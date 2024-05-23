@@ -363,7 +363,7 @@ const BillView = ({ route }) => {
       // Generate PDF
       const pdfOptions = {
         html: htmlContent,
-        fileName: 'invoice',
+        fileName: 'colortuff_invoice',
         directory: 'Documents',
       };
 
