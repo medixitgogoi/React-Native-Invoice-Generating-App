@@ -250,13 +250,17 @@ const BillView = ({ route }) => {
     }
 
     .party-info {
-      margin-top: 10px;
+      margin-top: 5px;
       width: 100%;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
     }
 
     .party-info h6 {
       font-weight: 400;
-      margin-top: 2px;
+      margin-top: 1px;
+      font-size: 8px;
     }
 
     .party-info em {
@@ -337,15 +341,17 @@ const BillView = ({ route }) => {
   <p style="font-size: 10px; margin-top: 3px;"><em>Sales Person-:</em> Anil Beniwal</p>
 
   <div class="party-info">
-   
-    <h6>ESTIMATE</h6>
-    <p><em>PARTY: ${name}</em></p>
+    <h5 style="fontSize: 12px;">ESTIMATE</h5>
+    <p style="fontSize: 12px; fontWeight: 600;"><em>PARTY: ${name}</em></p>
     <h6>Site: ${site}</h6>
+  </div>
+
+  <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%;">
     <h6>PAN: <em>${pan}</em></h6>
     <h6>Contact No.: <em>${contact}</em></h6>
     <h6>GSTIN: <em>${gstin}</em></h6>
   </div>
-
+  
   <table class="table">
     <thead>
       <tr>
