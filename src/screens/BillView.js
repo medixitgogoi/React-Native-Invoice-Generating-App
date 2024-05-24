@@ -3,7 +3,7 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import HTML from 'react-native-render-html';
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import { useSelector } from 'react-redux';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
@@ -192,13 +192,7 @@ const BillView = ({ route }) => {
   };
 
   const htmlContent = `
-    <!DOCTYPE html>
     <html>
-
-      <head>
-        <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-      </head>
-    
       <body style="color: black; padding: 20px; backgroundColor: white;">
 
         <div>
