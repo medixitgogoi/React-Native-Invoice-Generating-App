@@ -276,12 +276,13 @@ const BillView = ({ route }) => {
     .table th,
     .table td {
       border: 0.5px solid black;
-      padding: 5px;
+      padding: 13px;
       text-align: center;
     }
 
     .table th {
       background-color: #5bda49;
+      font-size: 12px;
     }
 
     .note {
@@ -346,7 +347,7 @@ const BillView = ({ route }) => {
     <h6>Site: ${site}</h6>
   </div>
 
-  <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%;">
+  <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 2px;">
     <h6>PAN: <em>${pan}</em></h6>
     <h6>Contact No.: <em>${contact}</em></h6>
     <h6>GSTIN: <em>${gstin}</em></h6>
@@ -355,14 +356,14 @@ const BillView = ({ route }) => {
   <table class="table">
     <thead>
       <tr>
-        <th style="width: 23%;">Material (Hi-rib)</th>
-        <th style="width: 8%;">Thick (mm)</th>
-        <th style="width: 8%;">Width</th>
-        <th style="width: 8%;">Length</th>
-        <th style="width: 8%;">No.of Pcs</th>
-        <th style="width: 15%;">Quantity</th>
-        <th style="width: 17%;">Rate (In Rs.)</th>
-        <th style="width: 13%;">Amount (In Rs.)</th>
+        <th style="width: 23%; ">Material (Hi-rib)</th>
+        <th style="width: 8%; ">Thick (mm)</th>
+        <th style="width: 8%; ">Width</th>
+        <th style="width: 8%; ">Length</th>
+        <th style="width: 8%; ">No.of Pcs</th>
+        <th style="width: 15%; ">Quantity</th>
+        <th style="width: 17%; ">Rate (In Rs.)</th>
+        <th style="width: 13%; ">Amount (In Rs.)</th>
       </tr>
     </thead>
     <tbody>
@@ -370,7 +371,7 @@ const BillView = ({ route }) => {
     </tbody>
   </table>
 
-  <table class="table" style="margin-top: 10px;">
+  <table style="width: 100%;border-collapse: collapse;">
     <tr style="height: 60px;">
       <td style="width: 86.9%; border: 0.5px solid black; text-align: right; padding-right: 2px;">
         <p style="margin: 1px; font-size: 6px;"><em>Loading Charges</em></p>
