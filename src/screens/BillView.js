@@ -108,68 +108,68 @@ const BillView = ({ route }) => {
 
   const generateTableRows = () => {
     return `
-    <table style="width: 100%; border-collapse: collapse;">
+    <table style="width: 100%; border-collapse: collapse; margin-top: 2px; margin-bottom: 2px;">
       ${billDetails.map((item, index) => `
         <tr key=${index} style="height: 30px; text-align: center;">
-          <td style="font-size: 6px; border: 0.5px solid black; width: 23%; padding: 1px;">
+          <td style="font-size: 10px; border: 0.5px solid black; width: 23%; padding: 10px;">
             <p style="margin: 0; font-weight: 500;"><u>Colour: ${item.color}</u></p>
             <u style="margin: 0; font-weight: 500;">${item.type}</u>
           </td>
-          <td style="font-size: 6px; border: 0.5px solid black; width: 8%; padding: 1px;">
+          <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 10px; ">
             <p style="margin: 0; font-weight: 500;">${item.thickness}</p>
           </td>
-          <td style="font-size: 6px; border: 0.5px solid black; width: 8%; padding: 1px;">
+          <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 10px; ">
             <p style="margin: 0; font-weight: 500;">${item.width}</p>
           </td>
-          <td style="font-size: 6px; border: 0.5px solid black; width: 8%; padding: 0; vertical-align: top;">
-            <div style="border-bottom: 0.5px solid black; height: 15px; display: flex; align-items: center; justify-content: center;">
+          <td style="font-size: 10px; border: 0.5px solid black; width: 8%; vertical-align: top; padding: 0;">
+            <div style="border-bottom: 0.5px solid black; height: 15px; display: flex; align-items: center; justify-content: center; padding: 10px;">
               <p style="margin: 0; font-weight: 500;">${item.length} ${item.unit}</p>
             </div>
             <div style="height: 1px; background-color: black;"></div>
-            <div style="height: 15px; display: flex; align-items: center; justify-content: center;">
+            <div style="height: 15px; display: flex; align-items: center; justify-content: center; padding: 10px;">
               <p style="margin: 0; font-weight: 500;">Total</p>
             </div>
           </td>
-          <td style="font-size: 6px; border: 0.5px solid black; width: 8%; padding: 0; vertical-align: top;">
-            <div style="border-bottom: 0.5px solid black; height: 15px; display: flex; align-items: center; justify-content: center;">
+          <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 10px; vertical-align: top; padding: 0;">
+            <div style="border-bottom: 0.5px solid black; height: 15px; padding: 10px; display: flex; align-items: center; justify-content: center;">
               <p style="margin: 0; font-weight: 500;">${item.pieces}</p>
             </div>
             <div style="height: 1px; background-color: black;"></div>
-            <div style="height: 15px; display: flex; align-items: center; justify-content: center;">
+            <div style="height: 15px; display: flex; align-items: center; padding: 10px; justify-content: center;">
               <p style="margin: 0; font-weight: 500;">${item.pieces}</p>
             </div>
           </td>
-          <td style="font-size: 6px; border: 0.5px solid black; width: 15%; padding: 0; vertical-align: top;">
-            <div style="border-bottom: 0.5px solid black; height: 15px; display: flex; align-items: center; justify-content: center;">
-              <p style="margin: 0; font-weight: 500;">${item.pieces * item.length}.00</p>
+          <td style="font-size: 10px; border: 0.5px solid black; width: 15%; padding: 0px; vertical-align: top;">
+            <div style="border-bottom: 0.5px solid black; height: 15px; display: flex; align-items: center; justify-content: center; padding: 10px;">
+              <p style="margin: 0; font-weight: 500;">${item.pieces * item.length}</p>
             </div>
             <div style="height: 1px; background-color: black;"></div>
-            <div style="display: flex; height: 15px;">
-              <div style="width: 65%; display: flex; align-items: center; justify-content: center;">
-                <p style="margin: 0; font-weight: 500;">${item.pieces * item.length}.00</p>
+            <div style="display: flex; height: 30px; ">
+              <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 10px;">
+                <p style="margin: 0; font-weight: 500;">${item.pieces * item.length}</p>
               </div>
-              <div style="width: 1px; background-color: black;"></div>
-              <div style="width: 35%; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 1px; background-color: black; height: 100%;"></div>
+              <div style="width: 35%; display: flex; align-items: center; justify-content: center; padding: 10px;">
                 <p style="margin: 0; font-weight: 600;">Rft</p>
               </div>
             </div>
           </td>
-          <td style="font-size: 6px; border: 0.5px solid black; width: 17%; padding: 0; vertical-align: top;">
-            <div style="border-bottom: 0.5px solid black; height: 15px; display: flex; align-items: center; justify-content: center;">
+          <td style="font-size: 10px; border: 0.5px solid black; width: 17%; padding: 0px; vertical-align: top;">
+            <div style="border-bottom: 0.5px solid black; height: 15px; padding: 10px; display: flex; align-items: center; justify-content: center;">
               <p style="margin: 0; font-weight: 600;">Per Rft</p>
             </div>
             <div style="height: 1px; background-color: black;"></div>
-            <div style="display: flex; height: 15px;">
-              <div style="width: 20%; display: flex; align-items: center; justify-content: center;">
+            <div style="display: flex; height: 30px; padding: 0px; ">
+              <div style="width: 20%; display: flex; align-items: center; justify-content: center; padding: 10px;">
                 <p style="margin: 0; font-weight: 500;">₹</p>
               </div>
               <div style="width: 1px; background-color: black;"></div>
-              <div style="width: 80%; display: flex; align-items: center; justify-content: center;">
+              <div style="width: 80%; display: flex; align-items: center; justify-content: center; padding: 10px;">
                 <p style="margin: 0; font-weight: 600;">${item.rate}.00</p>
               </div>
             </div>
           </td>
-          <td style="font-size: 6.3px; border: 0.5px solid black; width: 13%; padding: 1px;">
+          <td style="font-size: 10.3px; border: 0.5px solid black; width: 13%; padding: 10px; ">
             <p style="margin: 0; font-weight: 600;">₹${indianNumberFormat(item.length * item.pieces * item.rate)}.00</p>
           </td>
         </tr>
@@ -190,18 +190,18 @@ const BillView = ({ route }) => {
       padding: 30px;
       background-color: white;
       font-family: Arial, sans-serif;
-      font-size: 8px;
+      font-size: 10px;
       margin: 0;
     }
 
     h6 {
-      font-size: 8px;
+      font-size: 12px;
       margin: 0;
       font-weight: 500;
     }
 
     p {
-      font-size: 8px;
+      font-size: 12px;
       margin: 0;
     }
 
@@ -228,8 +228,8 @@ const BillView = ({ route }) => {
     }
 
     .header img {
-      height: 80px;
-      width: 80px;
+      height: 100px;
+      width: 100px;
       object-fit: contain;
       margin: 0;
       margin-right: 10px;
@@ -245,7 +245,7 @@ const BillView = ({ route }) => {
       text-align: center;
       margin: 0;
       font-weight: 400;
-      font-size: 12px;
+      font-size: 14px;
       margin-top: 2px;
     }
 
@@ -260,7 +260,7 @@ const BillView = ({ route }) => {
     .party-info h6 {
       font-weight: 400;
       margin-top: 1px;
-      font-size: 8px;
+      font-size: 11px;
     }
 
     .party-info em {
@@ -276,8 +276,8 @@ const BillView = ({ route }) => {
     .table th,
     .table td {
       border: 0.5px solid black;
-      padding: 13px;
       text-align: center;
+      backgroundColor: green;
     }
 
     .table th {
@@ -291,16 +291,25 @@ const BillView = ({ route }) => {
     }
 
     .note h5 {
-      font-weight: 500;
+      font-weight: 600;
       margin-bottom: 1px;
+      font-size: 11px;
+      margin: 0;
+      margin-bottom: 8px;
+    }
+
+    .note h6 {
+      font-weight: 400;
+      margin-bottom: 10px;
+      font-size: 10px;
     }
 
     .note p {
-      margin: 0;
+      margin: 3px;
     }
 
     .signature {
-      margin-top: 20px;
+      margin-top: 40px;
       display: flex;
       justify-content: space-between;
       width: 100%;
@@ -323,8 +332,8 @@ const BillView = ({ route }) => {
     <div class="header">
       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzKTWxwQYlE-bvvFw7cb3WLvV-sx_A-XXzdK5HrixwRw&s">
       <div>
-        <h6 style="font-size: 14px;">COLOURTUFF+</h6>
-        <h6 style="font-size: 12px;">(A Product Of POOJA ROOFING CO.(MFG))</h6>
+        <h6 style="font-size: 18px; padding-right: 10px;">COLOURTUFF+</h6>
+        <h6 style="font-size: 14px; padding-right: 10px;">(A Product Of POOJA ROOFING CO.(MFG))</h6>
       </div>
     </div>
 
@@ -332,6 +341,7 @@ const BillView = ({ route }) => {
     <p class="address">DISTRICT:- KAMRUP(M),GUWAHATI , ASSAM PIN CODE:- 781034</p>
     <p class="address">E Mail: poojaroofingco.mfg@gmail.com</p>
     <p class="address">Phone No.  0361-3102688</p>
+
   </div>
 
   <div class="ref">
@@ -339,11 +349,11 @@ const BillView = ({ route }) => {
     <p class="address">${new Date().toLocaleDateString()}</p>
   </div>
 
-  <p style="font-size: 10px; margin-top: 3px;"><em>Sales Person-:</em> Anil Beniwal</p>
+  <p style="font-size: 14px; margin-top: 3px;"><em>Sales Person-:</em> Anil Beniwal</p>
 
   <div class="party-info">
-    <h5 style="fontSize: 12px;">ESTIMATE</h5>
-    <p style="fontSize: 12px; fontWeight: 600;"><em>PARTY: ${name}</em></p>
+    <h5 style="fontSize: 16px;">ESTIMATE</h5>
+    <p style="fontSize: 14px; fontWeight: 600;"><em>PARTY: ${name}</em></p>
     <h6>Site: ${site}</h6>
   </div>
 
@@ -371,44 +381,43 @@ const BillView = ({ route }) => {
     </tbody>
   </table>
 
-  <table style="width: 100%;border-collapse: collapse;">
+  <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
     <tr style="height: 60px;">
       <td style="width: 86.9%; border: 0.5px solid black; text-align: right; padding-right: 2px;">
-        <p style="margin: 1px; font-size: 6px;"><em>Loading Charges</em></p>
-        <p style="margin: 1px; font-size: 6px;"><em>Bend Charges</em></p>
-        <p style="margin: 1px; font-size: 6px;"><em>Transport Charges</em></p>
+        <p style="margin: 1px; font-size: 11px;"><em>Loading Charges</em></p>
+        <p style="margin: 1px; font-size: 11px;"><em>Bend Charges</em></p>
+        <p style="margin: 1px; font-size: 11px;"><em>Transport Charges</em></p>
       </td>
-      <td style="width: 1.2%; background-color: black;"></td>
+      <td style="width: 0.5px; background-color: black;"></td>
       <td style="width: 13%; border: 0.5px solid black; text-align: center; padding-right: 2px;">
-        <p style="margin: 1px; font-size: 6px;"><em>₹${loadingCharge}.00</em></p>
-        <p style="margin: 1px; font-size: 6px;"><em>₹${bendCharge}.00</em></p>
-        <p style="margin: 1px; font-size: 6px;"><em>₹${transportCharge}.00</em></p>
+        <p style="margin: 1px; font-size: 11px;"><em>₹${loadingCharge}.00</em></p>
+        <p style="margin: 1px; font-size: 11px;"><em>₹${bendCharge}.00</em></p>
+        <p style="margin: 1px; font-size: 11px;"><em>₹${transportCharge}.00</em></p>
       </td>
     </tr>
     <tr style="height: 30px;">
       <td style="width: 86.9%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 2px;">
-        <p style="margin: 1px; font-size: 6px;"><em>Total amount to be paid</em></p>
+        <p style="margin: 1px; font-size: 11px;"><em>Total amount to be paid</em></p>
       </td>
       <td style="width: 1.2%; background-color: black;"></td>
       <td style="width: 13%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
-        <p style="font-size: 7px; font-weight: 500; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}</p>
+        <p style="font-size: 11px; font-weight: 500; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}</p>
       </td>
     </tr>
   </table>
 
   <div style="width: 100%;">
-    <p style="font-size: 6px; font-weight: 400; margin: 0;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
+    <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
   </div>
 
   <div class="note">
-    <h5>Note:</h5>
+    <h6>Note:</h6>
     <h5>Terms & conditions:-</h5>
     <p>1. Prices are inclusive of GST</p>
     <p>2. Prices are based on ex-factory at Changsari, Assam</p>
     <p>3. Payment Terms: 100% in Advance</p>
     <p>4. Rates are subject to change without any Prior Information.</p>
     <div>
-
       <p>5. FOR BANK DETAILS:- Name: Pooja Roofing Co. (MFG) A/C NO: 41122724588 (STATE BANK OF INDIA,)</p>
       <p>IFSC CODE: SBIN0013246 (Traders Branch Fancy Bazar)</p>
     </div>
@@ -416,23 +425,20 @@ const BillView = ({ route }) => {
     <p>7. The above Rates are valid for 7 Days</p>
   </div>
 
+  <div style="flexDirection: column; margin-top: 25px; ">
+    <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Regards</em></p>
+    <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Pooja Roofing Co.(MFG)</em></p>
+  </div>
+
   <div class="signature">
-    <div>
-      <h6>For Pooja Roofing Co. (MFG)</h6>
-      <p>Authorized Signatory</p>
-    </div>
-    <div>
-      <h6>For ${name}</h6>
-      <p>Authorized Signatory</p>
-    </div>
+    <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Prepared by )</em></p>
+    <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
+    <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
   </div>
 
 </body>
 
 </html>
-
-
-
 
   `;
 
