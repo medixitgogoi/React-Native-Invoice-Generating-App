@@ -112,18 +112,18 @@ const BillView = ({ route }) => {
       ${billDetails.map((item, index) => `
         <tr key=${index} style="height: 30px; text-align: center;">
           <td style="font-size: 10px; border: 0.5px solid black; width: 23%; padding: 10px;">
-            <p style="margin: 0; font-weight: 500;"><u>Colour: ${item.color}</u></p>
-            <u style="margin: 0; font-weight: 500;">${item.type}</u>
+            <p style="margin: 0; font-weight: 500; font-size: 12px; margin-bottom: 1px; "><u>Colour: ${item.color}</u></p>
+            <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type}</u>
           </td>
           <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 10px; ">
-            <p style="margin: 0; font-weight: 500;">${item.thickness}</p>
+            <p style="margin: 0; font-weight: 500; font-size: 11px;">${item.thickness}</p>
           </td>
           <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 10px; ">
-            <p style="margin: 0; font-weight: 500;">${item.width}</p>
+            <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.width}</p>
           </td>
           <td style="font-size: 10px; border: 0.5px solid black; width: 8%; vertical-align: top; padding: 0;">
             <div style="border-bottom: 0.5px solid black; height: 15px; display: flex; align-items: center; justify-content: center; padding: 10px;">
-              <p style="margin: 0; font-weight: 500;">${item.length} ${item.unit}</p>
+              <p style="margin: 0; font-weight: 500; font-size: 9px;">${item.length} ${item.unit}</p>
             </div>
             <div style="height: 1px; background-color: black;"></div>
             <div style="height: 15px; display: flex; align-items: center; justify-content: center; padding: 10px;">
@@ -383,26 +383,24 @@ const BillView = ({ route }) => {
 
   <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
     <tr style="height: 60px;">
-      <td style="width: 86.9%; border: 0.5px solid black; text-align: right; padding-right: 2px;">
-        <p style="margin: 1px; font-size: 11px;"><em>Loading Charges</em></p>
-        <p style="margin: 1px; font-size: 11px;"><em>Bend Charges</em></p>
-        <p style="margin: 1px; font-size: 11px;"><em>Transport Charges</em></p>
-      </td>
-      <td style="width: 0.5px; background-color: black;"></td>
-      <td style="width: 13%; border: 0.5px solid black; text-align: center; padding-right: 2px;">
-        <p style="margin: 1px; font-size: 11px;"><em>₹${loadingCharge}.00</em></p>
-        <p style="margin: 1px; font-size: 11px;"><em>₹${bendCharge}.00</em></p>
-        <p style="margin: 1px; font-size: 11px;"><em>₹${transportCharge}.00</em></p>
-      </td>
+        <td style="width: 87%; border: 0.5px solid black; text-align: right; ">
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>Loading Charges</em></p>
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>Bend Charges</em></p>
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>Transport Charges</em></p>
+        </td>
+        <td style="width: 13%; border: 0.5px solid black; text-align: center; ">
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>₹${loadingCharge}.00</em></p>
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>₹${bendCharge}.00</em></p>
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>₹${transportCharge}.00</em></p>
+        </td>
     </tr>
     <tr style="height: 30px;">
-      <td style="width: 86.9%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 2px;">
-        <p style="margin: 1px; font-size: 11px;"><em>Total amount to be paid</em></p>
-      </td>
-      <td style="width: 1.2%; background-color: black;"></td>
-      <td style="width: 13%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
-        <p style="font-size: 11px; font-weight: 500; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}</p>
-      </td>
+        <td style="width: 87%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 2px; ">
+          <p style="margin: 1px; font-size: 11px;"><em>Total amount to be paid</em></p>
+        </td>
+        <td style="width: 13%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
+          <p style="font-size: 11px; font-weight: 500; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}</p>
+        </td>
     </tr>
   </table>
 
