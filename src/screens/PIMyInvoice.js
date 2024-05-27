@@ -104,7 +104,7 @@ const PIMyInvoice = () => {
                                     <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8) }}>{item.site}</Text>
                                 </View>
                                 <View>
-                                    <Icon name="keyboard-arrow-right" size={20} color={"#000"} />
+                                    <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
                                 </View>
                             </TouchableOpacity>
                         ))}

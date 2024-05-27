@@ -8,7 +8,7 @@ export const billDetailsSlice = createSlice({
     reducers: {
         addItemToBill: (state, action) => {
             const newItem = {
-                id: Date.now() + Math.random().toString(36).substring(2, 9), // Generating a unique ID
+                id: Date.now() + Math.random().toString(36).substring(2, 9),
                 ...action.payload
             };
             state.push(newItem);

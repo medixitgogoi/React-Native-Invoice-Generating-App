@@ -7,7 +7,7 @@ import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon4 from 'react-native-vector-icons/dist/Feather';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
-import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
+import { lightBlack, lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill, removeItemFromBill } from '../redux/BillDetailsSlice';
@@ -54,6 +54,7 @@ const BillDetails = () => {
     const [billModal, setBillModal] = useState(false);
 
     const [error, setError] = useState(false);
+    const [error2, setError2] = useState(false);
 
     const [width, setWidth] = useState('');
 
@@ -157,6 +158,15 @@ const BillDetails = () => {
 
     const totalAmount = calculateTotalAmount();
 
+    const viewBillHandler = () => {
+        if (bend === 0 || loading === 0 || transport === 0) {
+            setError2(true);
+        } else {
+            navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport, totalAmount: totalAmount })
+            setError2(false);
+        }
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", }}>
             <StatusBar
@@ -192,9 +202,9 @@ const BillDetails = () => {
                                 <Text style={{ color: '#cbd2dd' }}>_________ </Text>
                             </View>
                         ) : (
-                            <View style={{ flexDirection: 'column', gap: 8, alignItems: 'center', height: '100%', justifyContent: 'center' }}>
+                            <View style={{ flexDirection: 'column', gap: 8, alignItems: 'center', justifyContent: 'center', height: 600, }}>
                                 <Icon2 name="newspaper" size={156} color={zomatoRed} />
-                                <Text style={{ color: '#959595', fontSize: responsiveFontSize(2.1), fontWeight: '500', textAlign: 'center' }}>Add the product details to see the preview of the bill</Text>
+                                <Text style={{ color: '#959595', fontSize: responsiveFontSize(2.1), fontWeight: '400', textAlign: 'center' }}>Add the product details to see the preview of the bill</Text>
                             </View>
                         )}
 
@@ -327,6 +337,17 @@ const BillDetails = () => {
                                     </View>
                                 </View>
 
+                                {error2 && (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 12, backgroundColor: 'yellow', overflow: 'hidden', borderColor: zomatoRed, borderWidth: 0.4, borderRadius: 4, }}>
+                                        <View style={{ backgroundColor: zomatoRed, width: 20, flexDirection: 'row', justifyContent: 'center', height: '100%', alignItems: 'center' }}>
+                                            <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.5), fontWeight: '900' }}>!</Text>
+                                        </View>
+                                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.5), paddingVertical: 5, paddingLeft: 5, }}>
+                                            Please fill in all the details before the invoice is generated.
+                                        </Text>
+                                    </View>
+                                )}
+
                             </View>
 
                             {/* Total price */}
@@ -340,7 +361,7 @@ const BillDetails = () => {
                             {/* Total amount to be paid */}
                             <View style={{ backgroundColor: lightZomatoRed, width: '100%', borderRadius: 5, flexDirection: 'column', paddingVertical: 8 }}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 12, }}>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '500', textTransform: 'uppercase' }}>total amount to be paid</Text>
+                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>total amount to be paid</Text>
                                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹{indianNumberFormat(calculateTotalAmount() ? calculateTotalAmount() : calculateTotalPrice())}.00</Text>
                                 </View>
                             </View>
@@ -611,7 +632,14 @@ const BillDetails = () => {
                         </View>
 
                         {error && (
-                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'yellow', overflow: 'hidden', borderColor: zomatoRed, borderWidth: 0.4, borderRadius: 4, marginTop: 5, marginBottom: 10, alignSelf: 'flex-end', }}>
+                                <View style={{ backgroundColor: zomatoRed, width: 20, flexDirection: 'row', justifyContent: 'center', height: '100%', alignItems: 'center' }}>
+                                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.5), fontWeight: '900' }}>!</Text>
+                                </View>
+                                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.5), paddingVertical: 5, paddingHorizontal: 5, }}>
+                                    Please fill in all the details before the invoice is generated.
+                                </Text>
+                            </View>
                         )}
 
                         {/* Buttons */}
@@ -640,10 +668,10 @@ const BillDetails = () => {
             </Modal>
 
             {/* Buttons */}
-            <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 10, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 0, elevation: 2 }}>
+            <View style={{ backgroundColor: productDetails.length !== 0 ? '#fff' : '#f1f3f6', width: '100%', flexDirection: 'row', paddingVertical: 10, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: productDetails.length !== 0 ? 0 : 5, elevation: productDetails.length !== 0 ? 2 : 0 }}>
 
                 {/* Add product */}
-                <TouchableOpacity style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => setBillModal(true)}>
+                <TouchableOpacity style={{ width: productDetails.length !== 0 ? '46%' : '95%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => setBillModal(true)}>
                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                         Add product
                     </Text>
@@ -651,14 +679,15 @@ const BillDetails = () => {
                 </TouchableOpacity>
 
                 {/* View bill */}
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 5, height: 42, }} onPress={() => navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport, totalAmount: totalAmount })}>
-                    <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>View Bill</Text>
-                    <Icon2 name="newspaper" size={16} color={"#fff"} />
-                </TouchableOpacity>
-
+                {productDetails.length !== 0 && (
+                    <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 5, height: 42, }} onPress={() => viewBillHandler()}>
+                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>View Bill</Text>
+                        <Icon2 name="newspaper" size={16} color={"#fff"} />
+                    </TouchableOpacity>
+                )}
             </View>
 
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 

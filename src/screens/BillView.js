@@ -356,15 +356,15 @@ const BillView = ({ route }) => {
   <p style="font-size: 14px; margin-top: 3px;"><em>Sales Person-:</em> Anil Beniwal</p>
 
   <div class="party-info">
-    <h5 style="font-size: 14px; margin: 0; padding-bottom: 1px;">ESTIMATE</h5>
+    <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;"><em>ESTIMATE</em></h5>
     <p style="fontSize: 14px; fontWeight: 600;"><em>PARTY: ${name}</em></p>
     <h6>Site: ${site}</h6>
   </div>
 
-  <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 2px;">
-    <h6>PAN: <em>${pan}</em></h6>
-    <h6>Contact No.: <em>${contact}</em></h6>
-    <h6>GSTIN: <em>${gstin}</em></h6>
+  <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
+    <h6>PAN: <em style="font-weight: 400;">${pan}</em></h6>
+    <h6>Contact No.: <em style="font-weight: 400;">${contact}</em></h6>
+    <h6>GSTIN: <em style="font-weight: 400;">${gstin}</em></h6>
   </div>
   
   <table class="table">
@@ -393,9 +393,9 @@ const BillView = ({ route }) => {
           <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>Transport Charges</em></p>
         </td>
         <td style="width: 13%; border: 0.5px solid black; text-align: center; ">
-          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>₹${loadingCharge}.00</em></p>
-          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>₹${bendCharge}.00</em></p>
-          <p style="margin: 1px; font-size: 11px; padding-right: 2px;"><em>₹${transportCharge}.00</em></p>
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px; font-weight: 600;"><em>₹${loadingCharge}.00</em></p>
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px; font-weight: 600;"><em>₹${bendCharge}.00</em></p>
+          <p style="margin: 1px; font-size: 11px; padding-right: 2px; font-weight: 600;"><em>₹${transportCharge}.00</em></p>
         </td>
     </tr>
     <tr style="height: 30px;">
@@ -403,7 +403,7 @@ const BillView = ({ route }) => {
           <p style="margin: 1px; font-size: 11px;"><em>Total amount to be paid</em></p>
         </td>
         <td style="width: 13%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
-          <p style="font-size: 11px; font-weight: 500; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}</p>
+          <p style="font-size: 11px; font-weight: 600; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}</p>
         </td>
     </tr>
   </table>

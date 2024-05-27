@@ -11,7 +11,7 @@ import { useState } from 'react';
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { addUser } from '../redux/UserSlice';
+import { addUser, logoutUser } from '../redux/UserSlice';
 import { emptyBill } from '../redux/BillDetailsSlice';
 
 const CustomerDetails = () => {
@@ -74,6 +74,10 @@ const CustomerDetails = () => {
     const editDetailsHandler = () => {
         setCustomerModal(true)
         dispatch(emptyBill());
+    }
+
+    const removeUserHandler = () => {
+        dispatch(logoutUser());
     }
 
     return (
@@ -230,6 +234,14 @@ const CustomerDetails = () => {
                 )}
 
             </ScrollView>
+
+            {userDetails.length !== 0 && (
+                <View style={{ position: 'absolute', bottom: 13, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, }}>
+                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, paddingVertical: 10, borderRadius: 8, width: '100%', borderColor: zomatoRed, borderWidth: 1 }} onPress={() => removeUserHandler()}>
+                        <Text style={{ color: zomatoRed, textAlign: 'center', fontSize: 15, fontWeight: '600', textTransform: 'uppercase' }}>Remove user</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
 
             {/* Customer Modal*/}
             <Modal
