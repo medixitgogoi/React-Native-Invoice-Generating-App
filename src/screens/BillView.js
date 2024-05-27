@@ -342,9 +342,9 @@ const BillView = ({ route }) => {
     </div>
 
     <p class="address">ADDRESS:- MAYFAIR BUILDING, 1ST FLOOR, LALGANESH LOKHRA ROAD, OPP. HANUMAN MANDIR</p>
-    <p class="address">DISTRICT:- KAMRUP(M),GUWAHATI , ASSAM PIN CODE:- 781034</p>
+    <p class="address">DISTRICT:- KAMRUP(M),GUWAHATI, ASSAM PIN CODE:- 781034</p>
     <p class="address">E Mail: poojaroofingco.mfg@gmail.com</p>
-    <p class="address">Phone No.  0361-3102688</p>
+    <p class="address">Phone No. 0361-3102688</p>
 
   </div>
 
@@ -356,7 +356,7 @@ const BillView = ({ route }) => {
   <p style="font-size: 14px; margin-top: 3px;"><em>Sales Person-:</em> Anil Beniwal</p>
 
   <div class="party-info">
-    <h5 style="fontSize: 16px;">ESTIMATE</h5>
+    <h5 style="font-size: 14px; margin: 0; padding-bottom: 1px;">ESTIMATE</h5>
     <p style="fontSize: 14px; fontWeight: 600;"><em>PARTY: ${name}</em></p>
     <h6>Site: ${site}</h6>
   </div>

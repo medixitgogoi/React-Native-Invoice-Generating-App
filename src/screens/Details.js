@@ -339,7 +339,7 @@ const CustomerDetails = () => {
                                 </View>
 
                                 {error && (
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right' }}>* Please fill all the details. All fields are necessary.</Text>
+                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right' }}>* Please fill all the details. All the fields are necessary.</Text>
                                 )}
 
                             </View>

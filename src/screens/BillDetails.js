@@ -53,6 +53,8 @@ const BillDetails = () => {
 
     const [billModal, setBillModal] = useState(false);
 
+    const [error, setError] = useState(false);
+
     const [width, setWidth] = useState('');
 
     const [length, setLength] = useState('');
@@ -75,22 +77,38 @@ const BillDetails = () => {
     const [transport, setTransport] = useState(0);
 
     const generateBillHandler = () => {
-        setBillModal(false);
-        dispatch(addItemToBill({
-            unit: selectedUnit,
-            type: selectedType,
-            color: selectedColor,
-            thickness: selectedThickness,
-            width: selectedType === 'Ridges' ? selectedWidth : '3.5 mm',
-            length: length,
-            pieces: pieces,
-            rate: rate,
-        }));
-        setWidth("");
-        setLength("");
-        setPieces("");
-        setRate('');
-        setSelectedType("");
+        if (length === '' || pieces === '' || rate === '' || selectedUnit === '' || selectedThickness === '' || selectedColor === '' || selectedType === '') {
+            setBillModal(true);
+            setError(true);
+        } else {
+            if (selectedType === "Ridges" && selectedWidth === '') {
+                setBillModal(true);
+                setError(true);
+            } else {
+                dispatch(addItemToBill({
+                    unit: selectedUnit,
+                    type: selectedType,
+                    color: selectedColor,
+                    thickness: selectedThickness,
+                    width: selectedType === 'Ridges' ? selectedWidth : '3.5 mm',
+                    length: length,
+                    pieces: pieces,
+                    rate: rate,
+                }));
+                setWidth("");
+                setLength("");
+                setPieces("");
+                setRate('');
+                setSelectedType("");
+                setSelectedColor("");
+                setSelectedUnit("");
+                setSelectedThickness("");
+                setSelectedWidth("");
+                setBillModal(false);
+                setError(false);
+
+            }
+        }
     }
 
     useEffect(() => {
@@ -591,6 +609,10 @@ const BillDetails = () => {
                                 />
                             </View>
                         </View>
+
+                        {error && (
+                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
+                        )}
 
                         {/* Buttons */}
                         <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
