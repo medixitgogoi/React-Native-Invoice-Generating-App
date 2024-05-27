@@ -12,6 +12,7 @@ import Modal from "react-native-modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { addUser } from '../redux/UserSlice';
+import { emptyBill } from '../redux/BillDetailsSlice';
 
 const CustomerDetails = () => {
 
@@ -69,6 +70,11 @@ const CustomerDetails = () => {
             }
         });
     };
+
+    const editDetailsHandler = () => {
+        setCustomerModal(true)
+        dispatch(emptyBill());
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -207,7 +213,7 @@ const CustomerDetails = () => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', borderRadius: 12, }}>
 
                             {/* Edit Button */}
-                            <TouchableOpacity style={{ marginVertical: 8, backgroundColor: lightZomatoRed, paddingHorizontal: 8, paddingVertical: 10, width: '49%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 8, gap: 5, borderColor: zomatoRed, borderWidth: 0.6 }} onPress={() => setCustomerModal(true)}>
+                            <TouchableOpacity style={{ marginVertical: 8, backgroundColor: lightZomatoRed, paddingHorizontal: 8, paddingVertical: 10, width: '49%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 8, gap: 5, borderColor: zomatoRed, borderWidth: 0.6 }} onPress={() => editDetailsHandler()}>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2), fontWeight: '600' }}>Edit details</Text>
                                 <Icon4 name="edit" size={17} color={zomatoRed} />
                             </TouchableOpacity>
