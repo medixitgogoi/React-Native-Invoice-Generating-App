@@ -24,7 +24,7 @@ const PIMyInvoice = () => {
 
     const pressHandler = (item) => {
         navigation.navigate("BillDetails");
-       
+
         dispatch(addUser({
             name: item.name,
             site: item.site,
@@ -35,7 +35,7 @@ const PIMyInvoice = () => {
 
         dispatch(emptyBill());
 
-    }
+    };
 
     const searchHandler = (text) => {
         setSearch(text);
@@ -44,7 +44,23 @@ const PIMyInvoice = () => {
         console.log(filteredData);
 
         setFilteredNames(filteredData);
-    }
+    };
+
+    const getHighlightedText = (text, highlight) => {
+        // Split the text by the highlight term and include the term itself in the resulting array
+        const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+        return (
+            <Text>
+                {parts.map((part, index) =>
+                    part.toLowerCase() === highlight.toLowerCase() ? (
+                        <Text key={index} style={{ backgroundColor: 'yellow' }}>{part}</Text>
+                    ) : (
+                        <Text key={index}>{part}</Text>
+                    )
+                )}
+            </Text>
+        );
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -87,7 +103,7 @@ const PIMyInvoice = () => {
                         <TextInput
                             placeholder="Customer names"
                             placeholderTextColor="#a1a1a1"
-                            onChangeText={(text) => searchHandler(text)}
+                            onChangeText={searchHandler}
                             value={search}
                             onFocus={() => setIsSearchFocused(true)}
                             onBlur={() => setIsSearchFocused(false)}
@@ -110,7 +126,7 @@ const PIMyInvoice = () => {
                         {filteredNames?.map(item => (
                             <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "#fceced", paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }} onPress={() => pressHandler(item)} key={item.id}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-                                    <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.name}</Text>
+                                    <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{getHighlightedText(item.name, search)}</Text>
                                     <Text style={{ color: "#000" }}>•</Text>
                                     <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8) }}>{item.site}</Text>
                                 </View>
@@ -129,4 +145,4 @@ const PIMyInvoice = () => {
 
 export default PIMyInvoice;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
