@@ -296,6 +296,11 @@ const generateInvoice = async () => {
   }
 };
 
+{/* The invoice */ }
+<View style={{ marginVertical: 100, flexDirection: 'row', alignItems: 'center', }}>
+  <HTML source={{ html: htmlContent2 }} />
+</View>
+
 
 
 

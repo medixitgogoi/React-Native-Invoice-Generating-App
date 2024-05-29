@@ -7,6 +7,17 @@ import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
+import PinchZoomView from 'react-native-pinch-zoom-view';
+import { zomatoRed } from '../utils/colors';
+
+const ZoomableHTML = ({ htmlContent }) => {
+
+  return (
+    <PinchZoomView style={{ paddingVertical: 100, flexDirection: 'row', alignItems: 'center', }}>
+      <HTML source={{ html: htmlContent }} />
+    </PinchZoomView>
+  );
+};
 
 const BillView = ({ route }) => {
 
@@ -723,7 +734,7 @@ const BillView = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#423a3d' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
       <StatusBar
         animated={true}
         backgroundColor='#000'
@@ -734,11 +745,11 @@ const BillView = ({ route }) => {
       <View style={{ flexDirection: "row", backgroundColor: "#000", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", }}>
 
-          <View style={{ paddingVertical: 10, flexDirection: "row", alignItems: "center", gap: 3, paddingHorizontal: 10 }}>
+          <View style={{ paddingVertical: 10, flexDirection: "row", alignItems: "center", gap: 3, paddingHorizontal: 10, justifyContent: 'space-between' }}>
             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
               <Icon name="keyboard-arrow-left" size={26} color={'#fff'} />
             </TouchableOpacity>
-            <Text style={{ color: "#fff", fontWeight: "500", fontSize: responsiveFontSize(2.4) }}>View Invoice</Text>
+            <Text style={{ color: "#fff", fontWeight: "500", fontSize: responsiveFontSize(2.4), textTransform: 'uppercase' }}>View Invoice</Text>
           </View>
 
           <TouchableOpacity style={{ paddingHorizontal: 20, paddingVertical: 8 }} onPress={() => generateInvoice()}>
@@ -750,10 +761,9 @@ const BillView = ({ route }) => {
 
       <ScrollView>
 
-        {/* The invoice */}
-        <View style={{ marginVertical: 100, flexDirection: 'row', alignItems: 'center', }}>
+        <PinchZoomView style={{ paddingVertical: 100, flexDirection: 'row', alignItems: 'center', height: '100%' }}>
           <HTML source={{ html: htmlContent2 }} />
-        </View>
+        </PinchZoomView>
 
       </ScrollView>
 
