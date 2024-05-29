@@ -182,7 +182,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', borderRadius: 50, backgroundColor: zomatoRed, }}>
                                         <Icon2 name="location-sharp" size={15} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '400', width: '90%' }}>{siteName}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500', width: '90%' }}>{siteName}</Text>
                                 </View>
 
                                 {/* PAN no */}
@@ -190,7 +190,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', borderRadius: 50, backgroundColor: zomatoRed }}>
                                         <Icon2 name="card" size={14} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '400' }}>{panNo}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{panNo}</Text>
                                 </View>
 
                                 {/* Contact no */}
@@ -198,7 +198,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 50 }}>
                                         <Icon3 name="phone" size={12} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '400' }}>{contact}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{contact}</Text>
                                 </View>
 
                                 {/* GSTIN no */}
@@ -206,7 +206,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 50 }}>
                                         <Icon3 name="barcode" size={13} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '400' }}>{gstin}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{gstin}</Text>
                                 </View>
 
                             </View>

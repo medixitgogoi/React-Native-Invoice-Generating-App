@@ -415,16 +415,16 @@ const BillView = ({ route }) => {
   <div class="note">
     <h6>Note:</h6>
     <h5>Terms & conditions:-</h5>
-    <p>1. Prices are inclusive of GST</p>
-    <p>2. Prices are based on ex-factory at Changsari, Assam</p>
-    <p>3. Payment Terms: 100% in Advance</p>
-    <p>4. Rates are subject to change without any Prior Information.</p>
-    <div>
+    <p><em>1. Prices are inclusive of GST</em></p>
+    <p><em>2. Prices are based on ex-factory at Changsari, Assam</em></p>
+    <p><em>3. Payment Terms: 100% in Advance</em></p>
+    <p><em>4. Rates are subject to change without any Prior Information.</em></p>
+    <div style="flex-direction: column; background-color: yellow; padding-top: 1px; padding-bottom: 1px;">
       <p>5. FOR BANK DETAILS:- Name: Pooja Roofing Co. (MFG) A/C NO: 41122724588 (STATE BANK OF INDIA,)</p>
-      <p style="padding-left: 5px;">IFSC CODE: SBIN0013246 (Traders Branch Fancy Bazar)</p>
+      <p style="padding-left: 12px;">IFSC CODE: SBIN0013246 (Traders Branch Fancy Bazar)</p>
     </div>
-    <p>6. Transportation: Client's Own Arrangement / To Pay Basis</p>
-    <p>7. The above Rates are valid for 7 Days</p>
+    <p><em>6. Transportation: Client's Own Arrangement / To Pay Basis</em></p>
+    <p><em>7. The above Rates are valid for 7 Days</em></p>
   </div>
 
   <div style="flexDirection: column; margin-top: 25px; ">

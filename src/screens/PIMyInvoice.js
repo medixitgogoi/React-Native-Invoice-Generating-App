@@ -41,7 +41,6 @@ const PIMyInvoice = () => {
         setSearch(text);
 
         const filteredData = names?.filter(word => word.name.toLowerCase().includes(text.toLowerCase()));
-        console.log(filteredData);
 
         setFilteredNames(filteredData);
     };
