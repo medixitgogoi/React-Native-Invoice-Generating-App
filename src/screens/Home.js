@@ -5,6 +5,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
 import names from '../data/names';
 import { useState } from 'react';
+import { TDefaultTextRenderer } from 'react-native-render-html/lib/typescript/TNodeRenderer';
 
 const Home = () => {
 
@@ -12,6 +13,8 @@ const Home = () => {
 
     const [search, setSearch] = useState("");
     const [isSearchFocused, setIsSearchFocused] = useState(false);
+
+    const [on, seton] = useState(false);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>

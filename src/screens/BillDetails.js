@@ -6,6 +6,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon4 from 'react-native-vector-icons/dist/Feather';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Icon6 from 'react-native-vector-icons/dist/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { lightBlack, lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -632,13 +633,16 @@ const BillDetails = () => {
                         </View>
 
                         {error && (
-                            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'yellow', overflow: 'hidden', borderColor: zomatoRed, borderWidth: 0.4, borderRadius: 4, marginTop: 5, marginBottom: 10, alignSelf: 'flex-end', }}>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'yellow', borderColor: zomatoRed, borderWidth: 0.4, borderRadius: 4, marginTop: 8, marginBottom: 10, alignSelf: 'flex-end', }}>
                                 <View style={{ backgroundColor: zomatoRed, width: 20, flexDirection: 'row', justifyContent: 'center', height: '100%', alignItems: 'center' }}>
                                     <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.5), fontWeight: '900' }}>!</Text>
                                 </View>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.5), paddingVertical: 5, paddingHorizontal: 5, }}>
                                     Please fill in all the details before the invoice is generated.
                                 </Text>
+                                <View style={{ position: 'absolute', right: -8, bottom: 12 }}>
+                                    <Icon6 name="caretup" style={{ width: 20, height: 20, color: zomatoRed }} />
+                                </View>
                             </View>
                         )}
 
