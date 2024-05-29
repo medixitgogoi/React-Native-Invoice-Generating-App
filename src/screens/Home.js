@@ -5,7 +5,6 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
 import names from '../data/names';
 import { useState } from 'react';
-import { TDefaultTextRenderer } from 'react-native-render-html/lib/typescript/TNodeRenderer';
 
 const Home = () => {
 

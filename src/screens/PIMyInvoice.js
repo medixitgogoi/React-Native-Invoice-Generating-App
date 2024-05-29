@@ -20,8 +20,11 @@ const PIMyInvoice = () => {
     const [search, setSearch] = useState("");
     const [isSearchFocused, setIsSearchFocused] = useState(false);
 
-    const pressHandler = (item) => {
+    const [filteredNames, setFilteredNames] = useState(names);
 
+    const pressHandler = (item) => {
+        navigation.navigate("BillDetails");
+       
         dispatch(addUser({
             name: item.name,
             site: item.site,
@@ -32,7 +35,15 @@ const PIMyInvoice = () => {
 
         dispatch(emptyBill());
 
-        navigation.navigate("BillDetails");
+    }
+
+    const searchHandler = (text) => {
+        setSearch(text);
+
+        const filteredData = names?.filter(word => word.name.toLowerCase().includes(text.toLowerCase()));
+        console.log(filteredData);
+
+        setFilteredNames(filteredData);
     }
 
     return (
@@ -58,45 +69,45 @@ const PIMyInvoice = () => {
                 </View>
             </View>
 
+            {/* Add customer button */}
+            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
+                <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '60%', paddingVertical: 10, borderRadius: 10, marginHorizontal: 2, elevation: 5, marginTop: 15, marginBottom: 10, justifyContent: 'center', flexDirection: 'row', alignItems: "center", gap: 6 }} onPress={() => navigation.navigate("Details")}>
+                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.3), fontWeight: '500', textAlign: 'center' }}>Add a new customer</Text>
+                    <Icon4 name="person-add" size={18} style={{ width: 20, height: 20, color: '#fff' }} />
+                </TouchableOpacity>
+            </View>
+
             {/* Searchbar */}
             <View View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: "#fff", borderRadius: 12, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: "98%", alignSelf: "center", borderColor: isSearchFocused ? zomatoRed : "", borderWidth: isSearchFocused ? 1 : 0, }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: "#fff", borderRadius: 12, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: "98%", alignSelf: "center", borderColor: isSearchFocused ? zomatoRed : "", borderWidth: isSearchFocused ? 0.7 : 0, }}>
                     <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', }}>
                         <View style={{ borderRadius: 10, alignItems: "center", justifyContent: "center", padding: 5, marginRight: 3, }}>
-                            <Icon2 name="search" size={20} color={zomatoRed} style={{}} />
+                            <Icon2 name="search" size={18} color={zomatoRed} />
                         </View>
                         <TextInput
                             placeholder="Customer names"
                             placeholderTextColor="#a1a1a1"
-                            onChangeText={setSearch}
+                            onChangeText={(text) => searchHandler(text)}
                             value={search}
                             onFocus={() => setIsSearchFocused(true)}
                             onBlur={() => setIsSearchFocused(false)}
-                            style={{ flex: 1, fontSize: responsiveFontSize(2.2), color: "#000", paddingVertical: 8, fontWeight: "500", }}
+                            style={{ flex: 1, fontSize: responsiveFontSize(2.1), color: "#000", paddingVertical: 5, fontWeight: "500", }}
                         />
 
                     </View>
                 </View>
             </View>
 
-            {/* Add customer button */}
-            <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '60%', paddingVertical: 10, borderRadius: 10, marginHorizontal: 2, elevation: 3, marginTop: 15, marginBottom: 20, justifyContent: 'center', flexDirection: 'row', alignItems: "center", gap: 6 }} onPress={() => navigation.navigate("Details")}>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.3), fontWeight: '500', textAlign: 'center' }}>Add a new customer</Text>
-                    <Icon4 name="person-add" size={18} style={{ width: 20, height: 20, color: '#fff' }} />
-                </TouchableOpacity>
-            </View>
-
             {/* Customer names */}
             <ScrollView>
                 <View style={{ marginBottom: 20, marginTop: 10, paddingHorizontal: 5 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', marginBottom: 15 }}>
-                        <Text style={{ color: '#c9c9c9' }}>__________</Text>
-                        <Text style={{ color: '#888888', fontSize: responsiveFontSize(1.7), fontWeight: '500', textTransform: 'uppercase' }}>All previously bought customers</Text>
-                        <Text style={{ color: '#c9c9c9' }}>__________</Text>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10, marginTop: 8, }}>
+                        <Text style={{ color: '#c9c9c9' }}>_____________</Text>
+                        <Text style={{ color: '#888888', fontSize: responsiveFontSize(1.5), fontWeight: '500', textTransform: 'uppercase' }}>All previously bought customers</Text>
+                        <Text style={{ color: '#c9c9c9' }}>_____________</Text>
                     </View>
                     <View style={{ paddingHorizontal: 3, flexDirection: 'column', gap: 10 }}>
-                        {names.map(item => (
+                        {filteredNames?.map(item => (
                             <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "#fceced", paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }} onPress={() => pressHandler(item)} key={item.id}>
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
                                     <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.name}</Text>
