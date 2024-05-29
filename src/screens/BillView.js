@@ -2,22 +2,12 @@ import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, Scro
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import HTML from 'react-native-render-html';
 import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
+import HTML from 'react-native-render-html';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import PinchZoomView from 'react-native-pinch-zoom-view';
-import { zomatoRed } from '../utils/colors';
-
-const ZoomableHTML = ({ htmlContent }) => {
-
-  return (
-    <PinchZoomView style={{ paddingVertical: 100, flexDirection: 'row', alignItems: 'center', }}>
-      <HTML source={{ html: htmlContent }} />
-    </PinchZoomView>
-  );
-};
 
 const BillView = ({ route }) => {
 
@@ -749,8 +739,9 @@ const BillView = ({ route }) => {
             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
               <Icon name="keyboard-arrow-left" size={26} color={'#fff'} />
             </TouchableOpacity>
-            <Text style={{ color: "#fff", fontWeight: "500", fontSize: responsiveFontSize(2.4), textTransform: 'uppercase' }}>View Invoice</Text>
           </View>
+
+          <Text style={{ color: "#fff", fontWeight: "500", fontSize: responsiveFontSize(2.4), textTransform: 'uppercase' }}>View Invoice</Text>
 
           <TouchableOpacity style={{ paddingHorizontal: 20, paddingVertical: 8 }} onPress={() => generateInvoice()}>
             <Icon name="share" size={18} color={'#fff'} />
