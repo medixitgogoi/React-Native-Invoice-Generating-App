@@ -80,11 +80,13 @@ const BillDetails = () => {
     const [transport, setTransport] = useState(0);
 
     const generateBillHandler = () => {
+
         Toast.show({
             type: 'success',
             text1: 'Product added successfully',
             text2: `${selectedType} added`,
         });
+
         if (length === '' || pieces === '' || rate === '' || selectedUnit === '' || selectedThickness === '' || selectedColor === '' || selectedType === '') {
             setBillModal(true);
             setError(true);
@@ -173,6 +175,16 @@ const BillDetails = () => {
         }
     }
 
+    const removeProductHandler = (item) => {
+
+        Toast.show({
+            type: 'error',
+            text1: 'Product removed successfully',
+        });
+
+        dispatch(removeItemFromBill(item))
+    }
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", }}>
             <StatusBar
@@ -203,9 +215,9 @@ const BillDetails = () => {
                         {/* Headline */}
                         {productDetails.length !== 0 ? (
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginTop: 15, marginBottom: 10 }}>
-                                <Text style={{ color: '#cbd2dd' }}>_________ </Text>
-                                <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.1), fontWeight: '600', textTransform: 'uppercase' }}>Here is the preview of the bill</Text>
-                                <Text style={{ color: '#cbd2dd' }}>_________ </Text>
+                                <Text style={{ color: '#cbd2dd' }}>_____________ </Text>
+                                <Text style={{ color: '#585858', fontSize: responsiveFontSize(1.7), fontWeight: '600', textTransform: 'uppercase' }}>Here is the preview of the bill</Text>
+                                <Text style={{ color: '#cbd2dd' }}>_____________ </Text>
                             </View>
                         ) : (
                             <View style={{ flexDirection: 'column', gap: 8, alignItems: 'center', justifyContent: 'center', height: 600, }}>
@@ -224,7 +236,7 @@ const BillDetails = () => {
                                     {/* Header */}
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: lightZomatoRed, padding: 5, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6 }}>
                                         <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.3), textTransform: 'uppercase', marginLeft: 5 }}>{item?.type}</Text>
-                                        <TouchableOpacity style={{ alignSelf: 'flex-end', backgroundColor: zomatoRed, padding: 3, borderRadius: 6 }} onPress={() => dispatch(removeItemFromBill(item))}>
+                                        <TouchableOpacity style={{ alignSelf: 'flex-end', backgroundColor: zomatoRed, padding: 3, borderRadius: 6 }} onPress={() => removeProductHandler(item)}>
                                             <Icon2 name="close" size={18} color='#fff' />
                                         </TouchableOpacity>
                                     </View>

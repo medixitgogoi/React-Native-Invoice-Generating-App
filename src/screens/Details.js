@@ -50,22 +50,24 @@ const CustomerDetails = () => {
             setCustomerModal(true);
             setError(true)
         } else {
+            dispatch(logoutUser());
             dispatch(addUser({
                 name: partyName,
                 site: siteName,
                 pan: panNo,
                 contact: contact,
                 gstin: gstin,
-            }))
-            setCustomerModal(false)
-            setError(false)
-        }
+            }));
+            setCustomerModal(false);
+            setError(false);
 
-        Toast.show({
-            type: 'success',
-            text1: 'User added successfully',
-            text2: `${partyName} added`,
-        });
+            Toast.show({
+                type: 'success',
+                text1: 'User added successfully',
+                text2: `${partyName} added`,
+            });
+
+        }
     }
 
     const imageHandler = () => {
