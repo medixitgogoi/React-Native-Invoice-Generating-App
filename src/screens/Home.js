@@ -3,7 +3,6 @@ import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Imag
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
-import { useState } from 'react';
 
 const Home = () => {
 

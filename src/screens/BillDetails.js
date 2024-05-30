@@ -108,7 +108,6 @@ const BillDetails = () => {
                 setSelectedWidth("");
                 setBillModal(false);
                 setError(false);
-
             }
         }
     }
@@ -666,9 +665,7 @@ const BillDetails = () => {
                         </View>
 
                     </View>
-
                 </View>
-
             </Modal>
 
             {/* Buttons */}
@@ -691,7 +688,7 @@ const BillDetails = () => {
                 )}
             </View>
 
-        </SafeAreaView >
+        </SafeAreaView>
     )
 }
 

@@ -1,15 +1,17 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, FlatList } from 'react-native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Octicons';
 import Icon4 from 'react-native-vector-icons/dist/Octicons';
 import { zomatoRed } from '../utils/colors';
 import names from '../data/names';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { addUser, logoutUser } from '../redux/UserSlice';
 import { useDispatch } from 'react-redux';
 import { emptyBill } from '../redux/BillDetailsSlice';
+import LinearGradient from 'react-native-linear-gradient';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
 
 const PIMyInvoice = () => {
 
@@ -17,10 +19,12 @@ const PIMyInvoice = () => {
 
     const dispatch = useDispatch();
 
+    const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
+
     const [search, setSearch] = useState("");
     const [isSearchFocused, setIsSearchFocused] = useState(false);
-
     const [filteredNames, setFilteredNames] = useState(names);
+    const [loading, setLoading] = useState(false);
 
     const pressHandler = (item) => {
         navigation.navigate("Details");
@@ -68,6 +72,13 @@ const PIMyInvoice = () => {
         );
     };
 
+    useEffect(() => {
+        setLoading(true);
+        setTimeout(() => {
+            setLoading(false);
+        }, 1500)
+    }, []);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
             <StatusBar
@@ -107,7 +118,7 @@ const PIMyInvoice = () => {
                             <Icon2 name="search" size={18} color={zomatoRed} />
                         </View>
                         <TextInput
-                            placeholder="Customer names"
+                            placeholder="Search for a customer name"
                             placeholderTextColor="#a1a1a1"
                             onChangeText={searchHandler}
                             value={search}
@@ -129,18 +140,32 @@ const PIMyInvoice = () => {
                         <Text style={{ color: '#c9c9c9' }}>_____________</Text>
                     </View>
                     <View style={{ paddingHorizontal: 3, flexDirection: 'column', gap: 10 }}>
-                        {filteredNames?.map(item => (
-                            <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "#fceced", paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }} onPress={() => pressHandler(item)} key={item.id}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-                                    <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{getHighlightedText(item.name, search)}</Text>
-                                    <Text style={{ color: "#000" }}>•</Text>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8) }}>{item.site}</Text>
-                                </View>
-                                <View>
-                                    <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
-                                </View>
-                            </TouchableOpacity>
-                        ))}
+
+                        {loading && (
+                            <FlatList
+                                data={[1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1]}
+                                renderItem={() => (
+                                    <ShimmerPlaceHolder style={{ width: '100%', height: 39, backgroundColor: '#a0a9a9', marginTop: 2, opacity: 0.5, marginBottom: 8, borderRadius: 7, }}>
+                                    </ShimmerPlaceHolder>
+                                )}
+                            />
+                        )}
+
+                        {!loading && (
+                            filteredNames?.map(item => (
+                                <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "#fceced", paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }} onPress={() => pressHandler(item)} key={item.id}>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
+                                        <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{getHighlightedText(item.name, search)}</Text>
+                                        <Text style={{ color: "#000" }}>•</Text>
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8) }}>{item.site}</Text>
+                                    </View>
+                                    <View>
+                                        <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
+                                    </View>
+                                </TouchableOpacity>
+                            ))
+                        )}
+
                     </View>
                 </View>
             </ScrollView>
