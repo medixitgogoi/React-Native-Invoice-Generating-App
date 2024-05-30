@@ -128,9 +128,9 @@ const CustomerDetails = () => {
 
                         {/* Headline */}
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginBottom: 12 }}>
-                            <Text style={{ color: '#cbd2dd' }}>_____ </Text>
-                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.1), fontWeight: '600', textTransform: 'uppercase' }}>Here is your added customer details</Text>
-                            <Text style={{ color: '#cbd2dd' }}>_____ </Text>
+                            <Text style={{ color: '#cbd2dd' }}>_________ </Text>
+                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(1.7), fontWeight: '600', textTransform: 'uppercase' }}>Here is your added customer details</Text>
+                            <Text style={{ color: '#cbd2dd' }}>_________ </Text>
                         </View>
 
                         {/* Details Card */}
@@ -170,7 +170,7 @@ const CustomerDetails = () => {
 
                                 </View>
 
-                                <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '500', fontSize: responsiveFontSize(2.4), textTransform: 'uppercase', marginTop: 8 }}>{partyName}</Text>
+                                <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '500', fontSize: responsiveFontSize(2.4), textTransform: 'uppercase', marginTop: 8 }}>{userDetails[0]?.name}</Text>
 
                             </View>
 
@@ -182,7 +182,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', borderRadius: 50, backgroundColor: zomatoRed, }}>
                                         <Icon2 name="location-sharp" size={15} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500', width: '90%' }}>{siteName}</Text>
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500', width: '90%' }}>{userDetails[0]?.site}</Text>
                                 </View>
 
                                 {/* PAN no */}
@@ -190,7 +190,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', borderRadius: 50, backgroundColor: zomatoRed }}>
                                         <Icon2 name="card" size={14} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{panNo}</Text>
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.pan}</Text>
                                 </View>
 
                                 {/* Contact no */}
@@ -198,7 +198,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 50 }}>
                                         <Icon3 name="phone" size={12} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{contact}</Text>
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.contact}</Text>
                                 </View>
 
                                 {/* GSTIN no */}
@@ -206,7 +206,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 50 }}>
                                         <Icon3 name="barcode" size={13} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{gstin}</Text>
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.gstin}</Text>
                                 </View>
 
                             </View>

@@ -7,7 +7,7 @@ import Icon4 from 'react-native-vector-icons/dist/Octicons';
 import { zomatoRed } from '../utils/colors';
 import names from '../data/names';
 import { useState } from 'react';
-import { addUser } from '../redux/UserSlice';
+import { addUser, logoutUser } from '../redux/UserSlice';
 import { useDispatch } from 'react-redux';
 import { emptyBill } from '../redux/BillDetailsSlice';
 
@@ -23,7 +23,9 @@ const PIMyInvoice = () => {
     const [filteredNames, setFilteredNames] = useState(names);
 
     const pressHandler = (item) => {
-        navigation.navigate("BillDetails");
+        navigation.navigate("Details");
+
+        dispatch(logoutUser());
 
         dispatch(addUser({
             name: item.name,
@@ -36,6 +38,11 @@ const PIMyInvoice = () => {
         dispatch(emptyBill());
 
     };
+
+    const addCustomerHandler = () => {
+        navigation.navigate("Details");
+        dispatch(logoutUser());
+    }
 
     const searchHandler = (text) => {
         setSearch(text);
@@ -86,7 +93,7 @@ const PIMyInvoice = () => {
 
             {/* Add customer button */}
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '60%', paddingVertical: 10, borderRadius: 10, marginHorizontal: 2, elevation: 5, marginTop: 15, marginBottom: 10, justifyContent: 'center', flexDirection: 'row', alignItems: "center", gap: 6 }} onPress={() => navigation.navigate("Details")}>
+                <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '60%', paddingVertical: 10, borderRadius: 10, marginHorizontal: 2, elevation: 5, marginTop: 15, marginBottom: 10, justifyContent: 'center', flexDirection: 'row', alignItems: "center", gap: 6 }} onPress={addCustomerHandler}>
                     <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.3), fontWeight: '500', textAlign: 'center' }}>Add a new customer</Text>
                     <Icon4 name="person-add" size={18} style={{ width: 20, height: 20, color: '#fff' }} />
                 </TouchableOpacity>
