@@ -12,6 +12,7 @@ import { lightBlack, lightZomatoRed, modalBackColor, zomatoRed } from '../utils/
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill, removeItemFromBill } from '../redux/BillDetailsSlice';
+import Toast from 'react-native-toast-message';
 
 const thickness = [
     { title: '0.30 mm', },
@@ -79,6 +80,11 @@ const BillDetails = () => {
     const [transport, setTransport] = useState(0);
 
     const generateBillHandler = () => {
+        Toast.show({
+            type: 'success',
+            text1: 'Product added successfully',
+            text2: `${selectedType} added`,
+        });
         if (length === '' || pieces === '' || rate === '' || selectedUnit === '' || selectedThickness === '' || selectedColor === '' || selectedType === '') {
             setBillModal(true);
             setError(true);
@@ -631,6 +637,7 @@ const BillDetails = () => {
                             </View>
                         </View>
 
+                        {/* Error Handling */}
                         {error && (
                             <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'yellow', borderColor: zomatoRed, borderWidth: 0.4, borderRadius: 4, marginTop: 8, marginBottom: 10, alignSelf: 'flex-end', }}>
                                 <View style={{ backgroundColor: zomatoRed, width: 20, flexDirection: 'row', justifyContent: 'center', height: '100%', alignItems: 'center' }}>

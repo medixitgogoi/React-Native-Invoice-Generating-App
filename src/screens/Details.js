@@ -13,6 +13,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { addUser, logoutUser } from '../redux/UserSlice';
 import { emptyBill } from '../redux/BillDetailsSlice';
+import Toast from 'react-native-toast-message';
 
 const CustomerDetails = () => {
 
@@ -44,6 +45,7 @@ const CustomerDetails = () => {
     const [photo, setPhoto] = useState('');
 
     const saveHandler = () => {
+
         if (partyName === '' || siteName === '' || panNo === '' || contact === '' || gstin === '') {
             setCustomerModal(true);
             setError(true)
@@ -58,6 +60,12 @@ const CustomerDetails = () => {
             setCustomerModal(false)
             setError(false)
         }
+
+        Toast.show({
+            type: 'success',
+            text1: 'User added successfully',
+            text2: `${partyName} added`,
+        });
     }
 
     const imageHandler = () => {
@@ -77,6 +85,10 @@ const CustomerDetails = () => {
     }
 
     const removeUserHandler = () => {
+        Toast.show({
+            type: 'error',
+            text1: 'User removed successfully',
+        });
         dispatch(logoutUser());
     }
 
@@ -182,7 +194,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', borderRadius: 50, backgroundColor: zomatoRed, }}>
                                         <Icon2 name="location-sharp" size={15} style={{ color: lightZomatoRed }} />
                                     </View>
-                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500', width: '90%' }}>{userDetails[0]?.site}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500', width: '90%' }}>{userDetails[0]?.site}</Text>
                                 </View>
 
                                 {/* PAN no */}
@@ -190,7 +202,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', borderRadius: 50, backgroundColor: zomatoRed }}>
                                         <Icon2 name="card" size={14} style={{ color: lightZomatoRed }} />
                                     </View>
-                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.pan}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.pan}</Text>
                                 </View>
 
                                 {/* Contact no */}
@@ -198,7 +210,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 50 }}>
                                         <Icon3 name="phone" size={12} style={{ color: lightZomatoRed }} />
                                     </View>
-                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.contact}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.contact}</Text>
                                 </View>
 
                                 {/* GSTIN no */}
@@ -206,7 +218,7 @@ const CustomerDetails = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 50 }}>
                                         <Icon3 name="barcode" size={13} style={{ color: lightZomatoRed }} />
                                     </View>
-                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.gstin}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.gstin}</Text>
                                 </View>
 
                             </View>
@@ -390,6 +402,9 @@ const CustomerDetails = () => {
 export default CustomerDetails;
 
 const styles = StyleSheet.create({
+    text1: {
+        fontSize: responsiveFontSize(2.6), // Change this to the desired font size
+    },
     dropdownButtonStyle: {
         backgroundColor: zomatoRed,
         borderRadius: 8,

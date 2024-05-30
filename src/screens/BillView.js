@@ -193,6 +193,7 @@ const BillView = ({ route }) => {
       font-family: Arial, sans-serif;
       font-size: 10px;
       margin: 0;
+      padding-top: 40px;
     }
 
     h6 {

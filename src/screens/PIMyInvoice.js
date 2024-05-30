@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, FlatList } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, FlatList, RefreshControl } from 'react-native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Octicons';
@@ -76,7 +76,7 @@ const PIMyInvoice = () => {
         setLoading(true);
         setTimeout(() => {
             setLoading(false);
-        }, 1500)
+        }, 1000);
     }, []);
 
     return (
@@ -87,7 +87,7 @@ const PIMyInvoice = () => {
                 barStyle="dark-content"
             />
 
-            {/* header */}
+            {/* Header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", }}>
                     <View style={{ paddingVertical: 8, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10 }}>
@@ -131,7 +131,7 @@ const PIMyInvoice = () => {
                 </View>
             </View>
 
-            {/* Customer names */}
+            {/* Customer Names */}
             <ScrollView>
                 <View style={{ marginBottom: 20, marginTop: 10, paddingHorizontal: 5 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10, marginTop: 8, }}>
@@ -140,12 +140,11 @@ const PIMyInvoice = () => {
                         <Text style={{ color: '#c9c9c9' }}>_____________</Text>
                     </View>
                     <View style={{ paddingHorizontal: 3, flexDirection: 'column', gap: 10 }}>
-
                         {loading && (
                             <FlatList
-                                data={[1, 1, 1, 1, 1, 1, 1, 1, 1, 1,1]}
+                                data={[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
                                 renderItem={() => (
-                                    <ShimmerPlaceHolder style={{ width: '100%', height: 39, backgroundColor: '#a0a9a9', marginTop: 2, opacity: 0.5, marginBottom: 8, borderRadius: 7, }}>
+                                    <ShimmerPlaceHolder style={{ width: '100%', height: 39, backgroundColor: '#8e9999', marginTop: 2, opacity: 0.2, marginBottom: 8, borderRadius: 7, }}>
                                     </ShimmerPlaceHolder>
                                 )}
                             />
