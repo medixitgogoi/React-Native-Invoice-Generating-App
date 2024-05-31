@@ -48,7 +48,7 @@ const CustomerDetails = () => {
 
         if (partyName === '' || siteName === '' || panNo === '' || contact === '' || gstin === '') {
             setCustomerModal(true);
-            setError(true)
+            setError(true);
         } else {
             dispatch(logoutUser());
             dispatch(addUser({
@@ -58,6 +58,7 @@ const CustomerDetails = () => {
                 contact: contact,
                 gstin: gstin,
             }));
+
             setCustomerModal(false);
             setError(false);
 
@@ -455,27 +456,3 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
 });
-
-{/* Fixed charges */ }
-{/* <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
-                                    <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Bend charges:</Text>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹700.00</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
-                                    <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Loading charges:</Text>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹98.00</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
-                                    <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Transportation charges:</Text>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹300.00</Text>
-                                </View>
-                            </View> */}
-
-{/* <View style={{ flexDirection: 'column', gap: 5, backgroundColor: lightZomatoRed, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Total amount</Text>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹{amount}.00</Text>
-                                </View>
-                            </View> 
-                        */}

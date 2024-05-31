@@ -1,9 +1,10 @@
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image } from 'react-native';
-import { lightBlack, offWhite, zomatoRed } from '../utils/colors';
+import { zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon2 from 'react-native-vector-icons/Feather';
 import { useNavigation } from '@react-navigation/native';
+import Toast from 'react-native-toast-message';
 
 const Login = () => {
 
@@ -14,6 +15,14 @@ const Login = () => {
     const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     const [isEmailFocused, setIsEmailFocused] = useState(false);
     const [show, setShow] = useState(true);
+
+    const loginHandler = () => {
+        navigation.navigate("Home");
+        Toast.show({
+            type: 'success',
+            text1: 'Logged in successfully',
+        });
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -89,7 +98,7 @@ const Login = () => {
                     </View>
 
                     {/* Log in button */}
-                    <TouchableOpacity style={{ alignSelf: "center", width: "80%", backgroundColor: zomatoRed, height: 55, justifyContent: 'center', alignItems: "center", borderRadius: 10, elevation: 10, marginVertical: 20 }} onPress={() => navigation.navigate("Home")}>
+                    <TouchableOpacity style={{ alignSelf: "center", width: "80%", backgroundColor: zomatoRed, height: 55, justifyContent: 'center', alignItems: "center", borderRadius: 10, elevation: 10, marginVertical: 20 }} onPress={() => loginHandler()}>
                         <Text style={{ color: "#fff", fontWeight: "700", fontSize: responsiveFontSize(2.4) }}>LOGIN</Text>
                     </TouchableOpacity>
 
