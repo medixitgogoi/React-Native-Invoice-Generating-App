@@ -21,6 +21,7 @@ const Login = () => {
         Toast.show({
             type: 'success',
             text1: 'Logged in successfully',
+            position: 'bottom'
         });
     }
 
@@ -98,8 +99,8 @@ const Login = () => {
                     </View>
 
                     {/* Log in button */}
-                    <TouchableOpacity style={{ alignSelf: "center", width: "80%", backgroundColor: zomatoRed, height: 55, justifyContent: 'center', alignItems: "center", borderRadius: 10, elevation: 10, marginVertical: 20 }} onPress={() => loginHandler()}>
-                        <Text style={{ color: "#fff", fontWeight: "700", fontSize: responsiveFontSize(2.4) }}>LOGIN</Text>
+                    <TouchableOpacity style={{ alignSelf: "center", width: "80%", backgroundColor: zomatoRed, height: 55, justifyContent: 'center', alignItems: "center", borderRadius: 10, elevation: 10, marginVertical: 20 }} onPress={loginHandler}>
+                        <Text style={{ color: "#fff", fontWeight: "700", fontSize: responsiveFontSize(2.5) }}>LOGIN</Text>
                     </TouchableOpacity>
 
                 </View>

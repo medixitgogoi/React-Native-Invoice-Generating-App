@@ -337,9 +337,12 @@ const CustomerDetails = () => {
                                         <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter CONTACT no.</Text>
                                         <Text style={{ color: '#24882a', fontSize: responsiveFontSize(1.9), fontStyle: 'italic', }}>(Preferably whatsapp)</Text>
                                     </View>
-                                    <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isContactFocused ? zomatoRed : "", borderWidth: isContactFocused ? 1 : 0, marginVertical: 2 }}>
+                                    <View style={{ flexDirection: 'row', alignSelf: "center", width: "100%", backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isContactFocused ? zomatoRed : "", borderWidth: isContactFocused ? 1 : 0, marginVertical: 2, overflow: 'hidden' }}>
+                                        <View style={{ width: '15%', backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRightColor: zomatoRed, borderRightWidth: 0.8 }}>
+                                            <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>+91</Text>
+                                        </View>
                                         <TextInput
-                                            style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                            style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", width: '85%', paddingHorizontal: 8, }}
                                             onChangeText={setContact}
                                             value={contact}
                                             placeholderTextColor="#abb0ba"
