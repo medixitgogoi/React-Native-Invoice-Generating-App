@@ -130,11 +130,11 @@ const CustomerDetails = () => {
                                 }}
                             />
                         </View>
-                        <View style={{ flexDirection: 'column', gap: 3 }}>
+                        <View style={{ flexDirection: 'column', gap: 5, }}>
                             <Text style={{ color: "#000", textAlign: "center", fontWeight: "600", fontSize: responsiveFontSize(2.8), }}>You have not added any customers yet!</Text>
                             <Text style={{ color: '#a3a3a3', textAlign: "center", fontSize: responsiveFontSize(1.9), fontWeight: "400", }}>Add customers and generate the invoice according to your business logic </Text>
                             <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 30 }} onPress={() => setCustomerModal(true)}>
-                                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.2), textTransform: 'uppercase' }}>Add customer</Text>
+                                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.2), textTransform: 'uppercase',}}>Add customer</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -250,14 +250,6 @@ const CustomerDetails = () => {
 
             </ScrollView>
 
-            {userDetails.length !== 0 && (
-                <View style={{ position: 'absolute', bottom: 13, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, }}>
-                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, paddingVertical: 10, borderRadius: 8, width: '100%', borderColor: zomatoRed, borderWidth: 1 }} onPress={() => removeUserHandler()}>
-                        <Text style={{ color: zomatoRed, textAlign: 'center', fontSize: 15, fontWeight: '600', textTransform: 'uppercase' }}>Remove user</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
-
             {/* Customer Modal*/}
             <Modal
                 isVisible={customerModal}
@@ -337,19 +329,21 @@ const CustomerDetails = () => {
                                         <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter CONTACT no.</Text>
                                         <Text style={{ color: '#24882a', fontSize: responsiveFontSize(1.9), fontStyle: 'italic', }}>(Preferably whatsapp)</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'row', alignSelf: "center", width: "100%", backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isContactFocused ? zomatoRed : "", borderWidth: isContactFocused ? 1 : 0, marginVertical: 2, overflow: 'hidden' }}>
-                                        <View style={{ width: '15%', backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRightColor: zomatoRed, borderRightWidth: 0.8 }}>
+                                    <View style={{ flexDirection: 'row', alignSelf: "center", width: "100%", backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, overflow: 'hidden' }}>
+                                        <View style={{ width: '15%', backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderRightWidth: !isContactFocused ? 1 : 0.3, borderWidth: 1, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}>
                                             <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>+91</Text>
                                         </View>
-                                        <TextInput
-                                            style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", width: '85%', paddingHorizontal: 8, }}
-                                            onChangeText={setContact}
-                                            value={contact}
-                                            placeholderTextColor="#abb0ba"
-                                            keyboardType="numeric"
-                                            onFocus={() => setIsContactFocused(true)}
-                                            onBlur={() => setIsContactFocused(false)}
-                                        />
+                                        <View style={{ borderColor: isContactFocused ? zomatoRed : "", borderWidth: isContactFocused ? 1 : 0, width: '85%', borderTopRightRadius: 8, borderBottomRightRadius: 8, }}>
+                                            <TextInput
+                                                style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", paddingHorizontal: 8, }}
+                                                onChangeText={setContact}
+                                                value={contact}
+                                                placeholderTextColor="#abb0ba"
+                                                keyboardType="numeric"
+                                                onFocus={() => setIsContactFocused(true)}
+                                                onBlur={() => setIsContactFocused(false)}
+                                            />
+                                        </View>
                                     </View>
                                 </View>
 
@@ -400,6 +394,15 @@ const CustomerDetails = () => {
                 </View>
 
             </Modal>
+
+            {/* Remove user button */}
+            {userDetails.length !== 0 && (
+                <View style={{ position: 'absolute', bottom: 13, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, }}>
+                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, paddingVertical: 10, borderRadius: 8, width: '100%', borderColor: zomatoRed, borderWidth: 1 }} onPress={() => removeUserHandler()}>
+                        <Text style={{ color: zomatoRed, textAlign: 'center', fontSize: 15, fontWeight: '600', textTransform: 'uppercase' }}>Remove user</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
 
         </SafeAreaView>
     )

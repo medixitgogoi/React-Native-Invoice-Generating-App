@@ -11,19 +11,54 @@ const Login = () => {
     const navigation = useNavigation();
 
     const [email, setEmail] = useState("");
+    const [isEmailFocused, setIsEmailFocused] = useState(false);
     const [password, setPassword] = useState("");
     const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-    const [isEmailFocused, setIsEmailFocused] = useState(false);
     const [show, setShow] = useState(true);
 
+    const [errors, setErrors] = useState({});
+
     const loginHandler = () => {
-        navigation.navigate("Home");
-        Toast.show({
-            type: 'success',
-            text1: 'Logged in successfully',
-            position: 'bottom'
-        });
+
+        if (validate()) {
+            navigation.navigate("Home");
+            Toast.show({
+                type: 'success',
+                text1: 'Logged in successfully',
+                position: 'bottom'
+            });
+            setEmail('');
+            setPassword('');
+        }
     }
+
+    const validate = () => {
+
+        const newErrors = {};
+
+        if (!email) {
+            newErrors.email = '*Email is required';
+        } else if (!/\S+@\S+\.\S+/.test(email)) {
+            newErrors.email = '*Invalid email address';
+        }
+
+        if (!password) {
+            newErrors.password = '*Password is required';
+        } else if (password.length < 8) {
+            newErrors.password = '*Password must be at least 8 characters long';
+        }
+
+        // if (!mobileNumber) {
+        //     newErrors.mobileNumber = 'Mobile number is required';
+        // } else if (!/^[0-9]{10}$/.test(mobileNumber)) {
+        //     newErrors.mobileNumber = 'Mobile number must be exactly 10 digits';
+        // }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
+
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -49,16 +84,18 @@ const Login = () => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '13%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -10, left: 50, backgroundColor: '#f1f3f6' }}>
                             <Text style={{ color: '#abb0ba', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Email</Text>
                         </View>
-                        <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 14, backgroundColor: "#f1f3f6", elevation: 10, borderRadius: 8, borderColor: isEmailFocused ? zomatoRed : "", borderWidth: isEmailFocused ? 1.5 : 0, marginVertical: 2 }}>
+                        <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 14, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isEmailFocused ? zomatoRed : "", borderWidth: isEmailFocused ? 1.5 : 0, marginVertical: 2 }}>
                             <TextInput
                                 style={{ paddingVertical: 8, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                 onChangeText={setEmail}
                                 value={email}
                                 placeholderTextColor="#abb0ba"
+                                keyboardType='email-address'
                                 onFocus={() => setIsEmailFocused(true)}
                                 onBlur={() => setIsEmailFocused(false)}
                             />
                         </View>
+                        {errors.email && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), paddingLeft: 35, marginTop: 4 }}>{errors.email}</Text>}
                     </View>
 
                     {/* Password */}
@@ -66,8 +103,8 @@ const Login = () => {
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '21%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -10, left: 50, backgroundColor: '#f1f3f6' }}>
                             <Text style={{ color: '#abb0ba', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Password</Text>
                         </View>
-                        <View style={{ flexDirection: 'column', gap: 7 }}>
-                            <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 15, backgroundColor: "#f1f3f6", elevation: 10, borderRadius: 8, borderColor: isPasswordFocused ? zomatoRed : "", borderWidth: isPasswordFocused ? 1.5 : 0, marginVertical: 2 }}>
+                        <View style={{ flexDirection: 'column', gap: 7, }}>
+                            <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 15, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isPasswordFocused ? zomatoRed : "", borderWidth: isPasswordFocused ? 1.5 : 0, marginTop: 2 }}>
                                 <TextInput
                                     style={{ paddingVertical: 8, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000" }}
                                     onChangeText={setPassword}
@@ -92,19 +129,23 @@ const Login = () => {
                                     />
                                 </View>
                             </View>
+
+                            {errors.password && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), paddingLeft: 35 }}>{errors.password}</Text>}
+
                             <TouchableOpacity style={{ marginRight: 35, }}>
                                 <Text style={{ color: "#b4b7bf", textAlign: "right", fontSize: responsiveFontSize(1.8), fontWeight: "500" }}>Forgot password?</Text>
                             </TouchableOpacity>
+
+
                         </View>
                     </View>
 
                     {/* Log in button */}
-                    <TouchableOpacity style={{ alignSelf: "center", width: "80%", backgroundColor: zomatoRed, height: 55, justifyContent: 'center', alignItems: "center", borderRadius: 10, elevation: 10, marginVertical: 20 }} onPress={loginHandler}>
+                    <TouchableOpacity style={{ alignSelf: "center", width: "80%", backgroundColor: zomatoRed, height: 55, justifyContent: 'center', alignItems: "center", borderRadius: 10, elevation: 10, marginBottom: 20, marginTop: errors.password ? 0 : 20 }} onPress={loginHandler}>
                         <Text style={{ color: "#fff", fontWeight: "700", fontSize: responsiveFontSize(2.5) }}>LOGIN</Text>
                     </TouchableOpacity>
 
                 </View>
-
             </View>
 
         </SafeAreaView>
@@ -113,4 +154,4 @@ const Login = () => {
 
 export default Login;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
