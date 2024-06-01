@@ -81,12 +81,6 @@ const BillDetails = () => {
 
     const generateBillHandler = () => {
 
-        Toast.show({
-            type: 'success',
-            text1: 'Product added successfully',
-            text2: `${selectedType} added`,
-        });
-
         if (length === '' || pieces === '' || rate === '' || selectedUnit === '' || selectedThickness === '' || selectedColor === '' || selectedType === '') {
             setBillModal(true);
             setError(true);
@@ -95,6 +89,11 @@ const BillDetails = () => {
                 setBillModal(true);
                 setError(true);
             } else {
+                Toast.show({
+                    type: 'success',
+                    text1: 'Product added successfully',
+                    text2: `${selectedType} added`,
+                });
                 dispatch(addItemToBill({
                     unit: selectedUnit,
                     type: selectedType,
@@ -105,6 +104,8 @@ const BillDetails = () => {
                     pieces: pieces,
                     rate: rate,
                 }));
+                setBillModal(false);
+                setError(false);
                 setWidth("");
                 setLength("");
                 setPieces("");
@@ -114,8 +115,6 @@ const BillDetails = () => {
                 setSelectedUnit("");
                 setSelectedThickness("");
                 setSelectedWidth("");
-                setBillModal(false);
-                setError(false);
             }
         }
     }
@@ -651,18 +650,20 @@ const BillDetails = () => {
 
                         {/* Error Handling */}
                         {error && (
-                            <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'yellow', borderColor: zomatoRed, borderWidth: 0.4, borderRadius: 4, marginTop: 8, marginBottom: 10, alignSelf: 'flex-end', }}>
+                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
+                        )}
+
+                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'yellow', borderColor: zomatoRed, borderWidth: 0.4, marginTop: 10, marginBottom: 10, alignSelf: 'flex-end', }}>
                                 <View style={{ backgroundColor: zomatoRed, width: 20, flexDirection: 'row', justifyContent: 'center', height: '100%', alignItems: 'center' }}>
                                     <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.5), fontWeight: '900' }}>!</Text>
                                 </View>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.5), paddingVertical: 5, paddingHorizontal: 5, }}>
                                     Please fill in all the details before the invoice is generated.
                                 </Text>
-                                <View style={{ position: 'absolute', right: -8, bottom: 12 }}>
+                                <View style={{ position: 'absolute', bottom: 12, left: -1 }}>
                                     <Icon6 name="caretup" style={{ width: 20, height: 20, color: zomatoRed }} />
                                 </View>
-                            </View>
-                        )}
+                            </View> */}
 
                         {/* Buttons */}
                         <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>

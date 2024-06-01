@@ -20,16 +20,18 @@ const Login = () => {
 
     const loginHandler = () => {
 
-        if (validate()) {
-            navigation.navigate("Home");
-            Toast.show({
-                type: 'success',
-                text1: 'Logged in successfully',
-                position: 'bottom'
-            });
-            setEmail('');
-            setPassword('');
-        }
+        navigation.navigate("Home");
+
+        // if (validate()) {
+        //     navigation.navigate("Home");
+        //     Toast.show({
+        //         type: 'success',
+        //         text1: 'Logged in successfully',
+        //         position: 'bottom'
+        //     });
+        //     setEmail('');
+        //     setPassword('');
+        // }
     }
 
     const validate = () => {
@@ -47,12 +49,6 @@ const Login = () => {
         } else if (password.length < 8) {
             newErrors.password = '*Password must be at least 8 characters long';
         }
-
-        // if (!mobileNumber) {
-        //     newErrors.mobileNumber = 'Mobile number is required';
-        // } else if (!/^[0-9]{10}$/.test(mobileNumber)) {
-        //     newErrors.mobileNumber = 'Mobile number must be exactly 10 digits';
-        // }
 
         setErrors(newErrors);
 
