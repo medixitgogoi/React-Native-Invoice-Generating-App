@@ -92,6 +92,8 @@ const BillDetails = () => {
                     type: 'success',
                     text1: 'Product added successfully',
                     text2: `${selectedType} added`,
+                    topOffset: 50,
+                    onPress: () => Toast.hide(),
                 });
                 dispatch(addItemToBill({
                     unit: selectedUnit,
@@ -178,6 +180,8 @@ const BillDetails = () => {
         Toast.show({
             type: 'error',
             text1: 'Product removed successfully',
+            topOffset: 50,
+            onPress: () => Toast.hide(),
         });
 
         dispatch(removeItemFromBill(item))

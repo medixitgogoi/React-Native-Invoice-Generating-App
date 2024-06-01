@@ -72,6 +72,8 @@ const CustomerDetails = () => {
                     type: 'success',
                     text1: 'User added successfully',
                     text2: `${partyName} added`,
+                    topOffset: 50,
+                    onPress: () => Toast.hide(),
                 });
             }
         }
@@ -97,6 +99,8 @@ const CustomerDetails = () => {
         Toast.show({
             type: 'error',
             text1: 'User removed successfully',
+            topOffset: 50,
+            onPress: () => Toast.hide(),
         });
         dispatch(logoutUser());
     }
@@ -113,13 +117,13 @@ const CustomerDetails = () => {
 
         if (!panNo) {
             newErrors.panNo = '*PAN number is required';
-        } else if (!/^[0-9]{10}$/.test(panNo)) {
-            newErrors.panNo = '*PAN number must be exactly 10 digits';
+        } else if (!/^[a-zA-Z0-9]{10}$/.test(panNo)) {
+            newErrors.panNo = '*PAN number must be exactly 10 alphanumeric characters';
         }
 
         if (!gstin) {
             newErrors.gstin = '*GSTIN number is required';
-        } else if (!/^[0-9]{15}$/.test(gstin)) {
+        } else if (!/^[a-zA-Z0-9]{15}$/.test(gstin)) {
             newErrors.gstin = '*GSTIN number must be exactly 15 digits';
         }
 

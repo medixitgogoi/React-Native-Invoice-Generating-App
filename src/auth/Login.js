@@ -27,7 +27,9 @@ const Login = () => {
         //     Toast.show({
         //         type: 'success',
         //         text1: 'Logged in successfully',
-        //         position: 'bottom'
+        //         position: 'top',
+        //         topOffset: 50,
+        //         onPress: () => Toast.hide(),
         //     });
         //     setEmail('');
         //     setPassword('');
