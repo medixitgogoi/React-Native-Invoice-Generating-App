@@ -6,9 +6,8 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon4 from 'react-native-vector-icons/dist/Feather';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import Icon6 from 'react-native-vector-icons/dist/AntDesign';
 import { useNavigation } from '@react-navigation/native';
-import { lightBlack, lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
+import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill, removeItemFromBill } from '../redux/BillDetailsSlice';
@@ -416,10 +415,10 @@ const BillDetails = () => {
                         </View>
 
                         {/* Unit and thickness */}
-                        <View style={{ flexDirection: 'row', gap: 5, flexWrap: 'wrap' }}>
+                        <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
 
                             {/* Unit */}
-                            <View style={{ marginBottom: 8, flex: 1 }}>
+                            <View style={{ marginBottom: 6, flex: 1 }}>
                                 <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
                                     <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginBottom: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Unit:</Text>
                                     <SelectDropdown
@@ -452,7 +451,7 @@ const BillDetails = () => {
                             </View>
 
                             {/* Thickness */}
-                            <View style={{ marginBottom: 8, flex: 1 }}>
+                            <View style={{ marginBottom: 6, flex: 1 }}>
                                 <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 10, elevation: 1 }}>
                                     <Text style={{
                                         color: '#151E26', fontSize: responsiveFontSize(2.2), fontSize: responsiveFontSize(2.3), fontWeight: '500', marginBottom: 3
@@ -489,7 +488,7 @@ const BillDetails = () => {
                         </View>
 
                         {/* Type and color */}
-                        <View style={{ flexDirection: 'row', gap: 5, flexWrap: 'wrap', marginBottom: 8 }}>
+                        <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: selectedType === "Ridges" ? 6 : 0 }}>
 
                             {/* Type */}
                             <View style={{ flex: 1 }}>
@@ -571,8 +570,8 @@ const BillDetails = () => {
                                             data={widths}
                                             onSelect={(selectedItem, index) => {
                                                 setSelectedWidth(selectedItem.title)
-                                                console.log(selectedWidth);
-                                                console.log(width);
+                                                // console.log(selectedWidth);
+                                                // console.log(width);
                                             }}
                                             renderButton={(selectedItem, isOpened) => {
                                                 return (
@@ -601,7 +600,7 @@ const BillDetails = () => {
                         )}
 
                         {/* Length */}
-                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 8, elevation: 1 }}>
+                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the length:</Text>
                             <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isLengthFocused ? zomatoRed : "", borderWidth: isLengthFocused ? 1 : 0, marginVertical: 2 }}>
                                 <TextInput
@@ -617,7 +616,7 @@ const BillDetails = () => {
                         </View>
 
                         {/* No of pieces */}
-                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 8, elevation: 1 }}>
+                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the No. of pieces:</Text>
                             <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, marginVertical: 2 }}>
                                 <TextInput
@@ -633,7 +632,7 @@ const BillDetails = () => {
                         </View>
 
                         {/* Rate */}
-                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 8, elevation: 1 }}>
+                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the rate:</Text>
                             <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRateFocused ? zomatoRed : "", borderWidth: isRateFocused ? 1 : 0, marginVertical: 2 }}>
                                 <TextInput
@@ -652,18 +651,6 @@ const BillDetails = () => {
                         {error && (
                             <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
                         )}
-
-                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: 'yellow', borderColor: zomatoRed, borderWidth: 0.4, marginTop: 10, marginBottom: 10, alignSelf: 'flex-end', }}>
-                                <View style={{ backgroundColor: zomatoRed, width: 20, flexDirection: 'row', justifyContent: 'center', height: '100%', alignItems: 'center' }}>
-                                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.5), fontWeight: '900' }}>!</Text>
-                                </View>
-                                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.5), paddingVertical: 5, paddingHorizontal: 5, }}>
-                                    Please fill in all the details before the invoice is generated.
-                                </Text>
-                                <View style={{ position: 'absolute', bottom: 12, left: -1 }}>
-                                    <Icon6 name="caretup" style={{ width: 20, height: 20, color: zomatoRed }} />
-                                </View>
-                            </View> */}
 
                         {/* Buttons */}
                         <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
