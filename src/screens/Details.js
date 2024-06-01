@@ -26,6 +26,7 @@ const CustomerDetails = () => {
     const [customerModal, setCustomerModal] = useState(false);
 
     const [error, setError] = useState(false);
+    const [errors, setErrors] = useState({});
 
     const [partyName, setPartyName] = useState('');
     const [isPartyNameFocused, setIsPartyNameFocused] = useState(false);
@@ -46,28 +47,33 @@ const CustomerDetails = () => {
 
     const saveHandler = () => {
 
-        if (partyName === '' || siteName === '' || panNo === '' || contact === '' || gstin === '') {
+        if (partyName === '' || siteName === '') {
             setCustomerModal(true);
             setError(true);
         } else {
-            dispatch(logoutUser());
-            dispatch(addUser({
-                name: partyName,
-                site: siteName,
-                pan: panNo,
-                contact: contact,
-                gstin: gstin,
-            }));
-
-            setCustomerModal(false);
             setError(false);
 
-            Toast.show({
-                type: 'success',
-                text1: 'User added successfully',
-                text2: `${partyName} added`,
-            });
+            if (validate()) {
 
+                dispatch(logoutUser());
+
+                dispatch(addUser({
+                    name: partyName,
+                    site: siteName,
+                    pan: panNo,
+                    contact: contact,
+                    gstin: gstin,
+                }));
+
+                setCustomerModal(false);
+                setError(false);
+
+                Toast.show({
+                    type: 'success',
+                    text1: 'User added successfully',
+                    text2: `${partyName} added`,
+                });
+            }
         }
     }
 
@@ -94,6 +100,33 @@ const CustomerDetails = () => {
         });
         dispatch(logoutUser());
     }
+
+    const validate = () => {
+
+        const newErrors = {};
+
+        if (!contact) {
+            newErrors.contact = '*Mobile number is required';
+        } else if (!/^[0-9]{10}$/.test(contact)) {
+            newErrors.contact = '*Mobile number must be exactly 10 digits';
+        }
+
+        if (!panNo) {
+            newErrors.panNo = '*PAN number is required';
+        } else if (!/^[0-9]{10}$/.test(panNo)) {
+            newErrors.panNo = '*PAN number must be exactly 10 digits';
+        }
+
+        if (!gstin) {
+            newErrors.gstin = '*GSTIN number is required';
+        } else if (!/^[0-9]{15}$/.test(gstin)) {
+            newErrors.gstin = '*GSTIN number must be exactly 15 digits';
+        }
+
+        setErrors(newErrors);
+
+        return Object.keys(newErrors).length === 0;
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -134,7 +167,7 @@ const CustomerDetails = () => {
                             <Text style={{ color: "#000", textAlign: "center", fontWeight: "600", fontSize: responsiveFontSize(2.8), }}>You have not added any customers yet!</Text>
                             <Text style={{ color: '#a3a3a3', textAlign: "center", fontSize: responsiveFontSize(1.9), fontWeight: "400", }}>Add customers and generate the invoice according to your business logic </Text>
                             <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 30 }} onPress={() => setCustomerModal(true)}>
-                                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.2), textTransform: 'uppercase',}}>Add customer</Text>
+                                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.2), textTransform: 'uppercase', }}>Add customer</Text>
                             </TouchableOpacity>
                         </View>
                     </View>
@@ -322,12 +355,13 @@ const CustomerDetails = () => {
                                         />
                                     </View>
                                 </View>
+                                {errors.panNo && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6) }}>{errors.panNo}</Text>}
 
                                 {/* Contact */}
                                 <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 15, paddingHorizontal: 15, paddingVertical: 10, gap: 4, elevation: 1 }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
                                         <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter CONTACT no.</Text>
-                                        <Text style={{ color: '#24882a', fontSize: responsiveFontSize(1.9), fontStyle: 'italic', }}>(Preferably whatsapp)</Text>
+                                        <Text style={{ color: '#24882a', fontSize: responsiveFontSize(1.8), fontStyle: 'italic', }}>(Preferably whatsapp)</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row', alignSelf: "center", width: "100%", backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, overflow: 'hidden' }}>
                                         <View style={{ width: '15%', backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderRightWidth: !isContactFocused ? 1 : 0.3, borderWidth: 1, borderTopLeftRadius: 8, borderBottomLeftRadius: 8 }}>
@@ -346,6 +380,7 @@ const CustomerDetails = () => {
                                         </View>
                                     </View>
                                 </View>
+                                {errors.contact && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6) }}>{errors.contact}</Text>}
 
                                 {/* GSTIN */}
                                 <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 15, paddingHorizontal: 15, paddingVertical: 10, gap: 4, elevation: 1 }}>
@@ -361,6 +396,7 @@ const CustomerDetails = () => {
                                         />
                                     </View>
                                 </View>
+                                {errors.gstin && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), }}>{errors.gstin}</Text>}
 
                                 {error && (
                                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right' }}>* Please fill all the details. All the fields are necessary.</Text>

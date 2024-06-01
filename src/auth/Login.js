@@ -59,7 +59,6 @@ const Login = () => {
         return Object.keys(newErrors).length === 0;
     };
 
-
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
             <StatusBar
