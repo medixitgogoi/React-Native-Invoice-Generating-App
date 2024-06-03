@@ -25,8 +25,8 @@ const SplashScreen = () => {
             <LinearGradient
                 colors={[
                     zomatoRed,
-                    '#ca202d',
-                    '#e03945',
+                    // '#ca202d',
+                    // '#e03945',
                 ]}
                 style={{ height: '100%', alignItems: 'center', justifyContent: "center", flexDirection: "column" }}
             >

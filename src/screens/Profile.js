@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, Image, FlatList, ViewBase } from 'react-native';
-import { lightBlack, lightZomatoRed, offWhite, zomatoRed } from '../utils/colors';
+import { StyleSheet, Text, View, TouchableOpacity, SafeAreaView, } from 'react-native';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Feather';
 import Icon3 from 'react-native-vector-icons/dist/Octicons';
@@ -7,14 +7,13 @@ import Icon4 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/Entypo';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { createEntityAdapter } from '@reduxjs/toolkit';
 
 const Profile = () => {
 
     const navigation = useNavigation();
 
     return (
-        <SafeAreaView>
+        <SafeAreaView style={{flex: 1}}>
 
             {/* header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
