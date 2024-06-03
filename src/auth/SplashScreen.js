@@ -8,25 +8,25 @@ const SplashScreen = () => {
 
     const navigation = useNavigation();
 
-    useEffect(() => {
-        setTimeout(() => {
-            navigation.navigate("Login")
-        }, 1200);
-    }, []);
+    // useEffect(() => {
+    //     setTimeout(() => {
+    //         navigation.navigate("Login")
+    //     }, 1200);
+    // }, []);
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: zomatoRed }}>
             <StatusBar
                 animated={true}
-                backgroundColor={zomatoRed}
+                backgroundColor={'#c3000f'}
                 barStyle="light-content"
             />
 
             <LinearGradient
                 colors={[
-                    zomatoRed,
-                    // '#ca202d',
-                    // '#e03945',
+                    '#c3000f',
+                    '#5a1818',
+                    '#a4000d',
                 ]}
                 style={{ height: '100%', alignItems: 'center', justifyContent: "center", flexDirection: "column" }}
             >
