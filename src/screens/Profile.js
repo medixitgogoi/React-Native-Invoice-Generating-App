@@ -13,7 +13,7 @@ const Profile = () => {
     const navigation = useNavigation();
 
     return (
-        <SafeAreaView style={{flex: 1}}>
+        <SafeAreaView style={{ flex: 1 }}>
 
             {/* header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
@@ -95,7 +95,7 @@ const Profile = () => {
             </View>
 
             <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-end', height: '37%' }}>
-                <Text style={{ color: '#678e8c', fontWeight: '400', fontSize: responsiveFontSize(1.6) }}>Colortuff @All rights reserved 2024</Text>
+                <Text style={{ color: '#678e8c', fontWeight: '400', fontSize: responsiveFontSize(1.6) }}>© 2024 ColorTuff. All rights reserved.</Text>
             </View>
 
         </SafeAreaView>

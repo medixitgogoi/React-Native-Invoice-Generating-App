@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, Image } from 'react-native';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
+import { zomatoRed } from '../utils/colors';
 import { useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -18,15 +18,16 @@ const SplashScreen = () => {
         <SafeAreaView style={{ height: '100%', backgroundColor: zomatoRed }}>
             <StatusBar
                 animated={true}
-                backgroundColor={'#c3000f'}
+                backgroundColor={'#3b090d'}
                 barStyle="light-content"
             />
 
             <LinearGradient
                 colors={[
-                    '#c3000f',
-                    '#5a1818',
-                    '#a4000d',
+                    '#3b090d',
+                    '#5e0f15',
+                    '#7f141c',
+                    '#a01924',
                 ]}
                 style={{ height: '100%', alignItems: 'center', justifyContent: "center", flexDirection: "column" }}
             >
