@@ -13,6 +13,7 @@ import DispatchOrder from '../screens/DispatchOrder';
 import SalesmanReport from '../screens/SalesmanReport';
 import PartyReport from '../screens/PartyReport';
 import Sales from '../screens/Sales';
+import Practice from '../screens/Practice';
 
 const StackNavigation = () => {
 
@@ -20,7 +21,7 @@ const StackNavigation = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SplashScreen">
+            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Details" component={Details} />
@@ -33,6 +34,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="SalesmanReport" component={SalesmanReport} />
                 <Stack.Screen name="PartyReport" component={PartyReport} />
                 <Stack.Screen name="Sales" component={Sales} />
+                <Stack.Screen name="Practice" component={Practice} />
             </Stack.Navigator>
         </NavigationContainer>
     )

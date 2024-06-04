@@ -63,13 +63,13 @@ const BillDetails = () => {
 
     const [length, setLength] = useState('');
     const [isLengthFocused, setIsLengthFocused] = useState(false);
-    const [moreLength, setMoreLength] = useState('');
-    const [isMoreLengthFocused, setIsMoreLengthFocused] = useState(false);
+    // const [moreLength, setMoreLength] = useState('');
+    // const [isMoreLengthFocused, setIsMoreLengthFocused] = useState(false);
 
     const [pieces, setPieces] = useState('');
     const [isPiecesFocused, setIsPiecesFocused] = useState(false);
-    const [morePieces, setMorePieces] = useState('');
-    const [isMorePiecesFocused, setIsMorePiecesFocused] = useState(false);
+    // const [morePieces, setMorePieces] = useState('');
+    // const [isMorePiecesFocused, setIsMorePiecesFocused] = useState(false);
 
     const [rate, setRate] = useState('');
     const [isRateFocused, setIsRateFocused] = useState(false);
@@ -112,6 +112,7 @@ const BillDetails = () => {
                     pieces: pieces,
                     rate: rate,
                 }));
+
                 setBillModal(false);
                 setError(false);
                 setWidth("");
@@ -123,14 +124,9 @@ const BillDetails = () => {
                 setSelectedUnit("");
                 setSelectedThickness("");
                 setSelectedWidth("");
+
             }
         }
-    }
-
-    const addProductHandler = () => {
-        setMoreProductModal(false);
-        setMoreLength('');
-        setMorePieces('');
     }
 
     // useEffect(() => {
@@ -244,6 +240,7 @@ const BillDetails = () => {
                         {productDetails.map((item, index) => {
 
                             const quantity = item?.length * item?.pieces;
+                            const unit = item?.unit;
 
                             return (
                                 <View style={{ backgroundColor: '#fff', borderRadius: 8, width: '100%', paddingHorizontal: 11, flexDirection: 'column', gap: 8, paddingVertical: 12, elevation: 1, marginBottom: 8 }} key={index}>
@@ -262,18 +259,18 @@ const BillDetails = () => {
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Color:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.color}</Text>
                                         </View>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.length} {item?.unit}</Text>
-                                        </View> */}
+                                        </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Width:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.width}</Text>
                                         </View>
-                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>No. of pieces:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.pieces}</Text>
-                                        </View> */}
+                                        </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Thickness:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.thickness}</Text>
@@ -281,47 +278,10 @@ const BillDetails = () => {
                                     </View>
 
                                     {/* Second section */}
-                                    <View style={{ flexDirection: 'column', gap: 6, backgroundColor: modalBackColor, paddingVertical: 9, paddingHorizontal: 9, borderRadius: 8, elevation: 1 }}>
-
-                                        {/* Length and Pieces */}
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: '#fff', padding: 10, elevation: 1, borderRadius: 8 }}>
-
-                                            {/* Length */}
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
-                                                <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
-                                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), fontWeight: '500', backgroundColor: zomatoRed, paddingVertical: 3, paddingHorizontal: 7, borderRadius: 8 }}>{item?.length} {item?.unit}</Text>
-                                            </View>
-
-                                            {/* Pieces */}
-                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'flex-end' }}>
-                                                <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Pieces:</Text>
-                                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), fontWeight: '500', backgroundColor: zomatoRed, paddingVertical: 3, paddingHorizontal: 6, borderRadius: 8 }}>{item?.pieces}</Text>
-                                            </View>
-
-                                            {/* Remove button */}
-                                            <View style={{ borderLeftColor: '#ccc6cd', borderLeftWidth: 0.8, paddingLeft: 10 }}>
-                                                <TouchableOpacity style={{ alignSelf: 'flex-end', backgroundColor: zomatoRed, padding: 3, borderRadius: 6, }}>
-                                                    <Icon2 name="close" size={18} color='#fff' />
-                                                </TouchableOpacity>
-                                            </View>
-
-                                        </View>
-
-                                        {/* Add more product button */}
-                                        <TouchableOpacity style={{ backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => setMoreProductModal(true)}>
-                                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                                                Add more products
-                                            </Text>
-                                            <Icon4 name="plus-square" size={18} color={zomatoRed} />
-                                        </TouchableOpacity>
-
-                                    </View>
-
-                                    {/* Second section */}
-                                    {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
                                         <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Quantity (in R.ft.):</Text>
                                         <Text style={{ color: '#000', fontWeight: '500', fontSize: responsiveFontSize(2.2), }}>{quantity}</Text>
-                                    </View> */}
+                                    </View>
 
                                     {/* Third section */}
                                     <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1 }}>
@@ -675,6 +635,22 @@ const BillDetails = () => {
                             </View>
                         )}
 
+                        {/* Rate */}
+                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
+                            <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the rate:</Text>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRateFocused ? zomatoRed : "", borderWidth: isRateFocused ? 1 : 0, marginVertical: 2 }}>
+                                <TextInput
+                                    style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                    onChangeText={setRate}
+                                    value={rate}
+                                    placeholderTextColor={zomatoRed}
+                                    onFocus={() => setIsRateFocused(true)}
+                                    onBlur={() => setIsRateFocused(false)}
+                                    keyboardType="numeric"
+                                />
+                            </View>
+                        </View>
+
                         {/* Length */}
                         <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the length:</Text>
@@ -702,22 +678,6 @@ const BillDetails = () => {
                                     placeholderTextColor={zomatoRed}
                                     onFocus={() => setIsPiecesFocused(true)}
                                     onBlur={() => setIsPiecesFocused(false)}
-                                    keyboardType="numeric"
-                                />
-                            </View>
-                        </View>
-
-                        {/* Rate */}
-                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
-                            <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the rate:</Text>
-                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRateFocused ? zomatoRed : "", borderWidth: isRateFocused ? 1 : 0, marginVertical: 2 }}>
-                                <TextInput
-                                    style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
-                                    onChangeText={setRate}
-                                    value={rate}
-                                    placeholderTextColor={zomatoRed}
-                                    onFocus={() => setIsRateFocused(true)}
-                                    onBlur={() => setIsRateFocused(false)}
                                     keyboardType="numeric"
                                 />
                             </View>
@@ -780,14 +740,14 @@ const BillDetails = () => {
                         {/* Length */}
                         <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the length:</Text>
-                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isMoreLengthFocused ? zomatoRed : "", borderWidth: isMoreLengthFocused ? 1 : 0, marginVertical: 2 }}>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2 }}>
                                 <TextInput
                                     style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
-                                    onChangeText={setMoreLength}
-                                    value={moreLength}
+                                    onChangeText={setLength}
+                                    value={length}
                                     placeholderTextColor={zomatoRed}
-                                    onFocus={() => setIsMoreLengthFocused(true)}
-                                    onBlur={() => setIsMoreLengthFocused(false)}
+                                    onFocus={() => setIsLengthFocused(true)}
+                                    onBlur={() => setIsLengthFocused(false)}
                                     keyboardType="numeric"
                                 />
                             </View>
@@ -796,14 +756,14 @@ const BillDetails = () => {
                         {/* No of pieces */}
                         <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the No. of pieces:</Text>
-                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isMorePiecesFocused ? zomatoRed : "", borderWidth: isMorePiecesFocused ? 1 : 0, marginVertical: 2 }}>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2 }}>
                                 <TextInput
                                     style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
-                                    onChangeText={setMorePieces}
-                                    value={morePieces}
+                                    onChangeText={setPieces}
+                                    value={pieces}
                                     placeholderTextColor={zomatoRed}
-                                    onFocus={() => setIsMorePiecesFocused(true)}
-                                    onBlur={() => setIsMorePiecesFocused(false)}
+                                    onFocus={() => setIsPiecesFocused(true)}
+                                    onBlur={() => setIsPiecesFocused(false)}
                                     keyboardType="numeric"
                                 />
                             </View>
@@ -825,7 +785,7 @@ const BillDetails = () => {
                             </TouchableOpacity>
 
                             {/* Add */}
-                            <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, }} onPress={addProductHandler}>
+                            <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, }}>
                                 <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>
                                     Add
                                 </Text>
