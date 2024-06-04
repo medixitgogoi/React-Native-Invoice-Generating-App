@@ -12,7 +12,6 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill, removeItemFromBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
-import { enableFreeze } from 'react-native-screens';
 
 const thickness = [
     { title: '0.30 mm', },
