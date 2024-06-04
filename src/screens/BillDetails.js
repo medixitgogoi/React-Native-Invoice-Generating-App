@@ -64,9 +64,13 @@ const BillDetails = () => {
 
     const [length, setLength] = useState('');
     const [isLengthFocused, setIsLengthFocused] = useState(false);
+    const [moreLength, setMoreLength] = useState('');
+    const [isMoreLengthFocused, setIsMoreLengthFocused] = useState(false);
 
     const [pieces, setPieces] = useState('');
     const [isPiecesFocused, setIsPiecesFocused] = useState(false);
+    const [morePieces, setMorePieces] = useState('');
+    const [isMorePiecesFocused, setIsMorePiecesFocused] = useState(false);
 
     const [rate, setRate] = useState('');
     const [isRateFocused, setIsRateFocused] = useState(false);
@@ -126,6 +130,8 @@ const BillDetails = () => {
 
     const addProductHandler = () => {
         setMoreProductModal(false);
+        setMoreLength('');
+        setMorePieces('');
     }
 
     // useEffect(() => {
@@ -305,7 +311,7 @@ const BillDetails = () => {
                                         {/* Add more product button */}
                                         <TouchableOpacity style={{ backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 35, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => setMoreProductModal(true)}>
                                             <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                                                Add product
+                                                Add more products
                                             </Text>
                                             <Icon4 name="plus-square" size={18} color={zomatoRed} />
                                         </TouchableOpacity>
@@ -445,7 +451,9 @@ const BillDetails = () => {
                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                         Add product
                     </Text>
-                    <Icon4 name="plus-square" size={18} color={zomatoRed} />
+                    <View style={{ backgroundColor: zomatoRed, height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                        <Icon2 name="add" size={16} color='#fff' />
+                    </View>
                 </TouchableOpacity>
 
                 {/* View bill */}
@@ -773,14 +781,14 @@ const BillDetails = () => {
                         {/* Length */}
                         <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the length:</Text>
-                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isLengthFocused ? zomatoRed : "", borderWidth: isLengthFocused ? 1 : 0, marginVertical: 2 }}>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isMoreLengthFocused ? zomatoRed : "", borderWidth: isMoreLengthFocused ? 1 : 0, marginVertical: 2 }}>
                                 <TextInput
                                     style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
-                                    onChangeText={setLength}
-                                    value={length}
+                                    onChangeText={setMoreLength}
+                                    value={moreLength}
                                     placeholderTextColor={zomatoRed}
-                                    onFocus={() => setIsLengthFocused(true)}
-                                    onBlur={() => setIsLengthFocused(false)}
+                                    onFocus={() => setIsMoreLengthFocused(true)}
+                                    onBlur={() => setIsMoreLengthFocused(false)}
                                     keyboardType="numeric"
                                 />
                             </View>
@@ -789,14 +797,14 @@ const BillDetails = () => {
                         {/* No of pieces */}
                         <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the No. of pieces:</Text>
-                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, marginVertical: 2 }}>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isMorePiecesFocused ? zomatoRed : "", borderWidth: isMorePiecesFocused ? 1 : 0, marginVertical: 2 }}>
                                 <TextInput
                                     style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
-                                    onChangeText={setPieces}
-                                    value={pieces}
+                                    onChangeText={setMorePieces}
+                                    value={morePieces}
                                     placeholderTextColor={zomatoRed}
-                                    onFocus={() => setIsPiecesFocused(true)}
-                                    onBlur={() => setIsPiecesFocused(false)}
+                                    onFocus={() => setIsMorePiecesFocused(true)}
+                                    onBlur={() => setIsMorePiecesFocused(false)}
                                     keyboardType="numeric"
                                 />
                             </View>
