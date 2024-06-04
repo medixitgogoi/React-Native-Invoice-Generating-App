@@ -8,11 +8,11 @@ const SplashScreen = () => {
 
     const navigation = useNavigation();
 
-    // useEffect(() => {
-    //     setTimeout(() => {
-    //         navigation.navigate("Login")
-    //     }, 1200);
-    // }, []);
+    useEffect(() => {
+        setTimeout(() => {
+            navigation.navigate("Login")
+        }, 1200);
+    }, []);
 
     return (
         <SafeAreaView style={{ height: '100%', backgroundColor: zomatoRed }}>

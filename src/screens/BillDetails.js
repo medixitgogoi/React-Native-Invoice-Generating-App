@@ -49,6 +49,7 @@ const BillDetails = () => {
     const dispatch = useDispatch();
 
     const productDetails = useSelector(state => state.bill);
+    // console.log(productDetails);
 
     const navigation = useNavigation();
 
@@ -95,6 +96,7 @@ const BillDetails = () => {
                     topOffset: 50,
                     onPress: () => Toast.hide(),
                 });
+                
                 dispatch(addItemToBill({
                     unit: selectedUnit,
                     type: selectedType,
@@ -120,9 +122,9 @@ const BillDetails = () => {
         }
     }
 
-    useEffect(() => {
-        setBillModal(true);
-    }, []);
+    // useEffect(() => {
+    //     setBillModal(true);
+    // }, []);
 
     function indianNumberFormat(number) {
 
@@ -249,18 +251,18 @@ const BillDetails = () => {
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Color:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.color}</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.length} {item?.unit}</Text>
-                                        </View>
+                                        </View> */}
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Width:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.width}</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
+                                        {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>No. of pieces:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.pieces}</Text>
-                                        </View>
+                                        </View> */}
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Thickness:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.thickness}</Text>
@@ -268,10 +270,22 @@ const BillDetails = () => {
                                     </View>
 
                                     {/* Second section */}
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
+                                    <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1 }}>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
+                                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.length} {item?.unit}</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
+                                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>No. of pieces:</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.pieces}</Text>
+                                        </View>
+                                    </View>
+
+                                    {/* Second section */}
+                                    {/* <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
                                         <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Quantity (in R.ft.):</Text>
                                         <Text style={{ color: '#000', fontWeight: '500', fontSize: responsiveFontSize(2.2), }}>{quantity}</Text>
-                                    </View>
+                                    </View> */}
 
                                     {/* Third section */}
                                     <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1 }}>

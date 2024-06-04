@@ -7,10 +7,13 @@ import Icon4 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/Entypo';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { useDispatch } from 'react-redux';
 
 const Profile = () => {
 
     const navigation = useNavigation();
+
+    const logoutHandler = () => { }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -61,7 +64,7 @@ const Profile = () => {
                     </TouchableOpacity>
 
                     {/* My Sales */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#7e3aaf', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#7e3aaf', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={() => navigation.navigate('Sales')} >
                         <View style={{ backgroundColor: '#eaddf4', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                             <Icon4 name="newspaper-sharp" size={18} style={{ width: 20, height: 20, color: '#7e3aaf' }} />
                         </View>
@@ -71,7 +74,7 @@ const Profile = () => {
                     </TouchableOpacity>
 
                     {/* Share App */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#e3e31d', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={() => navigation.navigate('Details')}>
+                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#e3e31d', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
                         <View style={{ backgroundColor: '#f9f9cd', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                             <Icon name="offline-share" size={18} style={{ width: 20, height: 20, color: '#c8c819' }} />
                         </View>
@@ -81,7 +84,7 @@ const Profile = () => {
                     </TouchableOpacity>
 
                     {/* Log out */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#47c724', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={() => navigation.navigate('Details')}>
+                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#47c724', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
                         <View style={{ backgroundColor: '#d3f5ca', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                             <Icon5 name="log-out" size={18} style={{ width: 20, height: 20, color: '#47c724' }} />
                         </View>

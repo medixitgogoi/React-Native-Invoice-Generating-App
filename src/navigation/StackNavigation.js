@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View } from 'react-native'
+import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import Login from '../auth/Login';
@@ -12,6 +12,7 @@ import PIMyInvoice from '../screens/PIMyInvoice';
 import DispatchOrder from '../screens/DispatchOrder';
 import SalesmanReport from '../screens/SalesmanReport';
 import PartyReport from '../screens/PartyReport';
+import Sales from '../screens/Sales';
 
 const StackNavigation = () => {
 
@@ -31,6 +32,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="DispatchOrder" component={DispatchOrder} />
                 <Stack.Screen name="SalesmanReport" component={SalesmanReport} />
                 <Stack.Screen name="PartyReport" component={PartyReport} />
+                <Stack.Screen name="Sales" component={Sales} />
             </Stack.Navigator>
         </NavigationContainer>
     )

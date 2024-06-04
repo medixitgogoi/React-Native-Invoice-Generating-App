@@ -353,6 +353,7 @@ const CustomerDetails = () => {
                                             style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                             onChangeText={setPanNo}
                                             value={panNo}
+                                            maxLength={10}
                                             placeholderTextColor="#abb0ba"
                                             onFocus={() => setIsPanNoFocused(true)}
                                             onBlur={() => setIsPanNoFocused(false)}
@@ -378,6 +379,7 @@ const CustomerDetails = () => {
                                                 value={contact}
                                                 placeholderTextColor="#abb0ba"
                                                 keyboardType="numeric"
+                                                maxLength={10}
                                                 onFocus={() => setIsContactFocused(true)}
                                                 onBlur={() => setIsContactFocused(false)}
                                             />
@@ -394,6 +396,7 @@ const CustomerDetails = () => {
                                             style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                             onChangeText={setGstin}
                                             value={gstin}
+                                            maxLength={10}
                                             placeholderTextColor="#abb0ba"
                                             onFocus={() => setIsGstinFocused(true)}
                                             onBlur={() => setIsGstinFocused(false)}
@@ -428,11 +431,9 @@ const CustomerDetails = () => {
                             </TouchableOpacity>
 
                         </View>
-
+                        
                     </View>
-
                 </View>
-
             </Modal>
 
             {/* Remove user button */}
