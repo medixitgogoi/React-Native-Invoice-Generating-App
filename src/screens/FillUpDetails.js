@@ -86,23 +86,16 @@ const FillUpDetails = () => {
 
     const [products, setProducts] = useState([]);
 
-    const generateBillHandler = () => {
+    const saveDataHandler = () => {
 
-        if (length === '' || pieces === '' || rate === '' || selectedUnit === '' || selectedThickness === '' || selectedColor === '' || selectedType === '') {
-            setBillModal(true);
+        if (rate === '' || selectedUnit === '' || selectedThickness === '' || selectedColor === '' || selectedType === '' || products?.length === 0) {
             setError(true);
         } else {
             if (selectedType === "Ridges" && selectedWidth === '') {
-                setBillModal(true);
                 setError(true);
             } else {
-                Toast.show({
-                    type: 'success',
-                    text1: 'Product added successfully',
-                    text2: `${selectedType} added`,
-                    topOffset: 50,
-                    onPress: () => Toast.hide(),
-                });
+
+                navigation.navigate('BillDetails');
 
                 dispatch(addItemToBill({
                     unit: selectedUnit,
@@ -110,22 +103,27 @@ const FillUpDetails = () => {
                     color: selectedColor,
                     thickness: selectedThickness,
                     width: selectedType === 'Ridges' ? selectedWidth : '3.5 mm',
-                    length: length,
-                    pieces: pieces,
+                    lengthAndPieces: products,
                     rate: rate,
                 }));
 
-                setBillModal(false);
                 setError(false);
                 setWidth("");
-                setLength("");
-                setPieces("");
                 setRate('');
                 setSelectedType("");
                 setSelectedColor("");
                 setSelectedUnit("");
                 setSelectedThickness("");
                 setSelectedWidth("");
+                setProducts([]);
+
+                Toast.show({
+                    type: 'success',
+                    text1: 'Product added successfully',
+                    text2: `${selectedType} added`,
+                    topOffset: 50,
+                    onPress: () => Toast.hide(),
+                });
 
             }
         }
@@ -146,10 +144,6 @@ const FillUpDetails = () => {
         const filteredData = products.filter(item => item.id !== id);
         setProducts(filteredData);
     }
-
-    // useEffect(() => {
-    //     setBillModal(true);
-    // }, []);
 
     // function indianNumberFormat(number) {
 
@@ -235,7 +229,7 @@ const FillUpDetails = () => {
             </View>
 
             {/* Content */}
-            <View style={{ paddingHorizontal: 14 }}>
+            <View style={{ paddingHorizontal: 10 }}>
 
                 {/* Headline */}
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 10, marginBottom: 15 }}>
@@ -467,9 +461,7 @@ const FillUpDetails = () => {
 
                             {/* Close button */}
                             <TouchableOpacity onPress={() => removeLengthPieces(item.id)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 30, backgroundColor: lightZomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
-                                {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: zomatoRed, width: 30 }}> */}
                                 <Icon2 name="close" size={18} style={{ color: zomatoRed }} />
-                                {/* </View> */}
                             </TouchableOpacity>
 
                         </View>
@@ -496,25 +488,13 @@ const FillUpDetails = () => {
                     )
                 }
 
-                {/* Buttons */}
-                <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, }}>
+            </View>
 
-                    {/* Cancel */}
-                    <TouchableOpacity activeOpacity={0.7} onPress={() => setBillModal(false)} style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                            Cancel
-                        </Text>
-                    </TouchableOpacity>
-
-                    {/* Generate bill */}
-                    <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4 }} onPress={() => generateBillHandler()}>
-                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>
-                            Generate Bill
-                        </Text>
-                    </TouchableOpacity>
-
-                </View>
-
+            {/* Save Button */}
+            <View style={{ position: 'absolute', bottom: 0, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10, paddingBottom: 7 }} >
+                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} onPress={saveDataHandler}>
+                    <Text style={{ color: '#fff', textAlign: 'center', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>Save Product Details</Text>
+                </TouchableOpacity>
             </View>
 
             {/* Add More Product Modal */}

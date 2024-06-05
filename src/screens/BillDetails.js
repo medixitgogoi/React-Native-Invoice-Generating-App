@@ -62,13 +62,9 @@ const BillDetails = () => {
 
     const [length, setLength] = useState('');
     const [isLengthFocused, setIsLengthFocused] = useState(false);
-    // const [moreLength, setMoreLength] = useState('');
-    // const [isMoreLengthFocused, setIsMoreLengthFocused] = useState(false);
 
     const [pieces, setPieces] = useState('');
     const [isPiecesFocused, setIsPiecesFocused] = useState(false);
-    // const [morePieces, setMorePieces] = useState('');
-    // const [isMorePiecesFocused, setIsMorePiecesFocused] = useState(false);
 
     const [rate, setRate] = useState('');
     const [isRateFocused, setIsRateFocused] = useState(false);
@@ -141,10 +137,6 @@ const BillDetails = () => {
         console.log(products)
     }
 
-    // useEffect(() => {
-    //     setBillModal(true);
-    // }, []);
-
     function indianNumberFormat(number) {
 
         // Split the number into an array of digits.
@@ -169,8 +161,14 @@ const BillDetails = () => {
         let amount = 0;
 
         productDetails.map(item => {
-            const quantity = item?.length * item?.pieces;
+            let quantity = 0;
+
+            item.lengthAndPieces.map(item => {
+                quantity += item.length * item.pieces;
+            })
+
             amount += quantity * item.rate;
+
         })
 
         return amount;
@@ -251,8 +249,15 @@ const BillDetails = () => {
 
                         {productDetails.map((item, index) => {
 
-                            const quantity = item?.length * item?.pieces;
-                            const unit = item?.unit;
+                            const calculateQuantity = () => {
+                                let quantity = 0;
+
+                                item.lengthAndPieces.map(item => {
+                                    quantity += item.length * item.pieces;
+                                })
+
+                                return quantity;
+                            }
 
                             return (
                                 <View style={{ backgroundColor: '#fff', borderRadius: 8, width: '100%', paddingHorizontal: 11, flexDirection: 'column', gap: 8, paddingVertical: 12, elevation: 1, marginBottom: 8 }} key={index}>
@@ -272,30 +277,38 @@ const BillDetails = () => {
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.color}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
-                                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.length} {item?.unit}</Text>
+                                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Thickness:</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.thickness}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Width:</Text>
                                             <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.width}</Text>
                                         </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
-                                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>No. of pieces:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.pieces}</Text>
-                                        </View>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
-                                            <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Thickness:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.thickness}</Text>
-                                        </View>
                                     </View>
 
-                                    {/* Second section */}
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
-                                        <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Quantity (in R.ft.):</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500', fontSize: responsiveFontSize(2.2), }}>{quantity}</Text>
+                                    {/* Second Section */}
+                                    <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
+                                        {item.lengthAndPieces.map(item => (
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%', }}>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, width: '50%', }}>
+                                                    <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
+                                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.length} {item?.unit}</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, width: '50%', justifyContent: 'flex-end' }}>
+                                                    <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Pieces:</Text>
+                                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.pieces}</Text>
+                                                </View>
+                                            </View>
+                                        ))}
                                     </View>
 
                                     {/* Third section */}
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
+                                        <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Quantity (in R.ft.):</Text>
+                                        <Text style={{ color: '#000', fontWeight: '500', fontSize: responsiveFontSize(2.2), }}>{calculateQuantity()}</Text>
+                                    </View>
+
+                                    {/* Fourth section */}
                                     <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1 }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Rate (In ₹):</Text>
@@ -303,7 +316,7 @@ const BillDetails = () => {
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Amount:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>₹{indianNumberFormat(quantity * item.rate)}.00</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>₹{indianNumberFormat(calculateQuantity() * item.rate)}.00</Text>
                                         </View>
                                     </View>
 
@@ -418,7 +431,7 @@ const BillDetails = () => {
             <View style={{ backgroundColor: productDetails.length !== 0 ? '#fff' : '#f1f3f6', width: '100%', flexDirection: 'row', paddingVertical: 10, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: productDetails.length !== 0 ? 0 : 5, elevation: productDetails.length !== 0 ? 2 : 0 }}>
 
                 {/* Add product */}
-                <TouchableOpacity style={{ width: productDetails.length !== 0 ? '46%' : '95%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => setBillModal(true)}>
+                <TouchableOpacity style={{ width: productDetails.length !== 0 ? '46%' : '95%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => navigation.navigate('FillUpDetails')}>
                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                         Add product
                     </Text>
