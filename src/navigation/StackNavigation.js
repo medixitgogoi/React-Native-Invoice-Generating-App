@@ -14,6 +14,7 @@ import SalesmanReport from '../screens/SalesmanReport';
 import PartyReport from '../screens/PartyReport';
 import Sales from '../screens/Sales';
 import Practice from '../screens/Practice';
+import FillUpDetails from '../screens/FillUpDetails';
 
 const StackNavigation = () => {
 
@@ -35,6 +36,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="PartyReport" component={PartyReport} />
                 <Stack.Screen name="Sales" component={Sales} />
                 <Stack.Screen name="Practice" component={Practice} />
+                <Stack.Screen name="FillUpDetails" component={FillUpDetails} />
             </Stack.Navigator>
         </NavigationContainer>
     )

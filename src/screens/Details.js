@@ -275,7 +275,7 @@ const CustomerDetails = () => {
                             </TouchableOpacity>
 
                             {/* Create Bill Button */}
-                            <TouchableOpacity style={{ marginVertical: 8, backgroundColor: zomatoRed, paddingHorizontal: 8, paddingVertical: 10, width: '49%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 8, gap: 5, borderColor: zomatoRed, borderWidth: 0.6 }} onPress={() => navigation.navigate("BillDetails")}>
+                            <TouchableOpacity style={{ marginVertical: 8, backgroundColor: zomatoRed, paddingHorizontal: 8, paddingVertical: 10, width: '49%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 8, gap: 5, borderColor: zomatoRed, borderWidth: 0.6 }} onPress={() => navigation.navigate("FillUpDetails")}>
                                 <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Create Bill</Text>
                                 <Icon2 name="newspaper" size={15} color={"#fff"} />
                             </TouchableOpacity>

@@ -131,7 +131,10 @@ const BillDetails = () => {
     }
 
     const addLengthPieces = () => {
+        setBillModal(false)
+        setMoreProductModal(true);
         products.push({
+            id: Date.now() + Math.random().toString(30).substring(3, 12),
             length: length,
             pieces: pieces,
         })
@@ -442,10 +445,10 @@ const BillDetails = () => {
                 animationType="slide"
                 swipeDirection={['down']}
                 backdropOpacity={0.5}
-                style={{ justifyContent: 'flex-end', margin: 0, }}
+                style={{ margin: 0, justifyContent: 'flex-end' }}
             >
 
-                <View style={{ width: "100%", height: '100%', justifyContent: 'flex-end' }}>
+                <View style={{ justifyContent: 'flex-end' }}>
 
                     {/* Close Button */}
                     <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setBillModal(false)}>
@@ -453,7 +456,7 @@ const BillDetails = () => {
                     </TouchableOpacity>
 
                     {/* <ScrollView> */}
-                    <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingHorizontal: 14, paddingVertical: 8 }}>
+                    <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingHorizontal: 14, paddingVertical: 8, height: '93.8%' }}>
 
                         {/* Headline */}
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 10, marginBottom: 15 }}>
@@ -702,26 +705,13 @@ const BillDetails = () => {
 
                         </View>
 
-                        <View style={{ flexDirection: 'column', gap: 5, backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10, marginTop: 6, elevation: 1, width: '100%', justifyContent: 'space-between' }}>
-                            {products?.map(item => (
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', backgroundColor: lightZomatoRed, width: '100%', paddingVertical: 8, borderRadius: 6, paddingHorizontal: 10 }}>
-                                    <View>
-                                        <Text style={{ color: '#000' }}>Length: {item.length}</Text>
-                                    </View>
-                                    <View>
-                                        <Text style={{ color: '#000' }}>Pieces: {item.pieces}</Text>
-                                    </View>
-                                </View>
-                            ))}
-                        </View>
-
                         {/* Error Handling */}
                         {error && (
                             <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
                         )}
 
                         {/* Buttons */}
-                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
+                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 0, left: 13, right: 10 }}>
 
                             {/* Cancel */}
                             <TouchableOpacity activeOpacity={0.7} onPress={() => setBillModal(false)} style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
@@ -741,6 +731,7 @@ const BillDetails = () => {
 
                     </View>
                     {/* </ScrollView> */}
+
                 </View>
             </Modal>
 
