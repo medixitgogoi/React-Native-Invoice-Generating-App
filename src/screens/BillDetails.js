@@ -186,12 +186,12 @@ const BillDetails = () => {
     const totalAmount = calculateTotalAmount();
 
     const viewBillHandler = () => {
-        if (bend === 0 || loading === 0 || transport === 0) {
-            setError2(true);
-        } else {
-            navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport, totalAmount: totalAmount })
-            setError2(false);
-        }
+        navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport, totalAmount: totalAmount })
+        // if (bend === 0 || loading === 0 || transport === 0) {
+        //     setError2(true);
+        // } else {
+        //     setError2(false);
+        // }
     }
 
     const removeProductHandler = (item) => {

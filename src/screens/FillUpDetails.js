@@ -7,11 +7,10 @@ import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
-import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill, removeItemFromBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
-import { replace } from 'formik';
 
 const thickness = [
     { title: '0.30 mm', },
@@ -482,17 +481,15 @@ const FillUpDetails = () => {
                 </View>
 
                 {/* Error Handling */}
-                {
-                    error && (
-                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
-                    )
-                }
+                {error && (
+                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
+                )}
 
             </View>
 
             {/* Save Button */}
-            <View style={{ position: 'absolute', bottom: 0, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10, paddingBottom: 7 }} >
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} onPress={saveDataHandler}>
+            <View style={{ position: 'absolute', bottom: 0, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10, paddingBottom: 8, }} >
+                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 50, borderRadius: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} onPress={saveDataHandler}>
                     <Text style={{ color: '#fff', textAlign: 'center', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>Save Product Details</Text>
                 </TouchableOpacity>
             </View>
