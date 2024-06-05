@@ -1,11 +1,11 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -47,43 +47,40 @@ const FillUpDetails = () => {
 
     const dispatch = useDispatch();
 
-    const productDetails = useSelector(state => state.bill);
-    // console.log(productDetails);
-
     const navigation = useNavigation();
 
-    const [billModal, setBillModal] = useState(false);
     const [moreProductModal, setMoreProductModal] = useState(false);
 
     const [error, setError] = useState(false);
     const [error2, setError2] = useState(false);
 
-    const [width, setWidth] = useState('');
-
     const [length, setLength] = useState('');
     const [isLengthFocused, setIsLengthFocused] = useState(false);
-    // const [moreLength, setMoreLength] = useState('');
-    // const [isMoreLengthFocused, setIsMoreLengthFocused] = useState(false);
 
     const [pieces, setPieces] = useState('');
     const [isPiecesFocused, setIsPiecesFocused] = useState(false);
-    // const [morePieces, setMorePieces] = useState('');
-    // const [isMorePiecesFocused, setIsMorePiecesFocused] = useState(false);
 
     const [rate, setRate] = useState('');
     const [isRateFocused, setIsRateFocused] = useState(false);
 
     const [selectedColor, setSelectedColor] = useState("");
     const [selectedType, setSelectedType] = useState("");
-    const [selectedUnit, setSelectedUnit] = useState("");
+    const [selectedUnit, setSelectedUnit] = useState(null);
     const [selectedThickness, setSelectedThickness] = useState("");
     const [selectedWidth, setSelectedWidth] = useState("");
 
-    const [bend, setBend] = useState(0);
-    const [loading, setLoading] = useState(0);
-    const [transport, setTransport] = useState(0);
-
     const [products, setProducts] = useState([]);
+
+    useFocusEffect(
+        useCallback(() => {
+            // Resetting state variables when the screen is focused
+            setSelectedColor('');
+            setSelectedType('');
+            setSelectedUnit('');
+            setSelectedThickness('');
+            setSelectedWidth('');
+        }, [])
+    )
 
     const saveDataHandler = () => {
 
@@ -96,6 +93,14 @@ const FillUpDetails = () => {
 
                 navigation.navigate('BillDetails');
 
+                Toast.show({
+                    type: 'success',
+                    text1: 'Product added successfully',
+                    text2: `${selectedType} added`,
+                    topOffset: 50,
+                    onPress: () => Toast.hide(),
+                });
+
                 dispatch(addItemToBill({
                     unit: selectedUnit,
                     type: selectedType,
@@ -107,22 +112,8 @@ const FillUpDetails = () => {
                 }));
 
                 setError(false);
-                setWidth("");
                 setRate('');
-                setSelectedType("");
-                setSelectedColor("");
-                setSelectedUnit("");
-                setSelectedThickness("");
-                setSelectedWidth("");
                 setProducts([]);
-
-                Toast.show({
-                    type: 'success',
-                    text1: 'Product added successfully',
-                    text2: `${selectedType} added`,
-                    topOffset: 50,
-                    onPress: () => Toast.hide(),
-                });
 
             }
         }
@@ -137,74 +128,13 @@ const FillUpDetails = () => {
         }]);
         setLength('');
         setPieces('');
+        setIsLengthFocused(false);
+        setIsPiecesFocused(false);
     }
 
     const removeLengthPieces = (id) => {
         const filteredData = products.filter(item => item.id !== id);
         setProducts(filteredData);
-    }
-
-    // function indianNumberFormat(number) {
-
-    //     // Split the number into an array of digits.
-    //     const digits = number.toString().split('');
-
-    //     // Reverse the array of digits.
-    //     digits.reverse();
-
-    //     // Add a comma after every three digits, starting from the right.
-    //     for (let i = 3; i < digits.length; i += 3) {
-    //         digits.splice(i, 0, ',');
-    //     }
-
-    //     // Join the array of digits back into a string.
-    //     const formattedNumber = digits.join('');
-
-    //     // Reverse the formatted number back to its original order.
-    //     return formattedNumber.split('').reverse().join('');
-    // }
-
-    const calculateTotalPrice = () => {
-        let amount = 0;
-
-        productDetails.map(item => {
-            const quantity = item?.length * item?.pieces;
-            amount += quantity * item.rate;
-        })
-
-        return amount;
-    }
-
-    const calculateTotalAmount = () => {
-        let amount = 0;
-
-        let price = calculateTotalPrice();
-        amount = price + parseInt(bend) + parseInt(loading) + parseInt(transport);
-
-        return amount;
-    }
-
-    const totalAmount = calculateTotalAmount();
-
-    const viewBillHandler = () => {
-        if (bend === 0 || loading === 0 || transport === 0) {
-            setError2(true);
-        } else {
-            navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport, totalAmount: totalAmount })
-            setError2(false);
-        }
-    }
-
-    const removeProductHandler = (item) => {
-
-        Toast.show({
-            type: 'error',
-            text1: 'Product removed successfully',
-            topOffset: 50,
-            onPress: () => Toast.hide(),
-        });
-
-        dispatch(removeItemFromBill(item))
     }
 
     return (
@@ -228,177 +158,68 @@ const FillUpDetails = () => {
             </View>
 
             {/* Content */}
-            <View style={{ paddingHorizontal: 10 }}>
+            <ScrollView>
+                <View style={{ paddingHorizontal: 10, paddingBottom: 62, paddingTop: 10 }}>
 
-                {/* Headline */}
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 10, marginBottom: 15 }}>
-                    <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Fill up the details below</Text>
-                </View>
-
-                {/* Unit and thickness */}
-                <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
-
-                    {/* Unit */}
-                    <View style={{ marginBottom: 6, flex: 1 }}>
-                        <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
-                            <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginBottom: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Unit:</Text>
-                            <SelectDropdown
-                                data={units}
-                                onSelect={(selectedItem, index) => {
-                                    setSelectedUnit(selectedItem.title)
-                                    // console.log(selectedItem, index);
-                                }}
-                                renderButton={(selectedItem, isOpened) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
-                                            <Text style={styles.dropdownButtonTxtStyle}>
-                                                {(selectedItem && selectedItem.title) || 'Select unit'}
-                                            </Text>
-                                            <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
-                                        </View>
-                                    );
-                                }}
-                                renderItem={(item, index, isSelected) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
-                                            <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
-                                        </View>
-                                    );
-                                }}
-                                showsVerticalScrollIndicator={false}
-                                dropdownStyle={styles.dropdownMenuStyle}
-                            />
-                        </View>
+                    {/* Headline */}
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginBottom: 10, marginBottom: 15 }}>
+                        <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Fill up the details below</Text>
                     </View>
 
-                    {/* Thickness */}
-                    <View style={{ marginBottom: 6, flex: 1 }}>
-                        <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 10, elevation: 1 }}>
-                            <Text style={{
-                                color: '#151E26', fontSize: responsiveFontSize(2.2), fontSize: responsiveFontSize(2.3), fontWeight: '500', marginBottom: 3
-                            }}>Thickness:</Text>
-                            <SelectDropdown
-                                data={thickness}
-                                onSelect={(selectedItem, index) => {
-                                    setSelectedThickness(selectedItem.title)
-                                    // console.log(selectedItem, index);
-                                }}
-                                renderButton={(selectedItem, isOpened) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
-                                            <Text style={styles.dropdownButtonTxtStyle}>
-                                                {(selectedItem && selectedItem.title) || 'Select thickness'}
-                                            </Text>
-                                            <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
-                                        </View>
-                                    );
-                                }}
-                                renderItem={(item, index, isSelected) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
-                                            <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
-                                        </View>
-                                    );
-                                }}
-                                showsVerticalScrollIndicator={false}
-                                dropdownStyle={styles.dropdownMenuStyle}
-                            />
-                        </View>
-                    </View>
+                    {/* Unit and thickness */}
+                    <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap' }}>
 
-                </View>
-
-                {/* Type and color */}
-                <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: selectedType === "Ridges" ? 6 : 0 }}>
-
-                    {/* Type */}
-                    <View style={{ flex: 1 }}>
-                        <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
-                            <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Type:</Text>
-                            <SelectDropdown
-                                data={types}
-                                onSelect={(selectedItem, index) => {
-                                    setSelectedType(selectedItem.title)
-                                    // console.log(selectedItem.type, index);
-                                }}
-                                renderButton={(selectedItem, isOpened) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
-                                            <Text style={styles.dropdownButtonTxtStyle}>
-                                                {(selectedItem && selectedItem.title) || 'Select type'}
-                                            </Text>
-                                            <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
-                                        </View>
-                                    );
-                                }}
-                                renderItem={(item, index, isSelected) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
-                                            <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
-                                        </View>
-                                    );
-                                }}
-                                showsVerticalScrollIndicator={false}
-                                dropdownStyle={styles.dropdownMenuStyle}
-                            />
-                        </View>
-                    </View>
-
-                    {/* Color */}
-                    <View style={{ flex: 1 }}>
-                        <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
-                            <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Color:</Text>
-                            <SelectDropdown
-                                data={colors}
-                                onSelect={(selectedItem, index) => {
-                                    setSelectedColor(selectedItem.title)
-                                    // console.log(selectedItem.type, index);
-                                }}
-                                renderButton={(selectedItem, isOpened) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
-                                            <Text style={styles.dropdownButtonTxtStyle}>
-                                                {(selectedItem && selectedItem.title) || 'Select color'}
-                                            </Text>
-                                            <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
-                                        </View>
-                                    );
-                                }}
-                                renderItem={(item, index, isSelected) => {
-                                    return (
-                                        <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
-                                            <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
-                                        </View>
-                                    );
-                                }}
-                                showsVerticalScrollIndicator={false}
-                                dropdownStyle={styles.dropdownMenuStyle}
-                            />
-                        </View>
-                    </View>
-
-                </View>
-
-                {/* Width */}
-                {selectedType === "Ridges" && (
-                    <View style={{ flexDirection: 'row', gap: 5, flexWrap: 'wrap' }}>
-
-                        {/* Width */}
-                        <View style={{ flex: 1 }}>
+                        {/* Unit */}
+                        <View style={{ marginBottom: 6, flex: 1 }}>
                             <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
-                                <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Width:</Text>
+                                <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginBottom: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Unit:</Text>
                                 <SelectDropdown
-                                    data={widths}
+                                    data={units}
                                     onSelect={(selectedItem, index) => {
-                                        setSelectedWidth(selectedItem.title)
-                                        // console.log(selectedWidth);
-                                        // console.log(width);
+                                        setSelectedUnit(selectedItem.title)
+                                        // console.log(selectedItem, index);
                                     }}
                                     renderButton={(selectedItem, isOpened) => {
                                         return (
                                             <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                 <Text style={styles.dropdownButtonTxtStyle}>
-                                                    {(selectedItem && selectedItem.title) || 'Select width'}
+                                                    {/* {(selectedItem && selectedItem.title) || 'Select unit'} */}
+                                                    {selectedUnit === '' ? 'Select Unit' : selectedUnit}
+                                                </Text>
+                                                <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
+                                            </View>
+                                        );
+                                    }}
+                                    renderItem={(item, index, isSelected) => {
+                                        return (
+                                            <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
+                                                <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
+                                            </View>
+                                        );
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                    dropdownStyle={styles.dropdownMenuStyle}
+                                />
+                            </View>
+                        </View>
+
+                        {/* Thickness */}
+                        <View style={{ marginBottom: 6, flex: 1 }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 10, elevation: 1 }}>
+                                <Text style={{
+                                    color: '#151E26', fontSize: responsiveFontSize(2.2), fontSize: responsiveFontSize(2.3), fontWeight: '500', marginBottom: 3
+                                }}>Thickness:</Text>
+                                <SelectDropdown
+                                    data={thickness}
+                                    onSelect={(selectedItem, index) => {
+                                        setSelectedThickness(selectedItem.title)
+                                        // console.log(selectedItem, index);
+                                    }}
+                                    renderButton={(selectedItem, isOpened) => {
+                                        return (
+                                            <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
+                                                <Text style={styles.dropdownButtonTxtStyle}>
+                                                    {selectedThickness === '' ? 'Select Thickness' : selectedThickness}
                                                 </Text>
                                                 <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
                                             </View>
@@ -418,80 +239,200 @@ const FillUpDetails = () => {
                         </View>
 
                     </View>
-                )}
 
-                {/* Rate */}
-                <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
-                    <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the rate:</Text>
-                    <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRateFocused ? zomatoRed : "", borderWidth: isRateFocused ? 1 : 0, marginVertical: 2 }}>
-                        <TextInput
-                            style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
-                            onChangeText={setRate}
-                            value={rate}
-                            placeholderTextColor={zomatoRed}
-                            onFocus={() => setIsRateFocused(true)}
-                            onBlur={() => setIsRateFocused(false)}
-                            keyboardType="numeric"
-                        />
+                    {/* Type and color */}
+                    <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: selectedType === "Ridges" ? 6 : 0 }}>
+
+                        {/* Type */}
+                        <View style={{ flex: 1 }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
+                                <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Type:</Text>
+                                <SelectDropdown
+                                    data={types}
+                                    onSelect={(selectedItem, index) => {
+                                        setSelectedType(selectedItem.title)
+                                        // console.log(selectedItem.type, index);
+                                    }}
+                                    renderButton={(selectedItem, isOpened) => {
+                                        return (
+                                            <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
+                                                <Text style={styles.dropdownButtonTxtStyle}>
+                                                    {selectedType === '' ? 'Select Type' : selectedType}
+                                                </Text>
+                                                <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
+                                            </View>
+                                        );
+                                    }}
+                                    renderItem={(item, index, isSelected) => {
+                                        return (
+                                            <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
+                                                <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
+                                            </View>
+                                        );
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                    dropdownStyle={styles.dropdownMenuStyle}
+                                />
+                            </View>
+                        </View>
+
+                        {/* Color */}
+                        <View style={{ flex: 1 }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
+                                <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Color:</Text>
+                                <SelectDropdown
+                                    data={colors}
+                                    onSelect={(selectedItem, index) => {
+                                        setSelectedColor(selectedItem.title)
+                                        // console.log(selectedItem.type, index);
+                                    }}
+                                    renderButton={(selectedItem, isOpened) => {
+                                        return (
+                                            <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
+                                                <Text style={styles.dropdownButtonTxtStyle}>
+                                                    {selectedColor === '' ? 'Select Color' : selectedColor}
+                                                </Text>
+                                                <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
+                                            </View>
+                                        );
+                                    }}
+                                    renderItem={(item, index, isSelected) => {
+                                        return (
+                                            <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
+                                                <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
+                                            </View>
+                                        );
+                                    }}
+                                    showsVerticalScrollIndicator={false}
+                                    dropdownStyle={styles.dropdownMenuStyle}
+                                />
+                            </View>
+                        </View>
+
                     </View>
-                </View>
 
-                {/* Length and pieces */}
-                <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 5, marginTop: 6, elevation: 1, }}>
+                    {/* Width */}
+                    {selectedType === "Ridges" && (
+                        <View style={{ flexDirection: 'row', gap: 5, flexWrap: 'wrap' }}>
 
-                    {products?.map(item => (
-                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 5 }} key={item.id}>
-
-                            {/* Length */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '40%' }}>
-                                <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
-                                <View style={{ width: "50%", height: 27, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.length}</Text>
+                            {/* Width */}
+                            <View style={{ flex: 1 }}>
+                                <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
+                                    <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Width:</Text>
+                                    <SelectDropdown
+                                        data={widths}
+                                        onSelect={(selectedItem, index) => {
+                                            setSelectedWidth(selectedItem.title)
+                                            // console.log(selectedWidth);
+                                            // console.log(width);
+                                        }}
+                                        renderButton={(selectedItem, isOpened) => {
+                                            return (
+                                                <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
+                                                    <Text style={styles.dropdownButtonTxtStyle}>
+                                                        {selectedWidth === '' ? 'Select Width' : selectedWidth}
+                                                    </Text>
+                                                    <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
+                                                </View>
+                                            );
+                                        }}
+                                        renderItem={(item, index, isSelected) => {
+                                            return (
+                                                <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
+                                                    <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
+                                                </View>
+                                            );
+                                        }}
+                                        showsVerticalScrollIndicator={false}
+                                        dropdownStyle={styles.dropdownMenuStyle}
+                                    />
                                 </View>
                             </View>
 
-                            {/* Pieces */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '40%', justifyContent: 'flex-end' }}>
-                                <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Pieces:</Text>
-                                <View style={{ width: "50%", height: 27, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                                    <Text style={{ color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.pieces}</Text>
+                        </View>
+                    )}
+
+                    {/* Rate */}
+                    <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
+                        <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the rate:</Text>
+                        <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRateFocused ? zomatoRed : "", borderWidth: isRateFocused ? 1 : 0, marginVertical: 2 }}>
+                            <TextInput
+                                style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                onChangeText={setRate}
+                                value={rate}
+                                placeholderTextColor={zomatoRed}
+                                onFocus={() => setIsRateFocused(true)}
+                                onBlur={() => setIsRateFocused(false)}
+                                keyboardType="numeric"
+                            />
+                        </View>
+                    </View>
+
+                    {/* Length and pieces */}
+                    <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 5, marginTop: 6, elevation: 1, }}>
+
+                        {products?.map(item => (
+                            <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 5 }} key={item.id}>
+
+                                {/* Length */}
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '40%' }}>
+                                    <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
+                                    <View style={{ width: "50%", height: 27, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={{ color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.length}</Text>
+                                    </View>
                                 </View>
+
+                                {/* Pieces */}
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '40%', justifyContent: 'flex-end' }}>
+                                    <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Pieces:</Text>
+                                    <View style={{ width: "50%", height: 27, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                        <Text style={{ color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.pieces}</Text>
+                                    </View>
+                                </View>
+
+                                {/* Close button */}
+                                <TouchableOpacity onPress={() => removeLengthPieces(item.id)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 30, backgroundColor: lightZomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
+                                    <Icon2 name="close" size={18} style={{ color: zomatoRed }} />
+                                </TouchableOpacity>
+
                             </View>
+                        ))}
 
-                            {/* Close button */}
-                            <TouchableOpacity onPress={() => removeLengthPieces(item.id)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 30, backgroundColor: lightZomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
-                                <Icon2 name="close" size={18} style={{ color: zomatoRed }} />
-                            </TouchableOpacity>
+                        {/* Add More Button */}
+                        <TouchableOpacity style={{ backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, height: 35, borderColor: zomatoRed, borderWidth: 1, marginVertical: 8 }} onPress={() => setMoreProductModal(true)}>
+                            {products.length === 0 ? (
+                                <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add length and pieces</Text>
+                            ) : (
+                                <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add more</Text>
+                            )}
+                            <View>
+                                <Icon2 name="add" size={16} color={zomatoRed} />
+                            </View>
+                        </TouchableOpacity>
 
-                        </View>
-                    ))}
+                    </View>
 
-                    {/* Add More Button */}
-                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, height: 35, borderColor: zomatoRed, borderWidth: 1, marginVertical: 8 }} onPress={() => setMoreProductModal(true)}>
-                        {products.length === 0 ? (
-                            <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add length and pieces</Text>
-                        ) : (
-                            <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add more</Text>
-                        )}
-                        <View>
-                            <Icon2 name="add" size={16} color={zomatoRed} />
-                        </View>
-                    </TouchableOpacity>
+                    {/* Error Handling */}
+                    {error && (
+                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
+                    )}
 
                 </View>
-
-                {/* Error Handling */}
-                {error && (
-                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
-                )}
-
-            </View>
+            </ScrollView>
 
             {/* Save Button */}
-            <View style={{ position: 'absolute', bottom: 0, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', paddingHorizontal: 10, paddingBottom: 8, }} >
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 50, borderRadius: 10, width: '100%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }} onPress={saveDataHandler}>
-                    <Text style={{ color: '#fff', textAlign: 'center', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>Save Product Details</Text>
+            <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 8, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 0, elevation: 2, paddingHorizontal: 10, }}>
+
+                {/* Add product */}
+                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 8, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={saveDataHandler}>
+                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.1), fontWeight: "600", textTransform: 'uppercase' }}>
+                        Save Product Details
+                    </Text>
+                    <View style={{ height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                        <Icon name="save" size={24} color={'#fff'} />
+                    </View>
                 </TouchableOpacity>
+
             </View>
 
             {/* Add More Product Modal */}
@@ -523,7 +464,7 @@ const FillUpDetails = () => {
                         {/* Length */}
                         <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the length:</Text>
-                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2 }}>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, borderColor: isLengthFocused ? zomatoRed : "", borderWidth: isLengthFocused ? 1.5 : 0, }}>
                                 <TextInput
                                     style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                     onChangeText={setLength}
@@ -539,7 +480,7 @@ const FillUpDetails = () => {
                         {/* No of pieces */}
                         <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                             <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the No. of pieces:</Text>
-                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2 }}>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1.5 : 0, }}>
                                 <TextInput
                                     style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                     onChangeText={setPieces}
@@ -551,11 +492,6 @@ const FillUpDetails = () => {
                                 />
                             </View>
                         </View>
-
-                        {/* Error Handling */}
-                        {error && (
-                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
-                        )}
 
                         {/* Buttons */}
                         <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>

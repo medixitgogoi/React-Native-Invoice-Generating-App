@@ -94,7 +94,7 @@ const PIMyInvoice = () => {
                         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                             <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
                         </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>PI my invoice</Text>
+                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>PI My Invoice</Text>
                     </View>
                     <TouchableOpacity style={{ marginRight: 8 }} onPress={() => navigation.navigate("Profile")}>
                         <Image source={require("../assets/login.png")} style={{ width: 30, height: 30 }} />
