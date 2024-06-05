@@ -7,10 +7,11 @@ import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import { useNavigation } from '@react-navigation/native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { responsiveFontSize, responsiveHeight } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill, removeItemFromBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
+import { replace } from 'formik';
 
 const thickness = [
     { title: '0.30 mm', },
@@ -131,14 +132,19 @@ const FillUpDetails = () => {
     }
 
     const addLengthPieces = () => {
-        setBillModal(false)
-        setMoreProductModal(true);
-        products.push({
-            id: Date.now() + Math.random().toString(30).substring(3, 12),
+        setMoreProductModal(false);
+        setProducts([...products, {
+            id: Date.now() + Math.random().toString(36).substring(2, 9),
             length: length,
             pieces: pieces,
-        })
-        console.log(products)
+        }]);
+        setLength('');
+        setPieces('');
+    }
+
+    const removeLengthPieces = (id) => {
+        const filteredData = products.filter(item => item.id !== id);
+        setProducts(filteredData);
     }
 
     // useEffect(() => {
@@ -228,6 +234,7 @@ const FillUpDetails = () => {
                 </View>
             </View>
 
+            {/* Content */}
             <View style={{ paddingHorizontal: 14 }}>
 
                 {/* Headline */}
@@ -436,51 +443,58 @@ const FillUpDetails = () => {
                     </View>
                 </View>
 
-                <View style={{ flexDirection: 'row', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 10, marginTop: 6, elevation: 1, width: '100%', justifyContent: 'space-between' }}>
+                {/* Length and pieces */}
+                <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 5, marginTop: 6, elevation: 1, }}>
 
-                    {/* Length */}
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '45%', }}>
-                        <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
-                        <View style={{ width: "50%", backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isLengthFocused ? zomatoRed : "", borderWidth: isLengthFocused ? 1 : 0, marginVertical: 2 }}>
-                            <TextInput
-                                style={{ paddingVertical: 1, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", textAlign: 'center' }}
-                                onChangeText={setLength}
-                                value={length}
-                                placeholderTextColor={zomatoRed}
-                                onFocus={() => setIsLengthFocused(true)}
-                                onBlur={() => setIsLengthFocused(false)}
-                                keyboardType="numeric"
-                            />
+                    {products?.map(item => (
+                        <View style={{ flexDirection: 'row', width: '100%', justifyContent: 'space-between', marginTop: 5 }} key={item.id}>
+
+                            {/* Length */}
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '40%' }}>
+                                <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
+                                <View style={{ width: "50%", height: 27, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.length}</Text>
+                                </View>
+                            </View>
+
+                            {/* Pieces */}
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '40%', justifyContent: 'flex-end' }}>
+                                <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Pieces:</Text>
+                                <View style={{ width: "50%", height: 27, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                                    <Text style={{ color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{item.pieces}</Text>
+                                </View>
+                            </View>
+
+                            {/* Close button */}
+                            <TouchableOpacity onPress={() => removeLengthPieces(item.id)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 30, backgroundColor: lightZomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
+                                {/* <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', backgroundColor: zomatoRed, width: 30 }}> */}
+                                <Icon2 name="close" size={18} style={{ color: zomatoRed }} />
+                                {/* </View> */}
+                            </TouchableOpacity>
+
                         </View>
-                    </View>
+                    ))}
 
-                    {/* Pieces */}
-                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 6, width: '45%', }}>
-                        <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Pieces:</Text>
-                        <View style={{ width: "50%", backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, marginVertical: 2 }}>
-                            <TextInput
-                                style={{ paddingVertical: 1, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", textAlign: 'center' }}
-                                onChangeText={setPieces}
-                                value={pieces}
-                                placeholderTextColor={zomatoRed}
-                                onFocus={() => setIsPiecesFocused(true)}
-                                onBlur={() => setIsPiecesFocused(false)}
-                                keyboardType="numeric"
-                            />
+                    {/* Add More Button */}
+                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, height: 35, borderColor: zomatoRed, borderWidth: 1, marginVertical: 8 }} onPress={() => setMoreProductModal(true)}>
+                        {products.length === 0 ? (
+                            <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add length and pieces</Text>
+                        ) : (
+                            <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add more</Text>
+                        )}
+                        <View>
+                            <Icon2 name="add" size={16} color={zomatoRed} />
                         </View>
-                    </View>
-
-                    {/* Add Button */}
-                    <TouchableOpacity style={{ backgroundColor: zomatoRed, width: 30, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5 }} onPress={addLengthPieces}>
-                        <Icon2 name="add" size={16} color='#fff' />
                     </TouchableOpacity>
 
                 </View>
 
                 {/* Error Handling */}
-                {error && (
-                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
-                )}
+                {
+                    error && (
+                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
+                    )
+                }
 
                 {/* Buttons */}
                 <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, }}>
@@ -502,6 +516,92 @@ const FillUpDetails = () => {
                 </View>
 
             </View>
+
+            {/* Add More Product Modal */}
+            <Modal
+                isVisible={moreProductModal}
+                onBackdropPress={() => setMoreProductModal(false)}
+                onSwipeComplete={() => setMoreProductModal(false)}
+                onRequestClose={() => setMoreProductModal(false)}
+                animationType="slide"
+                swipeDirection={['down']}
+                backdropOpacity={0.5}
+                style={{ justifyContent: 'flex-end', margin: 0, }}
+            >
+
+                <View style={{ width: "100%", height: '100%', justifyContent: 'flex-end' }}>
+
+                    {/* Close Button */}
+                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setMoreProductModal(false)}>
+                        <Icon2 name="close" size={20} style={{ color: '#fff' }} />
+                    </TouchableOpacity>
+
+                    <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingHorizontal: 14, paddingVertical: 8 }}>
+
+                        {/* Headline */}
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 8, marginBottom: 10 }}>
+                            <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Fill up the details below</Text>
+                        </View>
+
+                        {/* Length */}
+                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
+                            <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the length:</Text>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2 }}>
+                                <TextInput
+                                    style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                    onChangeText={setLength}
+                                    value={length}
+                                    placeholderTextColor={zomatoRed}
+                                    onFocus={() => setIsLengthFocused(true)}
+                                    onBlur={() => setIsLengthFocused(false)}
+                                    keyboardType="numeric"
+                                />
+                            </View>
+                        </View>
+
+                        {/* No of pieces */}
+                        <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
+                            <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the No. of pieces:</Text>
+                            <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, marginVertical: 2 }}>
+                                <TextInput
+                                    style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                    onChangeText={setPieces}
+                                    value={pieces}
+                                    placeholderTextColor={zomatoRed}
+                                    onFocus={() => setIsPiecesFocused(true)}
+                                    onBlur={() => setIsPiecesFocused(false)}
+                                    keyboardType="numeric"
+                                />
+                            </View>
+                        </View>
+
+                        {/* Error Handling */}
+                        {error && (
+                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right', marginVertical: 5, }}>* Please fill all the details. All the fields are necessary.</Text>
+                        )}
+
+                        {/* Buttons */}
+                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
+
+                            {/* Cancel */}
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => setMoreProductModal(false)} style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
+                                    Cancel
+                                </Text>
+                            </TouchableOpacity>
+
+                            {/* Add */}
+                            <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, }} onPress={addLengthPieces}>
+                                <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>
+                                    Add
+                                </Text>
+                            </TouchableOpacity>
+
+                        </View>
+
+                    </View>
+                </View>
+            </Modal>
 
         </SafeAreaView>
     )
