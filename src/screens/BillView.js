@@ -115,7 +115,7 @@ const BillView = ({ route }) => {
             <tr key="${itemIndex}-${lpIndex}" style="height: 30px; text-align: center; ">
               
               ${lpIndex === 0 ? `
-                <td style="font-size: 10px; width: 23%; padding: 10px; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
+                <td style="font-size: 10px; width: 23%; padding: 0; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
                   <p style="margin: 0; font-weight: 500; font-size: 12px; margin-bottom: 2px;"><u>Colour: ${item.color}</u></p>
                   <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type}</u>
                 </td>
@@ -145,13 +145,14 @@ const BillView = ({ route }) => {
                 <p style="margin: 0; font-weight: 500;">${lp.pieces}</p>
               </td>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 15%; padding: 0; background-color: green; ">
-                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; padding: 0; background-color: #5bda49; ">
-                  <div style="width: 65%; border-right: 0.5px solid black; padding: 0; ">
-                    <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}</p>
+              <td style="font-size: 10px; border: 0.5px solid black; width: 15%; padding: 0; ">
+                <div style="display: flex; height: 35px;">
+                  <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
+                    <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}.00</p>
                   </div>
-                  <div style="width: 34%; padding: 0;">
-                    <p style="margin: 0; font-weight: 500; font-size: 11px;">Rft</p>
+                  <div style="width: 1px; background-color: black; height: 100%;"></div>
+                  <div style="width: 35%; display: flex; align-items: center; justify-content: center; padding: 0;">
+                    <p style="margin: 0; font-weight: 600;"></p>
                   </div>
                 </div>
               </td>

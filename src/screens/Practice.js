@@ -91,8 +91,8 @@ const generateTableRows = () => {
 // quantity
 {/* <div style="border-bottom: 0.5px solid black; height: 35px; display: flex; align-items: center; justify-content: center; padding: 0;">
   <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}</p>
-</div> */}
-{/* <div style="height: 1px; background-color: black;"></div>
+</div>
+<div style="height: 1px; background-color: black;"></div>
 <div style="display: flex; height: 35px;">
   <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
     <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}</p>
