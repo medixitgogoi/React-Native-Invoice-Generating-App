@@ -145,7 +145,7 @@ const BillView = ({ route }) => {
                 <p style="margin: 0; font-weight: 500;">${lp.pieces}</p>
               </td>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 15%; padding: 0;">
+              <td style="font-size: 10px; border: 0.5px solid black; width: 15%; padding: 0; background-color: green; ">
                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; padding: 0; background-color: #5bda49; ">
                   <div style="width: 65%; border-right: 0.5px solid black; padding: 0; ">
                     <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}</p>
