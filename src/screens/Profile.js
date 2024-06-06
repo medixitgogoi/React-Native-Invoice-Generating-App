@@ -7,7 +7,6 @@ import Icon4 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/Entypo';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useDispatch } from 'react-redux';
 
 const Profile = () => {
 
@@ -27,7 +26,7 @@ const Profile = () => {
                         </TouchableOpacity>
                         <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Profile</Text>
                     </View>
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: lightZomatoRed, borderRadius: 50, width: 30, height: 30, justifyContent: 'center', marginRight: 12, elevation: 1 }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: lightZomatoRed, borderRadius: 50, width: 30, height: 30, justifyContent: 'center', marginRight: 12, borderColor: zomatoRed, borderWidth: 1 }}>
                         <TouchableOpacity style={{}} onPress={() => navigation.navigate('Home')}>
                             <Icon2 name="home" size={18} color={zomatoRed} />
                         </TouchableOpacity>

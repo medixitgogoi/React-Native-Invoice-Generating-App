@@ -15,7 +15,7 @@ const BillDetails = () => {
     const dispatch = useDispatch();
 
     const productDetails = useSelector(state => state.bill);
-    // console.log(productDetails);
+    console.log(productDetails);
 
     const navigation = useNavigation();
 

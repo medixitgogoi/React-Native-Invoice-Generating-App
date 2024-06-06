@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { useState, useEffect, useCallback } from 'react';
+import { useState } from 'react';
 import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import SelectDropdown from 'react-native-select-dropdown';
@@ -52,7 +52,6 @@ const FillUpDetails = () => {
     const [moreProductModal, setMoreProductModal] = useState(false);
 
     const [error, setError] = useState(false);
-    const [error2, setError2] = useState(false);
 
     const [length, setLength] = useState('');
     const [isLengthFocused, setIsLengthFocused] = useState(false);
@@ -70,17 +69,6 @@ const FillUpDetails = () => {
     const [selectedWidth, setSelectedWidth] = useState("");
 
     const [products, setProducts] = useState([]);
-
-    useFocusEffect(
-        useCallback(() => {
-            // Resetting state variables when the screen is focused
-            setSelectedColor('');
-            setSelectedType('');
-            setSelectedUnit('');
-            setSelectedThickness('');
-            setSelectedWidth('');
-        }, [])
-    )
 
     const saveDataHandler = () => {
 
@@ -119,6 +107,178 @@ const FillUpDetails = () => {
         }
     }
 
+    const arr =
+        [
+            {
+                "color": "Red",
+                "id": "1717652712149jzltw7h",
+                "lengthAndPieces": [
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    },
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    },
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    }
+                ],
+                "rate": "12",
+                "thickness": "0.30 mm",
+                "type": "Profile Sheet",
+                "unit": "mm",
+                "width": "3.5 mm",
+            },
+            {
+                "color": "Red",
+                "id": "1717652712149jzltw7h",
+                "lengthAndPieces": [
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    },
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    },
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    }
+                ],
+                "rate": "12",
+                "thickness": "0.30 mm",
+                "type": "Profile Sheet",
+                "unit": "mm",
+                "width": "3.5 mm",
+            },
+            {
+                "color": "Red",
+                "id": "1717652712149jzltw7h",
+                "lengthAndPieces": [
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    },
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    },
+                    {
+                        "id": "1717652694247mxa2ye5",
+                        "length": "23",
+                        "pieces": "47",
+                    },
+                    {
+                        "id": "1717652698699n09qsrp",
+                        "length": "13",
+                        "pieces": "26"
+                    },
+                    {
+                        "id": "1717652704939em80bw4",
+                        "length": "25",
+                        "pieces": "48"
+                    }
+                ],
+                "rate": "12",
+                "thickness": "0.30 mm",
+                "type": "Profile Sheet",
+                "unit": "mm",
+                "width": "3.5 mm",
+            },
+        ]
+
     const addLengthPieces = () => {
         setMoreProductModal(false);
         setProducts([...products, {
@@ -136,6 +296,8 @@ const FillUpDetails = () => {
         const filteredData = products.filter(item => item.id !== id);
         setProducts(filteredData);
     }
+
+    // console.log(products);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
