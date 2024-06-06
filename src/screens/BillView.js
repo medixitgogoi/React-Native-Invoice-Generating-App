@@ -111,7 +111,7 @@ const BillView = ({ route }) => {
     return `
       <table style="width: 100%; border-collapse: collapse; margin-top: 2px; margin-bottom: 2px;">
         ${billDetails.map((item, itemIndex) =>
-        item.lengthAndPieces.map((lp, lpIndex) => `
+      item.lengthAndPieces.map((lp, lpIndex) => `
             <tr key="${itemIndex}-${lpIndex}" style="height: 30px; text-align: center; ">
               
               ${lpIndex === 0 ? `
@@ -146,12 +146,11 @@ const BillView = ({ route }) => {
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 15%; padding: 0;">
-                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; ">
-                  <div style="width: 65%;">
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: center; width: 100%; padding: 0; background-color: #5bda49; ">
+                  <div style="width: 65%; border-right: 0.5px solid black; padding: 0; ">
                     <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}</p>
                   </div>
-                  <div style="width: 1px; background-color: black; height: 100%;"></div>
-                  <div style="width: 34.8%;">
+                  <div style="width: 34%; padding: 0;">
                     <p style="margin: 0; font-weight: 500; font-size: 11px;">Rft</p>
                   </div>
                 </div>
@@ -187,7 +186,7 @@ const BillView = ({ route }) => {
               
             </tr>
           `).join('')
-      ).join('')}
+    ).join('')}
       </table>
     `;
   };
