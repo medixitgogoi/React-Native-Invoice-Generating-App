@@ -1,15 +1,15 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { useState } from 'react';
+import { useCallback, useState } from 'react';
 import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useDispatch, useSelector } from 'react-redux';
-import { addItemToBill, removeItemFromBill } from '../redux/BillDetailsSlice';
+import { useDispatch } from 'react-redux';
+import { addItemToBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
 
 const thickness = [
@@ -64,7 +64,7 @@ const FillUpDetails = () => {
 
     const [selectedColor, setSelectedColor] = useState("");
     const [selectedType, setSelectedType] = useState("");
-    const [selectedUnit, setSelectedUnit] = useState(null);
+    const [selectedUnit, setSelectedUnit] = useState("");
     const [selectedThickness, setSelectedThickness] = useState("");
     const [selectedWidth, setSelectedWidth] = useState("");
 
@@ -102,182 +102,15 @@ const FillUpDetails = () => {
                 setError(false);
                 setRate('');
                 setProducts([]);
+                setSelectedColor('');
+                setSelectedType('');
+                setSelectedUnit('');
+                setSelectedThickness('');
+                setSelectedWidth('');
 
             }
         }
     }
-
-    const arr =
-        [
-            {
-                "color": "Red",
-                "id": "1717652712149jzltw7h",
-                "lengthAndPieces": [
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    },
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    },
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    }
-                ],
-                "rate": "12",
-                "thickness": "0.30 mm",
-                "type": "Profile Sheet",
-                "unit": "mm",
-                "width": "3.5 mm",
-            },
-            {
-                "color": "Red",
-                "id": "1717652712149jzltw7h",
-                "lengthAndPieces": [
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    },
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    },
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    }
-                ],
-                "rate": "12",
-                "thickness": "0.30 mm",
-                "type": "Profile Sheet",
-                "unit": "mm",
-                "width": "3.5 mm",
-            },
-            {
-                "color": "Red",
-                "id": "1717652712149jzltw7h",
-                "lengthAndPieces": [
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    },
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    },
-                    {
-                        "id": "1717652694247mxa2ye5",
-                        "length": "23",
-                        "pieces": "47",
-                    },
-                    {
-                        "id": "1717652698699n09qsrp",
-                        "length": "13",
-                        "pieces": "26"
-                    },
-                    {
-                        "id": "1717652704939em80bw4",
-                        "length": "25",
-                        "pieces": "48"
-                    }
-                ],
-                "rate": "12",
-                "thickness": "0.30 mm",
-                "type": "Profile Sheet",
-                "unit": "mm",
-                "width": "3.5 mm",
-            },
-        ]
 
     const addLengthPieces = () => {
         setMoreProductModal(false);
@@ -296,8 +129,6 @@ const FillUpDetails = () => {
         const filteredData = products.filter(item => item.id !== id);
         setProducts(filteredData);
     }
-
-    // console.log(products);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -345,7 +176,7 @@ const FillUpDetails = () => {
                                         return (
                                             <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                 <Text style={styles.dropdownButtonTxtStyle}>
-                                                    {/* {(selectedItem && selectedItem.title) || 'Select unit'} */}
+                                                    {/* {(selectedItem && selectedItem.title) || 'Select Unit'} */}
                                                     {selectedUnit === '' ? 'Select Unit' : selectedUnit}
                                                 </Text>
                                                 <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
@@ -381,6 +212,7 @@ const FillUpDetails = () => {
                                         return (
                                             <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                 <Text style={styles.dropdownButtonTxtStyle}>
+                                                    {/* {(selectedItem && selectedItem.title) || 'Select Thickness'} */}
                                                     {selectedThickness === '' ? 'Select Thickness' : selectedThickness}
                                                 </Text>
                                                 <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
@@ -419,6 +251,7 @@ const FillUpDetails = () => {
                                         return (
                                             <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                 <Text style={styles.dropdownButtonTxtStyle}>
+                                                    {/* {(selectedItem && selectedItem.title) || 'Select Type'} */}
                                                     {selectedType === '' ? 'Select Type' : selectedType}
                                                 </Text>
                                                 <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
@@ -452,6 +285,7 @@ const FillUpDetails = () => {
                                         return (
                                             <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                 <Text style={styles.dropdownButtonTxtStyle}>
+                                                    {/* {(selectedItem && selectedItem.title) || 'Select Color'} */}
                                                     {selectedColor === '' ? 'Select Color' : selectedColor}
                                                 </Text>
                                                 <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
@@ -476,8 +310,6 @@ const FillUpDetails = () => {
                     {/* Width */}
                     {selectedType === "Ridges" && (
                         <View style={{ flexDirection: 'row', gap: 5, flexWrap: 'wrap' }}>
-
-                            {/* Width */}
                             <View style={{ flex: 1 }}>
                                 <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
                                     <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Width:</Text>
@@ -492,6 +324,7 @@ const FillUpDetails = () => {
                                             return (
                                                 <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                     <Text style={styles.dropdownButtonTxtStyle}>
+                                                        {/* {(selectedItem && selectedItem.title) || 'Select Width'} */}
                                                         {selectedWidth === '' ? 'Select Width' : selectedWidth}
                                                     </Text>
                                                     <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
@@ -584,17 +417,14 @@ const FillUpDetails = () => {
 
             {/* Save Button */}
             <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 8, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 0, elevation: 2, paddingHorizontal: 10, }}>
-
-                {/* Add product */}
-                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 8, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={saveDataHandler}>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.1), fontWeight: "600", textTransform: 'uppercase' }}>
-                        Save Product Details
-                    </Text>
+                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 8, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }} onPress={saveDataHandler}>
                     <View style={{ height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
                         <Icon name="save" size={24} color={'#fff'} />
                     </View>
+                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.1), fontWeight: "600", textTransform: 'uppercase' }}>
+                        Save Product Details
+                    </Text>
                 </TouchableOpacity>
-
             </View>
 
             {/* Add More Product Modal */}
