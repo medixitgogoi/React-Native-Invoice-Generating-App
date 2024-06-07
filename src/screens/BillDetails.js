@@ -36,6 +36,8 @@ const BillDetails = () => {
     const [rate, setRate] = useState('');
     const [isRateFocused, setIsRateFocused] = useState(false);
 
+    // ${ indianNumberFormat(calculateTotalPrice()) } .00
+
     const [selectedColor, setSelectedColor] = useState("");
     const [selectedType, setSelectedType] = useState("");
     const [selectedUnit, setSelectedUnit] = useState("");
