@@ -96,10 +96,10 @@ const BillDetails = () => {
         return amount;
     }
 
-    const totalAmount = calculateTotalAmount();
+    // const totalAmount = calculateTotalAmount();
 
     const viewBillHandler = () => {
-        navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport, totalAmount: totalAmount })
+        navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport })
         // if (bend === 0 || loading === 0 || transport === 0) {
         //     setError2(true);
         // } else {
@@ -343,7 +343,7 @@ const BillDetails = () => {
             </ScrollView>
 
             {/* Buttons */}
-            <View style={{ backgroundColor: productDetails.length !== 0 ? '#fff' : '#f1f3f6', width: '100%', flexDirection: 'row', paddingVertical: 10, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: productDetails.length !== 0 ? 0 : 5, elevation: productDetails.length !== 0 ? 2 : 0 }}>
+            <View style={{ backgroundColor: productDetails.length !== 0 ? '#fff' : '#f1f3f6', width: '100%', flexDirection: 'row', paddingVertical: 8, borderRadius: 3, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: productDetails.length !== 0 ? 0 : 5, elevation: productDetails.length !== 0 ? 2 : 0 }}>
 
                 {/* Add product */}
                 <TouchableOpacity style={{ width: productDetails.length !== 0 ? '46%' : '95%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => navigation.navigate('FillUpDetails')}>

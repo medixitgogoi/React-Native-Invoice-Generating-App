@@ -1,14 +1,14 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { useCallback, useState } from 'react';
+import { useState } from 'react';
 import Modal from "react-native-modal";
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { useNavigation, useFocusEffect } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
 
@@ -48,6 +48,8 @@ const FillUpDetails = () => {
     const dispatch = useDispatch();
 
     const navigation = useNavigation();
+
+    const productDetails = useSelector(state => state.bill);
 
     const [moreProductModal, setMoreProductModal] = useState(false);
 
@@ -415,16 +417,29 @@ const FillUpDetails = () => {
                 </View>
             </ScrollView>
 
-            {/* Save Button */}
-            <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 8, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 0, elevation: 2, paddingHorizontal: 10, }}>
-                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 8, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }} onPress={saveDataHandler}>
-                    <View style={{ height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
-                        <Icon name="save" size={24} color={'#fff'} />
+            {/* Buttons */}
+            <View style={{ backgroundColor: '#fff', width: '100%', paddingHorizontal: productDetails.length === 0 ? 10 : 0, flexDirection: 'row', paddingVertical: 8, borderRadius: 3, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 5, elevation: 2, }}>
+
+                {/* View Preview */}
+                {productDetails.length !== 0 && (
+                    <TouchableOpacity style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5 }} onPress={() => navigation.navigate('BillDetails')}>
+                        <View style={{ backgroundColor: zomatoRed, height: 21, width: 21, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                            <Icon2 name="newspaper" size={13} color={'#fff'} />
+                        </View>
+                        <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>View Preview</Text>
+                    </TouchableOpacity>
+                )}
+
+                {/* Save details */}
+                <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: productDetails.length === 0 ? '100%' : '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 6, height: 42, }} onPress={saveDataHandler}>
+                    <View style={{ backgroundColor: lightZomatoRed, height: 19, width: 19, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                        <Icon2 name="add" size={16} color={zomatoRed} />
                     </View>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.1), fontWeight: "600", textTransform: 'uppercase' }}>
-                        Save Product Details
+                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "500" }}>
+                        Save details
                     </Text>
                 </TouchableOpacity>
+
             </View>
 
             {/* Add More Product Modal */}
@@ -563,3 +578,15 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
 });
+
+{/* Save Button */ }
+{/* <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 8, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 0, elevation: 2, paddingHorizontal: 10, }}>
+        <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 8, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }} onPress={saveDataHandler}>
+            <View style={{ height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                <Icon name="save" size={24} color={'#fff'} />
+            </View>
+            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.1), fontWeight: "600", textTransform: 'uppercase' }}>
+                Save Product Details
+            </Text>
+        </TouchableOpacity>
+    </View> */}
