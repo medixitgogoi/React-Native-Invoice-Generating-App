@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, FlatList, RefreshControl } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Image, TextInput, ScrollView, FlatList } from 'react-native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Octicons';
@@ -57,7 +57,6 @@ const PIMyInvoice = () => {
     };
 
     const getHighlightedText = (text, highlight) => {
-        // Split the text by the highlight term and include the term itself in the resulting array
         const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
         return (
             <Text>
@@ -111,7 +110,7 @@ const PIMyInvoice = () => {
             </View>
 
             {/* Searchbar */}
-            <View View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5 }}>
+            <View View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5, paddingBottom: 20, }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: "#fff", borderRadius: 12, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: "98%", alignSelf: "center", borderColor: isSearchFocused ? zomatoRed : "", borderWidth: isSearchFocused ? 0.7 : 0, }}>
                     <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center', }}>
                         <View style={{ borderRadius: 10, alignItems: "center", justifyContent: "center", padding: 5, marginRight: 3, }}>
@@ -133,7 +132,7 @@ const PIMyInvoice = () => {
 
             {/* Customer Names */}
             <ScrollView>
-                <View style={{ marginBottom: 20, marginTop: 10, paddingHorizontal: 5 }}>
+                <View style={{ marginBottom: 20, paddingHorizontal: 5 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10, marginTop: 8, }}>
                         <Text style={{ color: '#c9c9c9' }}>_____________</Text>
                         <Text style={{ color: '#888888', fontSize: responsiveFontSize(1.5), fontWeight: '500', textTransform: 'uppercase' }}>All previously bought customers</Text>

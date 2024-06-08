@@ -211,3 +211,16 @@ const generateTableRows = () => {
 
 // Amount
 {/* <p style="margin: 0; font-weight: 600;">₹${indianNumberFormat(lp.length * lp.pieces * item.rate)}.00</p> */ }
+
+{
+  // error2 && (
+  //   <View style={{ flexDirection: 'row', alignItems: 'center', marginHorizontal: 12, backgroundColor: 'yellow', overflow: 'hidden', borderColor: zomatoRed, borderWidth: 0.4, borderRadius: 4, }}>
+  //     <View style={{ backgroundColor: zomatoRed, width: 20, flexDirection: 'row', justifyContent: 'center', height: '100%', alignItems: 'center' }}>
+  //       <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.5), fontWeight: '900' }}>!</Text>
+  //     </View>
+  //     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.5), paddingVertical: 5, paddingLeft: 5, }}>
+  //       Please fill in all the details before the invoice is generated.
+  //     </Text>
+  //   </View>
+  // )
+}

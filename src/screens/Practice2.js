@@ -247,6 +247,93 @@ const Practice2 = () => {
         `;
     };
 
+    const generateTableRows2 = () => {
+        return billDetails.map((item, index) => `
+      <div key=${index} style="flexDirection: row; alignItems: center; alignSelf: center;">
+        
+        <div style="flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 23%; alignItems: center; padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; ">
+          <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color}</u></p>
+          <u style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.type}</u>
+        </div>
+
+        <div style="flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; " >
+          <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness}</p >
+        </div >
+
+        <div style="flexDirection: column; font-size: 6px; border: 0.5px solid black; alignItems: center; width: 8%; padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; " >
+          <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.width}</p>
+        </div>
+      
+        <div style="flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; height: 30px; justifyContent: center;">
+          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.length} ${item.unit}</p>
+          </div>         
+          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
+          <div style="flexDirection: column; font-size: 6px; width: 100%; alignItems: center; height: 15px; justifyContent: center; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">Total</p>
+          </div>         
+        </div>
+        
+        <div style="flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; height: 30px; justifyContent: center;">
+          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces}</p>
+          </div>         
+          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
+          <div style="flexDirection: column; font-size: 6px; width: 100%; alignItems: center; height: 15px; justifyContent: center; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces}</p>
+          </div>         
+        </div>
+        
+        <div style="flexDirection: column; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; padding-top: 4.9px; padding-bottom: 4.9px; height: 30px; justifyContent: center; ">
+          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces * item.length}.00</p>
+          </div>         
+          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
+
+          <div style="flexDirection: row; alignItems: center; width: 100%">
+            <div style="flexDirection: column; font-size: 6px; width: 65%; alignItems: center; height: 15px; justifyContent: center; ">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces * item.length}.00</p>
+            </div>   
+            <div style="backgroundColor: black; height: 99%; width: 1px;"></div>
+            <div style="flexDirection: column; font-size: 6px; width: 35%; alignItems: center; height: 15px; justifyContent: center; ">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500; fontWeight: 600;">Rft</p>
+            </div>
+          </div>
+        
+        </div>
+        
+        <div style="flexDirection: column; font-size: 6px; width: 17%;border: 0.5px solid black; alignItems: center;  padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; ">
+        
+          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
+            <div style="flexDirection: column; font-size: 6px; alignItems: center; height: 15px; justifyContent: center; ">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500; fontWeight: 600;">Per Rft</p>
+            </div>
+          </div>         
+        
+          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
+
+          <div style="flexDirection: row; alignItems: center; width: 100%">
+            <div style="flexDirection: column; font-size: 6px; width: 20%; alignItems: center; height: 15px; justifyContent: center; ">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">₹</p>
+            </div>
+            <div style="backgroundColor: black; height: 99%; width: 1px;"></div>
+            <div style="flexDirection: column; font-size: 6px; width: 80%; alignItems: center; height: 15px; justifyContent: center; ">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 600;">${item.rate}.00</p>
+            </div>   
+          </div>
+
+        </div>
+        
+        <div style="flexDirection: column; font-size: 6px; width: 13%; border: 0.5px solid black;alignItems: center;  padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; ">
+          <p style="fontSize: 6.3px; margin: 0; fontWeight: 600;">₹${indianNumberFormat(item.length * item.pieces * item.rate)}.00</p>
+        </div>
+
+      </div >
+  `).join('');
+    };
+
+    // <p style="fontSize: 6px; margin: 0; fontWeight: 500;"></p>
+
     return (
         <View>
             <Text></Text>

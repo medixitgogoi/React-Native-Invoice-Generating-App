@@ -13,7 +13,6 @@ import DispatchOrder from '../screens/DispatchOrder';
 import SalesmanReport from '../screens/SalesmanReport';
 import PartyReport from '../screens/PartyReport';
 import Sales from '../screens/Sales';
-import Practice from '../screens/Practice';
 import FillUpDetails from '../screens/FillUpDetails';
 
 const StackNavigation = () => {
@@ -22,7 +21,7 @@ const StackNavigation = () => {
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="Login">
+            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SplashScreen">
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Details" component={Details} />

@@ -506,88 +506,114 @@ const BillView = ({ route }) => {
   `;
 
   const generateTableRows2 = () => {
-    return billDetails.map((item, index) => `
-      <div key=${index} style="flexDirection: row; alignItems: center; alignSelf: center;">
-        
-        <div style="flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 23%; alignItems: center; padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; ">
-          <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color}</u></p>
-          <u style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.type}</u>
-        </div>
+    return billDetails.map((item, index) => {
 
-        <div style="flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; " >
-          <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness}</p >
-        </div >
+      const totalPieces = item.lengthAndPieces.reduce((total, lp) => total + parseInt(lp.pieces), 0);
+      const totalLength = item.lengthAndPieces.reduce((total, lp) => total + (parseInt(lp.pieces) * parseInt(lp.length)), 0);
+      const totalPrice = item.lengthAndPieces.reduce((total, lp) => total + (parseInt(lp.pieces) * parseInt(lp.length) * parseFloat(item.rate)), 0);
 
-        <div style="flexDirection: column; font-size: 6px; border: 0.5px solid black; alignItems: center; width: 8%; padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; " >
-          <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.width}</p>
-        </div>
-      
-        <div style="flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; height: 30px; justifyContent: center;">
-          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.length} ${item.unit}</p>
-          </div>         
-          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
-          <div style="flexDirection: column; font-size: 6px; width: 100%; alignItems: center; height: 15px; justifyContent: center; ">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">Total</p>
-          </div>         
-        </div>
-        
-        <div style="flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; height: 30px; justifyContent: center;">
-          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces}</p>
-          </div>         
-          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
-          <div style="flexDirection: column; font-size: 6px; width: 100%; alignItems: center; height: 15px; justifyContent: center; ">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces}</p>
-          </div>         
-        </div>
-        
-        <div style="flexDirection: column; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; padding-top: 4.9px; padding-bottom: 4.9px; height: 30px; justifyContent: center; ">
-          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces * item.length}.00</p>
-          </div>         
-          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
+      const rows = item.lengthAndPieces.map((lp, lpIndex) => `
+        <div key=${lpIndex} style="display: flex; flexDirection: row; alignItems: center; ">
 
-          <div style="flexDirection: row; alignItems: center; width: 100%">
-            <div style="flexDirection: column; font-size: 6px; width: 65%; alignItems: center; height: 15px; justifyContent: center; ">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.pieces * item.length}.00</p>
-            </div>   
-            <div style="backgroundColor: black; height: 99%; width: 1px;"></div>
-            <div style="flexDirection: column; font-size: 6px; width: 35%; alignItems: center; height: 15px; justifyContent: center; ">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 500; fontWeight: 600;">Rft</p>
+          ${lpIndex === 0 ? `
+            <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0;  justifyContent: center;">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color}</u></p>
+              <u style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.type}</u>
+            </div>
+            ` : (item.lengthAndPieces.length - 1 === lpIndex) ? `
+            <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
+            
+            </div>
+            `: `
+              <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
+             
+              </div>
+          `}
+
+          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 9%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness}</p>
+          </div>
+
+          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; alignItems: center; width: 8%; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.width}</p>
+          </div>
+
+          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.length} ${item.unit}</p>
+          </div>
+
+          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.pieces}</p>
+          </div>
+
+          <div style="display: flex; height: 22px; flexDirection: row; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+            <div style="width: 68%; align-items: center; ">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.pieces * lp.length}.00</p>
+            </div>
+            <div style="width: 1px; background-color: black; height: 100%; "></div>
+            <div style="width: 32%;">
+
             </div>
           </div>
-        
-        </div>
-        
-        <div style="flexDirection: column; font-size: 6px; width: 17%;border: 0.5px solid black; alignItems: center;  padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; ">
-        
-          <div style="flexDirection: column; font-size: 6px; width: 100%; borderBottom: 0.5px solid black; alignItems: center; height: 15px; justifyContent: center; ">
-            <div style="flexDirection: column; font-size: 6px; alignItems: center; height: 15px; justifyContent: center; ">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 500; fontWeight: 600;">Per Rft</p>
-            </div>
-          </div>         
-        
-          <div style="width: 100%; backgroundColor: black; height: 1px;"></div>
 
-          <div style="flexDirection: row; alignItems: center; width: 100%">
-            <div style="flexDirection: column; font-size: 6px; width: 20%; alignItems: center; height: 15px; justifyContent: center; ">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">₹</p>
-            </div>
-            <div style="backgroundColor: black; height: 99%; width: 1px;"></div>
-            <div style="flexDirection: column; font-size: 6px; width: 80%; alignItems: center; height: 15px; justifyContent: center; ">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 600;">${item.rate}.00</p>
-            </div>   
+          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 17%; border: 0.5px solid black; alignItems: center;  justifyContent: center; ">
+    
+          </div>
+
+          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 13%; border: 0.5px solid black; alignItems: center;  justifyContent: center;">
+        
           </div>
 
         </div>
-        
-        <div style="flexDirection: column; font-size: 6px; width: 13%; border: 0.5px solid black;alignItems: center;  padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; ">
-          <p style="fontSize: 6.3px; margin: 0; fontWeight: 600;">₹${indianNumberFormat(item.length * item.pieces * item.rate)}.00</p>
-        </div>
+        `).join('');
 
-      </div >
-  `).join('');
+      return rows + `
+        <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; ">
+
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 22%; alignItems: flex-end; height: 17px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500; "></p>
+          </div>
+
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 25%; alignItems: flex-end; height: 17px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500; ">Total</p>
+          </div>
+         
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 8%; alignItems: center; padding-top: 1px; padding-bottom: 1px; height: 17px; justifyContent: center; border: 0.5px solid black; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 600;">${totalPieces}</p>
+          </div>
+          
+          <div style="display: flex; height: 17px; flexDirection: row; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+            <div style="width: 68%; align-items: center; ">
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${totalPieces * totalLength}.00</p>
+            </div>
+            <div style="width: 1px; background-color: black; height: 100%; "></div>
+            <div style="width: 32%;">
+              <span style="text-align: center; ">Rft</span>
+            </div>
+          </div>
+         
+          <div style="display: flex; flexDirection: row; font-size: 6px; width: 17%; alignItems: center; height: 17px; justifyContent: center; border: 0.5px solid black; ">
+            <div style="width: 18%; ">
+              <span style="text-align: center; font-weight: 500;">₹</span>
+            </div>
+            <div style="width: 1px; background-color: black; height: 100%; "></div>
+            <div style="width: 40%; ">
+              <span style="text-align: center; font-weight: 500; ">${item.rate}.00</span>
+            </div>
+            <div style="width: 1px; background-color: black; height: 100%; "></div>
+            <div style="width: 42%;  ">
+              <span style="text-align: center; font-weight: 500;">Per Rft</span>
+            </div>  
+          </div>
+          
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 13%; alignItems: center; height: 17px; justifyContent: center; border: 0.5px solid black; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 600;">₹${indianNumberFormat(totalPrice)}.00</p>
+          </div>
+        
+          </div>
+        `;
+
+    }).join('');
   };
 
   const htmlContent2 = `
@@ -644,14 +670,14 @@ const BillView = ({ route }) => {
         
         </div>
 
-        <div style="flexDirection: row; alignItems: center; margin-top: 2px; alignSelf: center;">
+        <div style="flexDirection: row; alignItems: center; margin-bottom: 1px; alignSelf: center; margin-top: 2px; ">
           
-          <div style="flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 23%; alignItems: center; padding-top: 1px; padding-bottom: 1px; backgroundColor: #5bda49"; >
+          <div style="flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding-top: 1px; padding-bottom: 1px; backgroundColor: #5bda49"; >
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">Material</p>
             <u style="fontSize: 6px; margin: 0; fontWeight: 500;">(Hi-rib)</u>
           </div>
 
-          <div style="flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; backgroundColor: #5bda49"; " >
+          <div style="flexDirection: column; font-size: 6px; width: 9%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; backgroundColor: #5bda49"; " >
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">Thick</p>
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">(mm)</p>
           </div>
@@ -674,7 +700,7 @@ const BillView = ({ route }) => {
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;"></p>
           </div>
 
-          <div style="flexDirection: column; font-size: 6px; width: 17%;border: 0.5px solid black; alignItems: center;  padding-top: 1px; padding-bottom: 1px; backgroundColor: #5bda49";">
+          <div style="flexDirection: column; font-size: 6px; width: 17%; border: 0.5px solid black; alignItems: center;  padding-top: 1px; padding-bottom: 1px; backgroundColor: #5bda49";">
             <p style = "fontSize: 6px; margin: 0; fontWeight: 500;">Rate</p>
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">(In Rs.)</p>
           </div>
@@ -688,20 +714,20 @@ const BillView = ({ route }) => {
 
         ${generateTableRows2()}
 
-        <div style="height: 60px; width: 100%; border: 0.5px solid black; flexDirection: row; alignItems: center;">
+        <div style="height: 40px; width: 100%; border: 0.5px solid black; flexDirection: row; alignItems: center; margin-top: 1px; ">
 
           <div style="width: 86.9%; flexDirection: column; alignItems: flex-end; padding-right: 2px; ">
-            <p style="margin: 1px; fontSize: 6px; "><em>Loading Charges</em></p>
-            <p style="margin: 1px; fontSize: 6px; "><em>Bend Charges</em></p>
-            <p style="margin: 1px; fontSize: 6px; "><em>Transport Charges</em></p>
+            ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; margin-bottom: ">Loading Charges</p>` : ``}
+            ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; margin-bottom: ">Bend Charges</p>` : ``}
+            ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; margin-bottom: ">Transport Charges</p>` : ``}
           </div>
 
           <div style="height: 100%; backgroundColor: black; width: 1.2px"></div>
 
           <div style="width: 13%; flexDirection: column; alignItems: center; padding-right: 2px;">
-            <p style="margin: 1px; fontSize: 6px; "><em>₹${loadingCharge}.00</em></p>
-            <p style="margin: 1px; fontSize: 6px; "><em>₹${bendCharge}.00</em></p>
-            <p style="margin: 1px; fontSize: 6px; "><em>₹${transportCharge}.00</em></p>
+            ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${loadingCharge}.00</p>` : ``}
+            ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${bendCharge}.00</p>` : ``}
+            ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${transportCharge}.00</p>` : ``}
           </div>
 
         </div>
@@ -709,13 +735,13 @@ const BillView = ({ route }) => {
         <div style="width: 100%; border: 0.5px solid black; width: 100%; flexDirection: row; alignItems: center; ">
 
           <div style="width: 86.9%; padding-top: 5px; padding-bottom: 5px; flexDirection: row; justifyContent: flex-end; padding-right: 2px;">
-            <p style="margin: 1px; fontSize: 6px; "><em>Total amount to be paid</em></p>
+            <p style="margin: 1px; fontSize: 6px; ">Total amount to be paid</p>
           </div>
           
           <div style="height: 100%; backgroundColor: black; width: 1.2px"></div>
 
-          <div style="width: 13%; padding-top: 5px; padding-bottom: 5px; flexDirection: row; justifyContent: center; ">
-            <p style="fontSize: 7px; fontWeight: 500; margin: 0; ">₹${indianNumberFormat(calculateTotalPrice())}</p>
+          <div style="width: 13%; flexDirection: row; justifyContent: center; ">
+            <p style="fontSize: 6px; fontWeight: 600; margin: 0; ">₹${indianNumberFormat(calculateTotalPrice())}.00</p>
           </div>
 
         </div>
@@ -812,7 +838,7 @@ const BillView = ({ route }) => {
 
       <ScrollView>
 
-        <PinchZoomView style={{ paddingVertical: 100, flexDirection: 'row', alignItems: 'center', height: '100%' }}>
+        <PinchZoomView style={{ paddingVertical: 10, flexDirection: 'row', alignItems: 'center', height: '100%' }}>
           <HTML source={{ html: htmlContent2 }} />
         </PinchZoomView>
 
