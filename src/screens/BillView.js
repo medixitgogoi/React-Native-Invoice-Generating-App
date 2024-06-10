@@ -392,7 +392,7 @@ const BillView = ({ route }) => {
             margin-top: 20px;
           }
 
-          .page-break {
+          .gapping {
             page-break-before: always;
           }
 
@@ -485,43 +485,33 @@ const BillView = ({ route }) => {
           <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
         </div>
 
-        <div class="note" id="note-section">
-          <h6>Note:</h6>
-          <h5>Terms & conditions:-</h5>
-          <p><em>1. Prices are inclusive of GST</em></p>
-          <p><em>2. Prices are based on ex-factory at Changsari, Assam</em></p>
-          <p><em>3. Payment Terms: 100% in Advance</em></p>
-          <p><em>4. Rates are subject to change without any Prior Information.</em></p>
-          <div style="flex-direction: column; background-color: yellow; padding-top: 1px; padding-bottom: 1px;">
-            <p>5. FOR BANK DETAILS:- Name: Pooja Roofing Co. (MFG) A/C NO: 41122724588 (STATE BANK OF INDIA,)</p>
-            <p style="padding-left: 12px;">IFSC CODE: SBIN0013246 (Traders Branch Fancy Bazar)</p>
+        <div style="gapping">
+          <div class="note">
+            <h6>Note:</h6>
+            <h5>Terms & conditions:-</h5>
+            <p><em>1. Prices are inclusive of GST</em></p>
+            <p><em>2. Prices are based on ex-factory at Changsari, Assam</em></p>
+            <p><em>3. Payment Terms: 100% in Advance</em></p>
+            <p><em>4. Rates are subject to change without any Prior Information.</em></p>
+            <div style="flex-direction: column; background-color: yellow; padding-top: 1px; padding-bottom: 1px;">
+              <p>5. FOR BANK DETAILS:- Name: Pooja Roofing Co. (MFG) A/C NO: 41122724588 (STATE BANK OF INDIA,)</p>
+              <p style="padding-left: 12px;">IFSC CODE: SBIN0013246 (Traders Branch Fancy Bazar)</p>
+            </div>
+            <p><em>6. Transportation: Client's Own Arrangement / To Pay Basis</em></p>
+            <p><em>7. The above Rates are valid for 7 Days</em></p>
           </div>
-          <p><em>6. Transportation: Client's Own Arrangement / To Pay Basis</em></p>
-          <p><em>7. The above Rates are valid for 7 Days</em></p>
+
+          <div style="flex-direction: column; margin-top: 25px; ">
+            <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Regards</em></p>
+            <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Pooja Roofing Co.(MFG)</em></p>
+          </div>
+
+          <div class="signature" >
+            <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Prepared by )</em></p>
+            <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
+            <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
+          </div>
         </div>
-
-        <div style="flexDirection: column; margin-top: 25px; ">
-          <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Regards</em></p>
-          <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Pooja Roofing Co.(MFG)</em></p>
-        </div>
-
-        <div class="signature">
-          <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Prepared by )</em></p>
-          <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
-          <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
-        </div>
-
-        <script>
-          window.onload = function() {
-            var noteSection = document.getElementById('note-section');
-            var noteTopOffset = noteSection.offsetTop;
-            var pageHeight = 1122; // Assuming 1122px is the height of an A4 page
-
-            if (noteTopOffset + noteSection.offsetHeight > pageHeight) {
-              noteSection.classList.add('page-break');
-            }
-          };
-        </script>
 
       </body>
 
@@ -745,15 +735,15 @@ const BillView = ({ route }) => {
         <div style=" width: 100%; border: 0.5px solid black; flexDirection: row; alignItems: center; margin-top: 1px;">
 
           <div style="width: 86.9%; flexDirection: column; alignItems: flex-end; padding-right: 2px; padding-top: 5px; padding-bottom: 5px; ">
-            ${loadingCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0">Loading Charges</p>` : ``}
-            ${bendCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0">Bend Charges</p>` : ``}
-            ${transportCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin:0 ">Transport Charges</p>` : ``}
+            ${loadingCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Loading Charges</p>` : ``}
+            ${bendCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Bend Charges</p>` : ``}
+            ${transportCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Transport Charges</p>` : ``}
           </div>
 
           <div style="height: 100%; backgroundColor: black; width: 1.2px"></div>
 
           <div style="width: 13%; flexDirection: column; alignItems: center; padding-right: 2px;">
-            ${loadingCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
+            ${loadingCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0; ">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
             ${bendCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(bendCharge)}.00</p>` : ``}
             ${transportCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(transportCharge)}.00</p>` : ``}
           </div>

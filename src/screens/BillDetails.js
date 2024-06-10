@@ -14,7 +14,7 @@ const BillDetails = () => {
     const dispatch = useDispatch();
 
     const productDetails = useSelector(state => state.bill);
-    console.log(productDetails);
+    // console.log(productDetails);
 
     const navigation = useNavigation();
 
@@ -70,11 +70,6 @@ const BillDetails = () => {
 
     const viewBillHandler = () => {
         navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport })
-        // if (bend === 0 || loading === 0 || transport === 0) {
-        //     setError2(true);
-        // } else {
-        //     setError2(false);
-        // }
     }
 
     const removeProductHandler = (item) => {
@@ -141,7 +136,6 @@ const BillDetails = () => {
 
                                 return quantity;
                             }
-
                             const unit = item?.unit;
 
                             return (
@@ -190,7 +184,7 @@ const BillDetails = () => {
                                     {/* Third section */}
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
                                         <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Quantity (in R.ft.):</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500', fontSize: responsiveFontSize(2.2), }}>{calculateQuantity()}</Text>
+                                        <Text style={{ color: '#000', fontWeight: '500', fontSize: responsiveFontSize(2.2), }}>{indianNumberFormat(calculateQuantity())}</Text>
                                     </View>
 
                                     {/* Fourth section */}
