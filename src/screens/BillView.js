@@ -57,6 +57,18 @@ const BillView = ({ route }) => {
     })
   }, [])
 
+  const NoOfItems = () => {
+    let items = 0;
+    billDetails.map(item => {
+      let num = item.lengthAndPieces.length;
+      items += num;
+    })
+    if (items < 17) {
+      return false;
+    }
+    return true;
+  }
+
   function indianNumberFormat(number) {
     // Split the number into an array of digits.
     const digits = number.toString().split('');
@@ -485,7 +497,7 @@ const BillView = ({ route }) => {
           <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
         </div>
 
-        <div style="gapping">
+        <div style="${NoOfItems() ? `page-break-before: always;` : ``}">
           <div class="note">
             <h6>Note:</h6>
             <h5>Terms & conditions:-</h5>
