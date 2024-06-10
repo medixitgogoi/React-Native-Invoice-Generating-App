@@ -122,7 +122,7 @@ const BillView = ({ route }) => {
       const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
       const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
-        return `
+      return `
           ${item.lengthAndPieces.map((lp, lpIndex) => `
             <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
               ${lpIndex === 0 ? `
@@ -422,7 +422,7 @@ const BillView = ({ route }) => {
         <p style="font-size: 14px; margin-top: 3px;"><em>Sales Person-:</em> Anil Beniwal</p>
 
         <div class="party-info">
-          <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;"><em>ESTIMATE</em></h5>
+          <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;">ESTIMATE</h5>
           <p style="fontSize: 14px; fontWeight: 600;"><em>PARTY: ${name}</em></p>
           <h6>Site: ${site}</h6>
         </div>
@@ -453,7 +453,7 @@ const BillView = ({ route }) => {
         
         </table>
 
-        <table style="width: 100%; border-collapse: collapse; margin-top: 2px; ">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
 
           <tr style="height: 62px;">
             <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
