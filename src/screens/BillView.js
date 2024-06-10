@@ -517,45 +517,49 @@ const BillView = ({ route }) => {
   const generateTableRows2 = () => {
     return billDetails.map((item, index) => {
 
-      const totalPieces = item.lengthAndPieces.reduce((total, lp) => total + parseInt(lp.pieces), 0);
-      const totalLength = item.lengthAndPieces.reduce((total, lp) => total + (parseInt(lp.pieces) * parseInt(lp.length)), 0);
-      const totalPrice = item.lengthAndPieces.reduce((total, lp) => total + (parseInt(lp.pieces) * parseInt(lp.length) * parseFloat(item.rate)), 0);
+      const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
+      const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
+      const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
       const rows = item.lengthAndPieces.map((lp, lpIndex) => `
         <div key=${lpIndex} style="display: flex; flexDirection: row; alignItems: center; ">
 
           ${lpIndex === 0 ? `
-            <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0;  justifyContent: center;">
+            <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
               <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color}</u></p>
-              <u style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.type}</u>
+              ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type}</u>` : ``}
             </div>
-            ` : (item.lengthAndPieces.length - 1 === lpIndex) ? `
-            <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
+            ` : (item.lengthAndPieces.length - 1 === lpIndex && item.lengthAndPieces.length > 2) ? `
+            <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
             
             </div>
+            `: (lpIndex === 1) ? `
+              <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
+                <u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type}</u>
+              </div>
             `: `
-              <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
-             
+              <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
+              
               </div>
           `}
 
-          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 9%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
+          <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 9%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness}</p>
           </div>
 
-          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; border: 0.5px solid black; alignItems: center; width: 8%; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
+          <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; alignItems: center; width: 8%; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.width}</p>
           </div>
 
-          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+          <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.length} ${item.unit}</p>
           </div>
 
-          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+          <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
             <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.pieces}</p>
           </div>
 
-          <div style="display: flex; height: 22px; flexDirection: row; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+          <div style="display: flex; height: 13px; flexDirection: row; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
             <div style="width: 68%; align-items: center; ">
               <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.pieces * lp.length}.00</p>
             </div>
@@ -565,11 +569,11 @@ const BillView = ({ route }) => {
             </div>
           </div>
 
-          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 17%; border: 0.5px solid black; alignItems: center;  justifyContent: center; ">
+          <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 17%; border: 0.5px solid black; alignItems: center;  justifyContent: center; ">
     
           </div>
 
-          <div style="display: flex; height: 22px; flexDirection: column; font-size: 6px; width: 13%; border: 0.5px solid black; alignItems: center;  justifyContent: center;">
+          <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 13%; border: 0.5px solid black; alignItems: center;  justifyContent: center;">
         
           </div>
 
@@ -577,23 +581,23 @@ const BillView = ({ route }) => {
         `).join('');
 
       return rows + `
-        <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; ">
+        <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; background-color: #a2eaf3; ">
 
-          <div style="display: flex; flexDirection: column; font-size: 6px; width: 22%; alignItems: flex-end; height: 17px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 22%; alignItems: flex-end; height: 12px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
             <p style="fontSize: 6px; margin: 0; fontWeight: 500; "></p>
           </div>
 
-          <div style="display: flex; flexDirection: column; font-size: 6px; width: 25%; alignItems: flex-end; height: 17px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 25%; alignItems: flex-end; height: 12px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
             <p style="fontSize: 6px; margin: 0; fontWeight: 500; ">Total</p>
           </div>
          
-          <div style="display: flex; flexDirection: column; font-size: 6px; width: 8%; alignItems: center; padding-top: 1px; padding-bottom: 1px; height: 17px; justifyContent: center; border: 0.5px solid black; ">
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 8%; alignItems: center; height: 12px; justifyContent: center; border: 0.5px solid black; ">
             <p style="fontSize: 6px; margin: 0; fontWeight: 600;">${totalPieces}</p>
           </div>
           
-          <div style="display: flex; height: 17px; flexDirection: row; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
+          <div style="display: flex; height: 12px; flexDirection: row; font-size: 6px; width: 15%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
             <div style="width: 68%; align-items: center; ">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${totalPieces * totalLength}.00</p>
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${totalQuantity}.00</p>
             </div>
             <div style="width: 1px; background-color: black; height: 100%; "></div>
             <div style="width: 32%;">
@@ -601,7 +605,7 @@ const BillView = ({ route }) => {
             </div>
           </div>
          
-          <div style="display: flex; flexDirection: row; font-size: 6px; width: 17%; alignItems: center; height: 17px; justifyContent: center; border: 0.5px solid black; ">
+          <div style="display: flex; flexDirection: row; font-size: 6px; width: 17%; alignItems: center; height: 12px; justifyContent: center; border: 0.5px solid black; ">
             <div style="width: 18%; ">
               <span style="text-align: center; font-weight: 500;">₹</span>
             </div>
@@ -615,8 +619,8 @@ const BillView = ({ route }) => {
             </div>  
           </div>
           
-          <div style="display: flex; flexDirection: column; font-size: 6px; width: 13%; alignItems: center; height: 17px; justifyContent: center; border: 0.5px solid black; ">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 600;">₹${indianNumberFormat(totalPrice)}.00</p>
+          <div style="display: flex; flexDirection: column; font-size: 6px; width: 13%; alignItems: center; height: 12px; justifyContent: center; border: 0.5px solid black; ">
+            <p style="fontSize: 6px; margin: 0; fontWeight: 600;">₹${indianNumberFormat(totalAmount)}.00</p>
           </div>
         
           </div>
