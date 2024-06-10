@@ -133,7 +133,7 @@ const FillUpDetails = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", paddingBottom: 8,}}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", paddingBottom: 8, }}>
             <StatusBar
                 animated={true}
                 backgroundColor={moreProductModal ? "#818181" : '#fff'}
@@ -166,8 +166,8 @@ const FillUpDetails = () => {
 
                         {/* Unit */}
                         <View style={{ marginBottom: 6, flex: 1 }}>
-                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
-                                <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginBottom: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Unit:</Text>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 10, elevation: 1 }}>
+                                <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginBottom: 3, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Unit:</Text>
                                 <SelectDropdown
                                     data={units}
                                     onSelect={(selectedItem, index) => {
@@ -201,9 +201,7 @@ const FillUpDetails = () => {
                         {/* Thickness */}
                         <View style={{ marginBottom: 6, flex: 1 }}>
                             <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 10, elevation: 1 }}>
-                                <Text style={{
-                                    color: '#151E26', fontSize: responsiveFontSize(2.2), fontSize: responsiveFontSize(2.3), fontWeight: '500', marginBottom: 3
-                                }}>Thickness:</Text>
+                                <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), fontSize: responsiveFontSize(2.2), fontWeight: '500', marginBottom: 3 }}>Thickness:</Text>
                                 <SelectDropdown
                                     data={thickness}
                                     onSelect={(selectedItem, index) => {

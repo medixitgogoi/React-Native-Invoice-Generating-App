@@ -355,9 +355,8 @@ const BillView = ({ route }) => {
           }
 
           .note {
-            margin-top: 10px;
+            margin-top: 20px;
             width: 100%;
-            page-break-before: always;
           }
 
           .note h5 {
@@ -391,6 +390,10 @@ const BillView = ({ route }) => {
             align-items: center;
             width: 100%;
             margin-top: 20px;
+          }
+
+          .page-break {
+            page-break-before: always;
           }
 
         </style>
@@ -482,7 +485,7 @@ const BillView = ({ route }) => {
           <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
         </div>
 
-        <div class="note">
+        <div class="note" id="note-section">
           <h6>Note:</h6>
           <h5>Terms & conditions:-</h5>
           <p><em>1. Prices are inclusive of GST</em></p>
@@ -507,6 +510,18 @@ const BillView = ({ route }) => {
           <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
           <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
         </div>
+
+        <script>
+          window.onload = function() {
+            var noteSection = document.getElementById('note-section');
+            var noteTopOffset = noteSection.offsetTop;
+            var pageHeight = 1122; // Assuming 1122px is the height of an A4 page
+
+            if (noteTopOffset + noteSection.offsetHeight > pageHeight) {
+              noteSection.classList.add('page-break');
+            }
+          };
+        </script>
 
       </body>
 
@@ -534,7 +549,7 @@ const BillView = ({ route }) => {
             
             </div>
             `: (lpIndex === 1) ? `
-              <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
+              <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 2px; justifyContent: center;">
                 <u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type}</u>
               </div>
             `: `
@@ -620,7 +635,7 @@ const BillView = ({ route }) => {
           </div>
           
           <div style="display: flex; flexDirection: column; font-size: 6px; width: 13%; alignItems: center; height: 12px; justifyContent: center; border: 0.5px solid black; ">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 600;">₹${indianNumberFormat(totalAmount)}.00</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 600;">₹${totalAmount}.00</p>
           </div>
         
           </div>
@@ -727,20 +742,20 @@ const BillView = ({ route }) => {
 
         ${generateTableRows2()}
 
-        <div style="height: 40px; width: 100%; border: 0.5px solid black; flexDirection: row; alignItems: center; margin-top: 1px; ">
+        <div style=" width: 100%; border: 0.5px solid black; flexDirection: row; alignItems: center; margin-top: 1px;">
 
-          <div style="width: 86.9%; flexDirection: column; alignItems: flex-end; padding-right: 2px; ">
-            ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; margin-bottom: ">Loading Charges</p>` : ``}
-            ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; margin-bottom: ">Bend Charges</p>` : ``}
-            ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; margin-bottom: ">Transport Charges</p>` : ``}
+          <div style="width: 86.9%; flexDirection: column; alignItems: flex-end; padding-right: 2px; padding-top: 5px; padding-bottom: 5px; ">
+            ${loadingCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0">Loading Charges</p>` : ``}
+            ${bendCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0">Bend Charges</p>` : ``}
+            ${transportCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin:0 ">Transport Charges</p>` : ``}
           </div>
 
           <div style="height: 100%; backgroundColor: black; width: 1.2px"></div>
 
           <div style="width: 13%; flexDirection: column; alignItems: center; padding-right: 2px;">
-            ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${loadingCharge}.00</p>` : ``}
-            ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${bendCharge}.00</p>` : ``}
-            ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 6px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${transportCharge}.00</p>` : ``}
+            ${loadingCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
+            ${bendCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(bendCharge)}.00</p>` : ``}
+            ${transportCharge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(transportCharge)}.00</p>` : ``}
           </div>
 
         </div>
@@ -823,7 +838,7 @@ const BillView = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#000' }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#444444', }}>
       <StatusBar
         animated={true}
         backgroundColor='#000'
@@ -849,9 +864,9 @@ const BillView = ({ route }) => {
         </View>
       </View>
 
-      <ScrollView>
+      <ScrollView style={{ paddingTop: 20, }}>
 
-        <PinchZoomView style={{ paddingVertical: 10, flexDirection: 'row', alignItems: 'center', height: '100%' }}>
+        <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center' }}>
           <HTML source={{ html: htmlContent2 }} />
         </PinchZoomView>
 
