@@ -122,21 +122,24 @@ const BillView = ({ route }) => {
       const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
       const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
-      return `
+        return `
           ${item.lengthAndPieces.map((lp, lpIndex) => `
-             <tr key="${itemIndex}-${lpIndex}" style="height: 28px; text-align: center; ">
-              
+            <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
               ${lpIndex === 0 ? `
-                <td style="font-size: 10px; width: 23%; padding: 0; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <p style="margin: 0; font-weight: 500; font-size: 12px; margin-bottom: 2px;"><u>Colour: ${item.color}</u></p>
-                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type}</u>
+                <td style="font-size: 10px; width: 23%; padding: 3px; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
+                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color}</u></p>
+                  ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.type}</u>` : ``}
                 </td>
-              ` : (item.lengthAndPieces.length - 1 === lpIndex) ? `
-                <td style="font-size: 10px; width: 23%; padding: 10px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
+              ` : (item.lengthAndPieces.length - 1 === lpIndex && item.lengthAndPieces.length > 2) ? `
+                <td style="font-size: 10px; width: 23%; padding: 3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
                 
                 </td>
-              ` : `
-                <td style="font-size: 10px; width: 23%; padding: 10px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
+              ` : (lpIndex === 1) ? `
+                <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
+                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type}</u>
+                </td>
+              `: `
+                <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
 
                 </td>
               `}
@@ -145,66 +148,70 @@ const BillView = ({ route }) => {
                 <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness}</p>
               </td>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 6px;">
+              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
                 <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.width}</p>
               </td>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 0;">
+              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
                 <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit}</p>
               </td>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 0; ">
+              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px; ">
                 <p style="margin: 0; font-weight: 500;">${lp.pieces}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 14%; padding: 0; ">
-                <div style="display: flex; height: 35px;">
+                <div style="display: flex; height: 20px;">
                   <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                    <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}.00</p>
+                    <p style="margin: 0; font-weight: 500; font-size: 12px;">${lp.pieces * lp.length}.00</p>
                   </div>
                   <div style="width: 1px; background-color: black; height: 100%;"></div>
                   <div style="width: 35%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                    <p style="margin: 0; font-weight: 600;"></p>
+                    <p style="margin: 0; font-weight: 600; font-size: 12px;"></p>
                   </div>
                 </div>
               </td>
 
               ${lpIndex === 0 ? `
-                <td style="font-size: 10px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 0;">
+                <td style="font-size: 10px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 3px;">
                 
                 </td>
                 ` : (item.lengthAndPieces.length - 1 === lpIndex) ? `
-                <td style="font-size: 10px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 0;">
+                <td style="font-size: 10px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 3px;">
                 
                 </td>
                 ` : `
-                <td style="font-size: 10px; border-right: 0.5px solid black; width: 17%; padding: 0;">
+                <td style="font-size: 10px; border-right: 0.5px solid black; width: 17%; padding: 3px;">
                 
                 </td>
               `}
               
               ${lpIndex === 0 ? `
-                <td style="font-size: 10.3px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 14%; padding: 10px;">
+                <td style="font-size: 10.3px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 14%; padding: 3px;">
 
                 </td>
               ` : (item.lengthAndPieces.length - 1 === lpIndex) ? `
-                <td style="font-size: 10.3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 13%; padding: 10px;">
+                <td style="font-size: 10.3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 13%; padding: 3px;">
 
                 </td>
               ` : `
-                <td style="font-size: 10.3px; border-right: 0.5px solid black; width: 13%; padding: 10px;">
+                <td style="font-size: 10.3px; border-right: 0.5px solid black; width: 13%; padding: 3px;">
 
                 </td>
               `}
+
             </tr>
           `).join('')}
 
-          <tr style="height: 28px; text-align: center;">
+          <tr style="height: 20px; text-align: center; background-color: #a2eaf3; ">
             <td style="width: 23%; padding: 0; border: 0.5px solid black; "></td>
+            
             <td colspan="3" style="font-size: 13px; border: 0.5px solid black; text-align: right; padding-right: 13px; font-weight: 500; ">Total</td>
+            
             <td style="font-size: 13px; border: 0.5px solid black; font-weight: 500; ">${totalPieces}</td>
+            
             <td style="font-size: 10px; border: 0.5px solid black; width: 14%; padding: 0; ">
-              <div style="display: flex; height: 35px;">
+              <div style="display: flex; height: 20px;">
                 <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
                   <p style="margin: 0; font-weight: 500; font-size: 12px;">${totalQuantity}.00</p>
                 </div>
@@ -216,7 +223,7 @@ const BillView = ({ route }) => {
             </td>
 
             <td style="font-size: 10px; border: 0.5px solid black; width: 17%; padding: 0; vertical-align: top;">
-              <div style="display: flex; height: 35px; ">
+              <div style="display: flex; height: 20px; ">
                 <div style="width: 15%; display: flex; align-items: center; justify-content: center; padding: 0;">
                   <p style="margin: 0; font-weight: 500;">₹</p>
                 </div>
@@ -340,17 +347,17 @@ const BillView = ({ route }) => {
           .table td {
             border: 0.5px solid black;
             text-align: center;
-            backgroundColor: green;
           }
 
           .table th {
-            background-color: #5bda49;
+            background-color: #7ff460;
             font-size: 12px;
           }
 
           .note {
             margin-top: 10px;
             width: 100%;
+            page-break-before: always;
           }
 
           .note h5 {
@@ -446,26 +453,28 @@ const BillView = ({ route }) => {
         
         </table>
 
-        <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 2px; ">
+
           <tr style="height: 62px;">
-              <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
-                ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Loading Charges</p>` : ``}
-                ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Bend Charges</p>` : ``}
-                ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Transport Charges</p>` : ``}
-              </td>
-              <td style="width: 14%; border: 0.5px solid black; text-align: center; ">
-                ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${loadingCharge}.00</p>` : ``}
-                ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${bendCharge}.00</p>` : ``}
-                ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${transportCharge}.00</p>` : ``}
-              </td>
+            <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
+              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Loading Charges</p>` : ``}
+              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Bend Charges</p>` : ``}
+              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Transport Charges</p>` : ``}
+            </td>
+            <td style="width: 14%; border: 0.5px solid black; text-align: center; ">
+              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${loadingCharge}.00</p>` : ``}
+              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${bendCharge}.00</p>` : ``}
+              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${transportCharge}.00</p>` : ``}
+            </td>
           </tr>
+         
           <tr style="height: 30px;">
-              <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 2px; ">
-                <p style="margin: 1px; font-size: 11px;">Total amount to be paid</p>
-              </td>
-              <td style="width: 14%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
-                <p style="font-size: 13px; font-weight: 600; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}.00</p>
-              </td>
+            <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 2px; ">
+              <p style="margin: 1px; font-size: 11px;">Total amount to be paid</p>
+            </td>
+            <td style="width: 14%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
+              <p style="font-size: 13px; font-weight: 600; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}.00</p>
+            </td>
           </tr>
         </table>
 

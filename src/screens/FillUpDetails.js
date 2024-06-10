@@ -133,7 +133,7 @@ const FillUpDetails = () => {
     }
 
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", paddingBottom: 8,}}>
             <StatusBar
                 animated={true}
                 backgroundColor={moreProductModal ? "#818181" : '#fff'}
