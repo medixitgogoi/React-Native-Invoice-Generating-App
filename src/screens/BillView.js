@@ -259,10 +259,15 @@ const BillView = ({ route }) => {
   const htmlContent = `
   <!DOCTYPE html>
     <html>
-
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
         <style>
+
+          @page {
+            margin-top: 15px;
+            margin-bottom: 10px;
+          }
+        
           body {
             color: black;
             padding: 30px;
@@ -270,7 +275,7 @@ const BillView = ({ route }) => {
             font-family: Arial, sans-serif;
             font-size: 10px;
             margin: 0;
-            padding-top: 40px;
+            padding-top: 20px;
           }
 
           h6 {
@@ -465,23 +470,23 @@ const BillView = ({ route }) => {
         
         </table>
 
-        <table style="width: 100%; border-collapse: collapse; margin-top: ${NoOfItems() > 23 ? `20px` : `2px`}; ${NoOfItems() > 24 ? `page-break-before: always;` : ``}; ">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 2px; ${NoOfItems() > 24 ? `page-break-before: always;` : ``}; ">
 
           <tr style="height: 62px;">
             <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
-              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Loading Charges</p>` : ``}
-              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Bend Charges</p>` : ``}
-              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Transport Charges</p>` : ``}
+              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Loading Charges</p>` : ``}
+              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Bend Charges</p>` : ``}
+              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Transport Charges</p>` : ``}
             </td>
             <td style="width: 14%; border: 0.5px solid black; text-align: center; ">
-              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
-              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(bendCharge)}.00</p>` : ``}
-              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(transportCharge)}.00</p>` : ``}
+              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
+              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(bendCharge)}.00</p>` : ``}
+              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(transportCharge)}.00</p>` : ``}
             </td>
           </tr>
          
           <tr style="height: 30px;">
-            <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 8px; ">
+            <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 6px; ">
               <p style="margin: 1px; font-size: 11px;">Total amount to be paid</p>
             </td>
             <td style="width: 14%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
@@ -494,7 +499,7 @@ const BillView = ({ route }) => {
           <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
         </div>
 
-        <div style="${NoOfItems() > 12 && NoOfItems() < 24 ? `page-break-before: always;` : ``};">
+        <div style="${NoOfItems() > 15 && NoOfItems() < 24 ? `page-break-before: always;` : ``};">
           <div class="note">
             <h6>Note:</h6>
             <h5>Terms & conditions:-</h5>
@@ -509,6 +514,7 @@ const BillView = ({ route }) => {
             <p><em>6. Transportation: Client's Own Arrangement / To Pay Basis</em></p>
             <p><em>7. The above Rates are valid for 7 Days</em></p>
           </div>
+        </div>
 
           <div style="flex-direction: column; margin-top: 25px; ">
             <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Regards</em></p>
@@ -520,7 +526,6 @@ const BillView = ({ route }) => {
             <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
             <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
           </div>
-        </div>
 
       </body>
 
@@ -863,7 +868,7 @@ const BillView = ({ route }) => {
         </View>
       </View>
 
-      <ScrollView style={{ paddingTop: 20, }}>
+      <ScrollView style={{ paddingVertical: 20, }}>
 
         <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center' }}>
           <HTML source={{ html: htmlContent2 }} />
