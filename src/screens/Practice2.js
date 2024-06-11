@@ -626,22 +626,6 @@ const Practice2 = () => {
 
     `;
 
-    // <script>
-    //     window.onload = function() {
-    //         var noteToApprovedBySection = document.getElementById('note-to-approvedby');
-    //         var noteTopOffset = noteToApprovedBySection.offsetTop;
-    //         var pageHeight = 1122;
-
-    //         if (noteTopOffset + noteToApprovedBySection.offsetHeight > pageHeight) {
-    //         noteToApprovedBySection.classList.add('page-break');
-    //         }
-    //       };
-    // </script>
-  
-    // <div style="${NoOfItems() ? `page-break-before: always;` : ``}">
-    
-    // ${NoOfItems() ? `page-break-before: always;` : ``}
-
     return (
         <View>
             <Text></Text>
@@ -652,15 +636,3 @@ const Practice2 = () => {
 export default Practice2
 
 const styles = StyleSheet.create({})
-
-    // <td td style = "font-size: 10px; border: 0.5px solid black; width: 14%; padding: 3px; " >
-    //     <div style="display: flex; ">
-    //         <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
-    //             <p style="margin: 0; font-weight: 500;">${lp.pieces * lp.length}.00</p>
-    //         </div>
-    //         <div style="width: 1px; background-color: black; height: 100%;"></div>
-    //         <div style="width: 35%; display: flex; align-items: center; justify-content: center; padding: 0; ">
-    //             <p style="margin: 0; font-weight: 600;"></p>
-    //         </div>
-    //     </div>
-    // </td>

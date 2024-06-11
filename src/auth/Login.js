@@ -20,20 +20,20 @@ const Login = () => {
 
     const loginHandler = () => {
 
-        navigation.navigate("Home");
+        // navigation.navigate("Home");
 
-        // if (validate()) {
-        //     navigation.navigate("Home");
-        //     Toast.show({
-        //         type: 'success',
-        //         text1: 'Logged in successfully',
-        //         position: 'top',
-        //         topOffset: 50,
-        //         onPress: () => Toast.hide(),
-        //     });
-        //     setEmail('');
-        //     setPassword('');
-        // }
+        if (validate()) {
+            navigation.navigate("Home");
+            Toast.show({
+                type: 'success',
+                text1: 'Logged in successfully',
+                position: 'top',
+                topOffset: 50,
+                onPress: () => Toast.hide(),
+            });
+            setEmail('');
+            setPassword('');
+        }
     }
 
     const validate = () => {
@@ -143,6 +143,7 @@ const Login = () => {
                     </TouchableOpacity>
 
                 </View>
+                
             </View>
 
         </SafeAreaView>

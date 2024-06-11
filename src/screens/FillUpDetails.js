@@ -166,7 +166,7 @@ const FillUpDetails = () => {
 
                         {/* Unit */}
                         <View style={{ marginBottom: 6, flex: 1 }}>
-                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 10, elevation: 1 }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 10, padding: 10, elevation: 1 }}>
                                 <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginBottom: 3, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Unit:</Text>
                                 <SelectDropdown
                                     data={units}
@@ -200,7 +200,7 @@ const FillUpDetails = () => {
 
                         {/* Thickness */}
                         <View style={{ marginBottom: 6, flex: 1 }}>
-                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 10, elevation: 1 }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 10, padding: 10, elevation: 1 }}>
                                 <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), fontSize: responsiveFontSize(2.2), fontWeight: '500', marginBottom: 3 }}>Thickness:</Text>
                                 <SelectDropdown
                                     data={thickness}
@@ -239,7 +239,7 @@ const FillUpDetails = () => {
 
                         {/* Type */}
                         <View style={{ flex: 1 }}>
-                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 10, padding: 12, elevation: 1 }}>
                                 <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Type:</Text>
                                 <SelectDropdown
                                     data={types}
@@ -273,7 +273,7 @@ const FillUpDetails = () => {
 
                         {/* Color */}
                         <View style={{ flex: 1 }}>
-                            <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
+                            <View style={{ backgroundColor: '#fff', borderRadius: 10, padding: 12, elevation: 1 }}>
                                 <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Color:</Text>
                                 <SelectDropdown
                                     data={colors}
@@ -582,15 +582,3 @@ const styles = StyleSheet.create({
         marginRight: 8,
     },
 });
-
-{/* Save Button */ }
-{/* <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 8, borderRadius: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1, position: 'absolute', bottom: 0, elevation: 2, paddingHorizontal: 10, }}>
-        <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 8, height: 42, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 8 }} onPress={saveDataHandler}>
-            <View style={{ height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
-                <Icon name="save" size={24} color={'#fff'} />
-            </View>
-            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.1), fontWeight: "600", textTransform: 'uppercase' }}>
-                Save Product Details
-            </Text>
-        </TouchableOpacity>
-    </View> */}

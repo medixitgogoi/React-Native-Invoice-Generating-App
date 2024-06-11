@@ -5,6 +5,7 @@ import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon3 from 'react-native-vector-icons/dist/FontAwesome6';
 import Icon4 from 'react-native-vector-icons/dist/Feather';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
+import Icon6 from 'react-native-vector-icons/dist/AntDesign';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import { useState } from 'react';
@@ -270,14 +271,18 @@ const CustomerDetails = () => {
 
                             {/* Edit Button */}
                             <TouchableOpacity style={{ marginVertical: 8, backgroundColor: lightZomatoRed, paddingHorizontal: 8, paddingVertical: 10, width: '49%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 8, gap: 5, borderColor: zomatoRed, borderWidth: 0.6 }} onPress={() => editDetailsHandler()}>
+                                <View style={{ backgroundColor: zomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                                    <Icon4 name="edit" size={14} color={lightZomatoRed} />
+                                </View>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2), fontWeight: '600' }}>Edit details</Text>
-                                <Icon4 name="edit" size={17} color={zomatoRed} />
                             </TouchableOpacity>
 
                             {/* Create Bill Button */}
                             <TouchableOpacity style={{ marginVertical: 8, backgroundColor: zomatoRed, paddingHorizontal: 8, paddingVertical: 10, width: '49%', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 8, gap: 5, borderColor: zomatoRed, borderWidth: 0.6 }} onPress={() => navigation.navigate("FillUpDetails")}>
+                                <View style={{ backgroundColor: lightZomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                                    <Icon2 name="newspaper" size={15} color={zomatoRed} />
+                                </View>
                                 <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Create Bill</Text>
-                                <Icon2 name="newspaper" size={15} color={"#fff"} />
                             </TouchableOpacity>
 
                         </View>
@@ -286,6 +291,18 @@ const CustomerDetails = () => {
                 )}
 
             </ScrollView>
+
+            {/* Remove user button */}
+            {userDetails.length !== 0 && (
+                <View style={{ position: 'absolute', bottom: 13, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, }}>
+                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, paddingVertical: 10, borderRadius: 8, width: '100%', borderColor: zomatoRed, borderWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }} onPress={() => removeUserHandler()}>
+                        <View style={{ backgroundColor: zomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                            <Icon6 name="deleteuser" size={14} color='#fff' />
+                        </View>
+                        <Text style={{ color: zomatoRed, textAlign: 'center', fontSize: 15, fontWeight: '600', textTransform: 'uppercase' }}>Remove user</Text>
+                    </TouchableOpacity>
+                </View>
+            )}
 
             {/* Customer Modal*/}
             <Modal
@@ -431,19 +448,10 @@ const CustomerDetails = () => {
                             </TouchableOpacity>
 
                         </View>
-                        
+
                     </View>
                 </View>
             </Modal>
-
-            {/* Remove user button */}
-            {userDetails.length !== 0 && (
-                <View style={{ position: 'absolute', bottom: 13, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, }}>
-                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, paddingVertical: 10, borderRadius: 8, width: '100%', borderColor: zomatoRed, borderWidth: 1 }} onPress={() => removeUserHandler()}>
-                        <Text style={{ color: zomatoRed, textAlign: 'center', fontSize: 15, fontWeight: '600', textTransform: 'uppercase' }}>Remove user</Text>
-                    </TouchableOpacity>
-                </View>
-            )}
 
         </SafeAreaView>
     )
