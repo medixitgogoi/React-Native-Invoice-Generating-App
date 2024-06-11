@@ -63,7 +63,7 @@ const BillView = ({ route }) => {
       let num = item.lengthAndPieces.length;
       items += num;
     })
-    if (items < 17) {
+    if (items < 13) {
       return false;
     }
     return true;
@@ -390,7 +390,7 @@ const BillView = ({ route }) => {
           }
 
           .signature {
-            margin-top: 40px;
+            margin-top: 50px;
             display: flex;
             justify-content: space-between;
             width: 100%;
@@ -434,18 +434,18 @@ const BillView = ({ route }) => {
           <p class="address">${new Date().toLocaleDateString()}</p>
         </div>
 
-        <p style="font-size: 14px; margin-top: 3px;"><em>Sales Person-:</em> Anil Beniwal</p>
+        <p style="font-size: 14px; margin-top: 3px;">Sales Person-: Anil Beniwal</p>
 
         <div class="party-info">
           <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;">ESTIMATE</h5>
-          <p style="fontSize: 14px; fontWeight: 600;"><em>PARTY: ${name}</em></p>
-          <h6>Site: ${site}</h6>
+          <p style="font-size: 12px; fontWeight: 600;"> <strong>PARTY:</strong> ${name}</p>
+          <h6><strong style="font-size: 14px;">Site:</strong> ${site}</h6>
         </div>
 
         <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
-          <h6>PAN: <em style="font-weight: 400;">${pan}</em></h6>
-          <h6>Contact No.: <em style="font-weight: 400;">${contact}</em></h6>
-          <h6>GSTIN: <em style="font-weight: 400;">${gstin}</em></h6>
+          <h6 style="font-weight: 400; "><strong>PAN:</strong> ${pan}</h6>
+          <h6 style="font-weight: 400; "><strong>Contact No.:</strong> ${contact}</h6>
+          <h6 style="font-weight: 400; "><strong>GSTIN:</strong> ${gstin}</h6>
         </div>
         
         <table class="table">
@@ -468,7 +468,7 @@ const BillView = ({ route }) => {
         
         </table>
 
-        <table style="width: 100%; border-collapse: collapse; margin-top: 2px;">
+        <table style="width: 100%; border-collapse: collapse; margin-top: 2px; ${NoOfItems() ? `page-break-before: always;` : ``} ">
 
           <tr style="height: 62px;">
             <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
@@ -484,7 +484,7 @@ const BillView = ({ route }) => {
           </tr>
          
           <tr style="height: 30px;">
-            <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 2px; ">
+            <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 8px; ">
               <p style="margin: 1px; font-size: 11px;">Total amount to be paid</p>
             </td>
             <td style="width: 14%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
@@ -676,26 +676,26 @@ const BillView = ({ route }) => {
           <div style="flexDirection: row; alignItems: center; gap: 5px; justifyContent: space-between">
             <div style="flexDirection: row; alignItems: center">
               <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">REF.NO:-</p>
-              <em style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;marginLeft: 0.5px; text-decoration: underline;">PRCM/24-25/098</em>
+              <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;marginLeft: 0.5px; text-decoration: underline;"> PRCM/24-25/098</p>
             </div>
             <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">${currentDate.toLocaleDateString()}</p>
           </div>
           
           <div style="flexDirection: row; alignItems: center; ">
             <p style="margin: 0; font-size: 7px; padding: 0; fontWeight: 500">Sales Person-:</p>
-            <em style="margin: 0; font-size: 7px; padding: 0; margin-left: 2px">Anil Beniwal</em>
+            <p style="margin: 0; font-size: 7px; padding: 0; margin-left: 2px">Anil Beniwal</p>
           </div>
 
           <div style="flexDirection: column; alignItems: center">
-            <h6 style="margin: 0; font-size: 6px; font-weight: 400;">ESTIMATE</h6>
-            <em style="font-size: 7px; margin: 0; font-weight: 500; margin-top: 0.5px;">PARTY: ${name}</em>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 400; margin-top: 0.5px;">Site: <em></em>${site}</h6>
+            <h6 style="margin: 0; font-size: 7px; font-weight: 600;">ESTIMATE</h6>
+            <h5 style="font-size: 7px; margin: 0; font-weight: 500; margin-top: 0.5px;">PARTY: ${name}</h5>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 400; margin-top: 0.5px;">Site: ${site}</h6>
           </div>
 
           <div style="flexDirection: row; alignItems: center; justifyContent: space-between; margin-top: 0.5px;">
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN:<em> ${pan}</em></h6>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">Contact No.:<em> ${contact}</em></h6>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN:<em> ${gstin}</em></h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN: ${pan}</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">Contact No.: ${contact}</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN: ${gstin}</h6>
           </div>
         
         </div>

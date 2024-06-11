@@ -385,7 +385,7 @@ const FillUpDetails = () => {
                                     </View>
                                 </View>
 
-                                {/* Close button */}
+                                {/* Delete button */}
                                 <TouchableOpacity onPress={() => removeLengthPieces(item.id)} style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 30, backgroundColor: lightZomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
                                     <Icon2 name="close" size={18} style={{ color: zomatoRed }} />
                                 </TouchableOpacity>
@@ -394,14 +394,14 @@ const FillUpDetails = () => {
                         ))}
 
                         {/* Add More Button */}
-                        <TouchableOpacity style={{ backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, height: 35, borderColor: zomatoRed, borderWidth: 1, marginVertical: 8 }} onPress={() => setMoreProductModal(true)}>
+                        <TouchableOpacity style={{ backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, height: 35, borderColor: zomatoRed, borderWidth: 1, marginVertical: 8, gap: 5 }} onPress={() => setMoreProductModal(true)}>
                             {products.length === 0 ? (
                                 <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add length and pieces</Text>
                             ) : (
                                 <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add more</Text>
                             )}
-                            <View>
-                                <Icon2 name="add" size={16} color={zomatoRed} />
+                            <View style={{ backgroundColor: zomatoRed, width: 18, height: 18, borderRadius: 4, alignItems: 'center', justifyContent: 'center' }}>
+                                <Icon2 name="add" size={16} color={lightZomatoRed} />
                             </View>
                         </TouchableOpacity>
 
@@ -502,17 +502,23 @@ const FillUpDetails = () => {
                         <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
 
                             {/* Cancel */}
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => setMoreProductModal(false)} style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => setMoreProductModal(false)} style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                                     Cancel
                                 </Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 19, height: 19, alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
+                                    <Icon2 name="close" size={15} style={{ color: lightZomatoRed }} />
+                                </View>
                             </TouchableOpacity>
 
                             {/* Add */}
-                            <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, }} onPress={addLengthPieces}>
+                            <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, gap: 4, alignItems: 'center' }} onPress={addLengthPieces}>
                                 <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>
                                     Add
                                 </Text>
+                                <View style={{ backgroundColor: lightZomatoRed, width: 16, height: 16, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderEndWidth: 0.6 }}>
+                                    <Icon2 name="add" size={16} color={zomatoRed} />
+                                </View>
                             </TouchableOpacity>
 
                         </View>

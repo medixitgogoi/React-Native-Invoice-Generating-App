@@ -629,14 +629,16 @@ const Practice2 = () => {
     // <script>
     //     window.onload = function() {
     //         var noteToApprovedBySection = document.getElementById('note-to-approvedby');
-    //     var noteTopOffset = noteToApprovedBySection.offsetTop;
-    //     var pageHeight = 1122;
+    //         var noteTopOffset = noteToApprovedBySection.offsetTop;
+    //         var pageHeight = 1122;
 
     //         if (noteTopOffset + noteToApprovedBySection.offsetHeight > pageHeight) {
     //         noteToApprovedBySection.classList.add('page-break');
     //         }
     //       };
     // </script>
+  
+    // <div style="${NoOfItems() ? `page-break-before: always;` : ``}">
 
     return (
         <View>
