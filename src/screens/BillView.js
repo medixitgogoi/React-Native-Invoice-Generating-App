@@ -63,10 +63,7 @@ const BillView = ({ route }) => {
       let num = item.lengthAndPieces.length;
       items += num;
     })
-    if (items < 13) {
-      return false;
-    }
-    return true;
+    return items;
   }
 
   function indianNumberFormat(number) {
@@ -468,7 +465,7 @@ const BillView = ({ route }) => {
         
         </table>
 
-        <table style="width: 100%; border-collapse: collapse; margin-top: 2px; ${NoOfItems() ? `page-break-before: always;` : ``} ">
+        <table style="width: 100%; border-collapse: collapse; margin-top: ${NoOfItems() > 23 ? `20px` : `2px`}; ${NoOfItems() > 24 ? `page-break-before: always;` : ``}; ">
 
           <tr style="height: 62px;">
             <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
@@ -477,9 +474,9 @@ const BillView = ({ route }) => {
               ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; margin-bottom: ">Transport Charges</p>` : ``}
             </td>
             <td style="width: 14%; border: 0.5px solid black; text-align: center; ">
-              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${loadingCharge}.00</p>` : ``}
-              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${bendCharge}.00</p>` : ``}
-              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${transportCharge}.00</p>` : ``}
+              ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
+              ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(bendCharge)}.00</p>` : ``}
+              ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 2px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(transportCharge)}.00</p>` : ``}
             </td>
           </tr>
          
@@ -497,7 +494,7 @@ const BillView = ({ route }) => {
           <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
         </div>
 
-        <div style="${NoOfItems() ? `page-break-before: always;` : ``}">
+        <div style="${NoOfItems() > 12 && NoOfItems() < 24 ? `page-break-before: always;` : ``};">
           <div class="note">
             <h6>Note:</h6>
             <h5>Terms & conditions:-</h5>

@@ -639,6 +639,8 @@ const Practice2 = () => {
     // </script>
   
     // <div style="${NoOfItems() ? `page-break-before: always;` : ``}">
+    
+    // ${NoOfItems() ? `page-break-before: always;` : ``}
 
     return (
         <View>
