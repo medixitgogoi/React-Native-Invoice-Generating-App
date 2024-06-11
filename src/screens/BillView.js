@@ -842,7 +842,7 @@ const BillView = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#444444', }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#444444',paddingBottom: 10, }}>
       <StatusBar
         animated={true}
         backgroundColor='#000'
@@ -868,9 +868,9 @@ const BillView = ({ route }) => {
         </View>
       </View>
 
-      <ScrollView style={{ paddingVertical: 20, }}>
+      <ScrollView style={{  }}>
 
-        <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center' }}>
+        <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, }}>
           <HTML source={{ html: htmlContent2 }} />
         </PinchZoomView>
 
