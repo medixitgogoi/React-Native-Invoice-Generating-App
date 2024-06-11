@@ -31,6 +31,7 @@ const Home = () => {
                 </View>
             </View>
 
+            {/* Content */}
             <View style={{ padding: 10, width: '100%', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', gap: 10 }}>
 
                 <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, height: 50, flexDirection: 'row', alignItems: 'center', padding: 8, justifyContent: 'space-between', elevation: 2, borderRadius: 5 }} onPress={() => navigation.navigate("PIMyInvoice")}>

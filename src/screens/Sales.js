@@ -9,6 +9,25 @@ const Sales = () => {
 
     const navigation = useNavigation();
 
+    function indianNumberFormat(number) {
+        // Split the number into an array of digits.
+        const digits = number.toString().split('');
+
+        // Reverse the array of digits.
+        digits.reverse();
+
+        // Add a comma after every three digits, starting from the right.
+        for (let i = 3; i < digits.length; i += 3) {
+            digits.splice(i, 0, ',');
+        }
+
+        // Join the array of digits back into a string.
+        const formattedNumber = digits.join('');
+
+        // Reverse the formatted number back to its original order.
+        return formattedNumber.split('').reverse().join('');
+    };
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
 
@@ -33,7 +52,7 @@ const Sales = () => {
                         {/* Top */}
                         <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                             <View style={{ flexDirection: 'column', }}>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Ridges</Text>
+                                <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>Dixit Gogoi</Text>
                                 <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                             </View>
                             <View>
@@ -65,166 +84,7 @@ const Sales = () => {
                             {/* Date and amount */}
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
                                 <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>03 June 2024 at 12:40PM</Text>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>₹78,000</Text>
-                            </View>
-
-                            {/* Reorder */}
-                            {/* <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 4, marginTop: 4 }}>
-                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.8), color: '#fff', fontWeight: '500' }}>Reorder</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                                    <Icon name="refresh" style={{ width: 20, height: 20, color: '#fff' }} />
-                                </View>
-                            </TouchableOpacity> */}
-
-                        </View>
-
-                    </View>
-
-                    {/* Flatlist Card */}
-                    <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }}>
-
-                        {/* Top */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
-                            <View style={{ flexDirection: 'column', }}>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Ridges</Text>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
-                            </View>
-                            <View>
-                                <View style={{ backgroundColor: '#dde2e5', padding: 5, borderRadius: 5, elevation: 1, }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Delivered</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                        {/* Bottom */}
-                        <View style={{ padding: 12 }}>
-
-                            {/* Products */}
-                            <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Ridges</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Profile Sheet</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Tiles Profile Sheet</Text>
-                                </View>
-                            </View>
-
-                            {/* Date and amount */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>03 June 2024 at 12:40PM</Text>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>₹78,000</Text>
-                            </View>
-
-                            {/* Reorder */}
-                            {/* <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 4, marginTop: 4 }}>
-                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.8), color: '#fff', fontWeight: '500' }}>Reorder</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                                    <Icon name="refresh" style={{ width: 20, height: 20, color: '#fff' }} />
-                                </View>
-                            </TouchableOpacity> */}
-
-                        </View>
-
-                    </View>
-
-                    {/* Flatlist Card */}
-                    <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }}>
-
-                        {/* Top */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
-                            <View style={{ flexDirection: 'column', }}>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Ridges</Text>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
-                            </View>
-                            <View>
-                                <View style={{ backgroundColor: '#dde2e5', padding: 5, borderRadius: 5, elevation: 1, }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Delivered</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                        {/* Bottom */}
-                        <View style={{ padding: 12 }}>
-
-                            {/* Products */}
-                            <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Ridges</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Profile Sheet</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Tiles Profile Sheet</Text>
-                                </View>
-                            </View>
-
-                            {/* Date and amount */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>03 June 2024 at 12:40PM</Text>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>₹78,000</Text>
-                            </View>
-
-                            {/* Reorder */}
-                            {/* <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 4, marginTop: 4 }}>
-                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.8), color: '#fff', fontWeight: '500' }}>Reorder</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                                    <Icon name="refresh" style={{ width: 20, height: 20, color: '#fff' }} />
-                                </View>
-                            </TouchableOpacity> */}
-
-                        </View>
-
-                    </View>
-
-                    {/* Flatlist Card */}
-                    <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }}>
-
-                        {/* Top */}
-                        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
-                            <View style={{ flexDirection: 'column', }}>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Ridges</Text>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
-                            </View>
-                            <View>
-                                <View style={{ backgroundColor: '#dde2e5', padding: 5, borderRadius: 5, elevation: 1, }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Delivered</Text>
-                                </View>
-                            </View>
-                        </View>
-
-                        {/* Bottom */}
-                        <View style={{ padding: 12 }}>
-
-                            {/* Products */}
-                            <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Ridges</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Profile Sheet</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Tiles Profile Sheet</Text>
-                                </View>
-                            </View>
-
-                            {/* Date and amount */}
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>03 June 2024 at 12:40PM</Text>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>₹78,000</Text>
+                                <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>₹{indianNumberFormat(78000)}</Text>
                             </View>
 
                             {/* Reorder */}

@@ -395,14 +395,14 @@ const FillUpDetails = () => {
 
                         {/* Add More Button */}
                         <TouchableOpacity style={{ backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5, height: 35, borderColor: zomatoRed, borderWidth: 1, marginVertical: 8, gap: 5 }} onPress={() => setMoreProductModal(true)}>
+                            <View style={{ backgroundColor: zomatoRed, width: 18, height: 18, borderRadius: 4, alignItems: 'center', justifyContent: 'center' }}>
+                                <Icon2 name="add" size={16} color={lightZomatoRed} />
+                            </View>
                             {products.length === 0 ? (
                                 <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add length and pieces</Text>
                             ) : (
                                 <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Add more</Text>
                             )}
-                            <View style={{ backgroundColor: zomatoRed, width: 18, height: 18, borderRadius: 4, alignItems: 'center', justifyContent: 'center' }}>
-                                <Icon2 name="add" size={16} color={lightZomatoRed} />
-                            </View>
                         </TouchableOpacity>
 
                     </View>

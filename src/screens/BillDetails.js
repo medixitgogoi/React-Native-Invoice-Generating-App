@@ -99,7 +99,7 @@ const BillDetails = () => {
                         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                             <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
                         </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Bill Details</Text>
+                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Invoice Details</Text>
                     </View>
                 </View>
             </View>
@@ -310,13 +310,14 @@ const BillDetails = () => {
 
                 {/* View bill */}
                 {productDetails.length !== 0 && (
-                    <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 5, height: 42, }} onPress={() => viewBillHandler()}>
+                    <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 5, height: 42, }} onPress={viewBillHandler}>
                         <View style={{ backgroundColor: lightZomatoRed, height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
                             <Icon2 name="newspaper" size={14} color={zomatoRed} />
                         </View>
                         <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>View Invoice</Text>
                     </TouchableOpacity>
                 )}
+
             </View>
 
         </SafeAreaView>

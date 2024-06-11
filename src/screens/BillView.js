@@ -13,11 +13,17 @@ const BillView = ({ route }) => {
 
   const navigation = useNavigation();
 
+  const now = new Date();
+  
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0'); 
+  const year = now.getFullYear();
+  
+  const formattedDate = `${day}-${month}-${year}`;
+  
   const bendCharge = route.params.bend;
   const loadingCharge = route.params.loading;
   const transportCharge = route.params.transport;
-
-  const [currentDate, setCurrentDate] = useState(new Date());
 
   const [name, setName] = useState('');
   const [site, setSite] = useState('');
@@ -55,7 +61,7 @@ const BillView = ({ route }) => {
       setContact(user.contact)
       setGstin(user.gstin)
     })
-  }, [])
+  }, []);
 
   const NoOfItems = () => {
     let items = 0;
@@ -64,7 +70,7 @@ const BillView = ({ route }) => {
       items += num;
     })
     return items;
-  }
+  };
 
   function indianNumberFormat(number) {
     // Split the number into an array of digits.
@@ -433,7 +439,7 @@ const BillView = ({ route }) => {
 
         <div class="ref">
           <p class="address">REF.NO:- <u>PRCM/24-25/098</u></p>
-          <p class="address">${new Date().toLocaleDateString()}</p>
+          <p class="address">${formattedDate}</p>
         </div>
 
         <p style="font-size: 14px; margin-top: 3px;">Sales Person-: Anil Beniwal</p>
@@ -441,7 +447,7 @@ const BillView = ({ route }) => {
         <div class="party-info">
           <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;">ESTIMATE</h5>
           <p style="font-size: 12px; fontWeight: 600;"> <strong>PARTY:</strong> ${name}</p>
-          <h6><strong style="font-size: 14px;">Site:</strong> ${site}</h6>
+          <h6><strong style="font-size: 12px;">Site:</strong> ${site}</h6>
         </div>
 
         <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
@@ -680,7 +686,7 @@ const BillView = ({ route }) => {
               <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">REF.NO:-</p>
               <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;marginLeft: 0.5px; text-decoration: underline;"> PRCM/24-25/098</p>
             </div>
-            <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">${currentDate.toLocaleDateString()}</p>
+            <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">${formattedDate}</p>
           </div>
           
           <div style="flexDirection: row; alignItems: center; ">
@@ -868,7 +874,7 @@ const BillView = ({ route }) => {
         </View>
       </View>
 
-      <ScrollView style={{}}>
+      <ScrollView>
 
         <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, }}>
           <HTML source={{ html: htmlContent2 }} />
