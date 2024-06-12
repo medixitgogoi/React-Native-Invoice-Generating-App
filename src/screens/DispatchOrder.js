@@ -422,7 +422,7 @@ const DispatchOrder = () => {
         </View>
       ) : (
         <ScrollView>
-          <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, }}>
+          <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20, paddingBottom: 40}}>
 
             <View style={{ height: '100%', backgroundColor: '#fff', width: '100%', padding: 12 }}>
               <View style={{ borderColor: '#000', borderWidth: 1, padding: 2 }}>
@@ -484,11 +484,18 @@ const DispatchOrder = () => {
                         ))}
                       </View>
 
-                      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', borderWidth: 1, borderColor: '#000', backgroundColor: '#a2eaf3' }}>
-                        <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), borderColor: '#000', borderWidth: 0.5, width: '80%', paddingRight: 10, }}>Total</Text>
-                        <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), borderColor: '#000', borderWidth: 0.5, width: '20%', textAlign: 'center' }}>
-                          {data.lengthAndPieces.reduce((sum, item) => sum + parseInt(item.pieces), 0)}
-                        </Text>
+                      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#a2eaf3' }}>
+                        <View style={{ width: '60%', borderColor: '#000', borderWidth: 1, borderBottomWidth: 0.5, borderRightWidth: 0.5, borderLeftWidth: 0, }}>
+                          <Text></Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: '#000', borderWidth: 0.5, width: '20%', }}>
+                          <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), fontWeight: '500' }}>Total</Text>
+                        </View>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: '#000', borderWidth: 0.5, width: '20%', }}>
+                          <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), textAlign: 'center', fontWeight: '600' }}>
+                            {data.lengthAndPieces.reduce((sum, item) => sum + parseInt(item.pieces), 0)}
+                          </Text>
+                        </View>
                       </View>
 
                     </View>

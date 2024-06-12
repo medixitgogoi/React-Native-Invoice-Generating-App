@@ -3,10 +3,13 @@ import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Imag
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
+import { useSelector } from 'react-redux';
 
 const Home = () => {
 
     const navigation = useNavigation();
+
+    const billDetails = useSelector(state => state.bill);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -64,9 +67,11 @@ const Home = () => {
 
             </View>
 
-            <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '90%', alignSelf: 'center', padding: 8, borderRadius: 5 }} onPress={() => navigation.navigate('BillDetails')}>
-                <Text style={{ color: '#fff', textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(2), textTransform: 'uppercase' }}>Bill Details</Text>
-            </TouchableOpacity>
+            {billDetails.length !== 0 && (
+                <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '95%', alignSelf: 'center', padding: 8, borderRadius: 5, position: 'absolute', bottom: 15, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} onPress={() => navigation.navigate('BillDetails')}>
+                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2), textTransform: 'uppercase' }}>Bill Details</Text>
+                </TouchableOpacity>
+            )}
 
         </SafeAreaView>
     )
