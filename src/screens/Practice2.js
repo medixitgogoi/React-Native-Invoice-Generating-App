@@ -1,190 +1,110 @@
 import { StyleSheet, Text, View } from 'react-native';
 
 const arr =
-    [
+  [
+    {
+      "id": "1717652712149jzltw7h",
+      "color": "Red",
+      "lengthAndPieces": [
         {
-            "color": "Red",
-            "id": "1717652712149jzltw7h",
-            "lengthAndPieces": [
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                },
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                },
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                }
-            ],
-            "rate": "12",
-            "thickness": "0.30 mm",
-            "type": "Profile Sheet",
-            "unit": "mm",
-            "width": "3.5 mm",
+          "id": "1717652694247mxa2ye5",
+          "length": "23",
+          "pieces": "47",
         },
         {
-            "color": "Red",
-            "id": "1717652712149jzltw7h",
-            "lengthAndPieces": [
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                },
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                },
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                }
-            ],
-            "rate": "12",
-            "thickness": "0.30 mm",
-            "type": "Profile Sheet",
-            "unit": "mm",
-            "width": "3.5 mm",
+          "id": "1717652698699n09qsrp",
+          "length": "13",
+          "pieces": "26",
         },
         {
-            "color": "Red",
-            "id": "1717652712149jzltw7h",
-            "lengthAndPieces": [
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                },
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                },
-                {
-                    "id": "1717652694247mxa2ye5",
-                    "length": "23",
-                    "pieces": "47",
-                },
-                {
-                    "id": "1717652698699n09qsrp",
-                    "length": "13",
-                    "pieces": "26"
-                },
-                {
-                    "id": "1717652704939em80bw4",
-                    "length": "25",
-                    "pieces": "48"
-                }
-            ],
-            "rate": "12",
-            "thickness": "0.30 mm",
-            "type": "Profile Sheet",
-            "unit": "mm",
-            "width": "3.5 mm",
+          "id": "1717652704939em80bw4",
+          "length": "25",
+          "pieces": "48",
         },
-    ]
+        {
+          "id": "1717652694247mxa2ye5",
+          "length": "23",
+          "pieces": "47",
+        },
+      ],
+      "rate": "12",
+      "thickness": "0.30 mm",
+      "type": "Profile Sheet",
+      "unit": "mm",
+      "width": "3.5 mm",
+    },
+    {
+      "color": "Red",
+      "id": "1717652712149jzltw7h",
+      "lengthAndPieces": [
+        {
+          "id": "1717652694247mxa2ye5",
+          "length": "23",
+          "pieces": "47",
+        },
+        {
+          "id": "1717652698699n09qsrp",
+          "length": "13",
+          "pieces": "26"
+        },
+        {
+          "id": "1717652704939em80bw4",
+          "length": "25",
+          "pieces": "48"
+        },
+      ],
+      "rate": "12",
+      "thickness": "0.30 mm",
+      "type": "Profile Sheet",
+      "unit": "mm",
+      "width": "3.5 mm",
+    },
+    {
+      "color": "Red",
+      "id": "1717652712149jzltw7h",
+      "lengthAndPieces": [
+        {
+          "id": "1717652694247mxa2ye5",
+          "length": "23",
+          "pieces": "47",
+        },
+        {
+          "id": "1717652698699n09qsrp",
+          "length": "13",
+          "pieces": "26"
+        },
+        {
+          "id": "1717652704939em80bw4",
+          "length": "25",
+          "pieces": "48"
+        },
+        {
+          "id": "1717652694247mxa2ye5",
+          "length": "23",
+          "pieces": "47",
+        },
+      ],
+      "rate": "12",
+      "thickness": "0.30 mm",
+      "type": "Profile Sheet",
+      "unit": "mm",
+      "width": "3.5 mm",
+    },
+  ]
 
 const Practice2 = () => {
 
-    const generateTableRows = () => {
-        return `
+  const generateTableRows = () => {
+    return `
             <table style="width: 100%; border-collapse: collapse; margin-top: 2px; margin-bottom: 2px;">
                 ${billDetails.map((item, itemIndex) => {
-                    // Calculate totals for this item
-                    const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + lp.pieces, 0);
-                    const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0).toFixed(2);
-                    // You can calculate the total amount as needed
-                    const totalAmount = (totalQuantity * item.pricePerUnit).toFixed(2); // Example calculation, adjust as needed
+      // Calculate totals for this item
+      const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + lp.pieces, 0);
+      const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0).toFixed(2);
+      // You can calculate the total amount as needed
+      const totalAmount = (totalQuantity * item.pricePerUnit).toFixed(2); // Example calculation, adjust as needed
 
-                    return `
+      return `
                 ${item.lengthAndPieces.map((lp, lpIndex) => `
                     <tr key="${itemIndex}-${lpIndex}" style="height: 30px; text-align: center;">
                     ${lpIndex === 0 ? `
@@ -242,13 +162,13 @@ const Practice2 = () => {
                     <td colspan="2" style="font-size: 10px; border: 0.5px solid black;">${totalAmount}</td>
                 </tr>
                 `;
-                }).join('')}
+    }).join('')}
             </table>
         `;
-    };
+  };
 
-    const generateTableRows2 = () => {
-        return billDetails.map((item, index) => `
+  const generateTableRows2 = () => {
+    return billDetails.map((item, index) => `
       <div key=${index} style="flexDirection: row; alignItems: center; alignSelf: center;">
         
         <div style="flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 23%; alignItems: center; padding-top: 1px; padding-bottom: 1px; height: 30px; justifyContent: center; ">
@@ -330,9 +250,9 @@ const Practice2 = () => {
 
       </div >
   `).join('');
-    };
+  };
 
-    const htmlContent = `
+  const htmlContent = `
   <!DOCTYPE html>
     <html>
 
@@ -626,13 +546,15 @@ const Practice2 = () => {
 
     `;
 
-    return (
-        <View>
-            <Text></Text>
-        </View>
-    )
+  return (
+    <View>
+      <Text></Text>
+    </View>
+  )
 }
 
 export default Practice2
 
 const styles = StyleSheet.create({})
+
+{/* <TableComponent key={index} data={data} /> */ }

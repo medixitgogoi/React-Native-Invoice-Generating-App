@@ -10,6 +10,42 @@ import Share from 'react-native-share';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import { useEffect, useState } from 'react';
 
+const TableComponent = ({ data }) => {
+  return (
+    <View style={{ borderWidth: 1, borderColor: '#000', marginVertical: 8 }}>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', padding: 5 }}>
+        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000' }}>Colour: {data.color}</Text>
+        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000' }}>{data.type}</Text>
+      </View>
+
+      <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: '#000' }}>
+        <Text style={{ flex: 1, borderRightWidth: 1, borderColor: '#000', textAlign: 'center', color: '#000' }}>THICKNESS</Text>
+        <Text style={{ flex: 1, borderRightWidth: 1, borderColor: '#000', textAlign: 'center', color: '#000' }}>WIDTH</Text>
+        <Text style={{ flex: 1, borderRightWidth: 1, borderColor: '#000', textAlign: 'center', color: '#000' }}>LENGTH</Text>
+        <Text style={{ flex: 1, textAlign: 'center' }}>PC</Text>
+      </View>
+
+      {data.lengthAndPieces.map((item, index) => (
+        <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-around', borderBottomWidth: 1, borderColor: '#000' }}>
+          <Text style={{ flex: 1, borderRightWidth: 1, borderColor: '#000', textAlign: 'center' }}>{data.thickness}</Text>
+          <Text style={{ flex: 1, borderRightWidth: 1, borderColor: '#000', textAlign: 'center' }}>{data.width}</Text>
+          <Text style={{ flex: 1, borderRightWidth: 1, borderColor: '#000', textAlign: 'center' }}>{item.length}</Text>
+          <Text style={{ flex: 1, textAlign: 'center' }}>{item.pieces}</Text>
+        </View>
+      ))}
+
+      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', borderTopWidth: 1, borderColor: '#000' }}>
+        <Text style={{ textAlign: 'right', paddingRight: 10 }}>Total</Text>
+        <Text style={{ textAlign: 'right', paddingRight: 10 }}>
+          {data.lengthAndPieces.reduce((sum, item) => sum + parseInt(item.pieces), 0)}
+        </Text>
+      </View>
+
+    </View>
+  );
+};
+
 const DispatchOrder = () => {
 
   const navigation = useNavigation();
@@ -405,61 +441,58 @@ const DispatchOrder = () => {
                 </View>
 
                 {/* Second para */}
-                <View style={{ borderWidth: 1, borderColor: '#000', marginVertical: 8 }}>
-                  <View style={{ flexDirection: 'row', backgroundColor: '#f0f0f0' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', padding: 4 }}>THICKNESS</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', padding: 4 }}>WIDTH</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', padding: 4 }}>LENGTH</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', fontWeight: 'bold', padding: 4 }}>PC</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>0.45</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>3.5</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>17</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>30</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>0.45</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>3.5</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>15.6</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>10</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>0.45</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>3.5</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>13.6</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>10</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, fontWeight: 'bold', borderBottomWidth: 1, borderBottomColor: '#000' }}>Total</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }} />
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }} />
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>50</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>0.40</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>3.5</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>7.8</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>31</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, fontWeight: 'bold', borderBottomWidth: 1, borderBottomColor: '#000' }}>Total</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }} />
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }} />
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>31</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>0.40</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>2</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>10</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>4</Text>
-                  </View>
-                  <View style={{ flexDirection: 'row' }}>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, fontWeight: 'bold', borderBottomWidth: 1, borderBottomColor: '#000' }}>Total</Text>
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }} />
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }} />
-                    <Text style={{ flex: 1, textAlign: 'center', padding: 4, borderBottomWidth: 1, borderBottomColor: '#000' }}>4</Text>
-                  </View>
+                <View style={{ marginVertical: 4, borderColor: '#000', borderWidth: 1 }}>
+                  {billDetails.map((data, index) => (
+                    <View style={{ width: '100%', flexDirection: 'column' }}>
+
+                      <View style={{ width: '100%', flexDirection: 'row' }}>
+
+                        <View style={{ flexDirection: 'column', width: '20%', borderWidth: 0.5, borderColor: '#000', borderBottomWidth: 1, }}>
+                          <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline' }}>Colour: {data.color}</Text>
+                          <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline', marginBottom: 1 }}>{data.type}</Text>
+                        </View>
+
+                        <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderWidth: 0.5, borderColor: '#000', width: '80%' }}>
+                          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%', borderBottomWidth: 1, }}>
+                            <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>THICKNESS</Text>
+                          </View>
+                          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
+                            <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>WIDTH</Text>
+                          </View>
+                          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
+                            <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>LENGTH</Text>
+                          </View>
+                          <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 0.5, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
+                            <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>PC</Text>
+                          </View>
+                        </View>
+
+                      </View>
+
+                      <View>
+                        {data.lengthAndPieces.map((item, index) => (
+                          <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
+                            <View style={{ width: '20%', }}>
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%' }}>
+                              <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness}</Text>
+                              <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.width}</Text>
+                              <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length}</Text>
+                              <Text style={{ textAlign: 'center', color: '#000', width: '25%', borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', fontSize: responsiveFontSize(1.1), fontWeight: '500' }}>{item.pieces}</Text>
+                            </View>
+                          </View>
+                        ))}
+                      </View>
+
+                      <View style={{ flexDirection: 'row', justifyContent: 'flex-end', borderWidth: 1, borderColor: '#000', backgroundColor: '#a2eaf3' }}>
+                        <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), borderColor: '#000', borderWidth: 0.5, width: '80%', paddingRight: 10, }}>Total</Text>
+                        <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), borderColor: '#000', borderWidth: 0.5, width: '20%', textAlign: 'center' }}>
+                          {data.lengthAndPieces.reduce((sum, item) => sum + parseInt(item.pieces), 0)}
+                        </Text>
+                      </View>
+
+                    </View>
+                  ))}
                 </View>
 
                 {/* Third para */}
@@ -482,12 +515,14 @@ const DispatchOrder = () => {
                   </View>
 
                   <View style={{ marginTop: 5 }}>
-                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 2, fontWeight: '700' }}>Dispatch Date:-</Text>
-                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 2, fontWeight: '700' }}>Order By:- P. Chakraborty</Text>
-                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 2, fontWeight: '700' }}>Material weight=</Text>
-                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 2, fontWeight: '700' }}>Advance Payment=</Text>
-                    <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 2, fontWeight: '700' }}>Total Payment= 132800</Text>
-                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:-</Text>
+                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>Dispatch Date:-</Text>
+                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Order By:- P. Chakraborty</Text>
+                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
+                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                      <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = 132800</Text>
+                      <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:- </Text>
+                    </View>
                   </View>
 
                 </View>
