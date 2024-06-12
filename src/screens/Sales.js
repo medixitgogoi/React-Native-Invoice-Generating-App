@@ -1,7 +1,6 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import Icon2 from 'react-native-vector-icons/dist/Ionicons';
-import { zomatoRed } from '../utils/colors';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 
@@ -27,6 +26,9 @@ const Sales = () => {
         // Reverse the formatted number back to its original order.
         return formattedNumber.split('').reverse().join('');
     };
+
+    const viewOrderHandler = () => {
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -56,8 +58,8 @@ const Sales = () => {
                                 <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                             </View>
                             <View>
-                                <View style={{ backgroundColor: '#dde2e5', padding: 5, borderRadius: 5, elevation: 1, }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Delivered</Text>
+                                <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+                                    <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
                                 </View>
                             </View>
                         </View>
@@ -68,32 +70,41 @@ const Sales = () => {
                             {/* Products */}
                             <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
+                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>125 x</Text>
                                     <Text style={{ color: '#000', fontWeight: '500' }}>Ridges</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500' }}>Green</Text>
                                 </View>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
-                                    <Text style={{ color: '#000', fontWeight: '500' }}>Profile Sheet</Text>
-                                </View>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>1 x</Text>
+                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>450 x</Text>
                                     <Text style={{ color: '#000', fontWeight: '500' }}>Tiles Profile Sheet</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500' }}>Red</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>260 x</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500' }}>Profile Sheet</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500' }}>Blue</Text>
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                    <Text style={{ color: '#6f8990', fontWeight: '600' }}>380 x</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500' }}>Tiles Profile Sheet</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                                    <Text style={{ color: '#000', fontWeight: '500' }}>Green</Text>
                                 </View>
                             </View>
 
-                            {/* Date and amount */}
+                            {/* Date and Amount */}
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>03 June 2024 at 12:40PM</Text>
+                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>03 June 2024</Text>
                                 <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>₹{indianNumberFormat(78000)}</Text>
                             </View>
 
-                            {/* Reorder */}
-                            {/* <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 4, marginTop: 4 }}>
-                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.8), color: '#fff', fontWeight: '500' }}>Reorder</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', height: '100%' }}>
-                                    <Icon name="refresh" style={{ width: 20, height: 20, color: '#fff' }} />
-                                </View>
-                            </TouchableOpacity> */}
+                            {/* View Order Button */}
+                            <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8 }} onPress={viewOrderHandler}>
+                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '500', textTransform: 'uppercase' }}>View Order</Text>
+                            </TouchableOpacity>
 
                         </View>
 
@@ -106,6 +117,6 @@ const Sales = () => {
     )
 }
 
-export default Sales
+export default Sales;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

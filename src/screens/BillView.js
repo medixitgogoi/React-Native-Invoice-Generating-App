@@ -14,13 +14,13 @@ const BillView = ({ route }) => {
   const navigation = useNavigation();
 
   const now = new Date();
-  
+
   const day = String(now.getDate()).padStart(2, '0');
-  const month = String(now.getMonth() + 1).padStart(2, '0'); 
+  const month = String(now.getMonth() + 1).padStart(2, '0');
   const year = now.getFullYear();
-  
+
   const formattedDate = `${day}-${month}-${year}`;
-  
+
   const bendCharge = route.params.bend;
   const loadingCharge = route.params.loading;
   const transportCharge = route.params.transport;
@@ -522,16 +522,16 @@ const BillView = ({ route }) => {
           </div>
         </div>
 
-          <div style="flex-direction: column; margin-top: 25px; ">
-            <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Regards</em></p>
-            <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Pooja Roofing Co.(MFG)</em></p>
-          </div>
+        <div style="flex-direction: column; margin-top: 25px; ">
+          <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Regards</em></p>
+          <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Pooja Roofing Co.(MFG)</em></p>
+        </div>
 
-          <div class="signature" >
-            <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Prepared by )</em></p>
-            <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
-            <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
-          </div>
+        <div class="signature" >
+          <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Prepared by )</em></p>
+          <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
+          <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
+        </div>
 
       </body>
 
