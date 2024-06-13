@@ -236,30 +236,32 @@ const DispatchOrder = () => {
   const generateHtmlContent = () => {
     const rows = billDetails.map(detail => {
       const lengths = detail.lengthAndPieces.map(lp => `
-          <tr style="width: 100%; ">
-            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; "></td>
-            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.thickness}</td>
-            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.width}</td>
-            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.length}</td>
-            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.pieces}</td>
-          </tr>
-        `).join('');
+      <tr style="width: 100%; ">
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; "></td> 
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.thickness}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.width}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.length}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.pieces}</td>
+      </tr>
+    `).join('');
+
+      // Calculate the total number of pieces for each detail
+      const totalPieces = detail.lengthAndPieces.reduce((sum, lp) => sum + parseInt(lp.pieces), 0);
+
       return `
-            <tr>
-                <td colspan="4" style="text-align: left; padding: 10px;">Colour: ${detail.color}</td>
-            </tr>
-            <tr>
-                <td colspan="4" style="text-align: left; padding: 10px;">Profile Sheet</td>
-            </tr>
-            ${lengths}
-        `;
+      ${lengths}
+      <tr>
+        <td colspan="4" style="padding: 3px; text-align: right; font-weight: bold;">Total</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center;">${totalPieces}</td>
+      </tr>
+    `;
     }).join('');
 
     return `
         <!DOCTYPE html>
         <html>
             <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
             </head>
             <body style="font-family: Arial, sans-serif; padding: 10px;">
               <div style="border: 1px solid black; padding: 5px; margin: 0; ">
