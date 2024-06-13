@@ -129,119 +129,18 @@ const DispatchOrder = () => {
     return amount;
   };
 
-  //   const htmlContent = `
-  // <!DOCTYPE html>
-  // <html>
-  //   <head>
-  //     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-  //     <style>
-  //       body {
-  //         font-family: Arial, sans-serif;
-  //       }
-  //       .container {
-  //         width: 100%;
-  //         margin: 0 auto;
-  //         padding: 20px;
-  //         border: 1px solid #000;
-  //       }
-  //       .header {
-  //         text-align: center;
-  //       }
-  //       .header h1 {
-  //         margin: 0;
-  //         color: blue;
-  //       }
-  //       .header p {
-  //         margin: 5px 0;
-  //       }
-  //       .invoice-details {
-  //         margin-top: 20px;
-  //       }
-  //       .invoice-details table {
-  //         width: 100%;
-  //         border-collapse: collapse;
-  //       }
-  //       .invoice-details th, .invoice-details td {
-  //         border: 1px solid #000;
-  //         padding: 5px;
-  //         text-align: center;
-  //       }
-  //       .total {
-  //         text-align: right;
-  //         margin-top: 10px;
-  //       }
-  //       .footer {
-  //         margin-top: 20px;
-  //       }
-  //       .footer p {
-  //         margin: 5px 0;
-  //       }
-  //       .highlight {
-  //         background-color: yellow;
-  //       }
-  //     </style>
-  //   </head>
-  //   <body>
-  //     <div class="container">
-  //       <div class="header">
-  //         <h1>POOJA ROOFING CO.(MFG)</h1>
-  //         <p>LOKHRA - LALGANESH ROAD, GUWAHATI - 781034, ASSAM</p>
-  //         <p>GST NO: 18AAZFP3190K1ZD</p>
-  //         <p>REF: DO/24-25/077</p>
-  //         <p>Date: 29-04-2024</p>
-  //       </div>
-  //       <div class="invoice-details">
-  //         <p><strong>PARTY: Saraswati Enterprise</strong></p>
-  //         <table>
-  //           <tr>
-  //             <th>THICKNESS</th>
-  //             <th>WIDTH</th>
-  //             <th>LENGTH</th>
-  //             <th>PC</th>
-  //           </tr>
-  //           ${billDetails.map(item => `
-  //             ${item.lengthAndPieces.map(lp => `
-  //               <tr>
-  //                 <td>${item.thickness}</td>
-  //                 <td>${item.width}</td>
-  //                 <td>${lp.length}</td>
-  //                 <td>${lp.pieces}</td>
-  //               </tr>
-  //             `).join('')}
-  //             <tr>
-  //               <td colspan="4"><strong>Total ${item.type}: ${item.lengthAndPieces.reduce((sum, lp) => sum + parseInt(lp.pieces), 0)}</strong></td>
-  //             </tr>
-  //           `).join('')}
-  //         </table>
-  //       </div>
-  //       <div class="footer">
-  //         <p class="highlight">1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</p>
-  //         <p>2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
-  //         <p>Prepared By: (A.B)</p>
-  //         <p>Checked By</p>
-  //         <div style="flex-direction: row; justify-content: space-between; ">
-  //           <p>Approved by: (S Beniwal)</p>
-  //           <p>Dispatch Date:</p>
-  //         </div>
-  //         <p>Order By: P.Chakraborty</p>
-  //         <p>Material weight=</p>
-  //         <p>Advance Payment=</p>
-  //         <p>Total Payment= 132800</p>
-  //       </div>
-  //     </div>
-  //   </body>
-  // </html>
-  //   `;
-
   const generateHtmlContent = () => {
     const rows = billDetails.map(detail => {
-      const lengths = detail.lengthAndPieces.map(lp => `
-      <tr style="width: 100%; ">
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; "></td> 
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.thickness}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.width}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.length}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.pieces}</td>
+      const lengths = detail.lengthAndPieces.map((lp, index) => `
+      <tr style="width: 100%; margin: 0; ">
+        <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
+          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color : ''}</u></p>
+          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.type : ''}</u></p>
+        </td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.width}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.pieces}</td>
       </tr>
     `).join('');
 
@@ -251,8 +150,11 @@ const DispatchOrder = () => {
       return `
       ${lengths}
       <tr>
-        <td colspan="4" style="padding: 3px; text-align: right; font-weight: bold;">Total</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center;">${totalPieces}</td>
+        <td style="padding: 3px; "></td>
+        <td style="padding: 3px; "></td>
+        <td style="padding: 3px; "></td>
+        <td colspan="1" style="background-color: #a2eaf3; padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
+        <td style="background-color: #a2eaf3; border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
       </tr>
     `;
     }).join('');
@@ -277,11 +179,11 @@ const DispatchOrder = () => {
                 <table style="width: 100%; border-collapse: collapse; ">
                   <thead>
                     <tr style="width: 100%; ">
-                      <th style="padding: 10px; text-align: center; width: 20%; "></th>
-                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">THICKNESS</th>
-                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">WIDTH</th>
-                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">LENGTH</th>
-                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">PC</th>
+                      <th style="padding: 5px; text-align: center; width: 20%; "></th>
+                      <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">THICKNESS</th>
+                      <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">WIDTH</th>
+                      <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">LENGTH</th>
+                      <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">PC</th>
                     </tr>
                   </thead>
                   <tbody>
@@ -289,8 +191,8 @@ const DispatchOrder = () => {
                   </tbody>
                 </table>
                 <div style="font-size: 14px;">
-                  <p>1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</p>
-                  <p>2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
+                  <p style="background-color: yellow; margin: 0; font-size: 12px; ">1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</p>
+                  <p style="font-size: 12px; ">2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
                   <p>Prepared By: P. Chakraborty</p>
                   <p>Material weight=</p>
                   <p>Advance Payment=</p>
