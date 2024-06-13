@@ -1,10 +1,8 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, Image, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, ScrollView } from 'react-native'
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { zomatoRed } from '../utils/colors';
 import { useSelector } from 'react-redux';
-import HTML from 'react-native-render-html';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import PinchZoomView from 'react-native-pinch-zoom-view';
@@ -21,10 +19,6 @@ const DispatchOrder = () => {
   const year = now.getFullYear();
 
   const formattedDate = `${day}-${month}-${year}`;
-
-  const bendCharge = 200;
-  const loadingCharge = 100;
-  const transportCharge = 300;
 
   const [name, setName] = useState('');
   const [site, setSite] = useState('');
@@ -52,81 +46,6 @@ const DispatchOrder = () => {
       items += num;
     })
     return items;
-  };
-
-  function indianNumberFormat(number) {
-    // Split the number into an array of digits.
-    const digits = number.toString().split('');
-
-    // Reverse the array of digits.
-    digits.reverse();
-
-    // Add a comma after every three digits, starting from the right.
-    for (let i = 3; i < digits.length; i += 3) {
-      digits.splice(i, 0, ',');
-    }
-
-    // Join the array of digits back into a string.
-    const formattedNumber = digits.join('');
-
-    // Reverse the formatted number back to its original order.
-    return formattedNumber.split('').reverse().join('');
-  };
-
-  function numberToWords(num) {
-    if (num === 0) return 'Zero';
-
-    const belowTwenty = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-    const thousands = ['', 'Thousand', 'Lakh', 'Crore'];
-
-    function numberToWordsBelowThousand(num) {
-      if (num < 20) return belowTwenty[num];
-      if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + belowTwenty[num % 10] : '');
-      return belowTwenty[Math.floor(num / 100)] + ' Hundred' + (num % 100 !== 0 ? ' ' + numberToWordsBelowThousand(num % 100) : '');
-    }
-
-    let word = '';
-    let index = 0;
-
-    while (num > 0) {
-      let part = num % 1000;
-
-      if (index === 1) part = num % 100;
-
-      if (part > 0) {
-        let partInWords = numberToWordsBelowThousand(part);
-        if (index > 0) {
-          word = partInWords + ' ' + thousands[index] + ' ' + word;
-        } else {
-          word = partInWords;
-        }
-      }
-
-      num = Math.floor(num / (index === 1 ? 100 : 1000));
-      index++;
-    }
-
-    return word.trim();
-  };
-
-  const calculateTotalPrice = () => {
-    let amount = 0;
-
-    billDetails.map(item => {
-      let quantity = 0;
-
-      item.lengthAndPieces.map(item => {
-        quantity += item.length * item.pieces;
-      })
-
-      amount += quantity * item.rate;
-
-    })
-
-    amount += parseInt(bendCharge) + parseInt(loadingCharge) + parseInt(transportCharge);
-
-    return amount;
   };
 
   const generateHtmlContent = () => {
@@ -168,13 +87,13 @@ const DispatchOrder = () => {
 
               @page {
                 margin-top: 15px;
-                margin-bottom: 10px;
+                margin-bottom: 15px;
               }
             
             </style>
           </head>
-          <body style="font-family: Arial, sans-serif; padding: 10px;">
-            <div style="border: 1px solid black; padding: 5px; margin: 0; ">
+          <body style="font-family: Arial, sans-serif; padding: 20px;">
+            <div style="margin: 0; ">
               
               <div style="text-align: center; font-size: 19px; font-weight: bold; color: #1bb3c7; margin-bottom: 2px; "><u>POOJA ROOFING CO. (MFG)</u></div>
               <div style="text-align: center; font-size: 13px; margin-bottom: 15px; ">LOKHRA - LALGANESH ROAD, GUWAHATI - 781034, ASSAM</div>
@@ -192,10 +111,10 @@ const DispatchOrder = () => {
                 <thead>
                   <tr style="width: 100%; ">
                     <th style="padding: 5px; text-align: center; width: 20%; "></th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">THICKNESS</th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">WIDTH</th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">LENGTH</th>
-                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">PC</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; background-color: #7ff460; ">THICKNESS</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; background-color: #7ff460; ">WIDTH</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; background-color: #7ff460; ">LENGTH</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; background-color: #7ff460; ">PC</th>
                   </tr>
                 </thead>
                 <tbody>
@@ -206,7 +125,7 @@ const DispatchOrder = () => {
               <div style="font-size: 14px; margin-top: 10px; ${NoOfItems() > 24 ? `page-break-before: always;` : ``} ">
                 <p style="background-color: yellow; margin: 0; font-size: 12px; font-weight: 600; ">1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</p>
                 <p style="font-size: 12px; margin: 0; margin-top: 3px; font-weight: 600; ">2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
-                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 10px; margin-bottom: 10px;  ">
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 30px; margin-bottom: 10px;  ">
                   <div style="display: flex; flex-direction: column; align-items: center; ">
                     <p style="margin: 0; font-size: 12px; font-weight: 500; ">Prepared By </p>
                     <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(A.B.)</p>
@@ -232,6 +151,8 @@ const DispatchOrder = () => {
         </html>
     `;
   };
+
+  const htmlContent = generateHtmlContent();
 
   const generateInvoice = async () => {
 
@@ -261,8 +182,6 @@ const DispatchOrder = () => {
       console.error(error);
     }
   };
-
-  const htmlContent = generateHtmlContent();
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: '#444444', paddingBottom: 10, }}>
@@ -300,7 +219,7 @@ const DispatchOrder = () => {
           <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20, paddingBottom: 40 }}>
 
             <View style={{ height: '100%', backgroundColor: '#fff', width: '100%', padding: 12 }}>
-              <View style={{ borderColor: '#000', borderWidth: 1, padding: 2 }}>
+              <View style={{ padding: 2 }}>
 
                 {/* First para */}
                 <View>

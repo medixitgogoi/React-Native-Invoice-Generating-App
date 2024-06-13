@@ -544,7 +544,111 @@ const Practice2 = () => {
 
     </html>
 
+  `;
+
+  const generateHtmlContent = () => {
+    const rows = billDetails.map(detail => {
+      const lengths = detail.lengthAndPieces.map((lp, index) => `
+      <tr style="width: 100%; margin: 0; ">
+        <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
+          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color : ''}</u></p>
+          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.type : ''}</u></p>
+        </td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.width}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.pieces}</td>
+      </tr>
+    `).join('');
+
+      // Calculate the total number of pieces for each detail
+      const totalPieces = detail.lengthAndPieces.reduce((sum, lp) => sum + parseInt(lp.pieces), 0);
+
+      return `
+      ${lengths}
+      <tr>
+        <td style="padding: 3px; "></td>
+        <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
+        <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
+        <td colspan="1" style="background-color: #a2eaf3; padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
+        <td style="background-color: #a2eaf3; border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
+      </tr>
     `;
+    }).join('');
+
+    return `
+        <!DOCTYPE html>
+        <html>
+          <head>
+            <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+            <style>
+
+              @page {
+                margin-top: 15px;
+                margin-bottom: 10px;
+              }
+            
+            </style>
+          </head>
+          <body style="font-family: Arial, sans-serif; padding: 10px;">
+            <div style="border: 1px solid black; padding: 5px; margin: 0; ">
+              
+              <div style="text-align: center; font-size: 19px; font-weight: bold; color: #1bb3c7; margin-bottom: 2px; "><u>POOJA ROOFING CO. (MFG)</u></div>
+              <div style="text-align: center; font-size: 13px; margin-bottom: 15px; ">LOKHRA - LALGANESH ROAD, GUWAHATI - 781034, ASSAM</div>
+              <div style="text-align: center; font-size: 16px; margin-bottom: 5px; font-weight: 600;"><u>GST NO: 18AAZFP3190K1ZD</u></div>
+              
+              <div style="flex-direction: row; justify-content: space-between; display: flex; margin-bottom: 10px;">
+                <div style="text-align: center; font-size: 12px; font-weight: 600; ">REF: DO/24-25/077</div>
+                <div style="text-align: center; font-size: 12px; font-weight: 600; "><u>${formattedDate}</u></div>
+              </div>
+              
+              <div style="text-align: center; font-size: 18px; margin-bottom: 15px; font-weight: 700; "><u>DISPATCH ORDER</u></div>
+              <div style="text-align: center; font-size: 18px; margin-bottom: 5px; font-weight: 700;">PARTY: Saraswati Enterprise</div>
+              
+              <table style="width: 100%; border-collapse: collapse; ">
+                <thead>
+                  <tr style="width: 100%; ">
+                    <th style="padding: 5px; text-align: center; width: 20%; "></th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">THICKNESS</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">WIDTH</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">LENGTH</th>
+                    <th style="border: 1px solid black; padding: 5px; text-align: center; width: 20%; font-size: 12px; ">PC</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  ${rows}
+                </tbody>
+              </table>
+              
+              <div style="font-size: 14px; margin-top: 10px; ${NoOfItems() > 24 ? `page-break-before: always;` : ``} ">
+                <p style="background-color: yellow; margin: 0; font-size: 12px; font-weight: 600; ">1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</p>
+                <p style="font-size: 12px; margin: 0; margin-top: 3px; font-weight: 600; ">2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 10px; margin-bottom: 10px;  ">
+                  <div style="display: flex; flex-direction: column; align-items: center; ">
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; ">Prepared By </p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(A.B.)</p>
+                  </div>
+                  <p style="margin: 0; font-size: 12px; font-weight: 500; ">Checked By </p>
+                  <div style="display: flex; flex-direction: column; align-items: center; ">
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; ">Approved By </p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(S.Beniwal)</p>
+                  </div>               
+                </div>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Dispatch Date:- </p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Order By:- P. Chakraborty </p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Material weight=</p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Advance Payment=</p>
+                <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin: 0; margin-top: 3px; font-weight: 600;">
+                  <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= 132800</p>
+                  <p style="color: black; margin: 0; font-size: 12px; ">Receipt No: </p>
+                </div>
+              </div>
+            
+            </div>
+          </body>
+        </html>
+    `;
+  };
 
   return (
     <View>
