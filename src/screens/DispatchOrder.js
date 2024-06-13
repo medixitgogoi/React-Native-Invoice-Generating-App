@@ -237,14 +237,11 @@ const DispatchOrder = () => {
     const rows = billDetails.map(detail => {
       const lengths = detail.lengthAndPieces.map(lp => `
           <tr style="width: 100%; ">
-            <td style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; color: white; ">
-              <p style="color: black; font-size: 12px; "><u>Colour: ${detail.color}</u></p>
-              <p style="color: black; font-size: 12px; "><u>${detail.type}</u></p>
-            </td>
-            <td style="border: 1px solid black; padding: 10px; text-align: center; width: 20%;">${detail.thickness}</td>
-            <td style="border: 1px solid black; padding: 10px; text-align: center; width: 20%;">${detail.width}</td>
-            <td style="border: 1px solid black; padding: 10px; text-align: center; width: 20%;">${lp.length}</td>
-            <td style="border: 1px solid black; padding: 10px; text-align: center; width: 20%;">${lp.pieces}</td>
+            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; "></td>
+            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.thickness}</td>
+            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${detail.width}</td>
+            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.length}</td>
+            <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; ">${lp.pieces}</td>
           </tr>
         `).join('');
       return `
@@ -276,25 +273,29 @@ const DispatchOrder = () => {
                 <div style="text-align: center; font-size: 18px; margin-bottom: 15px; font-weight: 700; "><u>DISPATCH ORDER</u></div>
                 <div style="text-align: center; font-size: 18px; margin-bottom: 5px; font-weight: 700;">PARTY: Saraswati Enterprise</div>
                 <table style="width: 100%; border-collapse: collapse; ">
-                    <thead>
-                        <tr>
-                            <th style="border: 1px solid black; padding: 10px; text-align: center;">THICKNESS</th>
-                            <th style="border: 1px solid black; padding: 10px; text-align: center;">WIDTH</th>
-                            <th style="border: 1px solid black; padding: 10px; text-align: center;">LENGTH</th>
-                            <th style="border: 1px solid black; padding: 10px; text-align: center;">PC</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        ${rows}
-                    </tbody>
+                  <thead>
+                    <tr style="width: 100%; ">
+                      <th style="padding: 10px; text-align: center; width: 20%; "></th>
+                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">THICKNESS</th>
+                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">WIDTH</th>
+                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">LENGTH</th>
+                      <th style="border: 1px solid black; padding: 10px; text-align: center; width: 20%; ">PC</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    ${rows}
+                  </tbody>
                 </table>
                 <div style="font-size: 14px;">
-                    <p>1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</p>
-                    <p>2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
-                    <p>Prepared By: P. Chakraborty</p>
-                    <p>Material weight=</p>
-                    <p>Advance Payment=</p>
-                    <p>Total Payment= 132800</p>
+                  <p>1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</p>
+                  <p>2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
+                  <p>Prepared By: P. Chakraborty</p>
+                  <p>Material weight=</p>
+                  <p>Advance Payment=</p>
+                  <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; ">
+                    <p style="color: black; ">Total Payment= 132800</p>
+                    <p style="color: black; ">Receipt No: </p>
+                  </div>
                 </div>
               </div>
             </body>
