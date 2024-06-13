@@ -412,10 +412,6 @@ const BillView = ({ route }) => {
             margin-top: 20px;
           }
 
-          .gapping {
-            page-break-before: always;
-          }
-
         </style>
       </head>
 
