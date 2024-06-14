@@ -1,5 +1,6 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
@@ -28,6 +29,7 @@ const Sales = () => {
     };
 
     const viewOrderHandler = () => {
+        navigation.navigate('OrderDetails');
     }
 
     return (
@@ -97,12 +99,15 @@ const Sales = () => {
 
                             {/* Date and Amount */}
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
-                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>03 June 2024</Text>
-                                <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>₹{indianNumberFormat(78000)}</Text>
+                                <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7) }}>03 June 2024</Text>
+                                <Text style={{ color: '#000', fontSize: responsiveFontSize(2), fontWeight: '500' }}>₹{indianNumberFormat(78000)}</Text>
                             </View>
 
                             {/* View Order Button */}
-                            <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8 }} onPress={viewOrderHandler}>
+                            <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={viewOrderHandler}>
+                                <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                    <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
+                                </View>
                                 <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '500', textTransform: 'uppercase' }}>View Order</Text>
                             </TouchableOpacity>
 

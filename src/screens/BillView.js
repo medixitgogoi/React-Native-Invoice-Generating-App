@@ -9,7 +9,7 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 
-const BillView = ({ route }) => {
+const OrderDetails = ({ route }) => {
 
   const navigation = useNavigation();
 
@@ -882,6 +882,6 @@ const BillView = ({ route }) => {
   )
 }
 
-export default BillView;
+export default OrderDetails;
 
 const styles = StyleSheet.create({});

@@ -35,17 +35,17 @@ const Invoice = ({ route }) => {
                     <View style={{ paddingVertical: 8, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10 }}>
 
                         <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 50, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 27, height: 27 }} onPress={() => navigation.goBack()}>
-                            <Icon name="keyboard-arrow-left" size={24} color={lightZomatoRed} />
+                            <Icon name="keyboard-arrow-left" size={22} color={'#fff'} />
                         </TouchableOpacity>
 
                         <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
 
                             <TouchableOpacity style={{ backgroundColor: tab === 1 ? zomatoRed : '#fff', padding: 8, borderTopLeftRadius: 7, borderBottomLeftRadius: 7, borderColor: zomatoRed, borderWidth: 1, borderRightWidth: 0.5 }} onPress={() => tabChangeHandler()}>
-                                <Text style={{ color: tab === 1 ? lightZomatoRed : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Invoice</Text>
+                                <Text style={{ color: tab === 1 ? '#fff' : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Invoice</Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity style={{ backgroundColor: tab === 2 ? zomatoRed : '#fff', padding: 8, borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 7, borderBottomRightRadius: 7, borderLeftWidth: 0.5 }} onPress={() => tabChangeHandler()}>
-                                <Text style={{ color: tab === 2 ? lightZomatoRed : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Dispatch Order</Text>
+                                <Text style={{ color: tab === 2 ? '#fff' : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Dispatch Order</Text>
                             </TouchableOpacity>
 
                         </View>

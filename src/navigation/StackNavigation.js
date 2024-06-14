@@ -15,6 +15,7 @@ import PartyReport from '../screens/PartyReport';
 import Sales from '../screens/Sales';
 import FillUpDetails from '../screens/FillUpDetails';
 import Invoice from '../screens/Invoice';
+import OrderDetails from '../screens/BillView';
 
 const StackNavigation = () => {
 
@@ -36,6 +37,7 @@ const StackNavigation = () => {
                 <Stack.Screen name="Sales" component={Sales} />
                 <Stack.Screen name="FillUpDetails" component={FillUpDetails} />
                 <Stack.Screen name="Invoice" component={Invoice} />
+                <Stack.Screen name="OrderDetails" component={OrderDetails} />
             </Stack.Navigator>
         </NavigationContainer>
     )

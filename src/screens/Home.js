@@ -67,12 +67,6 @@ const Home = () => {
 
             </View>
 
-            {billDetails.length !== 0 && (
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '95%', alignSelf: 'center', padding: 8, borderRadius: 5, position: 'absolute', bottom: 15, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }} onPress={() => navigation.navigate('BillDetails')}>
-                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2), textTransform: 'uppercase' }}>Bill Details</Text>
-                </TouchableOpacity>
-            )}
-
         </SafeAreaView>
     )
 }
