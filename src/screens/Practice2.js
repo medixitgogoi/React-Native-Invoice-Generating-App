@@ -660,5 +660,3 @@ const Practice2 = () => {
 export default Practice2
 
 const styles = StyleSheet.create({})
-
-{/* <TableComponent key={index} data={data} /> */ }

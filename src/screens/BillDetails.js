@@ -69,7 +69,8 @@ const BillDetails = () => {
     }
 
     const viewBillHandler = () => {
-        navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport })
+        // navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport })
+        navigation.navigate('Invoice');
     }
 
     const removeProductHandler = (item) => {
@@ -308,7 +309,7 @@ const BillDetails = () => {
                     </Text>
                 </TouchableOpacity>
 
-                {/* View bill */}
+                {/* View Invoice */}
                 {productDetails.length !== 0 && (
                     <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 5, height: 42, }} onPress={viewBillHandler}>
                         <View style={{ backgroundColor: lightZomatoRed, height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
