@@ -96,7 +96,8 @@ const Profile = () => {
 
             </View>
 
-            <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-end', height: '37%' }}>
+            {/* Copyright */}
+            <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-end', height: 20, position: 'absolute', bottom: 8, }}>
                 <Text style={{ color: '#678e8c', fontWeight: '400', fontSize: responsiveFontSize(1.6) }}>© 2024 ColorTuff. All rights reserved.</Text>
             </View>
 

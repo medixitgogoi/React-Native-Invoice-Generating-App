@@ -158,7 +158,7 @@ const FillUpDetails = () => {
 
                     {/* Headline */}
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginBottom: 10, marginBottom: 15 }}>
-                        <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Fill up the details below</Text>
+                        <Text style={{ textAlign: 'center', color: '#383838', fontWeight: '600', fontSize: responsiveFontSize(2.2), }}>Fill up the details below</Text>
                     </View>
 
                     {/* Unit and thickness */}

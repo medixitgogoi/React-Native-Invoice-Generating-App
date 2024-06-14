@@ -304,8 +304,8 @@ const DispatchOrderView = () => {
 
             {/* Share button */}
             <TouchableOpacity style={{ marginTop: 10, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 5 }} onPress={generateInvoice}>
-                <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 24, width: 24 }}>
-                    <Icon2 name="share" size={16} color={zomatoRed} />
+                <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
+                    <Icon2 name="share" size={13} color={zomatoRed} />
                 </View>
                 <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
             </TouchableOpacity>

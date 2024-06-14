@@ -35,33 +35,33 @@ const Home = () => {
             </View>
 
             {/* Content */}
-            <View style={{ padding: 10, width: '100%', flexDirection: 'row', flexWrap: 'wrap', justifyContent: 'space-evenly', alignItems: 'center', gap: 10 }}>
+            <View style={{ padding: 10, width: '100%', flexDirection: 'column', flexWrap: 'wrap', alignItems: 'center', gap: 10 }}>
 
-                <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, height: 50, flexDirection: 'row', alignItems: 'center', padding: 8, justifyContent: 'space-between', elevation: 2, borderRadius: 5 }} onPress={() => navigation.navigate("PIMyInvoice")}>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>PI My Invoice</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: lightZomatoRed, borderRadius: 100 }}>
-                        <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
+                <TouchableOpacity style={{ width: '100%', backgroundColor: lightZomatoRed, height: 40, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, justifyContent: 'space-between', elevation: 2, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }} onPress={() => navigation.navigate("PIMyInvoice")}>
+                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>PI My Invoice</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 100 }}>
+                        <Icon name="keyboard-arrow-right" size={20} color={lightZomatoRed} />
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, height: 50, flexDirection: 'row', alignItems: 'center', padding: 8, justifyContent: 'space-between', elevation: 2, borderRadius: 5 }} onPress={() => navigation.navigate("DispatchOrder")}>
+                {/* <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, height: 50, flexDirection: 'row', alignItems: 'center', padding: 8, justifyContent: 'space-between', elevation: 2, borderRadius: 5 }} onPress={() => navigation.navigate("DispatchOrder")}>
                     <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Dispatch Order</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: lightZomatoRed, borderRadius: 100 }}>
                         <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
                     </View>
-                </TouchableOpacity>
+                </TouchableOpacity> */}
 
-                <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, height: 50, flexDirection: 'row', alignItems: 'center', padding: 8, justifyContent: 'space-between', elevation: 2, borderRadius: 5 }} onPress={() => navigation.navigate("SalesmanReport")}>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Salesman Report</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: lightZomatoRed, borderRadius: 100 }}>
-                        <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
+                <TouchableOpacity style={{ width: '100%', backgroundColor: lightZomatoRed, height: 40, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, justifyContent: 'space-between', elevation: 2, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }} onPress={() => navigation.navigate("Sales")}>
+                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Salesman Report</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 100 }}>
+                        <Icon name="keyboard-arrow-right" size={20} color={lightZomatoRed} />
                     </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, height: 50, flexDirection: 'row', alignItems: 'center', padding: 8, justifyContent: 'space-between', elevation: 2, borderRadius: 5 }} onPress={() => navigation.navigate("PartyReport")}>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Party Report</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: lightZomatoRed, borderRadius: 100 }}>
-                        <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
+                <TouchableOpacity style={{ width: '100%', backgroundColor: lightZomatoRed, height: 40, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, justifyContent: 'space-between', elevation: 2, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }} onPress={() => navigation.navigate("PartyReport")}>
+                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Party Report</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 100 }}>
+                        <Icon name="keyboard-arrow-right" size={20} color={lightZomatoRed} />
                     </View>
                 </TouchableOpacity>
 

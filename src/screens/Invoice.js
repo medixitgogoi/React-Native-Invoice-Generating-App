@@ -40,11 +40,11 @@ const Invoice = ({ route }) => {
 
                         <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
 
-                            <TouchableOpacity style={{ backgroundColor: tab === 1 ? zomatoRed : lightZomatoRed, padding: 8, borderTopLeftRadius: 7, borderBottomLeftRadius: 7, borderColor: zomatoRed, borderWidth: 1, borderRightWidth: 0.5 }} onPress={() => tabChangeHandler()}>
+                            <TouchableOpacity style={{ backgroundColor: tab === 1 ? zomatoRed : '#fff', padding: 8, borderTopLeftRadius: 7, borderBottomLeftRadius: 7, borderColor: zomatoRed, borderWidth: 1, borderRightWidth: 0.5 }} onPress={() => tabChangeHandler()}>
                                 <Text style={{ color: tab === 1 ? lightZomatoRed : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Invoice</Text>
                             </TouchableOpacity>
 
-                            <TouchableOpacity style={{ backgroundColor: tab === 2 ? zomatoRed : lightZomatoRed, padding: 8, borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 7, borderBottomRightRadius: 7, borderLeftWidth: 0.5 }} onPress={() => tabChangeHandler()}>
+                            <TouchableOpacity style={{ backgroundColor: tab === 2 ? zomatoRed : '#fff', padding: 8, borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 7, borderBottomRightRadius: 7, borderLeftWidth: 0.5 }} onPress={() => tabChangeHandler()}>
                                 <Text style={{ color: tab === 2 ? lightZomatoRed : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Dispatch Order</Text>
                             </TouchableOpacity>
 
@@ -66,6 +66,6 @@ const Invoice = ({ route }) => {
     )
 }
 
-export default Invoice
+export default Invoice;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
