@@ -2,6 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, Text
 import { useState } from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
+import Icon3 from 'react-native-vector-icons/dist/AntDesign';
 import { useNavigation } from '@react-navigation/native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -14,7 +15,6 @@ const BillDetails = () => {
     const dispatch = useDispatch();
 
     const productDetails = useSelector(state => state.bill);
-    // console.log(productDetails);
 
     const navigation = useNavigation();
 
@@ -70,7 +70,7 @@ const BillDetails = () => {
 
     const viewBillHandler = () => {
         // navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport })
-        navigation.navigate('Invoice');
+        navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
     }
 
     const removeProductHandler = (item) => {
@@ -309,13 +309,13 @@ const BillDetails = () => {
                     </Text>
                 </TouchableOpacity>
 
-                {/* View Invoice */}
+                {/* Continue */}
                 {productDetails.length !== 0 && (
-                    <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 5, height: 42, }} onPress={viewBillHandler}>
-                        <View style={{ backgroundColor: lightZomatoRed, height: 20, width: 20, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
-                            <Icon2 name="newspaper" size={14} color={zomatoRed} />
+                    <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 4, height: 42, }} onPress={viewBillHandler}>
+                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Continue</Text>
+                        <View style={{ backgroundColor: zomatoRed, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                            <Icon2 name="arrow-forward-circle" size={23} color={lightZomatoRed} />
                         </View>
-                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>View Invoice</Text>
                     </TouchableOpacity>
                 )}
 

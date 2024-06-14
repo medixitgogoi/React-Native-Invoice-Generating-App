@@ -29,7 +29,6 @@ const StackNavigation = () => {
                 <Stack.Screen name="Profile" component={Profile} />
                 <Stack.Screen name="BillDetails" component={BillDetails} />
                 <Stack.Screen name="SplashScreen" component={SplashScreen} />
-                <Stack.Screen name="BillView" component={BillView} />
                 <Stack.Screen name="PIMyInvoice" component={PIMyInvoice} />
                 <Stack.Screen name="DispatchOrder" component={DispatchOrder} />
                 <Stack.Screen name="SalesmanReport" component={SalesmanReport} />

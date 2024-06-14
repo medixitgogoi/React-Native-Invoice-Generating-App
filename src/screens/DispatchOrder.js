@@ -1,5 +1,5 @@
 import { useNavigation } from '@react-navigation/native';
-import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, ScrollView } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, ScrollView } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useSelector } from 'react-redux';
@@ -342,5 +342,3 @@ const DispatchOrder = () => {
 export default DispatchOrder;
 
 const styles = StyleSheet.create({});
-
-{/* <HTML source={{ html: htmlContent2 }} /> */ }

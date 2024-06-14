@@ -3,21 +3,34 @@ import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
+import { useState } from 'react';
+import InvoiceView from '../components/InvoiceView';
+import DispatchOrderView from '../components/DispatchOrderView';
 
 const Invoice = ({ route }) => {
 
+    const bendCharge = route.params.bend;
+    const loadingCharge = route.params.loading;
+    const transportCharge = route.params.transport;
+
     const navigation = useNavigation();
 
+    const [tab, setTab] = useState(1);
+
+    const tabChangeHandler = () => {
+        setTab(tab === 1 ? 2 : 1);
+    }
+
     return (
-        <SafeAreaView style={{ flex: 1, backgroundColor: "#fff", flexDirection: "column", }}>
+        <SafeAreaView style={{ flex: 1, backgroundColor: "#f6f6f6", flexDirection: "column", }}>
             <StatusBar
                 animated={true}
-                backgroundColor={'#fff'}
+                backgroundColor={'#f6f6f6'}
                 barStyle="dark-content"
             />
 
             {/* header */}
-            <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between" }}>
+            <View style={{ flexDirection: "row", backgroundColor: "#f6f6f6", alignItems: "center", justifyContent: "space-between" }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", }}>
                     <View style={{ paddingVertical: 8, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10 }}>
 
@@ -26,16 +39,27 @@ const Invoice = ({ route }) => {
                         </TouchableOpacity>
 
                         <View style={{ width: '90%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', }}>
-                            <View style={{ backgroundColor: lightZomatoRed, padding: 8, borderTopLeftRadius: 7, borderBottomLeftRadius: 7, borderColor: zomatoRed, borderWidth: 1, borderRightWidth: 0.5 }}>
-                                <Text style={{ color: zomatoRed }}>View Invoice</Text>
-                            </View>
-                            <View style={{ backgroundColor: lightZomatoRed, padding: 8, borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 7, borderBottomRightRadius: 7, borderLeftWidth: 0.5 }}>
-                                <Text style={{ color: zomatoRed }}>View Dispatch Order</Text>
-                            </View>
+
+                            <TouchableOpacity style={{ backgroundColor: tab === 1 ? zomatoRed : lightZomatoRed, padding: 8, borderTopLeftRadius: 7, borderBottomLeftRadius: 7, borderColor: zomatoRed, borderWidth: 1, borderRightWidth: 0.5 }} onPress={() => tabChangeHandler()}>
+                                <Text style={{ color: tab === 1 ? lightZomatoRed : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Invoice</Text>
+                            </TouchableOpacity>
+
+                            <TouchableOpacity style={{ backgroundColor: tab === 2 ? zomatoRed : lightZomatoRed, padding: 8, borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 7, borderBottomRightRadius: 7, borderLeftWidth: 0.5 }} onPress={() => tabChangeHandler()}>
+                                <Text style={{ color: tab === 2 ? lightZomatoRed : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Dispatch Order</Text>
+                            </TouchableOpacity>
+
                         </View>
 
                     </View>
                 </View>
+            </View>
+
+            <View style={{ margin: 10, }}>
+                {tab === 1 ? (
+                    <InvoiceView bendCharge={bendCharge} loadingCharge={loadingCharge} transportCharge={transportCharge} />
+                ) : (
+                    <DispatchOrderView />
+                )}
             </View>
 
         </SafeAreaView>
