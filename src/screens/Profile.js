@@ -26,9 +26,9 @@ const Profile = () => {
                         </TouchableOpacity>
                         <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Profile</Text>
                     </View>
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: lightZomatoRed, borderRadius: 50, width: 30, height: 30, justifyContent: 'center', marginRight: 12, borderColor: zomatoRed, borderWidth: 1 }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: zomatoRed, borderRadius: 50, width: 26, height: 26, justifyContent: 'center', marginRight: 12, borderColor: zomatoRed, borderWidth: 0.8, elevation: 1,  }}>
                         <TouchableOpacity style={{}} onPress={() => navigation.navigate('Home')}>
-                            <Icon2 name="home" size={18} color={zomatoRed} />
+                            <Icon2 name="home" size={15} color={lightZomatoRed} />
                         </TouchableOpacity>
                     </View>
                 </View>
