@@ -12,6 +12,15 @@ const Invoice = ({ route }) => {
     const bendCharge = route.params.bend;
     const loadingCharge = route.params.loading;
     const transportCharge = route.params.transport;
+    const bendCharge = route.params.bend;
+    const loadingCharge = route.params.loading;
+    const transportCharge = route.params.transport;
+    const bendCharge = route.params.bend;
+    const loadingCharge = route.params.loading;
+    const transportCharge = route.params.transport;
+    const bendCharge = route.params.bend;
+    const loadingCharge = route.params.loading;
+    const transportCharge = route.params.transport;
 
     const navigation = useNavigation();
 
