@@ -9,8 +9,6 @@ const Home = () => {
 
     const navigation = useNavigation();
 
-    const billDetails = useSelector(state => state.bill);
-
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
             <StatusBar

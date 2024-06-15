@@ -1,9 +1,8 @@
-import React from 'react'
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native'
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity } from 'react-native';
 import { zomatoRed } from '../utils/colors';
-import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { useNavigation } from '@react-navigation/native';
+import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 
 const OrderDetails = () => {
 
@@ -19,15 +18,17 @@ const OrderDetails = () => {
                         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                             <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
                         </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>My Sales</Text>
+                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Order Details</Text>
                     </View>
                 </View>
             </View>
+
+            
 
         </SafeAreaView>
     )
 }
 
-export default OrderDetails
+export default OrderDetails;
 
 const styles = StyleSheet.create({})

@@ -11,127 +11,127 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 
 const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
-    const now = new Date();
+  const now = new Date();
 
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const year = now.getFullYear();
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const year = now.getFullYear();
 
-    const formattedDate = `${day}-${month}-${year}`;
+  const formattedDate = `${day}-${month}-${year}`;
 
-    const [name, setName] = useState('');
-    const [site, setSite] = useState('');
-    const [pan, setPan] = useState('');
-    const [contact, setContact] = useState('');
-    const [gstin, setGstin] = useState('');
+  const [name, setName] = useState('');
+  const [site, setSite] = useState('');
+  const [pan, setPan] = useState('');
+  const [contact, setContact] = useState('');
+  const [gstin, setGstin] = useState('');
 
-    const userDetails = useSelector(state => state.user);
-    const billDetails = useSelector(state => state.bill);
+  const userDetails = useSelector(state => state.user);
+  const billDetails = useSelector(state => state.bill);
 
-    const calculateTotalPrice = () => {
-        let amount = 0;
+  const calculateTotalPrice = () => {
+    let amount = 0;
 
-        billDetails.map(item => {
-            let quantity = 0;
+    billDetails.map(item => {
+      let quantity = 0;
 
-            item.lengthAndPieces.map(item => {
-                quantity += item.length * item.pieces;
-            })
+      item.lengthAndPieces.map(item => {
+        quantity += item.length * item.pieces;
+      })
 
-            amount += quantity * item.rate;
+      amount += quantity * item.rate;
 
-        })
+    })
 
-        amount += parseInt(bendCharge) + parseInt(loadingCharge) + parseInt(transportCharge);
+    amount += parseInt(bendCharge) + parseInt(loadingCharge) + parseInt(transportCharge);
 
-        return amount;
-    };
+    return amount;
+  };
 
-    useEffect(() => {
-        userDetails.map(user => {
-            setName(user.name)
-            setSite(user.site)
-            setPan(user.pan)
-            setContact(user.contact)
-            setGstin(user.gstin)
-        })
-    }, []);
+  useEffect(() => {
+    userDetails.map(user => {
+      setName(user.name)
+      setSite(user.site)
+      setPan(user.pan)
+      setContact(user.contact)
+      setGstin(user.gstin)
+    })
+  }, []);
 
-    const NoOfItems = () => {
-        let items = 0;
-        billDetails.map(item => {
-            let num = item.lengthAndPieces.length;
-            items += num;
-        })
-        return items;
-    };
+  const NoOfItems = () => {
+    let items = 0;
+    billDetails.map(item => {
+      let num = item.lengthAndPieces.length;
+      items += num;
+    })
+    return items;
+  };
 
-    function indianNumberFormat(number) {
-        // Split the number into an array of digits.
-        const digits = number.toString().split('');
+  function indianNumberFormat(number) {
+    // Split the number into an array of digits.
+    const digits = number.toString().split('');
 
-        // Reverse the array of digits.
-        digits.reverse();
+    // Reverse the array of digits.
+    digits.reverse();
 
-        // Add a comma after every three digits, starting from the right.
-        for (let i = 3; i < digits.length; i += 3) {
-            digits.splice(i, 0, ',');
+    // Add a comma after every three digits, starting from the right.
+    for (let i = 3; i < digits.length; i += 3) {
+      digits.splice(i, 0, ',');
+    }
+
+    // Join the array of digits back into a string.
+    const formattedNumber = digits.join('');
+
+    // Reverse the formatted number back to its original order.
+    return formattedNumber.split('').reverse().join('');
+  };
+
+  function numberToWords(num) {
+    if (num === 0) return 'Zero';
+
+    const belowTwenty = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const thousands = ['', 'Thousand', 'Lakh', 'Crore'];
+
+    function numberToWordsBelowThousand(num) {
+      if (num < 20) return belowTwenty[num];
+      if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + belowTwenty[num % 10] : '');
+      return belowTwenty[Math.floor(num / 100)] + ' Hundred' + (num % 100 !== 0 ? ' ' + numberToWordsBelowThousand(num % 100) : '');
+    }
+
+    let word = '';
+    let index = 0;
+
+    while (num > 0) {
+      let part = num % 1000;
+
+      if (index === 1) part = num % 100;
+
+      if (part > 0) {
+        let partInWords = numberToWordsBelowThousand(part);
+        if (index > 0) {
+          word = partInWords + ' ' + thousands[index] + ' ' + word;
+        } else {
+          word = partInWords;
         }
+      }
 
-        // Join the array of digits back into a string.
-        const formattedNumber = digits.join('');
+      num = Math.floor(num / (index === 1 ? 100 : 1000));
+      index++;
+    }
 
-        // Reverse the formatted number back to its original order.
-        return formattedNumber.split('').reverse().join('');
-    };
+    return word.trim();
+  };
 
-    function numberToWords(num) {
-        if (num === 0) return 'Zero';
-
-        const belowTwenty = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-        const thousands = ['', 'Thousand', 'Lakh', 'Crore'];
-
-        function numberToWordsBelowThousand(num) {
-            if (num < 20) return belowTwenty[num];
-            if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + belowTwenty[num % 10] : '');
-            return belowTwenty[Math.floor(num / 100)] + ' Hundred' + (num % 100 !== 0 ? ' ' + numberToWordsBelowThousand(num % 100) : '');
-        }
-
-        let word = '';
-        let index = 0;
-
-        while (num > 0) {
-            let part = num % 1000;
-
-            if (index === 1) part = num % 100;
-
-            if (part > 0) {
-                let partInWords = numberToWordsBelowThousand(part);
-                if (index > 0) {
-                    word = partInWords + ' ' + thousands[index] + ' ' + word;
-                } else {
-                    word = partInWords;
-                }
-            }
-
-            num = Math.floor(num / (index === 1 ? 100 : 1000));
-            index++;
-        }
-
-        return word.trim();
-    };
-
-    const generateTableRows = () => {
-        return `
+  const generateTableRows = () => {
+    return `
     <table style="width: 100%; border-collapse: collapse; margin-top: 2px; margin-bottom: 2px;">
       ${billDetails.map((item, itemIndex) => {
 
-            const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
-            const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
-            const totalAmount = indianNumberFormat(totalQuantity * item.rate);
+      const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
+      const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
+      const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
-            return `
+      return `
           ${item.lengthAndPieces.map((lp, lpIndex) => `
             <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
               ${lpIndex === 0 ? `
@@ -251,12 +251,12 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
           </tr>
       `;
-        }).join('')}
+    }).join('')}
     </table>
   `;
-    };
+  };
 
-    const htmlContent = `
+  const htmlContent = `
         <!DOCTYPE html>
             <html>
             <head>
@@ -529,14 +529,14 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
     `;
 
-    const generateTableRows2 = () => {
-        return billDetails.map((item, index) => {
+  const generateTableRows2 = () => {
+    return billDetails.map((item, index) => {
 
-            const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
-            const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
-            const totalAmount = indianNumberFormat(totalQuantity * item.rate);
+      const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
+      const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
+      const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
-            const rows = item.lengthAndPieces.map((lp, lpIndex) => `
+      const rows = item.lengthAndPieces.map((lp, lpIndex) => `
         <div key=${lpIndex} style="display: flex; flexDirection: row; alignItems: center; ">
 
           ${lpIndex === 0 ? `
@@ -595,7 +595,7 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
         </div>
         `).join('');
 
-            return rows + `
+      return rows + `
         <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; background-color: #a2eaf3; ">
 
           <div style="display: flex; flexDirection: column; font-size: 6px; width: 22%; alignItems: flex-end; height: 12px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
@@ -641,10 +641,10 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
           </div>
         `;
 
-        }).join('');
-    };
+    }).join('');
+  };
 
-    const htmlContent2 = `
+  const htmlContent2 = `
   <!DOCTYPE html>
     <html>
       <head>
@@ -808,53 +808,54 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
     </html >
     `;
 
-    const generateInvoice = async () => {
+  const generateInvoice = async () => {
 
-        try {
-            // Generate PDF
-            const pdfOptions = {
-                html: htmlContent,
-                fileName: 'ColourTuff_Invoice',
-                directory: 'Documents',
-            };
+    try {
+      // Generate PDF
+      const pdfOptions = {
+        html: htmlContent,
+        fileName: 'ColourTuff_Invoice',
+        directory: 'Documents',
+      };
 
-            const pdf = await RNHTMLtoPDF.convert(pdfOptions);
-            const pdfPath = pdf.filePath;
+      const pdf = await RNHTMLtoPDF.convert(pdfOptions);
+      const pdfPath = pdf.filePath;
 
-            console.log(pdfPath);
+      console.log(pdfPath);
 
-            // Share the PDF
-            const shareOptions = {
-                title: 'Share Invoice',
-                url: `file://${pdfPath}`,
-                type: 'application/pdf',
-                saveToFiles: true,
-            };
+      // Share the PDF
+      const shareOptions = {
+        title: 'Share Invoice',
+        url: `file://${pdfPath}`,
+        type: 'application/pdf',
+        saveToFiles: true,
+      };
 
-            await Share.open(shareOptions);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+      await Share.open(shareOptions);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    return (
-        <View>
-            <ScrollView>
-                <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20 }}>
-                    <HTML source={{ html: htmlContent2 }} />
-                </PinchZoomView>
-            </ScrollView>
+  return (
+    <View>
+      
+      <ScrollView>
+        <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20 }}>
+          <HTML source={{ html: htmlContent2 }} />
+        </PinchZoomView>
+      </ScrollView>
 
-            {/* Share button */}
-            <TouchableOpacity style={{ marginTop: 10, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
-                <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
-                    <Icon2 name="share" size={13} color={zomatoRed} />
-                </View>
-                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
-            </TouchableOpacity>
-
+      {/* Share button */}
+      <TouchableOpacity style={{ marginTop: 10, marginBottom: 30, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
+        <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
+          <Icon2 name="share" size={13} color={zomatoRed} />
         </View>
-    )
+        <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
+      </TouchableOpacity>
+
+    </View>
+  )
 }
 
 export default InvoiceView;

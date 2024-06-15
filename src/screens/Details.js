@@ -16,7 +16,7 @@ import { addUser, logoutUser } from '../redux/UserSlice';
 import { emptyBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
 
-const CustomerDetails = () => {
+const Details = () => {
 
     const navigation = useNavigation();
 
@@ -148,8 +148,11 @@ const CustomerDetails = () => {
                         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                             <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
                         </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Add Details</Text>
+                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Customer Details</Text>
                     </View>
+                    <TouchableOpacity style={{ marginRight: 8 }} onPress={() => navigation.navigate("Profile")}>
+                        <Image source={require("../assets/login.png")} style={{ width: 30, height: 30 }} />
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -457,7 +460,7 @@ const CustomerDetails = () => {
     )
 }
 
-export default CustomerDetails;
+export default Details;
 
 const styles = StyleSheet.create({
     text1: {

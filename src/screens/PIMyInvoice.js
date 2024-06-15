@@ -106,7 +106,7 @@ const PIMyInvoice = () => {
             <View style={{ flexDirection: 'row', justifyContent: 'center' }}>
                 <TouchableOpacity style={{ backgroundColor: zomatoRed, width: '60%', paddingVertical: 10, borderRadius: 10, marginHorizontal: 2, elevation: 5, marginTop: 15, marginBottom: 10, justifyContent: 'center', flexDirection: 'row', alignItems: "center", gap: 6 }} onPress={addCustomerHandler}>
                     <View style={{ width: 22, height: 22, backgroundColor: lightZomatoRed, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 5 }}>
-                        <Icon4 name="person-add" size={15} style={{ color: zomatoRed }} />
+                        <Icon4 name="person-add" size={14} style={{ color: zomatoRed }} />
                     </View>
                     <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.3), fontWeight: '500', textAlign: 'center' }}>Add a new customer</Text>
                 </TouchableOpacity>

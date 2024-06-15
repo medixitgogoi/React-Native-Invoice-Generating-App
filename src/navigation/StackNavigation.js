@@ -15,7 +15,7 @@ import PartyReport from '../screens/PartyReport';
 import Sales from '../screens/Sales';
 import FillUpDetails from '../screens/FillUpDetails';
 import Invoice from '../screens/Invoice';
-import OrderDetails from '../screens/BillView';
+import OrderDetails from '../screens/OrderDetails';
 
 const StackNavigation = () => {
 
