@@ -117,6 +117,7 @@ const BillDetails = () => {
             .then(response => response.json())
             .then(result => {
                 console.log('Success: ', result);
+                navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
             })
             .catch(error => {
                 console.error('Error: ', error);

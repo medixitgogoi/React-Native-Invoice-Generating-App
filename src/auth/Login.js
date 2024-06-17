@@ -26,7 +26,7 @@ const Login = () => {
 
     const loginHandler = async () => {
 
-        navigation.navigate("Home")
+        navigation.navigate("Home");
 
         if (validate()) {
             try {
