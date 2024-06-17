@@ -9,8 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeItemFromBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
 
-// [{
-//     "color": "Red", "id": "1718622412126miiunem", "lengthAndPieces": [[Object], [Object], [Object], [Object]], "rate": "80", "thickness": "0.30 mm", "type": "
+// [{"color": "Red", "id": "1718622412126miiunem", "lengthAndPieces": [[Object], [Object], [Object], [Object]], "rate": "80", "thickness": "0.30 mm", "type": "
 // Profile Sheet", "unit": "mm", "width": "3.5 mm"}, {"color": "Blue", "id": "1718622453019mv2q262", "lengthAndPieces": [[Object], [Object], [Object], [Object]], "ra
 // te": "60", "thickness": "0.45 mm", "type": "Tiles Profile Sheet", "unit": "mm", "width": "3.5 mm"}]
 
@@ -77,9 +76,26 @@ const BillDetails = () => {
 
     const totalAmount = calculateTotalAmount();
 
-    const viewBillHandler = () => {
+    // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
 
-        navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
+    function mapProductDetails(productDetails) {
+        return productDetails.map(product => ({
+            unit_id: product.unit, // Assuming unit_id is a constant, adjust if necessary
+            thickness_id: product.thickness, // Assuming thickness_id is a constant, adjust if necessary
+            type_id: product.type, // Assuming type_id is a constant, adjust if necessary
+            color_id: product.color, // Assuming color_id is a constant, adjust if necessary
+            ridge_width_id: 1, // Assuming ridge_width_id is a constant, adjust if necessary
+            rate: parseInt(product.rate),
+            product_data: product.lengthAndPieces.map(lp => ({
+                length: parseInt(lp.length),
+                no_of_pieces: parseInt(lp.pieces)
+            }))
+        }));
+    }
+
+    const mappedProducts = mapProductDetails(productDetails);
+
+    const viewBillHandler = () => {
 
         const data = {
             "client_id": "1",
@@ -88,44 +104,7 @@ const BillDetails = () => {
             "transport_charge": transport,
             "total_amount": totalPrice,
             "total_payble_amount": totalAmount,
-            "products": [
-                {
-                    "unit_id": 1,
-                    "thickness_id": 1,
-                    "type_id": 1,
-                    "color_id": 1,
-                    "ridge_width_id": 1,
-                    "rate": 60,
-                    "product_data": [
-                        {
-                            "length": 100,
-                            "no_of_pieces": 2
-                        },
-                        {
-                            "length": 120,
-                            "no_of_pieces": 1
-                        },
-                        {
-                            "length": 150,
-                            "no_of_pieces": 2
-                        }
-                    ]
-                },
-                {
-                    "unit_id": 1,
-                    "thickness_id": 1,
-                    "type_id": 1,
-                    "color_id": 1,
-                    "ridge_width_id": 1,
-                    "rate": 40,
-                    "product_data": [
-                        {
-                            "length": 100,
-                            "no_of_pieces": 2
-                        }
-                    ]
-                }
-            ]
+            "products": mappedProducts,
         };
 
         fetch('https://colortuff.webinfoghy.co.in/public/api/employee/order/create', {
