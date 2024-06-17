@@ -11,11 +11,11 @@ const StackNavigation = () => {
 
     const userDetails = useSelector(state => state.user);
 
-    // console.log(userDetails?.access_token);
+    console.log("userDetailsStack: ", userDetails);
 
     return (
         <NavigationContainer>
-            {userDetails?.access_token ? <GuestStackNavigator /> : <AuthStackNavigator />}
+            {userDetails[0]?.access_token ? <GuestStackNavigator /> : <AuthStackNavigator />}
         </NavigationContainer>
     )
 }

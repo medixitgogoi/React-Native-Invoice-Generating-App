@@ -31,7 +31,7 @@ const Login = () => {
                 const response = await axios.post(`employee/login`,
                     {
                         email,
-                        password
+                        password,
                     }
                 );
 
@@ -44,18 +44,18 @@ const Login = () => {
                     };
 
                     dispatch(addUser(userInfo));
-                    console.log("userDetails: ", userDetails);
-                    
-                    Toast.show({
-                        type: 'success',
-                        text1: 'Logged in successfully',
-                        position: 'top',
-                        topOffset: 50,
-                        onPress: () => Toast.hide(),
-                    });
+                    console.log("userDetailsLogin: ", userDetails);
 
-                    setEmail('');
-                    setPassword('');
+                    // Toast.show({
+                    //     type: 'success',
+                    //     text1: 'Logged in successfully',
+                    //     position: 'top',
+                    //     topOffset: 50,
+                    //     onPress: () => Toast.hide(),
+                    // });
+
+                    // setEmail('');
+                    // setPassword('');
 
                 } else {
                     setErrors({ api: response.data.message });
