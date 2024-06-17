@@ -9,11 +9,17 @@ import { useDispatch, useSelector } from 'react-redux';
 import { removeItemFromBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
 
+// [{
+//     "color": "Red", "id": "1718622412126miiunem", "lengthAndPieces": [[Object], [Object], [Object], [Object]], "rate": "80", "thickness": "0.30 mm", "type": "
+// Profile Sheet", "unit": "mm", "width": "3.5 mm"}, {"color": "Blue", "id": "1718622453019mv2q262", "lengthAndPieces": [[Object], [Object], [Object], [Object]], "ra
+// te": "60", "thickness": "0.45 mm", "type": "Tiles Profile Sheet", "unit": "mm", "width": "3.5 mm"}]
+
 const BillDetails = () => {
 
     const dispatch = useDispatch();
 
     const productDetails = useSelector(state => state.bill);
+    console.log(productDetails);
 
     const navigation = useNavigation();
 
@@ -58,6 +64,8 @@ const BillDetails = () => {
         return amount;
     }
 
+    const totalPrice = calculateTotalPrice();
+
     const calculateTotalAmount = () => {
         let amount = 0;
 
@@ -67,9 +75,73 @@ const BillDetails = () => {
         return amount;
     }
 
+    const totalAmount = calculateTotalAmount();
+
     const viewBillHandler = () => {
-        // navigation.navigate("BillView", { bend: bend, loading: loading, transport: transport })
+
         navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
+
+        const data = {
+            "client_id": "1",
+            "bend_charge": bend,
+            "load_charge": loading,
+            "transport_charge": transport,
+            "total_amount": totalPrice,
+            "total_payble_amount": totalAmount,
+            "products": [
+                {
+                    "unit_id": 1,
+                    "thickness_id": 1,
+                    "type_id": 1,
+                    "color_id": 1,
+                    "ridge_width_id": 1,
+                    "rate": 60,
+                    "product_data": [
+                        {
+                            "length": 100,
+                            "no_of_pieces": 2
+                        },
+                        {
+                            "length": 120,
+                            "no_of_pieces": 1
+                        },
+                        {
+                            "length": 150,
+                            "no_of_pieces": 2
+                        }
+                    ]
+                },
+                {
+                    "unit_id": 1,
+                    "thickness_id": 1,
+                    "type_id": 1,
+                    "color_id": 1,
+                    "ridge_width_id": 1,
+                    "rate": 40,
+                    "product_data": [
+                        {
+                            "length": 100,
+                            "no_of_pieces": 2
+                        }
+                    ]
+                }
+            ]
+        };
+
+        fetch('https://colortuff.webinfoghy.co.in/public/api/employee/order/create', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json'
+            },
+            body: JSON.stringify(data)
+        })
+            .then(response => response.json())
+            .then(result => {
+                console.log('Success: ', result);
+            })
+            .catch(error => {
+                console.error('Error: ', error);
+            });
     }
 
     const removeProductHandler = (item) => {

@@ -9,6 +9,9 @@ const Home = () => {
 
     const navigation = useNavigation();
 
+    const loginDetails = useSelector(state => state.login);
+    console.log("loginDetails", loginDetails);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
             <StatusBar

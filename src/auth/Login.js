@@ -7,14 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
-import { addUser } from '../redux/UserSlice';
+import { addLoginUser } from '../redux/LoginSlice';
 
 const Login = () => {
 
     const dispatch = useDispatch();
-    const userDetails = useSelector(state => state.user);
+    const loginDetails = useSelector(state => state.login);
 
-    // const navigation = useNavigation();
+    const navigation = useNavigation();
 
     const [email, setEmail] = useState("");
     const [isEmailFocused, setIsEmailFocused] = useState(false);
@@ -26,12 +26,14 @@ const Login = () => {
 
     const loginHandler = async () => {
 
+        navigation.navigate("Home")
+
         if (validate()) {
             try {
                 const response = await axios.post(`employee/login`,
                     {
-                        email,
-                        password,
+                        email: email,
+                        password: password,
                     }
                 );
 
@@ -43,19 +45,19 @@ const Login = () => {
                         accessToken: response.data.access_token,
                     };
 
-                    dispatch(addUser(userInfo));
-                    console.log("userDetailsLogin: ", userDetails);
+                    dispatch(addLoginUser(userInfo));
+                    console.log("userDetailsLogin: ", loginDetails);
 
-                    // Toast.show({
-                    //     type: 'success',
-                    //     text1: 'Logged in successfully',
-                    //     position: 'top',
-                    //     topOffset: 50,
-                    //     onPress: () => Toast.hide(),
-                    // });
+                    Toast.show({
+                        type: 'success',
+                        text1: 'Logged in successfully',
+                        position: 'top',
+                        topOffset: 50,
+                        onPress: () => Toast.hide(),
+                    });
 
-                    // setEmail('');
-                    // setPassword('');
+                    setEmail('');
+                    setPassword('');
 
                 } else {
                     setErrors({ api: response.data.message });

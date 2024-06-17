@@ -7,12 +7,19 @@ import Icon4 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/Entypo';
 import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import { useDispatch, useSelector } from 'react-redux';
+import { logoutUser } from '../redux/LoginSlice';
 
 const Profile = () => {
 
     const navigation = useNavigation();
+    const dispatch = useDispatch();
 
-    const logoutHandler = () => { }
+    const loginDetails = useSelector(state => state.login);
+
+    const logoutHandler = () => {
+        dispatch(logoutUser());
+    }
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -26,7 +33,7 @@ const Profile = () => {
                         </TouchableOpacity>
                         <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Profile</Text>
                     </View>
-                    <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: zomatoRed, borderRadius: 50, width: 26, height: 26, justifyContent: 'center', marginRight: 12, borderColor: zomatoRed, borderWidth: 0.8, elevation: 1,  }}>
+                    <View style={{ flexDirection: "row", alignItems: "center", gap: 6, backgroundColor: zomatoRed, borderRadius: 50, width: 26, height: 26, justifyContent: 'center', marginRight: 12, borderColor: zomatoRed, borderWidth: 0.8, elevation: 1, }}>
                         <TouchableOpacity style={{}} onPress={() => navigation.navigate('Home')}>
                             <Icon2 name="home" size={15} color={lightZomatoRed} />
                         </TouchableOpacity>
@@ -83,7 +90,7 @@ const Profile = () => {
                     </TouchableOpacity>
 
                     {/* Log out */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#47c724', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#47c724', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={logoutHandler}>
                         <View style={{ backgroundColor: '#d3f5ca', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                             <Icon5 name="log-out" size={18} style={{ width: 20, height: 20, color: '#47c724' }} />
                         </View>
