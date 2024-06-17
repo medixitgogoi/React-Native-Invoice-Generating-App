@@ -1,29 +1,30 @@
 import { StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
-import Login from '../auth/Login';
-import Home from '../screens/Home';
-import Details from '../screens/Details';
-import Profile from '../screens/Profile';
-import BillDetails from '../screens/BillDetails';
-import SplashScreen from '../auth/SplashScreen';
-import BillView from '../screens/BillView';
-import PIMyInvoice from '../screens/PIMyInvoice';
-import DispatchOrder from '../screens/DispatchOrder';
-import SalesmanReport from '../screens/SalesmanReport';
-import PartyReport from '../screens/PartyReport';
-import Sales from '../screens/Sales';
-import FillUpDetails from '../screens/FillUpDetails';
-import Invoice from '../screens/Invoice';
-import OrderDetails from '../screens/OrderDetails';
+import AuthStackNavigator from './AuthStackNavigator';
+import GuestStackNavigator from './GuestStackNavigator';
+import { useSelector } from 'react-redux';
+import axios from 'axios';
+
+axios.defaults.baseURL = 'https://colortuff.webinfoghy.co.in/public/api/';
 
 const StackNavigation = () => {
 
-    const Stack = createNativeStackNavigator();
+    const userDetails = useSelector(state => state.user);
+
+    // console.log(userDetails?.access_token);
 
     return (
         <NavigationContainer>
-            <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SplashScreen">
+            {userDetails?.access_token ? <GuestStackNavigator /> : <AuthStackNavigator />}
+        </NavigationContainer>
+    )
+}
+
+export default StackNavigation
+
+const styles = StyleSheet.create({})
+
+{/* <Stack.Navigator screenOptions={{ headerShown: false }} initialRouteName="SplashScreen">
                 <Stack.Screen name="Login" component={Login} />
                 <Stack.Screen name="Home" component={Home} />
                 <Stack.Screen name="Details" component={Details} />
@@ -38,11 +39,4 @@ const StackNavigation = () => {
                 <Stack.Screen name="FillUpDetails" component={FillUpDetails} />
                 <Stack.Screen name="Invoice" component={Invoice} />
                 <Stack.Screen name="OrderDetails" component={OrderDetails} />
-            </Stack.Navigator>
-        </NavigationContainer>
-    )
-}
-
-export default StackNavigation
-
-const styles = StyleSheet.create({})
+            </Stack.Navigator> */}
