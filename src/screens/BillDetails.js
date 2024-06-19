@@ -79,10 +79,10 @@ const BillDetails = () => {
 
     function mapProductDetails(productDetails) {
         return productDetails.map(product => ({
-            unit_id: product.unit, 
-            thickness_id: product.thickness, 
-            type_id: product.type, 
-            color_id: product.color, 
+            unit_id: product.unit,
+            thickness_id: product.thickness,
+            type_id: product.type,
+            color_id: product.color,
             ridge_width_id: 1,
             rate: parseInt(product.rate),
             product_data: product.lengthAndPieces.map(lp => ({
@@ -96,9 +96,9 @@ const BillDetails = () => {
         try {
             axios.defaults.headers.common[
                 'Authorization'
-            ] = Bearer ${ modifiedUser?.token };
+            ] = `Bearer ${loginDetails[0]?.accessToken}`;
             const response = await axios.post(
-                '/api/v1/comment-reel',
+                '/employee/order/create',
                 { reel_id: route.params.data }
             );
             setdata(response.data.data);
