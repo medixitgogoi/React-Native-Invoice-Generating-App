@@ -29,9 +29,9 @@ const Login = () => {
 
     const loginHandler = async () => {
 
-        setLoading(true);
-
         if (validate()) {
+
+            setLoading(true);
 
             try {
                 const response = await axios.post(`employee/login`,

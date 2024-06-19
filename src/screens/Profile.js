@@ -9,6 +9,7 @@ import { useNavigation } from '@react-navigation/native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/LoginSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Profile = () => {
 
@@ -18,8 +19,13 @@ const Profile = () => {
     const loginDetails = useSelector(state => state.login);
     const email = loginDetails[0]?.email;
 
-    const logoutHandler = () => {
-        dispatch(logoutUser());
+    const logoutHandler = async () => {
+        try {
+            dispatch(logoutUser());
+            await AsyncStorage.removeItem('loginDetails');
+        } catch (error) {
+            console.error('Failed to logout: ', error);
+        }
     }
 
     return (
