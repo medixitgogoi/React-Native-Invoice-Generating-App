@@ -5,7 +5,7 @@ import AuthStackNavigator from './AuthStackNavigator';
 import GuestStackNavigator from './GuestStackNavigator';
 import { useDispatch, useSelector } from 'react-redux';
 import axios from 'axios';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addLoginUser } from '../redux/LoginSlice';
 
 axios.defaults.baseURL = 'https://colortuff.webinfoghy.co.in/public/api/';
@@ -20,22 +20,24 @@ const StackNavigation = () => {
 
     const isUserLoggedIn = loginDetails.length > 0 && loginDetails.some(item => item.accessToken);
 
-    // const loadLoginDetails = async () => {
-    //     try {
-    //         const storedLoginDetails = await AsyncStorage.getItem('loginDetails');
-    //         if (storedLoginDetails) {
-    //             dispatch(addLoginUser(JSON.parse(storedLoginDetails)));
-    //         }
-    //     } catch (error) {
-    //         console.error('Failed to load login details:', error);
-    //     } finally {
-    //         setIsAppLoading(false);
-    //     }
-    // };
+    useEffect(() => {
+        const loadLoginDetails = async () => {
+            try {
+                const storedLoginDetails = await AsyncStorage.getItem('loginDetails');
+                if (storedLoginDetails) {
+                    dispatch(addLoginUser(JSON.parse(storedLoginDetails)));
+                }
+            } catch (error) {
+                console.error('Failed to load login details:', error);
+            } finally {
+                setIsAppLoading(false);
+            }
+        };
+
+        loadLoginDetails();
+    }, [dispatch]);
 
     useEffect(() => {
-
-        // loadLoginDetails();
 
         const timer = setTimeout(() => {
             setIsAppLoading(false);

@@ -8,7 +8,7 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLoginUser } from '../redux/LoginSlice';
-// import AsyncStorage from '@react-native-async-storage/async-storage';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
 
@@ -54,7 +54,7 @@ const Login = () => {
                     dispatch(addLoginUser(userInfo));
                     console.log("userDetailsLogin: ", loginDetails);
 
-                    // await AsyncStorage.setItem('loginDetails', JSON.stringify(userInfo));
+                    await AsyncStorage.setItem('loginDetails', JSON.stringify(userInfo));
 
                     Toast.show({
                         type: 'success',
