@@ -8,17 +8,16 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItemFromBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
-
-// [{"color": "Red", "id": "1718622412126miiunem", "lengthAndPieces": [[Object], [Object], [Object], [Object]], "rate": "80", "thickness": "0.30 mm", "type": "
-// Profile Sheet", "unit": "mm", "width": "3.5 mm"}, {"color": "Blue", "id": "1718622453019mv2q262", "lengthAndPieces": [[Object], [Object], [Object], [Object]], "ra
-// te": "60", "thickness": "0.45 mm", "type": "Tiles Profile Sheet", "unit": "mm", "width": "3.5 mm"}]
+import axios from 'axios';
 
 const BillDetails = () => {
 
     const dispatch = useDispatch();
 
     const productDetails = useSelector(state => state.bill);
-    console.log(productDetails);
+    // console.log(productDetails);
+
+    const loginDetails = useSelector(state => state.login);
 
     const navigation = useNavigation();
 
@@ -80,11 +79,11 @@ const BillDetails = () => {
 
     function mapProductDetails(productDetails) {
         return productDetails.map(product => ({
-            unit_id: product.unit, // Assuming unit_id is a constant, adjust if necessary
-            thickness_id: product.thickness, // Assuming thickness_id is a constant, adjust if necessary
-            type_id: product.type, // Assuming type_id is a constant, adjust if necessary
-            color_id: product.color, // Assuming color_id is a constant, adjust if necessary
-            ridge_width_id: 1, // Assuming ridge_width_id is a constant, adjust if necessary
+            unit_id: product.unit, 
+            thickness_id: product.thickness, 
+            type_id: product.type, 
+            color_id: product.color, 
+            ridge_width_id: 1,
             rate: parseInt(product.rate),
             product_data: product.lengthAndPieces.map(lp => ({
                 length: parseInt(lp.length),
@@ -93,9 +92,27 @@ const BillDetails = () => {
         }));
     }
 
+    const SubmitComment = async () => {
+        try {
+            axios.defaults.headers.common[
+                'Authorization'
+            ] = Bearer ${ modifiedUser?.token };
+            const response = await axios.post(
+                '/api/v1/comment-reel',
+                { reel_id: route.params.data }
+            );
+            setdata(response.data.data);
+            // console.log("Rrrrr", response.data.data)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
     const mappedProducts = mapProductDetails(productDetails);
 
     const viewBillHandler = () => {
+
+        navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
 
         const data = {
             "client_id": "1",
@@ -117,7 +134,6 @@ const BillDetails = () => {
             .then(response => response.json())
             .then(result => {
                 console.log('Success: ', result);
-                navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
             })
             .catch(error => {
                 console.error('Error: ', error);
@@ -180,6 +196,7 @@ const BillDetails = () => {
                         {productDetails.map((item, index) => {
 
                             const calculateQuantity = () => {
+
                                 let quantity = 0;
 
                                 item.lengthAndPieces.map(item => {
@@ -188,6 +205,7 @@ const BillDetails = () => {
 
                                 return quantity;
                             }
+
                             const unit = item?.unit;
 
                             return (
