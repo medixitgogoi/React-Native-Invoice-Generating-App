@@ -8,7 +8,7 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLoginUser } from '../redux/LoginSlice';
-import AsyncStorage from '@react-native-async-storage/async-storage';
+// import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
 
@@ -54,7 +54,7 @@ const Login = () => {
                     dispatch(addLoginUser(userInfo));
                     console.log("userDetailsLogin: ", loginDetails);
 
-                    await AsyncStorage.setItem('loginDetails', JSON.stringify(userInfo));
+                    // await AsyncStorage.setItem('loginDetails', JSON.stringify(userInfo));
 
                     Toast.show({
                         type: 'success',
@@ -110,16 +110,18 @@ const Login = () => {
             <View style={{ height: "100%" }}>
 
                 {/* Image */}
-                <View style={{ height: "55%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                <View style={{ height: "50%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Image source={require("../assets/logo.png")} style={{ width: 220, height: 220 }} resizeMode='contain' />
                 </View>
 
                 {/* Loading spinner */}
-                {loading && (
-                    <ActivityIndicator size="large" color={zomatoRed} />
-                )}
+                <View style={{ height: '5%' }}>
+                    {loading && (
+                        <ActivityIndicator size="large" color={"#66ac53"} />
+                    )}
+                </View>
 
-                <View style={{ height: "45%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
+                <View style={{ height: "40%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
 
                     <Text style={{ color: "#000", textAlign: "center", color: zomatoRed, fontSize: responsiveFontSize(3.2), fontWeight: "700", textTransform: "uppercase", }}>Welcome Back!</Text>
 
