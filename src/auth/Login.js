@@ -8,6 +8,7 @@ import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLoginUser } from '../redux/LoginSlice';
+import AsyncStorage from '@react-native-async-storage/async-storage';
 
 const Login = () => {
 
@@ -53,6 +54,8 @@ const Login = () => {
                     dispatch(addLoginUser(userInfo));
                     console.log("userDetailsLogin: ", loginDetails);
 
+                    await AsyncStorage.setItem('loginDetails', JSON.stringify(userInfo));
+
                     Toast.show({
                         type: 'success',
                         text1: 'Logged in successfully',
@@ -61,8 +64,8 @@ const Login = () => {
                         onPress: () => Toast.hide(),
                     });
 
-                    // setEmail('');
-                    // setPassword('');
+                    setEmail('');
+                    setPassword('');
 
                 } else {
                     setErrors({ api: response.data.message });
@@ -186,6 +189,7 @@ const Login = () => {
                     </TouchableOpacity>
 
                 </View>
+
             </View>
 
         </SafeAreaView>
