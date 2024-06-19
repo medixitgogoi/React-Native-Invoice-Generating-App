@@ -16,6 +16,7 @@ const Profile = () => {
     const dispatch = useDispatch();
 
     const loginDetails = useSelector(state => state.login);
+    const email = loginDetails[0]?.email;
 
     const logoutHandler = () => {
         dispatch(logoutUser());
@@ -54,7 +55,7 @@ const Profile = () => {
                 {/* Name and Email */}
                 <View style={{ flexDirection: 'column', alignItems: 'center', gap: 3 }}>
                     <Text style={{ fontSize: responsiveFontSize(2.8), fontWeight: '600', textAlign: 'center', color: '#000', }}>Ashok Kejriwal</Text>
-                    <Text style={{ fontSize: responsiveFontSize(2), fontWeight: '400', textAlign: 'center', color: '#093d43' }}>ashokkejriwal123@gmail.com</Text>
+                    <Text style={{ fontSize: responsiveFontSize(2), fontWeight: '400', textAlign: 'center', color: '#093d43' }}>{email}</Text>
                 </View>
 
                 <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: 5, marginTop: 40 }}>

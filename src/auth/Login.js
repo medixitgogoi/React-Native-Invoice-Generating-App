@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
 import { zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -22,13 +22,16 @@ const Login = () => {
     const [isPasswordFocused, setIsPasswordFocused] = useState(false);
     const [show, setShow] = useState(true);
 
+    const [loading, setLoading] = useState(false);
+
     const [errors, setErrors] = useState({});
 
     const loginHandler = async () => {
 
-        navigation.navigate("Home");
+        setLoading(true);
 
         if (validate()) {
+
             try {
                 const response = await axios.post(`employee/login`,
                     {
@@ -42,6 +45,8 @@ const Login = () => {
                 if (response.data.status) {
 
                     const userInfo = {
+                        email: email,
+                        password: password,
                         accessToken: response.data.access_token,
                     };
 
@@ -56,8 +61,8 @@ const Login = () => {
                         onPress: () => Toast.hide(),
                     });
 
-                    setEmail('');
-                    setPassword('');
+                    // setEmail('');
+                    // setPassword('');
 
                 } else {
                     setErrors({ api: response.data.message });
@@ -66,6 +71,8 @@ const Login = () => {
                 console.log(error);
             }
         }
+
+        setLoading(false);
     }
 
     const validate = () => {
@@ -103,6 +110,11 @@ const Login = () => {
                 <View style={{ height: "55%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                     <Image source={require("../assets/logo.png")} style={{ width: 220, height: 220 }} resizeMode='contain' />
                 </View>
+
+                {/* Loading spinner */}
+                {loading && (
+                    <ActivityIndicator size="large" color={zomatoRed} />
+                )}
 
                 <View style={{ height: "45%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
 
@@ -165,7 +177,6 @@ const Login = () => {
                                 <Text style={{ color: "#b4b7bf", textAlign: "right", fontSize: responsiveFontSize(1.8), fontWeight: "500" }}>Forgot password?</Text>
                             </TouchableOpacity>
 
-
                         </View>
                     </View>
 
@@ -175,7 +186,6 @@ const Login = () => {
                     </TouchableOpacity>
 
                 </View>
-
             </View>
 
         </SafeAreaView>
