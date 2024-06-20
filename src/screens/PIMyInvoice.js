@@ -4,7 +4,7 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Octicons';
 import Icon4 from 'react-native-vector-icons/dist/Octicons';
-import { lightBlack, lightZomatoRed, zomatoRed } from '../utils/colors';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import names from '../data/names';
 import { useEffect, useState } from 'react';
 import { addUser, logoutUser } from '../redux/UserSlice';
@@ -28,7 +28,7 @@ const PIMyInvoice = () => {
     const [loading, setLoading] = useState(false);
 
     const pressHandler = (item) => {
-        
+
         navigation.navigate("Details");
 
         dispatch(logoutUser());

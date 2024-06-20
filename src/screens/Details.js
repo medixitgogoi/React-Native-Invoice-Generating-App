@@ -48,17 +48,23 @@ const Details = () => {
 
     const [photo, setPhoto] = useState('');
 
-    const SubmitComment = async () => {
+    const customerDetailsAdder = async () => {
         try {
             axios.defaults.headers.common[
                 'Authorization'
             ] = `Bearer ${loginDetails[0]?.accessToken}`;
             const response = await axios.post(
-                '/employee/order/create',
-                { reel_id: route.params.data }
+                '/employee/client/submit',
+                {
+                    name: partyName,
+                    site_name: siteName,
+                    pan: panNo,
+                    mobile: contact,
+                    gst: gstin,
+                }
             );
-            setdata(response.data.data);
-            // console.log("Rrrrr", response.data.data)
+            // setdata(response.data.data);
+            console.log("CustomerDetails", response?.data)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -75,6 +81,8 @@ const Details = () => {
             if (validate()) {
 
                 dispatch(logoutUser());
+
+                customerDetailsAdder();
 
                 dispatch(addUser({
                     name: partyName,
@@ -284,7 +292,6 @@ const Details = () => {
                                 </View>
 
                             </View>
-
                         </View>
 
                         {/* Buttons */}
@@ -344,9 +351,9 @@ const Details = () => {
                         <Icon2 name="close" size={20} style={{ color: '#fff' }} />
                     </TouchableOpacity>
 
+                    {/* Main content */}
                     <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 20, borderTopRightRadius: 20, }}>
 
-                        {/* Main content */}
                         <ScrollView style={{ marginTop: 5, padding: 15, flexDirection: 'column', gap: 10 }}>
 
                             {/* Modal Header */}
@@ -435,7 +442,7 @@ const Details = () => {
                                             style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                             onChangeText={setGstin}
                                             value={gstin}
-                                            maxLength={10}
+                                            maxLength={15}
                                             placeholderTextColor="#abb0ba"
                                             onFocus={() => setIsGstinFocused(true)}
                                             onBlur={() => setIsGstinFocused(false)}
@@ -452,7 +459,7 @@ const Details = () => {
 
                         </ScrollView>
 
-                        {/* ButtonStyle */}
+                        {/* Buttons */}
                         <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 10, paddingHorizontal: 10, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
 
                             {/* Cancel */}
@@ -472,6 +479,7 @@ const Details = () => {
                         </View>
 
                     </View>
+
                 </View>
             </Modal>
 
