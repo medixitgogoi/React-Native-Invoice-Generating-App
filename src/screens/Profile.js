@@ -10,6 +10,7 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/LoginSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { deleteUser } from '../redux/UserSlice';
 
 const Profile = () => {
 
@@ -26,6 +27,11 @@ const Profile = () => {
         } catch (error) {
             console.error('Failed to logout: ', error);
         }
+    }
+
+    const pressHandler = () => {
+        navigation.navigate('Details');
+        dispatch(deleteUser())
     }
 
     return (
@@ -67,7 +73,7 @@ const Profile = () => {
                 <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: 5, marginTop: 40 }}>
 
                     {/* Add customer */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: zomatoRed, borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={() => navigation.navigate('Details')}>
+                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: zomatoRed, borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={pressHandler}>
                         <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                             <Icon3 name="person-add" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
                         </View>

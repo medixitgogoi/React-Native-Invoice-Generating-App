@@ -98,7 +98,7 @@ const PIMyInvoice = () => {
             };
 
             getCustomerDetails();
-            
+
         }, [loginDetails])
     );
 

@@ -8,7 +8,7 @@ import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import Icon6 from 'react-native-vector-icons/dist/AntDesign';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -27,7 +27,6 @@ const Details = () => {
     const loginDetails = useSelector(state => state.login);
 
     const [customerModal, setCustomerModal] = useState(false);
-    const [customerData, setCustomerData] = useState(null);
 
     const [error, setError] = useState(false);
     const [errors, setErrors] = useState({});
@@ -49,26 +48,14 @@ const Details = () => {
 
     const [photo, setPhoto] = useState('');
 
-    // const getCustomerDetails = async () => {
-    //     try {
-    //         axios.defaults.headers.common[
-    //             'Authorization'
-    //         ] = `Bearer ${loginDetails[0]?.accessToken}`;
-    //         const response = await axios.get('/employee/client/list');
-
-    //         setCustomerData(response?.data?.data);
-    //         // console.log("GetCustomerDetails", response?.data?.data)
-
-    //     } catch (error) {
-    //         console.error('Error fetching data:', error);
-    //     }
-    // };
+    const [loading, setLoading] = useState(true);
 
     const postCustomerDetails = async () => {
+        setLoading(true);
         try {
-            axios.defaults.headers.common[
-                'Authorization'
-            ] = `Bearer ${loginDetails[0]?.accessToken}`;
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+
             const response = await axios.post(
                 '/employee/client/submit',
                 {
@@ -80,11 +67,22 @@ const Details = () => {
                 }
             );
 
-            setCustomerData(response?.data?.data);
-            console.log("CustomerDetails", response?.data?.data);
+            const customerData = response?.data?.data;
+            console.log("CustomerDetails", customerData);
+
+            // Dispatch to Redux store
+            dispatch(addUser({
+                name: customerData.name,
+                site: customerData.site_name,
+                pan: customerData.pan,
+                contact: customerData.mobile,
+                gstin: customerData.gst,
+            }));
 
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -97,37 +95,12 @@ const Details = () => {
             setError(false);
 
             if (validate()) {
-
                 dispatch(deleteUser());
-
                 await postCustomerDetails();
-                console.log("CustomerData: ", customerData);
+                
+                setCustomerModal(false);
+                setError(false);
 
-                // Dispatch the action after ensuring customerData is updated
-                if (customerData != null) {
-
-                    setCustomerModal(false);
-                    setError(false);
-
-                    dispatch(addUser({
-                        name: customerData.name,
-                        site: customerData.site_name,
-                        pan: customerData.pan,
-                        contact: customerData.mobile,
-                        gstin: customerData.gst,
-                    }));
-
-                    Toast.show({
-                        type: 'success',
-                        text1: 'User added successfully',
-                        text2: `${partyName} added`,
-                        topOffset: 50,
-                        onPress: () => Toast.hide(),
-                    });
-                    
-                } else {
-                    console.error('Customer data is not updated');
-                }
             }
         }
     }
@@ -349,8 +322,8 @@ const Details = () => {
 
             {/* Remove user button */}
             {userDetails.length !== 0 && (
-                <View style={{ position: 'absolute', bottom: 13, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, }}>
-                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, paddingVertical: 10, borderRadius: 8, width: '100%', borderColor: zomatoRed, borderWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }} onPress={() => removeUserHandler()}>
+                <View style={{ position: 'absolute', bottom: 0, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', marginHorizontal: 10, backgroundColor: '#fff', width: '100%', paddingVertical: 10, elevation: 2 }}>
+                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, paddingVertical: 10, borderRadius: 8, width: '95%', borderColor: zomatoRed, borderWidth: 1, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }} onPress={() => removeUserHandler()}>
                         <View style={{ backgroundColor: zomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
                             <Icon6 name="deleteuser" size={14} color='#fff' />
                         </View>
