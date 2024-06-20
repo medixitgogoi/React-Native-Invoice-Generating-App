@@ -8,15 +8,17 @@ import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import names from '../data/names';
 import { useEffect, useState } from 'react';
 import { addUser, logoutUser } from '../redux/UserSlice';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { emptyBill } from '../redux/BillDetailsSlice';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder'
-import { createEntityAdapter } from '@reduxjs/toolkit';
+import axios from 'axios';
 
 const PIMyInvoice = () => {
 
     const navigation = useNavigation();
+
+    const loginDetails = useSelector(state => state.login);
 
     const dispatch = useDispatch();
 
@@ -24,8 +26,10 @@ const PIMyInvoice = () => {
 
     const [search, setSearch] = useState("");
     const [isSearchFocused, setIsSearchFocused] = useState(false);
-    const [filteredNames, setFilteredNames] = useState(names);
+    const [filteredNames, setFilteredNames] = useState([]);
     const [loading, setLoading] = useState(false);
+
+    const [customerData, setCustomerData] = useState([]);
 
     const pressHandler = (item) => {
 
@@ -35,10 +39,10 @@ const PIMyInvoice = () => {
 
         dispatch(addUser({
             name: item.name,
-            site: item.site,
+            site: item.site_name,
             pan: item.pan,
-            contact: item.contact,
-            gstin: item.gstin,
+            contact: item.mobile,
+            gstin: item.gst,
         }))
 
         dispatch(emptyBill());
@@ -53,7 +57,7 @@ const PIMyInvoice = () => {
     const searchHandler = (text) => {
         setSearch(text);
 
-        const filteredData = names?.filter(word => word.name.toLowerCase().includes(text.toLowerCase()));
+        const filteredData = customerData?.filter(word => word.name.toLowerCase().includes(text.toLowerCase()));
 
         setFilteredNames(filteredData);
     };
@@ -73,11 +77,29 @@ const PIMyInvoice = () => {
         );
     };
 
-    useEffect(() => {
+    const getCustomerDetails = async () => {
+
         setLoading(true);
-        setTimeout(() => {
-            setLoading(false);
-        }, 1200);
+        
+        try {
+            axios.defaults.headers.common[
+                'Authorization'
+            ] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.get('/employee/client/list');
+
+            setCustomerData(response?.data?.data);
+            setFilteredNames(customerData);
+
+            console.log("GetCustomerDetails", response?.data?.data)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+
+        setLoading(false);
+    };
+
+    useEffect(() => {
+        getCustomerDetails();
     }, []);
 
     return (
@@ -145,7 +167,7 @@ const PIMyInvoice = () => {
                     <View style={{ paddingHorizontal: 3, flexDirection: 'column', gap: 10 }}>
                         {loading && (
                             <FlatList
-                                data={[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1]}
+                                data={[1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1, 1,]}
                                 renderItem={() => (
                                     <ShimmerPlaceHolder style={{ width: '100%', height: 39, backgroundColor: '#8e9999', marginTop: 2, opacity: 0.2, marginBottom: 8, borderRadius: 7, }}>
                                     </ShimmerPlaceHolder>
@@ -156,10 +178,10 @@ const PIMyInvoice = () => {
                         {!loading && (
                             filteredNames?.map(item => (
                                 <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: "#fceced", paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }} onPress={() => pressHandler(item)} key={item.id}>
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 8 }}>
-                                        <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>{getHighlightedText(item.name, search)}</Text>
+                                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 5 }}>
+                                        <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.1), }}>{getHighlightedText(item.name, search)}</Text>
                                         <Text style={{ color: "#000" }}>•</Text>
-                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(1.8) }}>{item.site}</Text>
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(1.7) }}>{item.site_name}</Text>
                                     </View>
                                     <View>
                                         <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />

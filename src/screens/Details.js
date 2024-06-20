@@ -8,7 +8,7 @@ import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import Icon6 from 'react-native-vector-icons/dist/AntDesign';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -27,6 +27,7 @@ const Details = () => {
     const loginDetails = useSelector(state => state.login);
 
     const [customerModal, setCustomerModal] = useState(false);
+    const [customerData, setCustomerData] = useState(null);
 
     const [error, setError] = useState(false);
     const [errors, setErrors] = useState({});
@@ -48,7 +49,24 @@ const Details = () => {
 
     const [photo, setPhoto] = useState('');
 
-    const customerDetailsAdder = async () => {
+    const getCustomerDetails = async () => {
+        try {
+            axios.defaults.headers.common[
+                'Authorization'
+            ] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.get('/employee/client/list');
+            setCustomerData(response?.data?.data);
+            // console.log("GetCustomerDetails", response?.data?.data)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
+
+    useEffect(() => {
+        getCustomerDetails();
+    }, [saveHandler])
+
+    const postCustomerDetails = async () => {
         try {
             axios.defaults.headers.common[
                 'Authorization'
@@ -63,8 +81,8 @@ const Details = () => {
                     gst: gstin,
                 }
             );
-            // setdata(response.data.data);
-            console.log("CustomerDetails", response?.data)
+            // setCustomerData(response?.data?.data);
+            // console.log("CustomerDetails", response?.data?.data)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
@@ -82,14 +100,14 @@ const Details = () => {
 
                 dispatch(logoutUser());
 
-                customerDetailsAdder();
+                postCustomerDetails();
 
                 dispatch(addUser({
-                    name: partyName,
-                    site: siteName,
-                    pan: panNo,
-                    contact: contact,
-                    gstin: gstin,
+                    name: customerData?.name,
+                    site: customerData?.site_name,
+                    pan: customerData?.pan,
+                    contact: customerData?.mobile,
+                    gstin: customerData?.gst,
                 }));
 
                 setCustomerModal(false);
@@ -292,6 +310,7 @@ const Details = () => {
                                 </View>
 
                             </View>
+
                         </View>
 
                         {/* Buttons */}
