@@ -28,6 +28,7 @@ const PIMyInvoice = () => {
     const [loading, setLoading] = useState(false);
 
     const pressHandler = (item) => {
+        
         navigation.navigate("Details");
 
         dispatch(logoutUser());

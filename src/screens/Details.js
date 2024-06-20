@@ -15,6 +15,7 @@ import { launchImageLibrary } from 'react-native-image-picker';
 import { addUser, logoutUser } from '../redux/UserSlice';
 import { emptyBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
+import axios from 'axios';
 
 const Details = () => {
 
@@ -23,6 +24,7 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
+    const loginDetails = useSelector(state => state.login);
 
     const [customerModal, setCustomerModal] = useState(false);
 
@@ -45,6 +47,22 @@ const Details = () => {
     const [isGstinFocused, setIsGstinFocused] = useState(false);
 
     const [photo, setPhoto] = useState('');
+
+    const SubmitComment = async () => {
+        try {
+            axios.defaults.headers.common[
+                'Authorization'
+            ] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.post(
+                '/employee/order/create',
+                { reel_id: route.params.data }
+            );
+            setdata(response.data.data);
+            // console.log("Rrrrr", response.data.data)
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        }
+    };
 
     const saveHandler = () => {
 
@@ -331,6 +349,7 @@ const Details = () => {
                         {/* Main content */}
                         <ScrollView style={{ marginTop: 5, padding: 15, flexDirection: 'column', gap: 10 }}>
 
+                            {/* Modal Header */}
                             <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), marginBottom: 20 }}>Enter your customer details</Text>
 
                             <View style={{ flexDirection: 'column', gap: 8, padding: 2 }}>
@@ -434,7 +453,7 @@ const Details = () => {
                         </ScrollView>
 
                         {/* ButtonStyle */}
-                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 15, paddingHorizontal: 10, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
+                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 10, paddingHorizontal: 10, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
 
                             {/* Cancel */}
                             <TouchableOpacity activeOpacity={0.7} onPress={() => setCustomerModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
