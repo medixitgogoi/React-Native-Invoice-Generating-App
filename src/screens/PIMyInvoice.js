@@ -5,9 +5,9 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Octicons';
 import Icon4 from 'react-native-vector-icons/dist/Octicons';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
-import names from '../data/names';
-import { useEffect, useState } from 'react';
-import { addUser, logoutUser } from '../redux/UserSlice';
+import { useFocusEffect } from '@react-navigation/native';
+import { useCallback, useEffect, useState } from 'react';
+import { addUser, deleteUser } from '../redux/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { emptyBill } from '../redux/BillDetailsSlice';
 import LinearGradient from 'react-native-linear-gradient';
@@ -35,7 +35,7 @@ const PIMyInvoice = () => {
 
         navigation.navigate("Details");
 
-        dispatch(logoutUser());
+        dispatch(deleteUser());
 
         dispatch(addUser({
             name: item.name,
@@ -51,7 +51,7 @@ const PIMyInvoice = () => {
 
     const addCustomerHandler = () => {
         navigation.navigate("Details");
-        dispatch(logoutUser());
+        dispatch(deleteUser());
     }
 
     const searchHandler = (text) => {
@@ -77,30 +77,30 @@ const PIMyInvoice = () => {
         );
     };
 
-    const getCustomerDetails = async () => {
+    useFocusEffect(
+        useCallback(() => {
+            setLoading(true);
 
-        setLoading(true);
-        
-        try {
-            axios.defaults.headers.common[
-                'Authorization'
-            ] = `Bearer ${loginDetails[0]?.accessToken}`;
-            const response = await axios.get('/employee/client/list');
+            const getCustomerDetails = async () => {
+                try {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+                    const response = await axios.get('/employee/client/list');
 
-            setCustomerData(response?.data?.data);
-            setFilteredNames(customerData);
+                    setCustomerData(response?.data?.data);
+                    setFilteredNames(response?.data?.data);
 
-            console.log("GetCustomerDetails", response?.data?.data)
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
+                    console.log("GetCustomerDetails", response?.data?.data);
+                } catch (error) {
+                    console.error('Error fetching data:', error);
+                } finally {
+                    setLoading(false);
+                }
+            };
 
-        setLoading(false);
-    };
-
-    useEffect(() => {
-        getCustomerDetails();
-    }, []);
+            getCustomerDetails();
+            
+        }, [loginDetails])
+    );
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>

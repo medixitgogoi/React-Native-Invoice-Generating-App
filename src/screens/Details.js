@@ -12,7 +12,7 @@ import { useEffect, useState } from 'react';
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
-import { addUser, logoutUser } from '../redux/UserSlice';
+import { addUser, deleteUser } from '../redux/UserSlice';
 import { emptyBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
@@ -49,22 +49,20 @@ const Details = () => {
 
     const [photo, setPhoto] = useState('');
 
-    const getCustomerDetails = async () => {
-        try {
-            axios.defaults.headers.common[
-                'Authorization'
-            ] = `Bearer ${loginDetails[0]?.accessToken}`;
-            const response = await axios.get('/employee/client/list');
-            setCustomerData(response?.data?.data);
-            // console.log("GetCustomerDetails", response?.data?.data)
-        } catch (error) {
-            console.error('Error fetching data:', error);
-        }
-    };
+    // const getCustomerDetails = async () => {
+    //     try {
+    //         axios.defaults.headers.common[
+    //             'Authorization'
+    //         ] = `Bearer ${loginDetails[0]?.accessToken}`;
+    //         const response = await axios.get('/employee/client/list');
 
-    useEffect(() => {
-        getCustomerDetails();
-    }, [saveHandler])
+    //         setCustomerData(response?.data?.data);
+    //         // console.log("GetCustomerDetails", response?.data?.data)
+
+    //     } catch (error) {
+    //         console.error('Error fetching data:', error);
+    //     }
+    // };
 
     const postCustomerDetails = async () => {
         try {
@@ -81,14 +79,16 @@ const Details = () => {
                     gst: gstin,
                 }
             );
-            // setCustomerData(response?.data?.data);
-            // console.log("CustomerDetails", response?.data?.data)
+
+            setCustomerData(response?.data?.data);
+            console.log("CustomerDetails", response?.data?.data);
+
         } catch (error) {
             console.error('Error fetching data:', error);
         }
     };
 
-    const saveHandler = () => {
+    const saveHandler = async () => {
 
         if (partyName === '' || siteName === '') {
             setCustomerModal(true);
@@ -98,28 +98,36 @@ const Details = () => {
 
             if (validate()) {
 
-                dispatch(logoutUser());
+                dispatch(deleteUser());
 
-                postCustomerDetails();
+                await postCustomerDetails();
+                console.log("CustomerData: ", customerData);
 
-                dispatch(addUser({
-                    name: customerData?.name,
-                    site: customerData?.site_name,
-                    pan: customerData?.pan,
-                    contact: customerData?.mobile,
-                    gstin: customerData?.gst,
-                }));
+                // Dispatch the action after ensuring customerData is updated
+                if (customerData != null) {
 
-                setCustomerModal(false);
-                setError(false);
+                    setCustomerModal(false);
+                    setError(false);
 
-                Toast.show({
-                    type: 'success',
-                    text1: 'User added successfully',
-                    text2: `${partyName} added`,
-                    topOffset: 50,
-                    onPress: () => Toast.hide(),
-                });
+                    dispatch(addUser({
+                        name: customerData.name,
+                        site: customerData.site_name,
+                        pan: customerData.pan,
+                        contact: customerData.mobile,
+                        gstin: customerData.gst,
+                    }));
+
+                    Toast.show({
+                        type: 'success',
+                        text1: 'User added successfully',
+                        text2: `${partyName} added`,
+                        topOffset: 50,
+                        onPress: () => Toast.hide(),
+                    });
+                    
+                } else {
+                    console.error('Customer data is not updated');
+                }
             }
         }
     }
@@ -147,7 +155,7 @@ const Details = () => {
             topOffset: 50,
             onPress: () => Toast.hide(),
         });
-        dispatch(logoutUser());
+        dispatch(deleteUser());
     }
 
     const validate = () => {
