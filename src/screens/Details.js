@@ -50,7 +50,7 @@ const Details = () => {
 
     const [loading, setLoading] = useState(false);
 
-    const [editDetails, setEditDetails] = useState(false);
+    // const [editDetails, setEditDetails] = useState(false);
 
     const postCustomerDetails = async () => {
         setLoading(true);
@@ -88,45 +88,44 @@ const Details = () => {
         }
     };
 
-    const updateCustomerDetails = async () => {
-        // setEditDetails(true);
-        setLoading(true);
-        
-        try {
+    // const updateCustomerDetails = async () => {
+    //     setLoading(true);
 
-            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+    //     try {
 
-            const response = await axios.put(
-                '/employee/client/submit',
-                {
-                    name: partyName,
-                    site_name: siteName,
-                    pan: panNo,
-                    mobile: contact,
-                    gst: gstin,
-                }
-            );
+    //         axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
-            const updatedCustomerData = response?.data?.data;
-            console.log("UpdatedCustomerDetails", updatedCustomerData);
+    //         const response = await axios.put(
+    //             '/employee/client/submit',
+    //             {
+    //                 name: partyName,
+    //                 site_name: siteName,
+    //                 pan: panNo,
+    //                 mobile: contact,
+    //                 gst: gstin,
+    //             }
+    //         );
 
-            // Dispatch to Redux store
-            dispatch(deleteUser());
-            dispatch(addUser({
-                name: updatedCustomerData.name,
-                site: updatedCustomerData.site_name,
-                pan: updatedCustomerData.pan,
-                contact: updatedCustomerData.mobile,
-                gstin: updatedCustomerData.gst,
-            }));
+    //         const updatedCustomerData = response?.data?.data;
+    //         console.log("UpdatedCustomerDetails", updatedCustomerData);
 
-        } catch (error) {
-            console.error('Error updating data:', error);
-        } finally {
-            setLoading(false);
-        }
-    };
+    //         // Dispatch to Redux store
+    //         dispatch(deleteUser());
+    //         dispatch(addUser({
+    //             name: updatedCustomerData.name,
+    //             site: updatedCustomerData.site_name,
+    //             pan: updatedCustomerData.pan,
+    //             contact: updatedCustomerData.mobile,
+    //             gstin: updatedCustomerData.gst,
+    //         }));
 
+    //     } catch (error) {
+    //         console.error('Error updating data:', error);
+    //     } finally {
+    //         setLoading(false);
+    //         setEditDetails(false);
+    //     }
+    // };
 
     const saveHandler = async () => {
 
@@ -158,18 +157,19 @@ const Details = () => {
         });
     };
 
-    const editDetailsHandler = () => {
-        setEditDetails(true);
-        setCustomerModal(true);
+    // const editDetailsHandler = () => {
 
-        setPartyName(userDetails[0]?.name)
-        setSiteName(userDetails[0]?.site);
-        setPanNo(userDetails[0]?.pan);
-        setContact(userDetails[0]?.contact);
-        setGstin(userDetails[0]?.gstin);
+    //     setEditDetails(true);
+    //     setCustomerModal(true);
 
-        dispatch(emptyBill());
-    }
+    //     setPartyName(userDetails[0]?.name)
+    //     setSiteName(userDetails[0]?.site);
+    //     setPanNo(userDetails[0]?.pan);
+    //     setContact(userDetails[0]?.contact);
+    //     setGstin(userDetails[0]?.gstin);
+
+    //     dispatch(emptyBill());
+    // }
 
     const removeUserHandler = () => {
         Toast.show({
@@ -207,6 +207,11 @@ const Details = () => {
 
         return Object.keys(newErrors).length === 0;
     };
+
+    const cancelHandler = () => {
+        setCustomerModal(false);
+        // setEditDetails(false);
+    }
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -249,7 +254,7 @@ const Details = () => {
                         <View style={{ flexDirection: 'column', gap: 5, }}>
                             <Text style={{ color: "#000", textAlign: "center", fontWeight: "600", fontSize: responsiveFontSize(2.8), }}>You have not added any customers yet!</Text>
                             <Text style={{ color: '#a3a3a3', textAlign: "center", fontSize: responsiveFontSize(1.9), fontWeight: "400", }}>Add customers and generate the invoice according to your business logic </Text>
-                            <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 30 }} onPress={() => setCustomerModal(true)}>
+                            <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 30 }} onPress={() => setCustomerModal(true) && dispatch(deleteUser())}>
                                 <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.2), textTransform: 'uppercase', }}>Add customer</Text>
                             </TouchableOpacity>
                         </View>
@@ -386,8 +391,8 @@ const Details = () => {
             <Modal
                 isVisible={customerModal}
                 onBackdropPress={() => setCustomerModal(false)}
-                onSwipeComplete={() => setCustomerModal(false)}
-                onRequestClose={() => setCustomerModal(false)}
+                onSwipeComplete={() => setCustomerModal(false) && editDetails && setEditDetails(false)}
+                onRequestClose={() => setCustomerModal(false) && editDetails && setEditDetails(false)}
                 animationType="slide"
                 swipeDirection={['down']}
                 backdropOpacity={0.5}
@@ -397,7 +402,7 @@ const Details = () => {
                 <View style={{ width: "100%", }}>
 
                     {/* Close Button */}
-                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setCustomerModal(false)}>
+                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setCustomerModal(false) && editDetails && setEditDetails(false)}>
                         <Icon2 name="close" size={20} style={{ color: '#fff' }} />
                     </TouchableOpacity>
 
@@ -513,7 +518,7 @@ const Details = () => {
                         <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 10, paddingHorizontal: 10, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
 
                             {/* Cancel */}
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => setCustomerModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={cancelHandler} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                                     Cancel
                                 </Text>
