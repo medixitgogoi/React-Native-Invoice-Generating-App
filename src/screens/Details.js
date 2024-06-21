@@ -88,10 +88,45 @@ const Details = () => {
         }
     };
 
-    const updateCustomerDetails = () => {
-        console.log('Clicked');
-        console.log(userDetails);
-    }
+    const updateCustomerDetails = async () => {
+        // setEditDetails(true);
+        setLoading(true);
+        
+        try {
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+
+            const response = await axios.put(
+                '/employee/client/submit',
+                {
+                    name: partyName,
+                    site_name: siteName,
+                    pan: panNo,
+                    mobile: contact,
+                    gst: gstin,
+                }
+            );
+
+            const updatedCustomerData = response?.data?.data;
+            console.log("UpdatedCustomerDetails", updatedCustomerData);
+
+            // Dispatch to Redux store
+            dispatch(deleteUser());
+            dispatch(addUser({
+                name: updatedCustomerData.name,
+                site: updatedCustomerData.site_name,
+                pan: updatedCustomerData.pan,
+                contact: updatedCustomerData.mobile,
+                gstin: updatedCustomerData.gst,
+            }));
+
+        } catch (error) {
+            console.error('Error updating data:', error);
+        } finally {
+            setLoading(false);
+        }
+    };
+
 
     const saveHandler = async () => {
 
