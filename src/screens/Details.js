@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Image } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Image, ActivityIndicator } from 'react-native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
@@ -48,7 +48,9 @@ const Details = () => {
 
     const [photo, setPhoto] = useState('');
 
-    const [loading, setLoading] = useState(true);
+    const [loading, setLoading] = useState(false);
+
+    const [editDetails, setEditDetails] = useState(false);
 
     const postCustomerDetails = async () => {
         setLoading(true);
@@ -86,6 +88,11 @@ const Details = () => {
         }
     };
 
+    const updateCustomerDetails = () => {
+        console.log('Clicked');
+        console.log(userDetails);
+    }
+
     const saveHandler = async () => {
 
         if (partyName === '' || siteName === '') {
@@ -97,7 +104,7 @@ const Details = () => {
             if (validate()) {
                 dispatch(deleteUser());
                 await postCustomerDetails();
-                
+
                 setCustomerModal(false);
                 setError(false);
 
@@ -117,7 +124,15 @@ const Details = () => {
     };
 
     const editDetailsHandler = () => {
-        setCustomerModal(true)
+        setEditDetails(true);
+        setCustomerModal(true);
+
+        setPartyName(userDetails[0]?.name)
+        setSiteName(userDetails[0]?.site);
+        setPanNo(userDetails[0]?.pan);
+        setContact(userDetails[0]?.contact);
+        setGstin(userDetails[0]?.gstin);
+
         dispatch(emptyBill());
     }
 
@@ -470,10 +485,25 @@ const Details = () => {
                             </TouchableOpacity>
 
                             {/* Save */}
-                            <TouchableOpacity onPress={() => saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40 }}>
-                                <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                                    Save
-                                </Text>
+                            <TouchableOpacity onPress={() => editDetails ? updateCustomerDetails() : saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
+                                {loading ? (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
+                                        <ActivityIndicator size="small" color={'#5a5a5a'} />
+                                        <Text style={{ color: '#5a5a5a' }}>Saving data ...</Text>
+                                    </View>
+                                ) : (
+                                    <View>
+                                        {editDetails ? (
+                                            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
+                                                Update
+                                            </Text>
+                                        ) : (
+                                            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
+                                                Save
+                                            </Text>
+                                        )}
+                                    </View>
+                                )}
                             </TouchableOpacity>
 
                         </View>
