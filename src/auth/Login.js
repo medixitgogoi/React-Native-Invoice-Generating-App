@@ -27,6 +27,16 @@ const Login = () => {
 
     const [errors, setErrors] = useState({});
 
+    const extractName = (message) => {
+        // Find the index of the comma
+        const commaIndex = message.indexOf(',');
+
+        // Extract the substring from the 4th character to the character before the comma
+        const name = message.substring(3, commaIndex).trim();
+
+        return name;
+    };
+
     const loginHandler = async () => {
 
         if (validate()) {
@@ -41,14 +51,15 @@ const Login = () => {
                     }
                 );
 
-                console.log("response: ", response);
+                console.log("loginResponse: ", response?.data);
 
                 if (response.data.status) {
 
                     const userInfo = {
+                        name: extractName(response?.data?.message),
                         email: email,
                         password: password,
-                        accessToken: response.data.access_token,
+                        accessToken: response?.data?.access_token,
                     };
 
                     dispatch(addLoginUser(userInfo));

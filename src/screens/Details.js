@@ -157,19 +157,19 @@ const Details = () => {
         });
     };
 
-    // const editDetailsHandler = () => {
+    const editDetailsHandler = () => {
 
-    //     setEditDetails(true);
-    //     setCustomerModal(true);
+        // setEditDetails(true);
+        setCustomerModal(true);
 
-    //     setPartyName(userDetails[0]?.name)
-    //     setSiteName(userDetails[0]?.site);
-    //     setPanNo(userDetails[0]?.pan);
-    //     setContact(userDetails[0]?.contact);
-    //     setGstin(userDetails[0]?.gstin);
+        setPartyName(userDetails[0]?.name)
+        setSiteName(userDetails[0]?.site);
+        setPanNo(userDetails[0]?.pan);
+        setContact(userDetails[0]?.contact);
+        setGstin(userDetails[0]?.gstin);
 
-    //     dispatch(emptyBill());
-    // }
+        dispatch(emptyBill());
+    }
 
     const removeUserHandler = () => {
         Toast.show({
@@ -179,6 +179,7 @@ const Details = () => {
             onPress: () => Toast.hide(),
         });
         dispatch(deleteUser());
+        // console.log("removeUser", userDetails);
     }
 
     const validate = () => {
@@ -211,6 +212,12 @@ const Details = () => {
     const cancelHandler = () => {
         setCustomerModal(false);
         // setEditDetails(false);
+    }
+
+    const addCustomerHandler = () => {
+        dispatch(deleteUser());
+        setCustomerModal(true);
+        // console.log("addCustomer", userDetails)
     }
 
     return (
@@ -254,7 +261,7 @@ const Details = () => {
                         <View style={{ flexDirection: 'column', gap: 5, }}>
                             <Text style={{ color: "#000", textAlign: "center", fontWeight: "600", fontSize: responsiveFontSize(2.8), }}>You have not added any customers yet!</Text>
                             <Text style={{ color: '#a3a3a3', textAlign: "center", fontSize: responsiveFontSize(1.9), fontWeight: "400", }}>Add customers and generate the invoice according to your business logic </Text>
-                            <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 30 }} onPress={() => setCustomerModal(true) && dispatch(deleteUser())}>
+                            <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 45, borderRadius: 6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 30 }} onPress={addCustomerHandler}>
                                 <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.2), textTransform: 'uppercase', }}>Add customer</Text>
                             </TouchableOpacity>
                         </View>
@@ -525,24 +532,16 @@ const Details = () => {
                             </TouchableOpacity>
 
                             {/* Save */}
-                            <TouchableOpacity onPress={() => editDetails ? updateCustomerDetails() : saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
+                            <TouchableOpacity onPress={saveHandler} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
                                 {loading ? (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
-                                        <ActivityIndicator size="small" color={'#5a5a5a'} />
+                                        <ActivityIndicator size="small" color='#5a5a5a' />
                                         <Text style={{ color: '#5a5a5a' }}>Saving data ...</Text>
                                     </View>
                                 ) : (
-                                    <View>
-                                        {editDetails ? (
-                                            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                                                Update
-                                            </Text>
-                                        ) : (
-                                            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                                                Save
-                                            </Text>
-                                        )}
-                                    </View>
+                                    <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
+                                        Save
+                                    </Text>
                                 )}
                             </TouchableOpacity>
 

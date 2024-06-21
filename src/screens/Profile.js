@@ -18,7 +18,6 @@ const Profile = () => {
     const dispatch = useDispatch();
 
     const loginDetails = useSelector(state => state.login);
-    const email = loginDetails[0]?.email;
 
     const logoutHandler = async () => {
         try {
@@ -60,14 +59,14 @@ const Profile = () => {
                 <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 30, marginVertical: 10 }}>
                     {/* <Image source={require("../assets/login.png")} style={{ width: 200, height: 200 }} /> */}
                     <View style={{ height: 130, width: 130, backgroundColor: '#000', borderRadius: 100, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: '#fff', fontSize: responsiveFontSize(8) }}>A</Text>
+                        <Text style={{ color: '#fff', fontSize: responsiveFontSize(8), textTransform: 'uppercase' }}>{loginDetails[0]?.name.slice(0, 1)}</Text>
                     </View>
                 </View>
 
                 {/* Name and Email */}
                 <View style={{ flexDirection: 'column', alignItems: 'center', gap: 3 }}>
-                    <Text style={{ fontSize: responsiveFontSize(2.8), fontWeight: '600', textAlign: 'center', color: '#000', }}>Ashok Kejriwal</Text>
-                    <Text style={{ fontSize: responsiveFontSize(2), fontWeight: '400', textAlign: 'center', color: '#093d43' }}>{email}</Text>
+                    <Text style={{ fontSize: responsiveFontSize(2.6), fontWeight: '600', textAlign: 'center', color: '#000', textTransform: 'uppercase' }}>{loginDetails[0]?.name}</Text>
+                    <Text style={{ fontSize: responsiveFontSize(2), fontWeight: '500', textAlign: 'center', color: '#656565' }}>{loginDetails[0]?.email}</Text>
                 </View>
 
                 <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: 5, marginTop: 40 }}>
