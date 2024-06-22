@@ -20,7 +20,7 @@ const BillDetails = () => {
     const [clientId, setClientId] = useState(null)
 
     const loginDetails = useSelector(state => state.login);
-    console.log("loginDetails", loginDetails);
+    console.log(loginDetails)
 
     const navigation = useNavigation();
 
@@ -102,7 +102,7 @@ const BillDetails = () => {
     const mappedProducts = mapProductDetails(productDetails);
 
     const data = {
-        "client_id": clientId,
+        "client_id": 1,
         "bend_charge": bend,
         "load_charge": loading,
         "transport_charge": transport,
@@ -111,34 +111,28 @@ const BillDetails = () => {
         "products": mappedProducts,
     };
 
-    const postProductDetails = async () => {
-        console.log("data", data);
-        console.log("userDetails", userDetails);
+    const viewBillHandler = async () => {
 
         try {
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
             const response = await axios.post(
                 '/employee/order/create',
-                { data: data }
+                { order: data }
             );
             // setData(response.data.data);
             console.log("productDetails: ", response)
+            console.log("data", data);
         } catch (error) {
             console.error('Error fetching data:', error);
         }
 
     };
 
-    const viewBillHandler = async () => {
-
-        // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
-
-        await postProductDetails();
-
-        // postProductDetails();
-
-    }
+    // const viewBillHandler = async () => {
+    //     await postProductDetails();
+    //     // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
+    // }
 
     const removeProductHandler = (item) => {
 
