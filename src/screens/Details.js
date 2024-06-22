@@ -24,6 +24,8 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
+    console.log("dednededd", userDetails);
+
     const loginDetails = useSelector(state => state.login);
 
     const [customerModal, setCustomerModal] = useState(false);
@@ -52,7 +54,7 @@ const Details = () => {
 
     // const [editDetails, setEditDetails] = useState(false);
 
-    const postCustomerDetails = async () => {
+    const postCustomerDetails = async (id) => {
         setLoading(true);
         try {
 
@@ -74,6 +76,7 @@ const Details = () => {
 
             // Dispatch to Redux store
             dispatch(addUser({
+                id: customerData.id,
                 name: customerData.name,
                 site: customerData.site_name,
                 pan: customerData.pan,
@@ -88,7 +91,7 @@ const Details = () => {
         }
     };
 
-    // const updateCustomerDetails = async () => {
+    // const updateCustomerDetails = async (customerId) => {
     //     setLoading(true);
 
     //     try {
@@ -98,6 +101,7 @@ const Details = () => {
     //         const response = await axios.put(
     //             '/employee/client/submit',
     //             {
+    //                 id: customerId, // Assuming customerId is available in the scope
     //                 name: partyName,
     //                 site_name: siteName,
     //                 pan: panNo,
@@ -142,6 +146,8 @@ const Details = () => {
                 setCustomerModal(false);
                 setError(false);
 
+                console.log("Dixit", userDetails);
+
             }
         }
     }
@@ -180,6 +186,11 @@ const Details = () => {
         });
         dispatch(deleteUser());
         // console.log("removeUser", userDetails);
+        setPartyName('')
+        setSiteName('');
+        setPanNo('');
+        setContact('');
+        setGstin('');
     }
 
     const validate = () => {
@@ -532,16 +543,27 @@ const Details = () => {
                             </TouchableOpacity>
 
                             {/* Save */}
-                            <TouchableOpacity onPress={saveHandler} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
+                            <TouchableOpacity onPress={() => saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
                                 {loading ? (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
                                         <ActivityIndicator size="small" color='#5a5a5a' />
                                         <Text style={{ color: '#5a5a5a' }}>Saving data ...</Text>
                                     </View>
                                 ) : (
-                                    <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                                        Save
-                                    </Text>
+                                    <View>
+                                        <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
+                                            Save
+                                        </Text>
+                                        {/* {editDetails ? (
+                                            <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
+                                                Update
+                                            </Text>
+                                        ) : (
+                                            <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
+                                                Save
+                                            </Text>
+                                        )} */}
+                                    </View>
                                 )}
                             </TouchableOpacity>
 

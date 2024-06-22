@@ -50,6 +50,9 @@ const FillUpDetails = () => {
     const navigation = useNavigation();
 
     const productDetails = useSelector(state => state.bill);
+    const userDetails = useSelector(state => state.user);
+
+    console.log("FillDetails", userDetails);
 
     const [moreProductModal, setMoreProductModal] = useState(false);
 

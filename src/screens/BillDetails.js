@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import { useNavigation } from '@react-navigation/native';
@@ -15,15 +15,22 @@ const BillDetails = () => {
     const dispatch = useDispatch();
 
     const productDetails = useSelector(state => state.bill);
-    // console.log(productDetails);
+    const userDetails = useSelector(state => state.user);
+
+    const [clientId, setClientId] = useState(null)
 
     const loginDetails = useSelector(state => state.login);
+    console.log("loginDetails", loginDetails);
 
     const navigation = useNavigation();
 
     const [bend, setBend] = useState(0);
     const [loading, setLoading] = useState(0);
     const [transport, setTransport] = useState(0);
+
+    useEffect(() => {
+        setClientId(userDetails[0]?.id);
+    }, [])
 
     function indianNumberFormat(number) {
 
@@ -92,52 +99,45 @@ const BillDetails = () => {
         }));
     }
 
-    const SubmitComment = async () => {
+    const mappedProducts = mapProductDetails(productDetails);
+
+    const data = {
+        "client_id": clientId,
+        "bend_charge": bend,
+        "load_charge": loading,
+        "transport_charge": transport,
+        "total_amount": totalPrice,
+        "total_payble_amount": totalAmount,
+        "products": mappedProducts,
+    };
+
+    const postProductDetails = async () => {
+        console.log("data", data);
+        console.log("userDetails", userDetails);
+
         try {
-            axios.defaults.headers.common[
-                'Authorization'
-            ] = `Bearer ${loginDetails[0]?.accessToken}`;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+
             const response = await axios.post(
                 '/employee/order/create',
-                { reel_id: route.params.data }
+                { data: data }
             );
-            setdata(response.data.data);
-            // console.log("Rrrrr", response.data.data)
+            // setData(response.data.data);
+            console.log("productDetails: ", response)
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+
     };
 
-    const mappedProducts = mapProductDetails(productDetails);
+    const viewBillHandler = async () => {
 
-    const viewBillHandler = () => {
+        // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
 
-        navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
+        await postProductDetails();
 
-        const data = {
-            "client_id": "1",
-            "bend_charge": bend,
-            "load_charge": loading,
-            "transport_charge": transport,
-            "total_amount": totalPrice,
-            "total_payble_amount": totalAmount,
-            "products": mappedProducts,
-        };
+        // postProductDetails();
 
-        fetch('https://colortuff.webinfoghy.co.in/public/api/employee/order/create', {
-            method: 'POST',
-            headers: {
-                'Content-Type': 'application/json'
-            },
-            body: JSON.stringify(data)
-        })
-            .then(response => response.json())
-            .then(result => {
-                console.log('Success: ', result);
-            })
-            .catch(error => {
-                console.error('Error: ', error);
-            });
     }
 
     const removeProductHandler = (item) => {

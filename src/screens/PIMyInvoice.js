@@ -38,6 +38,7 @@ const PIMyInvoice = () => {
         dispatch(deleteUser());
 
         dispatch(addUser({
+            id: item.id,
             name: item.name,
             site: item.site_name,
             pan: item.pan,
