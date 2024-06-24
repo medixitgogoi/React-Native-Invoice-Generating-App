@@ -129,11 +129,6 @@ const BillDetails = () => {
 
     };
 
-    // const viewBillHandler = async () => {
-    //     await postProductDetails();
-    //     // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
-    // }
-
     const removeProductHandler = (item) => {
 
         Toast.show({

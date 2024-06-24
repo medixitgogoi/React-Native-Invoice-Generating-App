@@ -82,7 +82,6 @@ const Login = () => {
                     setErrors({ api: response.data.message });
                 }
             } catch (error) {
-                // console.log(error);
                 if (error.response && error.response.status === 500) {
                     // Display a user-friendly error message
                     alert('An unexpected error occurred. Please try again later.');
