@@ -20,7 +20,7 @@ const BillDetails = () => {
     const [clientId, setClientId] = useState(null)
 
     const loginDetails = useSelector(state => state.login);
-    // console.log(productDetails)
+    // console.log(productDetails);
 
     const navigation = useNavigation();
 
@@ -86,10 +86,10 @@ const BillDetails = () => {
 
     function mapProductDetails(productDetails) {
         return productDetails.map(product => ({
-            unit_id: product.unit,
-            thickness_id: product.thickness,
-            type_id: product.type,
-            color_id: product.color,
+            unit_id: product.unit.id,
+            thickness_id: product.thickness.id,
+            type_id: product.type.id,
+            color_id: product.color.id,
             ridge_width_id: 1,
             rate: parseInt(product.rate),
             product_data: product.lengthAndPieces.map(lp => ({
@@ -102,7 +102,7 @@ const BillDetails = () => {
     const mappedProducts = mapProductDetails(productDetails);
 
     const data = {
-        "client_id": 1,
+        "client_id": clientId,
         "bend_charge": bend,
         "load_charge": loading,
         "transport_charge": transport,

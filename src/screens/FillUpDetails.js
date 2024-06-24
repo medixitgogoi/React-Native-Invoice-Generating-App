@@ -49,87 +49,87 @@ const FillUpDetails = () => {
 
     const [products, setProducts] = useState([]);
 
+    const getThicknessDetails = async () => {
+        try {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.get('/employee/thickness/dropDown');
+
+            setThickness(response?.data?.data);
+            // console.log("thickness", thickness);
+
+            console.log("Thickness", response?.data?.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            // setLoading(false);
+        }
+    };
+
+    const getUnitDetails = async () => {
+        try {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.get('/employee/unit/dropDown');
+
+            setUnit(response?.data?.data);
+            console.log("unit", unit);
+
+            console.log("Units", response?.data?.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            // setLoading(false);
+        }
+    };
+
+    const getColorDetails = async () => {
+        try {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.get('/employee/color/dropDown');
+
+            setColor(response?.data?.data);
+            console.log("colors", color);
+
+            console.log("Colors", response?.data?.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            // setLoading(false);
+        }
+    };
+
+    const getTypeDetails = async () => {
+        try {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.get('/employee/type/dropDown');
+
+            setType(response?.data?.data);
+            console.log("types", type);
+
+            console.log("Types", response?.data?.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            // setLoading(false);
+        }
+    };
+
+    const getRidgeWidthDetails = async () => {
+        try {
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+            const response = await axios.get('/employee/ridge_width/dropDown');
+
+            setWidth(response?.data?.data);
+            console.log("widths", width);
+
+            console.log("Widths", response?.data?.data);
+        } catch (error) {
+            console.error('Error fetching data:', error);
+        } finally {
+            // setLoading(false);
+        }
+    };
+    
     useEffect(() => {
-
-        const getThicknessDetails = async () => {
-            try {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-                const response = await axios.get('/employee/thickness/dropDown');
-
-                setThickness(response?.data?.data);
-                // console.log("thickness", thickness);
-
-                console.log("Thickness", response?.data?.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                // setLoading(false);
-            }
-        };
-
-        const getUnitDetails = async () => {
-            try {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-                const response = await axios.get('/employee/unit/dropDown');
-
-                setUnit(response?.data?.data);
-                console.log("unit", unit);
-
-                console.log("Units", response?.data?.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                // setLoading(false);
-            }
-        };
-
-        const getColorDetails = async () => {
-            try {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-                const response = await axios.get('/employee/color/dropDown');
-
-                setColor(response?.data?.data);
-                console.log("colors", color);
-
-                console.log("Colors", response?.data?.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                // setLoading(false);
-            }
-        };
-
-        const getTypeDetails = async () => {
-            try {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-                const response = await axios.get('/employee/type/dropDown');
-
-                setType(response?.data?.data);
-                console.log("types", type);
-
-                console.log("Types", response?.data?.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                // setLoading(false);
-            }
-        };
-
-        const getRidgeWidthDetails = async () => {
-            try {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-                const response = await axios.get('/employee/ridge_width/dropDown');
-
-                setWidth(response?.data?.data);
-                console.log("widths", width);
-
-                console.log("Widths", response?.data?.data);
-            } catch (error) {
-                console.error('Error fetching data:', error);
-            } finally {
-                // setLoading(false);
-            }
-        };
 
         getThicknessDetails();
         getUnitDetails();
