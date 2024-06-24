@@ -82,7 +82,14 @@ const Login = () => {
                     setErrors({ api: response.data.message });
                 }
             } catch (error) {
-                console.log(error);
+                // console.log(error);
+                if (error.response && error.response.status === 500) {
+                    // Display a user-friendly error message
+                    alert('An unexpected error occurred. Please try again later.');
+                    console.error('Error fetching data:', error.message);
+                } else {
+                    console.error('Error fetching data:', error.message);
+                }
             }
         }
 
@@ -125,10 +132,10 @@ const Login = () => {
                     <Image source={require("../assets/logo.png")} style={{ width: 220, height: 220 }} resizeMode='contain' />
                 </View>
 
-                {/* Loading spinner */}
+                {/* Loading Spinner */}
                 <View style={{ height: '5%' }}>
                     {loading && (
-                        <View style={{ backgroundColor: '#fff', padding: 8, elevation: 5, width: '20%', paddingBottom: 6, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 2, }}>
+                        <View style={{ backgroundColor: '#fff', padding: 8, elevation: 5, width: '13%', paddingBottom: 6, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 2, }}>
                             <ActivityIndicator size="large" color={"#66ac53"} />
                         </View>
                     )}
