@@ -1,21 +1,19 @@
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image, ActivityIndicator } from 'react-native';
-import { zomatoRed } from '../utils/colors';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon2 from 'react-native-vector-icons/Feather';
-import { useNavigation } from '@react-navigation/native';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { addLoginUser } from '../redux/LoginSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
+import { BlurView } from '@react-native-community/blur';
 
 const Login = () => {
 
     const dispatch = useDispatch();
     const loginDetails = useSelector(state => state.login);
-
-    const navigation = useNavigation();
 
     const [email, setEmail] = useState("");
     const [isEmailFocused, setIsEmailFocused] = useState(false);
@@ -120,33 +118,25 @@ const Login = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
             <StatusBar
                 animated={true}
-                backgroundColor="#f1f3f6"
+                backgroundColor={loading ? '#959595' : "#f1f3f6"}
                 barStyle="dark-content"
             />
 
             <View style={{ height: "100%" }}>
 
                 {/* Image */}
-                <View style={{ height: "50%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                    <Image source={require("../assets/logo.png")} style={{ width: 220, height: 220 }} resizeMode='contain' />
+                <View style={{ height: "55%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center', }}>
+                    <Image source={require("../assets/logo.png")} style={{ width: 220, height: 220, marginTop: '8%' }} resizeMode='contain' />
                 </View>
 
-                {/* Loading Spinner */}
-                <View style={{ height: '5%' }}>
-                    {loading && (
-                        <View style={{ backgroundColor: '#fff', padding: 8, elevation: 5, width: '13%', paddingBottom: 6, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 2, }}>
-                            <ActivityIndicator size="large" color={"#66ac53"} />
-                        </View>
-                    )}
-                </View>
-
-                <View style={{ height: "40%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
+                {/* Content */}
+                <View style={{ height: "45%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
 
                     <Text style={{ color: "#000", textAlign: "center", color: zomatoRed, fontSize: responsiveFontSize(3.2), fontWeight: "700", textTransform: "uppercase", }}>Welcome Back!</Text>
 
                     {/* Email */}
                     <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '13%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -10, left: 50, backgroundColor: '#f1f3f6' }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '13%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -10, left: 50, backgroundColor: '#f1f3f6', display: loading ? 'none' : "flex" }}>
                             <Text style={{ color: '#abb0ba', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Email</Text>
                         </View>
                         <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 14, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isEmailFocused ? zomatoRed : "", borderWidth: isEmailFocused ? 1.5 : 0, marginVertical: 2 }}>
@@ -164,44 +154,38 @@ const Login = () => {
                     </View>
 
                     {/* Password */}
-                    <View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '21%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -10, left: 50, backgroundColor: '#f1f3f6' }}>
+                    <View style={{ marginBottom: 20 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: '21%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -10, left: 50, backgroundColor: '#f1f3f6', display: loading ? 'none' : "flex" }}>
                             <Text style={{ color: '#abb0ba', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Password</Text>
                         </View>
-                        <View style={{ flexDirection: 'column', gap: 7, }}>
-                            <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 15, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isPasswordFocused ? zomatoRed : "", borderWidth: isPasswordFocused ? 1.5 : 0, marginTop: 2 }}>
-                                <TextInput
-                                    style={{ paddingVertical: 8, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000" }}
-                                    onChangeText={setPassword}
-                                    value={password}
-                                    placeholderTextColor="#abb0ba"
-                                    onFocus={() => setIsPasswordFocused(true)}
-                                    onBlur={() => setIsPasswordFocused(false)}
-                                    secureTextEntry={show}
+
+                        <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 15, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isPasswordFocused ? zomatoRed : "", borderWidth: isPasswordFocused ? 1.5 : 0, marginTop: 2 }}>
+                            <TextInput
+                                style={{ paddingVertical: 8, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000" }}
+                                onChangeText={setPassword}
+                                value={password}
+                                placeholderTextColor="#abb0ba"
+                                onFocus={() => setIsPasswordFocused(true)}
+                                onBlur={() => setIsPasswordFocused(false)}
+                                secureTextEntry={show}
+                            />
+                            <View style={{ position: 'absolute', right: 7, bottom: 1 }}>
+                                <Icon2
+                                    name={show ? 'eye-off' : 'eye'}
+                                    onPress={() => setShow(!show)}
+                                    style={{
+                                        color: zomatoRed,
+                                        fontSize: responsiveFontSize(2.2),
+                                        width: 30,
+                                        height: 30,
+                                        alignItems: 'center',
+                                        justifyContent: 'center',
+                                    }}
                                 />
-                                <View style={{ position: 'absolute', right: 7, bottom: 1 }}>
-                                    <Icon2
-                                        name={show ? 'eye-off' : 'eye'}
-                                        onPress={() => setShow(!show)}
-                                        style={{
-                                            color: zomatoRed,
-                                            fontSize: responsiveFontSize(2.2),
-                                            width: 30,
-                                            height: 30,
-                                            alignItems: 'center',
-                                            justifyContent: 'center',
-                                        }}
-                                    />
-                                </View>
                             </View>
-
-                            {errors.password && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), paddingLeft: 35 }}>{errors.password}</Text>}
-
-                            <TouchableOpacity style={{ marginRight: 35, }}>
-                                <Text style={{ color: "#b4b7bf", textAlign: "right", fontSize: responsiveFontSize(1.8), fontWeight: "500" }}>Forgot password?</Text>
-                            </TouchableOpacity>
-
                         </View>
+
+                        {errors.password && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), paddingLeft: 35 }}>{errors.password}</Text>}
                     </View>
 
                     {/* Log in button */}
@@ -211,6 +195,22 @@ const Login = () => {
 
                 </View>
 
+                {/* Loading Spinner */}
+                {loading && (
+                    <View style={styles.loadingOverlay}>
+                        <BlurView
+                            style={styles.absolute}
+                            blurType="light"
+                            blurAmount={10}
+                            reducedTransparencyFallbackColor="#818181"
+                        />
+                        <View style={styles.loadingContainer}>
+                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.4), fontWeight: '500' }}>Logging you in ...</Text>
+                            <ActivityIndicator size="large" color={zomatoRed} />
+                        </View>
+                    </View>
+                )}
+
             </View>
 
         </SafeAreaView>
@@ -219,4 +219,25 @@ const Login = () => {
 
 export default Login;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    loadingOverlay: {
+        ...StyleSheet.absoluteFillObject,
+        backgroundColor: 'rgba(0,0,0,0.5)',
+        justifyContent: 'center',
+        alignItems: 'center',
+    },
+    absolute: {
+        ...StyleSheet.absoluteFillObject,
+    },
+    loadingContainer: {
+        backgroundColor: "#fff",
+        paddingVertical: 8,
+        borderRadius: 3,
+        elevation: 20,
+        flexDirection: 'row',
+        alignItems: 'center',
+        justifyContent: 'center',
+        gap: 8,
+        paddingHorizontal: 15,
+    },
+});

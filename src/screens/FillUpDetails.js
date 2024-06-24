@@ -128,7 +128,7 @@ const FillUpDetails = () => {
             // setLoading(false);
         }
     };
-    
+
     useEffect(() => {
 
         getThicknessDetails();
