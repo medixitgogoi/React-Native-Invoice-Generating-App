@@ -128,7 +128,9 @@ const Login = () => {
                 {/* Loading spinner */}
                 <View style={{ height: '5%' }}>
                     {loading && (
-                        <ActivityIndicator size="large" color={"#66ac53"} />
+                        <View style={{ backgroundColor: '#fff', padding: 8, elevation: 5, width: '20%', paddingBottom: 6, alignSelf: 'center', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 2, }}>
+                            <ActivityIndicator size="large" color={"#66ac53"} />
+                        </View>
                     )}
                 </View>
 

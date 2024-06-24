@@ -20,7 +20,7 @@ const BillDetails = () => {
     const [clientId, setClientId] = useState(null)
 
     const loginDetails = useSelector(state => state.login);
-    console.log(loginDetails)
+    console.log(productDetails)
 
     const navigation = useNavigation();
 

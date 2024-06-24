@@ -13,29 +13,6 @@ import { addItemToBill } from '../redux/BillDetailsSlice';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
 
-const units = [
-    { title: 'mm', },
-    { title: 'ft', },
-];
-
-const types = [
-    { title: 'Profile Sheet', },
-    { title: 'Ridges', },
-    { title: 'Tiles Profile Sheet', },
-];
-
-const colors = [
-    { title: 'Red', },
-    { title: 'Blue', },
-    { title: 'Green', },
-];
-
-const widths = [
-    { title: '16 inch', },
-    { title: '18 inch', },
-    { title: '24 inch', },
-];
-
 const FillUpDetails = () => {
 
     const dispatch = useDispatch();
@@ -112,7 +89,7 @@ const FillUpDetails = () => {
                 const response = await axios.get('/employee/color/dropDown');
 
                 setColor(response?.data?.data);
-                console.log("colors", unit);
+                console.log("colors", color);
 
                 console.log("Colors", response?.data?.data);
             } catch (error) {
@@ -143,10 +120,10 @@ const FillUpDetails = () => {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
                 const response = await axios.get('/employee/ridge_width/dropDown');
 
-                // setCustomerData(response?.data?.data);
-                // setFilteredNames(response?.data?.data);
+                setWidth(response?.data?.data);
+                console.log("widths", width);
 
-                console.log("Ridges", response?.data?.data);
+                console.log("Widths", response?.data?.data);
             } catch (error) {
                 console.error('Error fetching data:', error);
             } finally {
@@ -194,11 +171,11 @@ const FillUpDetails = () => {
                 setError(false);
                 setRate('');
                 setProducts([]);
-                setSelectedColor('');
-                setSelectedType('');
-                setSelectedUnit('');
-                setSelectedThickness('');
-                setSelectedWidth('');
+                setSelectedColor(null);
+                setSelectedType(null);
+                setSelectedUnit(null);
+                setSelectedThickness(null);
+                setSelectedWidth(null);
 
             }
         }
@@ -325,7 +302,7 @@ const FillUpDetails = () => {
                     </View>
 
                     {/* Type and color */}
-                    <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: selectedType === "Ridges" ? 6 : 0 }}>
+                    <View style={{ flexDirection: 'row', gap: 6, flexWrap: 'wrap', marginBottom: selectedType?.name === "Ridges" ? 6 : 0 }}>
 
                         {/* Type */}
                         <View style={{ flex: 1 }}>
@@ -366,9 +343,9 @@ const FillUpDetails = () => {
                             <View style={{ backgroundColor: '#fff', borderRadius: 10, padding: 12, elevation: 1 }}>
                                 <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Color:</Text>
                                 <SelectDropdown
-                                    data={colors}
+                                    data={color}
                                     onSelect={(selectedItem, index) => {
-                                        setSelectedColor(selectedItem.title)
+                                        setSelectedColor(selectedItem)
                                         // console.log(selectedItem.type, index);
                                     }}
                                     renderButton={(selectedItem, isOpened) => {
@@ -376,7 +353,7 @@ const FillUpDetails = () => {
                                             <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                 <Text style={styles.dropdownButtonTxtStyle}>
                                                     {/* {(selectedItem && selectedItem.title) || 'Select Color'} */}
-                                                    {selectedColor === '' ? 'Select Color' : selectedColor}
+                                                    {selectedColor === null ? 'Select Color' : `${selectedItem.name}`}
                                                 </Text>
                                                 <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
                                             </View>
@@ -385,7 +362,7 @@ const FillUpDetails = () => {
                                     renderItem={(item, index, isSelected) => {
                                         return (
                                             <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
-                                                <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
+                                                <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.name}</Text>
                                             </View>
                                         );
                                     }}
@@ -398,15 +375,15 @@ const FillUpDetails = () => {
                     </View>
 
                     {/* Width */}
-                    {selectedType.name === "Ridges" && (
+                    {selectedType?.name === "Ridges" && (
                         <View style={{ flexDirection: 'row', gap: 5, flexWrap: 'wrap' }}>
                             <View style={{ flex: 1 }}>
                                 <View style={{ backgroundColor: '#fff', borderRadius: 15, padding: 12, elevation: 1 }}>
                                     <Text style={{ color: '#151E26', fontSize: responsiveFontSize(2.2), marginVertical: 5, fontSize: responsiveFontSize(2.3), fontWeight: '500' }}>Width:</Text>
                                     <SelectDropdown
-                                        data={widths}
+                                        data={width}
                                         onSelect={(selectedItem, index) => {
-                                            setSelectedWidth(selectedItem.title)
+                                            setSelectedWidth(selectedItem)
                                             // console.log(selectedWidth);
                                             // console.log(width);
                                         }}
@@ -415,7 +392,7 @@ const FillUpDetails = () => {
                                                 <View style={{ ...styles.dropdownButtonStyle, width: '100%' }}>
                                                     <Text style={styles.dropdownButtonTxtStyle}>
                                                         {/* {(selectedItem && selectedItem.title) || 'Select Width'} */}
-                                                        {selectedWidth === '' ? 'Select Width' : selectedWidth}
+                                                        {selectedWidth === null ? 'Select Width' : `${selectedItem.name} inch`}
                                                     </Text>
                                                     <Icon5 name={isOpened ? 'chevron-up' : 'chevron-down'} style={styles.dropdownButtonArrowStyle} color="#000" />
                                                 </View>
@@ -424,7 +401,7 @@ const FillUpDetails = () => {
                                         renderItem={(item, index, isSelected) => {
                                             return (
                                                 <View style={{ ...styles.dropdownItemStyle, ...(isSelected && { backgroundColor: zomatoRed }) }}>
-                                                    <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.title}</Text>
+                                                    <Text style={{ ...styles.dropdownItemTxtStyle, ...(isSelected && { color: '#fff' }) }}>{item.name} inch</Text>
                                                 </View>
                                             );
                                         }}
