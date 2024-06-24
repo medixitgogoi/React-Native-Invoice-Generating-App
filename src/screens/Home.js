@@ -3,14 +3,10 @@ import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Imag
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
-import { useSelector } from 'react-redux';
 
 const Home = () => {
 
     const navigation = useNavigation();
-
-    const loginDetails = useSelector(state => state.login);
-    console.log("loginDetails", loginDetails);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
