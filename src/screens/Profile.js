@@ -92,14 +92,14 @@ const Profile = () => {
                     </TouchableOpacity>
 
                     {/* Share App */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#e3e31d', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
+                    {/* <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#e3e31d', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
                         <View style={{ backgroundColor: '#f9f9cd', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                             <Icon name="offline-share" size={18} style={{ width: 20, height: 20, color: '#c8c819' }} />
                         </View>
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                             <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>Share App</Text>
                         </View>
-                    </TouchableOpacity>
+                    </TouchableOpacity> */}
 
                     {/* Log out */}
                     <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#47c724', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={logoutHandler}>
@@ -113,11 +113,6 @@ const Profile = () => {
 
                 </View>
 
-            </View>
-
-            {/* Copyright */}
-            <View style={{ alignSelf: 'center', flexDirection: 'row', alignItems: 'flex-end', height: 20, position: 'absolute', bottom: 8, }}>
-                <Text style={{ color: '#678e8c', fontWeight: '400', fontSize: responsiveFontSize(1.6) }}>© 2024 ColorTuff. All rights reserved.</Text>
             </View>
 
         </SafeAreaView>
