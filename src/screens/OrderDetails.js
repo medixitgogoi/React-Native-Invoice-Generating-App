@@ -30,7 +30,7 @@ const OrderDetails = () => {
             </View>
 
             <View>
-                <InvoiceView />
+                {/* <InvoiceView /> */}
             </View>
 
         </SafeAreaView>
