@@ -839,7 +839,7 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
   return (
     <View>
-
+      
       <ScrollView>
         <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20 }}>
           <HTML source={{ html: htmlContent2 }} />

@@ -3,6 +3,7 @@ import { zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import InvoiceView from '../components/InvoiceView';
 
 const OrderDetails = () => {
 
@@ -23,9 +24,13 @@ const OrderDetails = () => {
                         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                             <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
                         </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Order Details</Text>
+                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>View Order Details</Text>
                     </View>
                 </View>
+            </View>
+
+            <View>
+                <InvoiceView />
             </View>
 
         </SafeAreaView>
