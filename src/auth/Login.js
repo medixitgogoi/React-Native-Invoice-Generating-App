@@ -132,6 +132,7 @@ const Login = () => {
                 {/* Content */}
                 <View style={{ height: "45%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
 
+                    {/* Headline */}
                     <Text style={{ color: "#000", textAlign: "center", color: zomatoRed, fontSize: responsiveFontSize(3.2), fontWeight: "700", textTransform: "uppercase", }}>Welcome Back!</Text>
 
                     {/* Email */}
@@ -205,8 +206,8 @@ const Login = () => {
                             reducedTransparencyFallbackColor="#818181"
                         />
                         <View style={styles.loadingContainer}>
-                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.4), fontWeight: '500' }}>Logging you in ...</Text>
-                            <ActivityIndicator size="large" color={zomatoRed} />
+                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '400' }}>Logging you in. Please wait ...</Text>
+                            <ActivityIndicator size="small" color={zomatoRed} />
                         </View>
                     </View>
                 )}
@@ -230,7 +231,7 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
     },
     loadingContainer: {
-        backgroundColor: "#fff",
+        backgroundColor: lightZomatoRed,
         paddingVertical: 8,
         borderRadius: 3,
         elevation: 20,
