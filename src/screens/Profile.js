@@ -11,6 +11,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logoutUser } from '../redux/LoginSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { deleteUser } from '../redux/UserSlice';
+import Toast from 'react-native-toast-message';
 
 const Profile = () => {
 
@@ -20,12 +21,28 @@ const Profile = () => {
     const loginDetails = useSelector(state => state.login);
 
     const logoutHandler = async () => {
-        try {
-            dispatch(logoutUser());
-            await AsyncStorage.removeItem('loginDetails');
-        } catch (error) {
-            console.error('Failed to logout: ', error);
-        }
+        Toast.show({
+            type: 'error',
+            text1: "Failed to log out. Please try again later.",
+            text2: `Error message: ${error?.message}`,
+            position: 'top',
+            topOffset: 50,
+            onPress: () => Toast.hide(),
+        });
+        // try {
+        //     dispatch(logoutUser());
+        //     await AsyncStorage.removeItem('loginDetails');
+        // } catch (error) {
+        //     Toast.show({
+        //         type: 'error',
+        //         text1: "Failed to log out. Please try again later.",
+        //         text2: `Error message: ${error?.message}`,
+        //         position: 'top',
+        //         topOffset: 50,
+        //         onPress: () => Toast.hide(),
+        //     });
+        //     console.error('Failed to logout: ', error);
+        // }
     }
 
     const pressHandler = () => {
