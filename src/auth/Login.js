@@ -144,8 +144,8 @@ const Login = () => {
 
                         {/* Email */}
                         <View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 8, width: '13%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -15, left: 50, backgroundColor: '#f1f3f6', display: loading ? 'none' : "flex" }}>
-                                <Text style={{ color: '#abb0ba', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Email</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 8, width: '13%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -15, left: 50, backgroundColor: '#f1f3f6', display: loading ? 'none' : "flex", paddingHorizontal: 3 }}>
+                                <Text style={{ color: '#8a919f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Email</Text>
                             </View>
                             <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 14, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isEmailFocused ? zomatoRed : "", borderWidth: isEmailFocused ? 1.5 : 0, marginVertical: 2 }}>
                                 <TextInput
@@ -164,7 +164,7 @@ const Login = () => {
                         {/* Password */}
                         <View style={{ marginBottom: 20 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 8, width: '21%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -15, left: 50, backgroundColor: '#f1f3f6', display: loading ? 'none' : "flex" }}>
-                                <Text style={{ color: '#abb0ba', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Password</Text>
+                                <Text style={{ color: '#8a919f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Password</Text>
                             </View>
 
                             <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 15, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isPasswordFocused ? zomatoRed : "", borderWidth: isPasswordFocused ? 1.5 : 0, marginTop: 2 }}>
