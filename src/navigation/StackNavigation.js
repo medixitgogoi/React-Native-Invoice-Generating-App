@@ -57,7 +57,7 @@ const StackNavigation = () => {
 
     return (
         <NavigationContainer>
-            {isUserLoggedIn ? <GuestStackNavigator /> : <AuthStackNavigator initialRoute="Login" />}
+            {!isUserLoggedIn ? <GuestStackNavigator /> : <AuthStackNavigator initialRoute="Login" />}
         </NavigationContainer>
     );
 }
