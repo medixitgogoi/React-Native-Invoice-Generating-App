@@ -24,7 +24,7 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
-    console.log("dednededd", userDetails);
+    // console.log("dednededd", userDetails);
 
     const loginDetails = useSelector(state => state.login);
 
