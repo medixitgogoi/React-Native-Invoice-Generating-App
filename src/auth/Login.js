@@ -1,5 +1,5 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image, ActivityIndicator, ImageBackground } from 'react-native';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image, ActivityIndicator, ImageBackground, Animated } from 'react-native';
+import { zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon2 from 'react-native-vector-icons/Feather';
@@ -9,6 +9,7 @@ import { useDispatch, useSelector } from 'react-redux';
 import { addLoginUser } from '../redux/LoginSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BlurView } from '@react-native-community/blur';
+import LinearGradient from 'react-native-linear-gradient';
 
 const Login = () => {
 
@@ -80,13 +81,14 @@ const Login = () => {
                     setErrors({ api: response.data.message });
                 }
             } catch (error) {
-                if (error.response && error.response.status === 500) {
-                    // Display a user-friendly error message
-                    alert('An unexpected error occurred. Please try again later.');
-                    console.error('Error fetching data:', error.message);
-                } else {
-                    console.error('Error fetching data:', error.message);
-                }
+                Toast.show({
+                    type: 'error',
+                    text1: "An unexpected error occurred. Please try again later.",
+                    text2: `Error message: ${error?.message}`,
+                    position: 'top',
+                    topOffset: 50,
+                    onPress: () => Toast.hide(),
+                });
             }
         }
 
@@ -118,7 +120,7 @@ const Login = () => {
         <ImageBackground
             source={require("../assets/back3.jpg")}
             style={{ flex: 1 }}
-            imageStyle={{ opacity: 0.2, }}
+            imageStyle={{ opacity: 0.15, }}
             resizeMode='cover'
         >
             <SafeAreaView style={{ flex: 1, backgroundColor: "transparent", flexDirection: "column", }}>
@@ -132,12 +134,12 @@ const Login = () => {
                 <View style={{ height: "100%" }}>
 
                     {/* Image */}
-                    <View style={{ height: "55%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                    <View style={{ height: "57%", flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                         <Image source={require("../assets/logo.png")} style={{ width: 280, height: 280, marginTop: '8%' }} resizeMode='contain' />
                     </View>
 
                     {/* Content */}
-                    <View style={{ height: "45%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
+                    <View style={{ height: "43%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
 
                         {/* Headline */}
                         <Text style={{ color: "#000", textAlign: "center", color: zomatoRed, fontSize: responsiveFontSize(3.2), fontWeight: "700", textTransform: "uppercase", }}>Welcome Back!</Text>
@@ -197,10 +199,25 @@ const Login = () => {
                         </View>
 
                         {/* Log in button */}
-                        <TouchableOpacity style={{ alignSelf: "center", width: "80%", backgroundColor: zomatoRed, height: 55, justifyContent: 'center', alignItems: "center", borderRadius: 10, elevation: 10, marginBottom: 20, marginTop: errors.password ? 0 : 20 }} onPress={loginHandler}>
-                            <Text style={{ color: "#fff", fontWeight: "700", fontSize: responsiveFontSize(2.5) }}>LOGIN</Text>
+                        <TouchableOpacity onPress={loginHandler} style={{ alignSelf: "center", width: "80%", height: 55, marginBottom: 20, marginTop: errors.password ? 0 : 20 }}>
+                            <LinearGradient
+                                colors={['#d4212f', '#92141c']}
+                                start={{ x: 0, y: 0 }} 
+                                end={{ x: 1, y: 0 }}
+                                style={{
+                                    width: '100%',
+                                    height: '100%',
+                                    justifyContent: 'center',
+                                    alignItems: 'center',
+                                    borderRadius: 10,
+                                    elevation: 10,
+                                }}
+                            >
+                                <Text style={{ color: "#fff", fontWeight: "700", fontSize: responsiveFontSize(2.5) }}>
+                                    LOGIN
+                                </Text>
+                            </LinearGradient>
                         </TouchableOpacity>
-
                     </View>
 
                     {/* Loading Spinner */}
@@ -213,8 +230,8 @@ const Login = () => {
                                 reducedTransparencyFallbackColor="#818181"
                             />
                             <View style={styles.loadingContainer}>
-                                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '400' }}>Logging you in. Please wait ...</Text>
-                                <ActivityIndicator size="small" color={zomatoRed} />
+                                <Text style={{ color: '#000', fontSize: responsiveFontSize(2.5), fontWeight: '500' }}>Logging you in ...</Text>
+                                <ActivityIndicator size="large" color={zomatoRed} />
                             </View>
                         </View>
                     )}
@@ -239,10 +256,10 @@ const styles = StyleSheet.create({
         ...StyleSheet.absoluteFillObject,
     },
     loadingContainer: {
-        backgroundColor: lightZomatoRed,
+        backgroundColor: '#fff',
         paddingVertical: 8,
         borderRadius: 3,
-        elevation: 20,
+        elevation: 10,
         flexDirection: 'row',
         alignItems: 'center',
         justifyContent: 'center',
