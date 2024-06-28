@@ -22,6 +22,7 @@ const BillDetails = () => {
 
     // console.log("loginDetails", loginDetails);
     // console.log("productDetails", productDetails);
+    console.log("userDetailsssss", userDetails);
 
     const navigation = useNavigation();
 
@@ -32,6 +33,7 @@ const BillDetails = () => {
     useEffect(() => {
         setClientId(userDetails[0]?.id);
     }, [])
+
 
     function indianNumberFormat(number) {
 
@@ -93,7 +95,7 @@ const BillDetails = () => {
                 thickness_id: product.thickness.id,
                 type_id: product.type.id,
                 color_id: product.color.id,
-                ridge_width_id: product.type.name == "Ridges" ? product.width.id : null,
+                ridge_width_id: product.type.name == "Ridges" ? product.width.id : 0,
                 rate: parseInt(product.rate),
                 product_data: product.lengthAndPieces.map(lp => ({
                     length: parseInt(lp.length),
@@ -136,13 +138,12 @@ const BillDetails = () => {
                 },
             });
             // setData(response.data.data);
-            // console.log('dataaaaaa', data);
+            console.log('dataaaaaa', data);
             console.log("productDetailsFromBackend: ", response.data);
             // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-        console.log("datataaaaaa", data);
     };
 
     const removeProductHandler = (item) => {

@@ -52,9 +52,7 @@ const Details = () => {
 
     const [loading, setLoading] = useState(false);
 
-    // const [editDetails, setEditDetails] = useState(false);
-
-    const postCustomerDetails = async (id) => {
+    const postCustomerDetails = async () => {
         setLoading(true);
         try {
 

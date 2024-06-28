@@ -112,6 +112,8 @@ const PIMyInvoice = () => {
         }, [loginDetails])
     );
 
+    console.log("customerData", customerData);
+
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
             <StatusBar
