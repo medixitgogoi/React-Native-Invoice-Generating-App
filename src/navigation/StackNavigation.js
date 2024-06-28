@@ -4,9 +4,9 @@ import { NavigationContainer } from '@react-navigation/native';
 import AuthStackNavigator from './AuthStackNavigator';
 import GuestStackNavigator from './GuestStackNavigator';
 import { useDispatch, useSelector } from 'react-redux';
-import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addLoginUser } from '../redux/LoginSlice';
+import axios from 'axios';
 
 axios.defaults.baseURL = 'https://colortuff.biswainterior.com/public/api/';
 

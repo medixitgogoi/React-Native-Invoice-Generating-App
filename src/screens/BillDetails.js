@@ -16,11 +16,12 @@ const BillDetails = () => {
 
     const productDetails = useSelector(state => state.bill);
     const userDetails = useSelector(state => state.user);
-
-    const [clientId, setClientId] = useState(null)
-
     const loginDetails = useSelector(state => state.login);
-    console.log("productDetails", productDetails);
+
+    const [clientId, setClientId] = useState(null);
+
+    // console.log("loginDetails", loginDetails);
+    // console.log("productDetails", productDetails);
 
     const navigation = useNavigation();
 
@@ -84,49 +85,63 @@ const BillDetails = () => {
 
     // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
 
-    const mapProductDetails = (productDetails) => {
-        return productDetails.map(product => ({
-            unit_id: product.unit.id,
-            thickness_id: product.thickness.id,
-            type_id: product.type.id,
-            color_id: product.color.id,
-            ridge_width_id: 1,
-            rate: parseInt(product.rate),
-            product_data: product.lengthAndPieces.map(lp => ({
-                length: parseInt(lp.length),
-                no_of_pieces: parseInt(lp.pieces)
-            }))
-        }));
-    }
-
-    const mappedProducts = mapProductDetails(productDetails);
-
-    const data = {
-        "client_id": clientId,
-        "bend_charge": bend,
-        "load_charge": loading,
-        "transport_charge": transport,
-        "total_amount": totalPrice,
-        "total_payble_amount": totalAmount,
-        "products": mappedProducts,
-    };
-
     const viewBillHandler = async () => {
+
+        const mapProductDetails = (productDetails) => {
+            return productDetails.map(product => ({
+                unit_id: product.unit.id,
+                thickness_id: product.thickness.id,
+                type_id: product.type.id,
+                color_id: product.color.id,
+                ridge_width_id: product.type.name === "Ridges" ? product.width.id : null,
+                rate: parseInt(product.rate),
+                product_data: product.lengthAndPieces.map(lp => ({
+                    length: parseInt(lp.length),
+                    no_of_pieces: parseInt(lp.pieces)
+                }))
+            }));
+        }
+
+        const mappedProducts = mapProductDetails(productDetails);
+
+        // Create a FormData object
+        const data = new FormData();
+        data.append("client_id", parseInt(clientId));
+        data.append("bend_charge", parseInt(bend));
+        data.append("load_charge", parseInt(loading));
+        data.append("transport_charge", parseInt(transport));
+        data.append("total_amount", parseInt(totalPrice));
+        data.append("total_payble_amount", parseInt(totalAmount));
+
+        // Append products array items
+        mappedProducts.forEach((product, index) => {
+            data.append(`products[${index}][unit_id]`, product.unit_id);
+            data.append(`products[${index}][thickness_id]`, product.thickness_id);
+            data.append(`products[${index}][type_id]`, product.type_id);
+            data.append(`products[${index}][color_id]`, product.color_id);
+            data.append(`products[${index}][ridge_width_id]`, product.ridge_width_id);
+            data.append(`products[${index}][rate]`, product.rate);
+            product.product_data.forEach((pd, pdIndex) => {
+                data.append(`products[${index}][product_data][${pdIndex}][length]`, pd.length);
+                data.append(`products[${index}][product_data][${pdIndex}][no_of_pieces]`, pd.no_of_pieces);
+            });
+        });
 
         try {
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
-            const response = await axios.post(
-                '/employee/order/create',
-                { order: data }
-            );
+            const response = await axios.post('/employee/order/create', data, {
+                headers: {
+                    'content-type': 'multipart/form-data',
+                },
+            });
             // setData(response.data.data);
-            console.log("productDetails: ", response)
-            console.log("data", data);
+            // console.log('dataaaaaa', data);
+            console.log("productDetailsFromBackend: ", response.data);
+            // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
         } catch (error) {
             console.error('Error fetching data:', error);
         }
-
     };
 
     const removeProductHandler = (item) => {
@@ -140,6 +155,8 @@ const BillDetails = () => {
 
         dispatch(removeItemFromBill(item))
     }
+
+    // console.log('cllientId', clientId);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", }}>
@@ -178,14 +195,13 @@ const BillDetails = () => {
                         ) : (
                             <View style={{ flexDirection: 'column', gap: 8, alignItems: 'center', justifyContent: 'center', height: 600, }}>
                                 <Icon2 name="newspaper" size={156} color={zomatoRed} />
-                                <Text style={{ color: '#959595', fontSize: responsiveFontSize(2.1), fontWeight: '400', textAlign: 'center' }}>Add the product details to see the preview of the bill</Text>
+                                <Text style={{ color: '#6f6f6f', fontSize: responsiveFontSize(2.1), fontWeight: '400', textAlign: 'center' }}>Add the product details to see the preview of the bill</Text>
                             </View>
                         )}
 
                         {productDetails.map((item, index) => {
 
                             const calculateQuantity = () => {
-
                                 let quantity = 0;
 
                                 item.lengthAndPieces.map(item => {
@@ -195,14 +211,14 @@ const BillDetails = () => {
                                 return quantity;
                             }
 
-                            const unit = item?.unit;
+                            const unit = item?.unit?.name;
 
                             return (
                                 <View style={{ backgroundColor: '#fff', borderRadius: 8, width: '100%', paddingHorizontal: 11, flexDirection: 'column', gap: 8, paddingVertical: 12, elevation: 1, marginBottom: 8 }} key={index}>
 
                                     {/* Header */}
                                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: lightZomatoRed, padding: 5, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6 }}>
-                                        <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.3), textTransform: 'uppercase', marginLeft: 5 }}>{item?.type}</Text>
+                                        <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.3), textTransform: 'uppercase', marginLeft: 5 }}>{item?.type?.name}</Text>
                                         <TouchableOpacity style={{ alignSelf: 'flex-end', backgroundColor: zomatoRed, padding: 3, borderRadius: 6 }} onPress={() => removeProductHandler(item)}>
                                             <Icon2 name="close" size={18} color='#fff' />
                                         </TouchableOpacity>
@@ -220,7 +236,7 @@ const BillDetails = () => {
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Width:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.type}</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.type?.name === "Ridges" ? `${item?.width?.name} inch` : '3.5 mm'}</Text>
                                         </View>
                                     </View>
 

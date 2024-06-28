@@ -118,10 +118,10 @@ const FillUpDetails = () => {
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
             const response = await axios.get('/employee/ridge_width/dropDown');
 
+            console.log("Widths", response?.data?.data);
+
             setWidth(response?.data?.data);
             console.log("widths", width);
-
-            console.log("Widths", response?.data?.data);
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {
@@ -163,10 +163,12 @@ const FillUpDetails = () => {
                     type: selectedType,
                     color: selectedColor,
                     thickness: selectedThickness,
-                    width: selectedType === 'Ridges' ? selectedWidth : '3.5 mm',
+                    width: selectedType.name === 'Ridges' ? selectedWidth : '3.5 mm',
                     lengthAndPieces: products,
                     rate: rate,
                 }));
+
+                // console.log("fillupdetails", productDetails);
 
                 setError(false);
                 setRate('');
