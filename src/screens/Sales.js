@@ -96,17 +96,14 @@ const Sales = () => {
 
             <ScrollView style={{ flex: 1 }}>
                 <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8, }}>
-                    {loading ? (
-                        <View>
-                            <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.5), textAlign: 'center' }}>Loading</Text>
-                        </View>
-                    ) : (
+                    
+                    {details?.map(item => (
                         <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }}>
 
                             {/* Top */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                                 <View style={{ flexDirection: 'column', }}>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>Dixit Gogoi</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{item?.client_name}</Text>
                                     <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                                 </View>
                                 <View>
@@ -164,7 +161,7 @@ const Sales = () => {
                             </View>
 
                         </View>
-                    )}
+                    ))}
 
                 </View>
             </ScrollView>

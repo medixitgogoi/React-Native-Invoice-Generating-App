@@ -21,28 +21,20 @@ const Profile = () => {
     const loginDetails = useSelector(state => state.login);
 
     const logoutHandler = async () => {
-        Toast.show({
-            type: 'error',
-            text1: "Failed to log out. Please try again later.",
-            text2: `Error message: ${error?.message}`,
-            position: 'top',
-            topOffset: 50,
-            onPress: () => Toast.hide(),
-        });
-        // try {
-        //     dispatch(logoutUser());
-        //     await AsyncStorage.removeItem('loginDetails');
-        // } catch (error) {
-        //     Toast.show({
-        //         type: 'error',
-        //         text1: "Failed to log out. Please try again later.",
-        //         text2: `Error message: ${error?.message}`,
-        //         position: 'top',
-        //         topOffset: 50,
-        //         onPress: () => Toast.hide(),
-        //     });
-        //     console.error('Failed to logout: ', error);
-        // }
+        try {
+            dispatch(logoutUser());
+            await AsyncStorage.removeItem('loginDetails');
+        } catch (error) {
+            Toast.show({
+                type: 'error',
+                text1: "Failed to log out. Please try again later.",
+                text2: `Error message: ${error?.message}`,
+                position: 'top',
+                topOffset: 50,
+                onPress: () => Toast.hide(),
+            });
+            console.error('Failed to logout: ', error);
+        }
     }
 
     const pressHandler = () => {

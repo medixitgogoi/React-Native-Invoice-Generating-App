@@ -93,7 +93,7 @@ const BillDetails = () => {
                 thickness_id: product.thickness.id,
                 type_id: product.type.id,
                 color_id: product.color.id,
-                ridge_width_id: product.type.name === "Ridges" ? product.width.id : null,
+                ridge_width_id: product.type.name == "Ridges" ? product.width.id : null,
                 rate: parseInt(product.rate),
                 product_data: product.lengthAndPieces.map(lp => ({
                     length: parseInt(lp.length),
@@ -142,6 +142,7 @@ const BillDetails = () => {
         } catch (error) {
             console.error('Error fetching data:', error);
         }
+        console.log("datataaaaaa", data);
     };
 
     const removeProductHandler = (item) => {
