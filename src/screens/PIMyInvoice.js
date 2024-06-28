@@ -20,6 +20,7 @@ const PIMyInvoice = () => {
     const navigation = useNavigation();
 
     const loginDetails = useSelector(state => state.login);
+    // console.log(loginDetails)
 
     const dispatch = useDispatch();
 
