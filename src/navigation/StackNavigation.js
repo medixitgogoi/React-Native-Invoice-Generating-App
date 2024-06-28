@@ -8,7 +8,7 @@ import axios from 'axios';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { addLoginUser } from '../redux/LoginSlice';
 
-axios.defaults.baseURL = 'https://colortuff.webinfoghy.co.in/public/api/';
+axios.defaults.baseURL = 'https://colortuff.biswainterior.com/public/api/';
 
 const StackNavigation = () => {
 

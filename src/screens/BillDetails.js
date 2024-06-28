@@ -20,7 +20,7 @@ const BillDetails = () => {
     const [clientId, setClientId] = useState(null)
 
     const loginDetails = useSelector(state => state.login);
-    // console.log(productDetails);
+    console.log("productDetails", productDetails);
 
     const navigation = useNavigation();
 
@@ -84,7 +84,7 @@ const BillDetails = () => {
 
     // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
 
-    function mapProductDetails(productDetails) {
+    const mapProductDetails = (productDetails) => {
         return productDetails.map(product => ({
             unit_id: product.unit.id,
             thickness_id: product.thickness.id,
@@ -212,15 +212,15 @@ const BillDetails = () => {
                                     <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1 }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Color:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.color}</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.color?.name}</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Thickness:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.thickness}</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.thickness?.name} mm</Text>
                                         </View>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Width:</Text>
-                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.width}</Text>
+                                            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{item?.type}</Text>
                                         </View>
                                     </View>
 

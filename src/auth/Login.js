@@ -202,7 +202,7 @@ const Login = () => {
                         <TouchableOpacity onPress={loginHandler} style={{ alignSelf: "center", width: "80%", height: 55, marginBottom: 20, marginTop: errors.password ? 0 : 20 }}>
                             <LinearGradient
                                 colors={['#d4212f', '#92141c']}
-                                start={{ x: 0, y: 0 }} 
+                                start={{ x: 0, y: 0 }}
                                 end={{ x: 1, y: 0 }}
                                 style={{
                                     width: '100%',

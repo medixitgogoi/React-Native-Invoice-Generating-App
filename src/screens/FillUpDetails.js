@@ -5,7 +5,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
@@ -153,7 +153,7 @@ const FillUpDetails = () => {
                 Toast.show({
                     type: 'success',
                     text1: 'Product added successfully',
-                    text2: `${selectedType} added`,
+                    text2: `${selectedType.name} added`,
                     topOffset: 50,
                     onPress: () => Toast.hide(),
                 });
