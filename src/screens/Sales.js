@@ -7,11 +7,14 @@ import { useNavigation } from '@react-navigation/native';
 import { useSelector } from 'react-redux';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import Toast from 'react-native-toast-message';
 
 const Sales = () => {
 
     const loginDetails = useSelector(state => state.login);
+
     const [loading, setLoading] = useState(false);
+    const [details, setDetails] = useState([]);
 
     const navigation = useNavigation();
 
@@ -47,14 +50,24 @@ const Sales = () => {
             const response = await axios.post(
                 '/employee/order/list',
                 {
-                    order_status: '2'
+                    order_status: '2',
                 }
             );
 
-            console.log("Detailssss", response?.data?.data);
+            const data = response?.data?.data;
+            setDetails(data);
+
+            // console.log("Detailssss", data);
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            Toast.show({
+                type: 'error',
+                text1: 'Error fetching data',
+                text2: error.message,
+                topOffset: 50,
+                onPress: () => Toast.hide(),
+            });
+
         } finally {
             setLoading(false);
         }
@@ -63,6 +76,8 @@ const Sales = () => {
     useEffect(() => {
         getOrderDetails();
     }, []);
+
+    console.log(details);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
