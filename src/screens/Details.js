@@ -24,7 +24,7 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
-    console.log('userDetailsFromRedux', userDetails[0].id);
+    // console.log('userDetailsFromRedux', userDetails[0].id);
 
     const loginDetails = useSelector(state => state.login);
 
@@ -92,29 +92,29 @@ const Details = () => {
     };
 
     const updateCustomerDetails = async () => {
+        console.log('dixixixixixi', userDetails);
         setLoading(true);
+        dispatch(deleteUser());
 
         try {
-
+            // Set Authorization header
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
-            const response = await axios.post(
-                '/employee/client/submit',
-                {
-                    id: userDetails[0].id,
-                    name: partyName,
-                    site_name: siteName,
-                    pan: panNo,
-                    mobile: contact,
-                    gst: gstin,
-                }
-            );
+            // Make API call to update customer details
+            const response = await axios.post('/employee/client/submit', {
+                id: userDetails[0].id,
+                name: partyName,
+                site_name: siteName,
+                pan: panNo,
+                mobile: contact,
+                gst: gstin,
+            });
 
-            const updatedCustomerData = response?.data;
+            // Extract updated customer data from response
+            const updatedCustomerData = response?.data?.data;
             console.log("UpdatedCustomerDetails", updatedCustomerData);
 
-            // Dispatch to Redux store
-            dispatch(deleteUser());
+            // Dispatch actions to update Redux store
             dispatch(addUser({
                 id: updatedCustomerData.id,
                 name: updatedCustomerData.name,
@@ -125,15 +125,17 @@ const Details = () => {
             }));
 
         } catch (error) {
+            // Log error
             console.error('Error updating data:', error);
+            // Optional: Provide user feedback or additional error handling here
         } finally {
+            // Reset loading state and close modals
             setLoading(false);
             setEditDetails(false);
             setCustomerModal(false);
         }
-
-        console.log('afterUpdation', userDetails);
     };
+
 
     const editDetailsHandler = () => {
 
