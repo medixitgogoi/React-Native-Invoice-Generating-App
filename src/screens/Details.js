@@ -24,7 +24,7 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
-    console.log('userDetailsFromRedux', userDetails);
+    console.log('userDetailsFromRedux', userDetails[0].id);
 
     const loginDetails = useSelector(state => state.login);
 
@@ -131,6 +131,8 @@ const Details = () => {
             setEditDetails(false);
             setCustomerModal(false);
         }
+
+        console.log('afterUpdation', userDetails);
     };
 
     const editDetailsHandler = () => {
