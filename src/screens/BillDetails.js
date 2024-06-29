@@ -34,6 +34,8 @@ const BillDetails = () => {
         setClientId(userDetails[0]?.id);
     }, [])
 
+    console.log("clienId", clientId)
+
 
     function indianNumberFormat(number) {
 
@@ -89,6 +91,8 @@ const BillDetails = () => {
 
     const viewBillHandler = async () => {
 
+        console.log("dednededd", userDetails);
+
         const mapProductDetails = (productDetails) => {
             return productDetails.map(product => ({
                 unit_id: product.unit.id,
@@ -108,7 +112,7 @@ const BillDetails = () => {
 
         // Create a FormData object
         const data = new FormData();
-        data.append("client_id", parseInt(clientId));
+        data.append("client_id", clientId);
         data.append("bend_charge", parseInt(bend));
         data.append("load_charge", parseInt(loading));
         data.append("transport_charge", parseInt(transport));
