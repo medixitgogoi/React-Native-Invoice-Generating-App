@@ -6,7 +6,7 @@ import Icon2 from 'react-native-vector-icons/dist/Octicons';
 import Icon4 from 'react-native-vector-icons/dist/Octicons';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { useFocusEffect } from '@react-navigation/native';
-import { useCallback, useEffect, useState } from 'react';
+import { useCallback, useState } from 'react';
 import { addUser, deleteUser } from '../redux/UserSlice';
 import { useDispatch, useSelector } from 'react-redux';
 import { emptyBill } from '../redux/BillDetailsSlice';
@@ -112,7 +112,7 @@ const PIMyInvoice = () => {
         }, [loginDetails])
     );
 
-    console.log("customerData", customerData);
+    // console.log("customerData", customerData);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>

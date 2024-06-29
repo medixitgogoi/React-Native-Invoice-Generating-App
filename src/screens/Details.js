@@ -24,7 +24,7 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
-    // console.log("dednededd", userDetails);
+    console.log('userDetailsFromRedux', userDetails);
 
     const loginDetails = useSelector(state => state.login);
 
@@ -51,6 +51,8 @@ const Details = () => {
     const [photo, setPhoto] = useState('');
 
     const [loading, setLoading] = useState(false);
+
+    const [editDetails, setEditDetails] = useState(false);
 
     const postCustomerDetails = async () => {
         setLoading(true);
@@ -89,45 +91,61 @@ const Details = () => {
         }
     };
 
-    // const updateCustomerDetails = async (customerId) => {
-    //     setLoading(true);
+    const updateCustomerDetails = async () => {
+        setLoading(true);
 
-    //     try {
+        try {
 
-    //         axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
-    //         const response = await axios.put(
-    //             '/employee/client/submit',
-    //             {
-    //                 id: customerId, // Assuming customerId is available in the scope
-    //                 name: partyName,
-    //                 site_name: siteName,
-    //                 pan: panNo,
-    //                 mobile: contact,
-    //                 gst: gstin,
-    //             }
-    //         );
+            const response = await axios.post(
+                '/employee/client/submit',
+                {
+                    id: userDetails[0].id,
+                    name: partyName,
+                    site_name: siteName,
+                    pan: panNo,
+                    mobile: contact,
+                    gst: gstin,
+                }
+            );
 
-    //         const updatedCustomerData = response?.data?.data;
-    //         console.log("UpdatedCustomerDetails", updatedCustomerData);
+            const updatedCustomerData = response?.data;
+            console.log("UpdatedCustomerDetails", updatedCustomerData);
 
-    //         // Dispatch to Redux store
-    //         dispatch(deleteUser());
-    //         dispatch(addUser({
-    //             name: updatedCustomerData.name,
-    //             site: updatedCustomerData.site_name,
-    //             pan: updatedCustomerData.pan,
-    //             contact: updatedCustomerData.mobile,
-    //             gstin: updatedCustomerData.gst,
-    //         }));
+            // Dispatch to Redux store
+            dispatch(deleteUser());
+            dispatch(addUser({
+                id: updatedCustomerData.id,
+                name: updatedCustomerData.name,
+                site: updatedCustomerData.site_name,
+                pan: updatedCustomerData.pan,
+                contact: updatedCustomerData.mobile,
+                gstin: updatedCustomerData.gst,
+            }));
 
-    //     } catch (error) {
-    //         console.error('Error updating data:', error);
-    //     } finally {
-    //         setLoading(false);
-    //         setEditDetails(false);
-    //     }
-    // };
+        } catch (error) {
+            console.error('Error updating data:', error);
+        } finally {
+            setLoading(false);
+            setEditDetails(false);
+            setCustomerModal(false);
+        }
+    };
+
+    const editDetailsHandler = () => {
+
+        setEditDetails(true);
+        setCustomerModal(true);
+
+        setPartyName(userDetails[0]?.name)
+        setSiteName(userDetails[0]?.site);
+        setPanNo(userDetails[0]?.pan);
+        setContact(userDetails[0]?.contact);
+        setGstin(userDetails[0]?.gstin);
+
+        dispatch(emptyBill());
+    }
 
     const saveHandler = async () => {
 
@@ -160,20 +178,6 @@ const Details = () => {
             }
         });
     };
-
-    const editDetailsHandler = () => {
-
-        // setEditDetails(true);
-        setCustomerModal(true);
-
-        setPartyName(userDetails[0]?.name)
-        setSiteName(userDetails[0]?.site);
-        setPanNo(userDetails[0]?.pan);
-        setContact(userDetails[0]?.contact);
-        setGstin(userDetails[0]?.gstin);
-
-        dispatch(emptyBill());
-    }
 
     const removeUserHandler = () => {
         Toast.show({
@@ -220,7 +224,7 @@ const Details = () => {
 
     const cancelHandler = () => {
         setCustomerModal(false);
-        // setEditDetails(false);
+        setEditDetails(false);
     }
 
     const addCustomerHandler = () => {
@@ -406,9 +410,18 @@ const Details = () => {
             {/* Customer Modal*/}
             <Modal
                 isVisible={customerModal}
-                onBackdropPress={() => setCustomerModal(false)}
-                onSwipeComplete={() => setCustomerModal(false) && editDetails && setEditDetails(false)}
-                onRequestClose={() => setCustomerModal(false) && editDetails && setEditDetails(false)}
+                onBackdropPress={() => {
+                    setCustomerModal(false);
+                    if (editDetails) setEditDetails(false);
+                }}
+                onSwipeComplete={() => {
+                    setCustomerModal(false);
+                    if (editDetails) setEditDetails(false);
+                }}
+                onRequestClose={() => {
+                    setCustomerModal(false);
+                    if (editDetails) setEditDetails(false);
+                }}
                 animationType="slide"
                 swipeDirection={['down']}
                 backdropOpacity={0.5}
@@ -418,8 +431,15 @@ const Details = () => {
                 <View style={{ width: "100%", }}>
 
                     {/* Close Button */}
-                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setCustomerModal(false) && editDetails && setEditDetails(false)}>
+                    <TouchableOpacity
+                        style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }}
+                        onPress={() => {
+                            setCustomerModal(false);
+                            if (editDetails) setEditDetails(false);
+                        }}>
+
                         <Icon2 name="close" size={20} style={{ color: '#fff' }} />
+
                     </TouchableOpacity>
 
                     {/* Main content */}
@@ -541,7 +561,7 @@ const Details = () => {
                             </TouchableOpacity>
 
                             {/* Save */}
-                            <TouchableOpacity onPress={() => saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
+                            <TouchableOpacity onPress={() => editDetails ? updateCustomerDetails() : saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
                                 {loading ? (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
                                         <ActivityIndicator size="small" color='#5a5a5a' />
@@ -549,10 +569,7 @@ const Details = () => {
                                     </View>
                                 ) : (
                                     <View>
-                                        <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
-                                            Save
-                                        </Text>
-                                        {/* {editDetails ? (
+                                        {editDetails ? (
                                             <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                                                 Update
                                             </Text>
@@ -560,7 +577,7 @@ const Details = () => {
                                             <Text Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                                                 Save
                                             </Text>
-                                        )} */}
+                                        )}
                                     </View>
                                 )}
                             </TouchableOpacity>
