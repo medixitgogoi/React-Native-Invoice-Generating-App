@@ -8,7 +8,7 @@ import Icon5 from 'react-native-vector-icons/dist/MaterialCommunityIcons';
 import Icon6 from 'react-native-vector-icons/dist/AntDesign';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import Modal from "react-native-modal";
 import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
@@ -24,7 +24,7 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
-    // console.log('userDetailsFromRedux', userDetails[0].id);
+    // console.log('userDetailsFromRedux', userDetails);
 
     const loginDetails = useSelector(state => state.login);
 
@@ -53,6 +53,12 @@ const Details = () => {
     const [loading, setLoading] = useState(false);
 
     const [editDetails, setEditDetails] = useState(false);
+
+    const [clientId, setClientId] = useState(0);
+
+    useEffect(() => {
+        setClientId(userDetails[0]?.id);
+    }, [updateCustomerDetails])
 
     const postCustomerDetails = async () => {
         setLoading(true);
@@ -92,7 +98,8 @@ const Details = () => {
     };
 
     const updateCustomerDetails = async () => {
-        console.log('dixixixixixi', userDetails);
+        // console.log('dixixixixixi', userDetails);
+        // console.log("clientId", clientId);
         setLoading(true);
         dispatch(deleteUser());
 
@@ -102,7 +109,7 @@ const Details = () => {
 
             // Make API call to update customer details
             const response = await axios.post('/employee/client/submit', {
-                id: userDetails[0].id,
+                id: clientId,
                 name: partyName,
                 site_name: siteName,
                 pan: panNo,
@@ -112,7 +119,7 @@ const Details = () => {
 
             // Extract updated customer data from response
             const updatedCustomerData = response?.data?.data;
-            console.log("UpdatedCustomerDetails", updatedCustomerData);
+            console.log("UpdatedCustomerDetails", response);
 
             // Dispatch actions to update Redux store
             dispatch(addUser({
@@ -135,7 +142,6 @@ const Details = () => {
             setCustomerModal(false);
         }
     };
-
 
     const editDetailsHandler = () => {
 
