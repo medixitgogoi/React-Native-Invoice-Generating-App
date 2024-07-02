@@ -75,7 +75,7 @@ const Profile = () => {
                 {/* Name and Email */}
                 <View style={{ flexDirection: 'column', alignItems: 'center', gap: 3 }}>
                     <Text style={{ fontSize: responsiveFontSize(2.6), fontWeight: '600', textAlign: 'center', color: '#000', textTransform: 'uppercase' }}>{loginDetails[0]?.name}</Text>
-                    <Text style={{ fontSize: responsiveFontSize(2), fontWeight: '500', textAlign: 'center', color: '#656565' }}>{loginDetails[0]?.email}</Text>
+                    <Text style={{ fontSize: responsiveFontSize(2), textAlign: 'center', color: '#656565' }}>{loginDetails[0]?.email}</Text>
                 </View>
 
                 <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: 5, marginTop: 40 }}>

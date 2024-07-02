@@ -1,12 +1,14 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
-import { zomatoRed } from '../utils/colors';
+import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
+import Icon3 from 'react-native-vector-icons/dist/Ionicons';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import HTML from 'react-native-render-html';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
+import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
 
 const OrderDetails = (route) => {
 
@@ -22,6 +24,15 @@ const OrderDetails = (route) => {
     const year = now.getFullYear();
 
     const formattedDate = `${day}-${month}-${year}`;
+
+    const NoOfItems = () => {
+        let items = 0;
+        details.orderDetails.map(item => {
+            let num = item.orderData.length;
+            items += num;
+        })
+        return items;
+    };
 
     function indianNumberFormat(number) {
         // Split the number into an array of digits.
@@ -380,27 +391,27 @@ const OrderDetails = (route) => {
     const generateTableRows = () => {
         return `
     <table style="width: 100%; border-collapse: collapse; margin-top: 2px; margin-bottom: 2px;">
-      ${billDetails.map((item, itemIndex) => {
+      ${details.orderDetails.map((item, itemIndex) => {
 
-            const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
-            const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
+            const totalPieces = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * 1), 0);
+            const totalQuantity = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
             const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
             return `
-          ${item.lengthAndPieces.map((lp, lpIndex) => `
+          ${item.orderData.map((lp, lpIndex) => `
             <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
               ${lpIndex === 0 ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color.name}</u></p>
-                  ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.type.name}</u>` : ``}
+                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color}</u></p>
+                  ${item.orderData.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.product_type}</u>` : ``}
                 </td>
-              ` : (item.lengthAndPieces.length - 1 === lpIndex && item.lengthAndPieces.length > 2) ? `
+              ` : (item.orderData.length - 1 === lpIndex && item.orderData.length > 2) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
                 
                 </td>
               ` : (lpIndex === 1) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type.name}</u>
+                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.product_type}</u>
                 </td>
               `: `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
@@ -409,25 +420,25 @@ const OrderDetails = (route) => {
               `}
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness.name}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.type.name === 'Ridges' ? `${item.width.name} inch` : item.width}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.product_type === 'Ridges' ? `${item.ridge_width} inch` : '3.5 mm'}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit.name}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px; ">
-                <p style="margin: 0; font-weight: 500;">${lp.pieces}</p>
+                <p style="margin: 0; font-weight: 500;">${lp.quantity}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 14%; padding: 0; ">
                 <div style="display: flex; height: 20px;">
                   <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                    <p style="margin: 0; font-weight: 500; font-size: 12px;">${lp.pieces * lp.length}.00</p>
+                    <p style="margin: 0; font-weight: 500; font-size: 12px;">${lp.quantity * lp.length}.00</p>
                   </div>
                   <div style="width: 1px; background-color: black; height: 100%;"></div>
                   <div style="width: 35%; display: flex; align-items: center; justify-content: center; padding: 0;">
@@ -440,7 +451,7 @@ const OrderDetails = (route) => {
                 <td style="font-size: 10px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 3px;">
                 
                 </td>
-                ` : (item.lengthAndPieces.length - 1 === lpIndex) ? `
+                ` : (item.orderData.length - 1 === lpIndex) ? `
                 <td style="font-size: 10px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 3px;">
                 
                 </td>
@@ -454,7 +465,7 @@ const OrderDetails = (route) => {
                 <td style="font-size: 10.3px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 14%; padding: 3px;">
 
                 </td>
-              ` : (item.lengthAndPieces.length - 1 === lpIndex) ? `
+              ` : (item.orderData.length - 1 === lpIndex) ? `
                 <td style="font-size: 10.3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 13%; padding: 3px;">
 
                 </td>
@@ -691,14 +702,14 @@ const OrderDetails = (route) => {
 
                 <div class="party-info">
                 <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;">ESTIMATE</h5>
-                <p style="font-size: 12px; fontWeight: 600;"> <strong>PARTY:</strong> ${name}</p>
-                <h6><strong style="font-size: 12px;">Site:</strong> ${site}</h6>
+                <p style="font-size: 12px; fontWeight: 600;"> <strong>PARTY:</strong> ${details.client_name}</p>
+                <h6><strong style="font-size: 12px;">Site:</strong> Ganeshguri</h6>
                 </div>
 
                 <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
-                <h6 style="font-weight: 400; "><strong>PAN:</strong> ${pan}</h6>
-                <h6 style="font-weight: 400; "><strong>Contact No.:</strong> ${contact}</h6>
-                <h6 style="font-weight: 400; "><strong>GSTIN:</strong> ${gstin}</h6>
+                <h6 style="font-weight: 400; "><strong>PAN:</strong> 111111111</h6>
+                <h6 style="font-weight: 400; "><strong>Contact No.:</strong> 333333333</h6>
+                <h6 style="font-weight: 400; "><strong>GSTIN:</strong> 33333333333</h6>
                 </div>
                 
                 <table class="table">
@@ -725,14 +736,14 @@ const OrderDetails = (route) => {
 
                 <tr style="height: 62px;">
                     <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
-                    ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Loading Charges</p>` : ``}
-                    ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Bend Charges</p>` : ``}
-                    ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Transport Charges</p>` : ``}
+                    ${details.loading_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Loading Charges</p>` : ``}
+                    ${details.bend_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Bend Charges</p>` : ``}
+                    ${details.transport_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Transport Charges</p>` : ``}
                     </td>
                     <td style="width: 14%; border: 0.5px solid black; text-align: center; ">
-                    ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
-                    ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(bendCharge)}.00</p>` : ``}
-                    ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(transportCharge)}.00</p>` : ``}
+                    ${details.loading_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.loading_charge)}.00</p>` : ``}
+                    ${details.bend_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.bend_charge)}.00</p>` : ``}
+                    ${details.transport_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.transport_charge)}.00</p>` : ``}
                     </td>
                 </tr>
                 
@@ -830,6 +841,9 @@ const OrderDetails = (route) => {
                         </TouchableOpacity>
                         <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>View Order Details</Text>
                     </View>
+                    <TouchableOpacity style={{ paddingHorizontal: 5, backgroundColor: modalBackColor, paddingVertical: 5, borderRadius: 50, elevation: 1, marginRight: 15 }} onPress={generateInvoice}>
+                        <Icon3 name="share-social" size={20} color={zomatoRed} />
+                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -840,14 +854,6 @@ const OrderDetails = (route) => {
                     </PinchZoomView>
                 </ScrollView>
             </View>
-
-            {/* Share button */}
-            <TouchableOpacity style={{ marginTop: 10, marginBottom: 30, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
-                <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
-                    <Icon2 name="share" size={13} color={zomatoRed} />
-                </View>
-                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
-            </TouchableOpacity>
 
         </SafeAreaView>
     )
