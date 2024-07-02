@@ -3,11 +3,13 @@ import { zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import InvoiceView from '../components/InvoiceView';
 
-const OrderDetails = () => {
+const OrderDetails = (route) => {
 
     const navigation = useNavigation();
+    const details = route?.route?.params?.data;
+
+    console.log("details", details);
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
@@ -30,7 +32,7 @@ const OrderDetails = () => {
             </View>
 
             <View>
-                {/* <InvoiceView /> */}
+
             </View>
 
         </SafeAreaView>

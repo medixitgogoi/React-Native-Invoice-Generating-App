@@ -37,8 +37,8 @@ const Sales = () => {
         return formattedNumber.split('').reverse().join('');
     };
 
-    const viewOrderHandler = () => {
-        navigation.navigate('OrderDetails');
+    const viewOrderHandler = (item) => {
+        navigation.navigate('OrderDetails', { data: item });
     }
 
     const getOrderDetails = async () => {
@@ -77,7 +77,7 @@ const Sales = () => {
         getOrderDetails();
     }, []);
 
-    console.log(details);
+    // console.log(details);
 
     const convertedDate = (timestamp) => {
         const date = new Date(timestamp);
@@ -158,7 +158,7 @@ const Sales = () => {
                                 </View>
 
                                 {/* View Order Button */}
-                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={viewOrderHandler}>
+                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => viewOrderHandler(item)}>
                                     <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
                                     </View>
