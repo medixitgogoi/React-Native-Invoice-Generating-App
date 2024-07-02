@@ -137,8 +137,8 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
             <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
               ${lpIndex === 0 ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color}</u></p>
-                  ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.type}</u>` : ``}
+                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color.name}</u></p>
+                  ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.type.name}</u>` : ``}
                 </td>
               ` : (item.lengthAndPieces.length - 1 === lpIndex && item.lengthAndPieces.length > 2) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
@@ -146,7 +146,7 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
                 </td>
               ` : (lpIndex === 1) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type}</u>
+                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type.name}</u>
                 </td>
               `: `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
@@ -155,15 +155,15 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
               `}
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness.name}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.width}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.type.name === 'Ridges' ? `${item.width.name} inch` : item.width}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit.name}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px; ">
@@ -542,8 +542,8 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
           ${lpIndex === 0 ? `
             <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color}</u></p>
-              ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type}</u>` : ``}
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color.name}</u></p>
+              ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type.name}</u>` : ``}
             </div>
             ` : (item.lengthAndPieces.length - 1 === lpIndex && item.lengthAndPieces.length > 2) ? `
             <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
@@ -551,7 +551,7 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
             </div>
             `: (lpIndex === 1) ? `
               <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 2px; justifyContent: center;">
-                <u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type}</u>
+                <u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type.name}</u>
               </div>
             `: `
               <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
@@ -560,15 +560,15 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
           `}
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 9%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness}</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness.name}</p>
           </div>
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; alignItems: center; width: 8%; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.width}</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.type.name === 'Ridges' ? `${item.width.name} inch` : item.width}</p>
           </div>
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.length} ${item.unit}</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.length} ${item.unit.name}</p>
           </div>
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
@@ -594,7 +594,7 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
           </div>
 
         </div>
-        `).join('');
+      `).join('');
 
       return rows + `
         <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; background-color: #a2eaf3; ">
@@ -807,7 +807,7 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
       </body >
     </html >
-    `;
+  `;
 
   const generateInvoice = async () => {
 

@@ -8,7 +8,7 @@ import PinchZoomView from 'react-native-pinch-zoom-view';
 import { useEffect, useState } from 'react';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 
-const DispatchOrderView = () => {
+const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
     const now = new Date();
 
@@ -25,6 +25,7 @@ const DispatchOrderView = () => {
     const [gstin, setGstin] = useState('');
 
     const userDetails = useSelector(state => state.user);
+    const loginDetails = useSelector(state => state.login);
     const billDetails = useSelector(state => state.bill);
 
     useEffect(() => {
@@ -46,17 +47,31 @@ const DispatchOrderView = () => {
         return items;
     };
 
+    const getTotal = () => {
+        let total = 0; // Use let instead of const
+
+        billDetails.forEach(item => {
+            const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
+            const totalAmount = totalQuantity * item.rate;
+            total += totalAmount;
+        });
+
+        total = indianNumberFormat(total + parseInt(loadingCharge) + parseInt(bendCharge) + parseInt(transportCharge)); // Format the total amount
+        // return total + parseInt(loadingCharge) + parseInt(bendCharge) + parseInt(transportCharge);
+        return total;
+    };
+
     const generateHtmlContent = () => {
         const rows = billDetails.map(detail => {
             const lengths = detail.lengthAndPieces.map((lp, index) => `
       <tr style="width: 100%; margin: 0; ">
         <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
-          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color : ''}</u></p>
-          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.type : ''}</u></p>
+          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color.name : ''}</u></p>
+          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.type.name : ''}</u></p>
         </td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.width}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length} ${detail.unit}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness.name}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.type.name === 'Ridges' ? `${detail.width.name} inch` : detail.width}</td>
+        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length} ${detail.unit.name}</td>
         <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.pieces}</td>
       </tr>
     `).join('');
@@ -103,7 +118,7 @@ const DispatchOrderView = () => {
               </div>
               
               <div style="text-align: center; font-size: 18px; margin-bottom: 15px; font-weight: 700; "><u>DISPATCH ORDER</u></div>
-              <div style="text-align: center; font-size: 18px; margin-bottom: 5px; font-weight: 700;">PARTY: Saraswati Enterprise</div>
+              <div style="text-align: center; font-size: 18px; margin-bottom: 5px; font-weight: 700;">PARTY: ${name}</div>
               
               <table style="width: 100%; border-collapse: collapse; ">
                 <thead>
@@ -131,7 +146,7 @@ const DispatchOrderView = () => {
                   <p style="margin: 0; font-size: 12px; font-weight: 500; ">Checked By </p>
                   <div style="display: flex; flex-direction: column; align-items: center; ">
                     <p style="margin: 0; font-size: 12px; font-weight: 500; ">Approved By </p>
-                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(S.Beniwal)</p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(${loginDetails[0].name})</p>
                   </div>               
                 </div>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Dispatch Date:- </p>
@@ -139,7 +154,7 @@ const DispatchOrderView = () => {
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Material weight=</p>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Advance Payment=</p>
                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin: 0; margin-top: 3px; font-weight: 600;">
-                  <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= 132800</p>
+                  <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= ${getTotal()}.00</p>
                   <p style="color: black; margin: 0; font-size: 12px; ">Receipt No: </p>
                 </div>
               </div>
@@ -181,6 +196,25 @@ const DispatchOrderView = () => {
         }
     };
 
+    function indianNumberFormat(number) {
+        // Split the number into an array of digits.
+        const digits = number.toString().split('');
+
+        // Reverse the array of digits.
+        digits.reverse();
+
+        // Add a comma after every three digits, starting from the right.
+        for (let i = 3; i < digits.length; i += 3) {
+            digits.splice(i, 0, ',');
+        }
+
+        // Join the array of digits back into a string.
+        const formattedNumber = digits.join('');
+
+        // Reverse the formatted number back to its original order.
+        return formattedNumber.split('').reverse().join('');
+    };
+
     return (
         <View>
             <ScrollView>
@@ -199,19 +233,19 @@ const DispatchOrderView = () => {
                                     <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'right', marginVertical: 4, color: '#000', textDecorationLine: 'underline', fontWeight: '500' }}>{formattedDate}</Text>
                                 </View>
                                 <Text style={{ fontSize: responsiveFontSize(1.9), fontWeight: 'bold', textAlign: 'center', marginTop: 3, marginBottom: 3, color: '#000', textDecorationLine: 'underline' }}>DISPATCH ORDER</Text>
-                                <Text style={{ fontSize: responsiveFontSize(1.7), textAlign: 'center', marginVertical: 6, color: '#000', fontWeight: '700', textDecorationLine: 'underline' }}>PARTY: Saraswati Enterprise</Text>
+                                <Text style={{ fontSize: responsiveFontSize(1.7), textAlign: 'center', marginVertical: 6, color: '#000', fontWeight: '700', textDecorationLine: 'underline' }}>PARTY: {name}</Text>
                             </View>
 
                             {/* Second para */}
                             <View style={{ marginVertical: 4, borderColor: '#000', borderWidth: 1 }}>
-                                {billDetails.map((data, index) => (
-                                    <View style={{ width: '100%', flexDirection: 'column' }}>
+                                {billDetails.map((data) => (
+                                    <View style={{ width: '100%', flexDirection: 'column' }} key={data.id}>
 
                                         <View style={{ width: '100%', flexDirection: 'row' }}>
 
                                             <View style={{ flexDirection: 'column', width: '20%', borderWidth: 0.5, borderColor: '#000', borderBottomWidth: 1, }}>
-                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline' }}>Colour: {data.color}</Text>
-                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline', marginBottom: 1 }}>{data.type}</Text>
+                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline' }}>Colour: {data.color.name}</Text>
+                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline', marginBottom: 1 }}>{data.type.name}</Text>
                                             </View>
 
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderWidth: 0.5, borderColor: '#000', width: '80%' }}>
@@ -237,9 +271,9 @@ const DispatchOrderView = () => {
                                                     <View style={{ width: '20%', }}>
                                                     </View>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%' }}>
-                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness}</Text>
-                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.width}</Text>
-                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length} {data.unit}</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness.name}</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.type.name === 'Ridges' ? `${data.width.name} inch` : data.width}</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length} {data.unit.name}</Text>
                                                         <Text style={{ textAlign: 'center', color: '#000', width: '25%', borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', fontSize: responsiveFontSize(1.1), fontWeight: '500' }}>{item.pieces}</Text>
                                                     </View>
                                                 </View>
@@ -279,7 +313,7 @@ const DispatchOrderView = () => {
                                     </View>
                                     <View>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Approved By</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( S Beniwal )</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( {loginDetails[0].name} )</Text>
                                     </View>
                                 </View>
 
@@ -289,7 +323,7 @@ const DispatchOrderView = () => {
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = 132800</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = {getTotal()}.00</Text>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:- </Text>
                                     </View>
                                 </View>

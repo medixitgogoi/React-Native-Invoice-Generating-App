@@ -57,7 +57,7 @@ const Invoice = ({ route }) => {
                 {tab === 1 ? (
                     <InvoiceView bendCharge={bendCharge} loadingCharge={loadingCharge} transportCharge={transportCharge} />
                 ) : (
-                    <DispatchOrderView />
+                    <DispatchOrderView bendCharge={bendCharge} loadingCharge={loadingCharge} transportCharge={transportCharge} />
                 )}
             </View>
 
