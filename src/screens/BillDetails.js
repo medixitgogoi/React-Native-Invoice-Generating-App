@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView, ActivityIndicator } from 'react-native';
 import { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
@@ -30,12 +30,13 @@ const BillDetails = () => {
     const [loading, setLoading] = useState(0);
     const [transport, setTransport] = useState(0);
 
+    const [appLoad, setAppLoad] = useState(false)
+
     useEffect(() => {
         setClientId(userDetails[0]?.id);
     }, [])
 
     console.log("clienId", clientId)
-
 
     function indianNumberFormat(number) {
 
@@ -91,6 +92,8 @@ const BillDetails = () => {
 
     const viewBillHandler = async () => {
 
+        setAppLoad(true);
+
         console.log("dednededd", userDetails);
 
         const mapProductDetails = (productDetails) => {
@@ -144,9 +147,11 @@ const BillDetails = () => {
             // setData(response.data.data);
             console.log('dataaaaaa', data);
             console.log("productDetailsFromBackend: ", response.data);
-            // navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
+            navigation.navigate('Invoice', { bend: bend, loading: loading, transport: transport });
         } catch (error) {
             console.error('Error fetching data:', error);
+        } finally {
+            setAppLoad(false);
         }
     };
 
@@ -391,11 +396,20 @@ const BillDetails = () => {
 
                 {/* Continue */}
                 {productDetails.length !== 0 && (
-                    <TouchableOpacity style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, alignItems: 'center', gap: 4, height: 42, }} onPress={viewBillHandler}>
-                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Continue</Text>
-                        <View style={{ backgroundColor: zomatoRed, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
-                            <Icon2 name="arrow-forward-circle" size={23} color={lightZomatoRed} />
-                        </View>
+                    <TouchableOpacity style={{ backgroundColor: appLoad ? '#e1e1e1' : zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: appLoad ? 2 : 4, alignItems: 'center', gap: 4, height: 42, borderColor: appLoad ? '#000' : '', borderWidth: appLoad ? 0.4 : 0 }} onPress={viewBillHandler}>
+                        {appLoad ? (
+                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
+                                <ActivityIndicator size="small" color='#5a5a5a' />
+                                <Text style={{ color: '#5a5a5a' }}>Saving data ...</Text>
+                            </View>
+                        ) : (
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                                <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Continue</Text>
+                                <View style={{ backgroundColor: zomatoRed, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 4 }}>
+                                    <Icon2 name="arrow-forward-circle" size={23} color={lightZomatoRed} />
+                                </View>
+                            </View>
+                        )}
                     </TouchableOpacity>
                 )}
 

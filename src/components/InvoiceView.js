@@ -27,6 +27,7 @@ const InvoiceView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
   const userDetails = useSelector(state => state.user);
   const billDetails = useSelector(state => state.bill);
+  console.log('billDetails', billDetails);
 
   const calculateTotalPrice = () => {
     let amount = 0;

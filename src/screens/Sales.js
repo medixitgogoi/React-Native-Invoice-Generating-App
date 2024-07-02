@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
@@ -50,7 +50,7 @@ const Sales = () => {
             const response = await axios.post(
                 '/employee/order/list',
                 {
-                    order_status: '2',
+                    order_status: '1',
                 }
             );
 
@@ -79,6 +79,16 @@ const Sales = () => {
 
     console.log(details);
 
+    const convertedDate = (timestamp) => {
+        const date = new Date(timestamp);
+
+        const day = date.getDate();
+        const month = date.toLocaleString('default', { month: 'long' });
+        const year = date.getFullYear();
+
+        return `${day} ${month}, ${year}`;
+    }
+
     return (
         <SafeAreaView style={{ flex: 1 }}>
 
@@ -94,11 +104,17 @@ const Sales = () => {
                 </View>
             </View>
 
+            {loading && (
+                <View style={{ height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                    <ActivityIndicator size="large" color={zomatoRed} />
+                </View>
+            )}
+
             <ScrollView style={{ flex: 1 }}>
                 <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8, }}>
-                    
+
                     {details?.map(item => (
-                        <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }}>
+                        <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={item?.id}>
 
                             {/* Top */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
@@ -116,38 +132,29 @@ const Sales = () => {
                             {/* Bottom */}
                             <View style={{ padding: 12 }}>
 
-                                {/* Products */}
                                 <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                        <Text style={{ color: '#6f8990', fontWeight: '600' }}>125 x</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Ridges</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Green</Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                        <Text style={{ color: '#6f8990', fontWeight: '600' }}>450 x</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Tiles Profile Sheet</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Red</Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                        <Text style={{ color: '#6f8990', fontWeight: '600' }}>260 x</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Profile Sheet</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Blue</Text>
-                                    </View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
-                                        <Text style={{ color: '#6f8990', fontWeight: '600' }}>380 x</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Tiles Profile Sheet</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
-                                        <Text style={{ color: '#000', fontWeight: '500' }}>Green</Text>
-                                    </View>
+                                    {item.orderDetails.map(item => {
+
+                                        const totalPieces = item.orderData.reduce((pi, item) => {
+                                            return pi + parseInt(item.quantity);
+                                        }, 0);
+
+                                        return (
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                                <Text style={{ color: '#6f8990', fontWeight: '600' }}>{totalPieces} x</Text>
+                                                <Text style={{ color: '#000', fontWeight: '500' }}>{item.product_type}</Text>
+                                                <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                                                <Text style={{ color: '#000', fontWeight: '500' }}>{item.color}</Text>
+                                            </View>
+                                        )
+                                    })}
                                 </View>
+
 
                                 {/* Date and Amount */}
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
-                                    <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7) }}>03 June 2024</Text>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2), fontWeight: '500' }}>₹{indianNumberFormat(78000)}</Text>
+                                    <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7) }}>{convertedDate(item?.order_date)}</Text>
+                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2), fontWeight: '500' }}>₹{indianNumberFormat(item?.payble_amount)}</Text>
                                 </View>
 
                                 {/* View Order Button */}
