@@ -54,7 +54,7 @@ const Details = () => {
 
     const [editDetails, setEditDetails] = useState(false);
 
-    const [clientId, setClientId] = useState(0);
+    const [clientId, setClientId] = useState();
 
     useEffect(() => {
         setClientId(userDetails[0]?.id);
@@ -66,16 +66,20 @@ const Details = () => {
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
-            const response = await axios.post(
-                '/employee/client/submit',
-                {
-                    name: partyName,
-                    site_name: siteName,
-                    pan: panNo,
-                    mobile: contact,
-                    gst: gstin,
+            const formData = new FormData();
+
+            formData.append('name', partyName);
+            formData.append('site_name', siteName);
+            formData.append('pan', panNo);
+            formData.append('mobile', contact);
+            formData.append('gst', gstin);
+
+            // Make API call to post customer details
+            const response = await axios.post('/employee/client/submit', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
                 }
-            );
+            });
 
             const customerData = response?.data?.data;
             console.log("CustomerDetails", customerData);
@@ -107,19 +111,25 @@ const Details = () => {
             // Set Authorization header
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
+            const formData = new FormData();
+
+            formData.append('id', clientId);
+            formData.append('name', partyName);
+            formData.append('site_name', siteName);
+            formData.append('pan', panNo);
+            formData.append('mobile', contact);
+            formData.append('gst', gstin);
+
             // Make API call to update customer details
-            const response = await axios.post('/employee/client/submit', {
-                id: clientId,
-                name: partyName,
-                site_name: siteName,
-                pan: panNo,
-                mobile: contact,
-                gst: gstin,
+            const response = await axios.post('/employee/client/submit', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
             });
 
             // Extract updated customer data from response
             const updatedCustomerData = response?.data?.data;
-            console.log("UpdatedCustomerDetails", response);
+            console.log("updatedCustomerDetails", response);
 
             // Dispatch actions to update Redux store
             dispatch(addUser({

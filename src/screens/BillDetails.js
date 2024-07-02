@@ -36,7 +36,7 @@ const BillDetails = () => {
         setClientId(userDetails[0]?.id);
     }, [])
 
-    console.log("clienId", clientId)
+    console.log("clienId", clientId);
 
     function indianNumberFormat(number) {
 

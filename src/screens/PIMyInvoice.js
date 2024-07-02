@@ -88,7 +88,7 @@ const PIMyInvoice = () => {
                 try {
                     axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
                     const response = await axios.get('/employee/client/list');
-
+                    console.log("yyyyyy", response)
                     setCustomerData(response?.data?.data);
                     setFilteredNames(response?.data?.data);
 
