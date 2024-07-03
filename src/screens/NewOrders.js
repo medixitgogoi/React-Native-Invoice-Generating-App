@@ -37,10 +37,6 @@ const NewOrders = () => {
         return formattedNumber.split('').reverse().join('');
     };
 
-    const viewOrderHandler = (item) => {
-        navigation.navigate('NewOrderDetails', { data: item });
-    }
-
     const getOrderDetails = async () => {
         setLoading(true);
         try {
@@ -77,8 +73,6 @@ const NewOrders = () => {
         getOrderDetails();
     }, []);
 
-    // console.log(details);
-
     const convertedDate = (timestamp) => {
         const date = new Date(timestamp);
 
@@ -101,7 +95,7 @@ const NewOrders = () => {
                         </TouchableOpacity>
                         <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>New Orders</Text>
                     </View>
-                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, borderRadius: 5, marginRight: 10, marginBottom: 4, elevation: 2, paddingHorizontal: 4 , borderColor: zomatoRed, borderWidth: 0.5}} onPress={() => navigation.navigate('DispatchedOrders')}>
+                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, borderRadius: 5, marginRight: 10, marginBottom: 4, elevation: 2, paddingHorizontal: 4, borderColor: zomatoRed, borderWidth: 0.5 }} onPress={() => navigation.navigate('DispatchedOrders')}>
                         <Text style={{ color: zomatoRed, padding: 6, fontWeight: '500', fontSize: responsiveFontSize(1.8) }}>View Dispatched Orders</Text>
                     </TouchableOpacity>
                 </View>
@@ -164,7 +158,7 @@ const NewOrders = () => {
                                 </View>
 
                                 {/* View Order Button */}
-                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => viewOrderHandler(item)}>
+                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('NewOrderDetails', { data: item })}>
                                     <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
                                     </View>

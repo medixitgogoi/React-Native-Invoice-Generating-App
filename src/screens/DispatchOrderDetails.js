@@ -56,7 +56,7 @@ const DispatchOrderDetails = (route) => {
     };
 
     const getTotal = () => {
-        let total = 0; // Use let instead of const
+        let total = 0;
 
         details?.orderDetails?.forEach(item => {
             const totalQuantity = item?.orderData?.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
@@ -64,7 +64,7 @@ const DispatchOrderDetails = (route) => {
             total += totalAmount;
         });
 
-        total = indianNumberFormat(total + parseInt(details.bend_charge) + parseInt(details.loading_charge) + parseInt(details.transport_charge)); // Format the total amount
+        total = indianNumberFormat(total + parseInt(details.bend_charge) + parseInt(details.loading_charge) + parseInt(details.transport_charge));
 
         return total;
     };
@@ -74,8 +74,8 @@ const DispatchOrderDetails = (route) => {
             const lengths = detail.orderData.map((lp, index) => `
                 <tr style="width: 100%; margin: 0; ">
                     <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
-                    <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color : ''}</u></p>
-                    <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.product_type : ''}</u></p>
+                        <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color : ''}</u></p>
+                        <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.product_type : ''}</u></p>
                     </td>
                     <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness} mm</td>
                     <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.product_type === 'Ridges' ? `${detail.ridge_width} inch` : '3.5 mm'}</td>
@@ -85,7 +85,7 @@ const DispatchOrderDetails = (route) => {
             `).join('');
 
             // Calculate the total number of pieces for each detail
-            const totalPieces = detail.orderData.reduce((sum, lp) => sum + parseInt(lp.quantity), 0);
+            const totalPieces = detail?.orderData?.reduce((sum, lp) => sum + parseInt(lp.quantity), 0);
 
             return `
                 ${lengths}

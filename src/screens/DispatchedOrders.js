@@ -29,10 +29,6 @@ const DispatchedOrders = () => {
         return `${day} ${month}, ${year}`;
     }
 
-    const viewOrderHandler = (item) => {
-        navigation.navigate('DispatchOrderDetails', { data: item });
-    }
-
     function indianNumberFormat(number) {
         // Split the number into an array of digits.
         const digits = number.toString().split('');
@@ -119,6 +115,7 @@ const DispatchedOrders = () => {
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, marginTop: 8, justifyContent: 'center' }}>
                     <Text style={{ color: '#5f5f5f', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Orders that are dispatched</Text>
                 </View>
+
                 <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8, }}>
 
                     {details?.map((item, index) => (
@@ -164,7 +161,7 @@ const DispatchedOrders = () => {
                                 </View>
 
                                 {/* View Order Button */}
-                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => viewOrderHandler(item)}>
+                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('DispatchOrderDetails', { data: item })}>
                                     <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
                                     </View>
@@ -177,6 +174,7 @@ const DispatchedOrders = () => {
                     ))}
 
                 </View>
+                
             </ScrollView>
 
         </SafeAreaView>
