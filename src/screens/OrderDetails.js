@@ -1,5 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
-import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
+import { modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
@@ -8,7 +8,6 @@ import PinchZoomView from 'react-native-pinch-zoom-view';
 import HTML from 'react-native-render-html';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
-import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
 import { useSelector } from 'react-redux';
 
 const OrderDetails = (route) => {
@@ -18,7 +17,7 @@ const OrderDetails = (route) => {
 
   const loginDetails = useSelector(state => state.login);
 
-  console.log("details", details);
+  // console.log("details", details);
 
   const now = new Date();
 
@@ -389,7 +388,7 @@ const OrderDetails = (route) => {
 
       </body >
     </html >
-    `;
+  `;
 
   const generateTableRows = () => {
     return `
@@ -796,7 +795,7 @@ const OrderDetails = (route) => {
 
         </html>
 
-    `;
+  `;
 
   const generateInvoice = async () => {
 

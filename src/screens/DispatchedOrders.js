@@ -1,22 +1,38 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ActivityIndicator, ScrollView, StatusBar } from 'react-native'
+import { lightZomatoRed, zomatoRed } from '../utils/colors'
+import { responsiveFontSize } from 'react-native-responsive-dimensions'
+import { useState, useEffect } from 'react'
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
-import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import { useNavigation } from '@react-navigation/native';
-import { useSelector } from 'react-redux';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
 import Toast from 'react-native-toast-message';
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { collapseTopMarginForChild } from 'react-native-render-html';
 
-const Sales = () => {
+const DispatchedOrders = () => {
 
-    const loginDetails = useSelector(state => state.login);
+    const navigation = useNavigation();
 
     const [loading, setLoading] = useState(false);
     const [details, setDetails] = useState([]);
 
-    const navigation = useNavigation();
+    const loginDetails = useSelector(state => state.login);
+
+    const convertedDate = (timestamp) => {
+        const date = new Date(timestamp);
+
+        const day = date.getDate();
+        const month = date.toLocaleString('default', { month: 'long' });
+        const year = date.getFullYear();
+
+        return `${day} ${month}, ${year}`;
+    }
+
+    const viewOrderHandler = (item) => {
+        navigation.navigate('DispatchOrderDetails', { data: item });
+    }
 
     function indianNumberFormat(number) {
         // Split the number into an array of digits.
@@ -37,10 +53,6 @@ const Sales = () => {
         return formattedNumber.split('').reverse().join('');
     };
 
-    const viewOrderHandler = (item) => {
-        navigation.navigate('OrderDetails', { data: item });
-    }
-
     const getOrderDetails = async () => {
         setLoading(true);
         try {
@@ -50,7 +62,7 @@ const Sales = () => {
             const response = await axios.post(
                 '/employee/order/list',
                 {
-                    order_status: '1',
+                    order_status: '2',
                 }
             );
 
@@ -77,20 +89,13 @@ const Sales = () => {
         getOrderDetails();
     }, []);
 
-    // console.log(details);
-
-    const convertedDate = (timestamp) => {
-        const date = new Date(timestamp);
-
-        const day = date.getDate();
-        const month = date.toLocaleString('default', { month: 'long' });
-        const year = date.getFullYear();
-
-        return `${day} ${month}, ${year}`;
-    }
-
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar
+                animated={true}
+                backgroundColor={'#fff'}
+                barStyle="dark-content"
+            />
 
             {/* header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 2 }}>
@@ -101,9 +106,6 @@ const Sales = () => {
                         </TouchableOpacity>
                         <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>My Sales</Text>
                     </View>
-                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, borderRadius: 8, marginRight: 10, marginBottom: 4, elevation: 2, paddingHorizontal: 4 }} onPress={() => navigation.navigate('DispatchedOrders')}>
-                        <Text style={{ color: zomatoRed, padding: 6, fontWeight: '500', fontSize: responsiveFontSize(1.8) }}>View Dispatched Orders</Text>
-                    </TouchableOpacity>
                 </View>
             </View>
 
@@ -116,7 +118,7 @@ const Sales = () => {
             <ScrollView style={{ flex: 1 }}>
 
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, marginTop: 8, justifyContent: 'center' }}>
-                    <Text style={{ color: '#5f5f5f', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Orders that are yet to be dispatched</Text>
+                    <Text style={{ color: '#5f5f5f', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Orders that are dispatched</Text>
                 </View>
                 <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8, }}>
 
@@ -129,10 +131,9 @@ const Sales = () => {
                                     <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{item?.client_name}</Text>
                                     <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                                 </View>
-                                <View>
-                                    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
-                                        <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
-                                    </View>
+                                <View style={{ backgroundColor: '#95f358', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
+                                    <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
+                                    <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
                                 </View>
                             </View>
 
@@ -183,6 +184,6 @@ const Sales = () => {
     )
 }
 
-export default Sales;
+export default DispatchedOrders
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})
