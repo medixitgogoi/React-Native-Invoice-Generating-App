@@ -9,7 +9,7 @@ import { useEffect, useState } from 'react';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 
-const Sales = () => {
+const NewOrders = () => {
 
     const loginDetails = useSelector(state => state.login);
 
@@ -38,7 +38,7 @@ const Sales = () => {
     };
 
     const viewOrderHandler = (item) => {
-        navigation.navigate('OrderDetails', { data: item });
+        navigation.navigate('NewOrderDetails', { data: item });
     }
 
     const getOrderDetails = async () => {
@@ -99,9 +99,9 @@ const Sales = () => {
                         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                             <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
                         </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>My Sales</Text>
+                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>New Orders</Text>
                     </View>
-                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, borderRadius: 8, marginRight: 10, marginBottom: 4, elevation: 2, paddingHorizontal: 4 }} onPress={() => navigation.navigate('DispatchedOrders')}>
+                    <TouchableOpacity style={{ backgroundColor: lightZomatoRed, borderRadius: 5, marginRight: 10, marginBottom: 4, elevation: 2, paddingHorizontal: 4 , borderColor: zomatoRed, borderWidth: 0.5}} onPress={() => navigation.navigate('DispatchedOrders')}>
                         <Text style={{ color: zomatoRed, padding: 6, fontWeight: '500', fontSize: responsiveFontSize(1.8) }}>View Dispatched Orders</Text>
                     </TouchableOpacity>
                 </View>
@@ -183,6 +183,6 @@ const Sales = () => {
     )
 }
 
-export default Sales;
+export default NewOrders;
 
 const styles = StyleSheet.create({});

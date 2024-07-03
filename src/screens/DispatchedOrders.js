@@ -9,7 +9,6 @@ import { useNavigation } from '@react-navigation/native';
 import Toast from 'react-native-toast-message';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
-import { collapseTopMarginForChild } from 'react-native-render-html';
 
 const DispatchedOrders = () => {
 
@@ -104,7 +103,7 @@ const DispatchedOrders = () => {
                         <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
                             <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
                         </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>My Sales</Text>
+                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Dispatched Orders</Text>
                     </View>
                 </View>
             </View>
@@ -131,7 +130,7 @@ const DispatchedOrders = () => {
                                     <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{item?.client_name}</Text>
                                     <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                                 </View>
-                                <View style={{ backgroundColor: '#95f358', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
+                                <View style={{ backgroundColor: '#c5f8a4', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
                                     <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
                                     <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
                                 </View>

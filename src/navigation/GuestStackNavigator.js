@@ -7,13 +7,14 @@ import PIMyInvoice from '../screens/PIMyInvoice';
 import DispatchOrder from '../screens/DispatchOrder';
 import SalesmanReport from '../screens/SalesmanReport';
 import PartyReport from '../screens/PartyReport';
-import Sales from '../screens/Sales';
 import FillUpDetails from '../screens/FillUpDetails';
 import Invoice from '../screens/Invoice';
-import OrderDetails from '../screens/OrderDetails';
+import OrderDetails from '../screens/NewOrderDetails';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DispatchedOrders from '../screens/DispatchedOrders';
 import DispatchOrderDetails from '../screens/DispatchOrderDetails';
+import NewOrders from '../screens/NewOrders';
+import NewOrderDetails from '../screens/NewOrderDetails';
 
 const GuestStackNavigator = () => {
 
@@ -29,10 +30,10 @@ const GuestStackNavigator = () => {
             <Stack.Screen name="DispatchOrder" component={DispatchOrder} />
             <Stack.Screen name="SalesmanReport" component={SalesmanReport} />
             <Stack.Screen name="PartyReport" component={PartyReport} />
-            <Stack.Screen name="Sales" component={Sales} />
+            <Stack.Screen name="NewOrders" component={NewOrders} />
             <Stack.Screen name="FillUpDetails" component={FillUpDetails} />
             <Stack.Screen name="Invoice" component={Invoice} />
-            <Stack.Screen name="OrderDetails" component={OrderDetails} />
+            <Stack.Screen name="NewOrderDetails" component={NewOrderDetails} />
             <Stack.Screen name="DispatchedOrders" component={DispatchedOrders} />
             <Stack.Screen name="DispatchOrderDetails" component={DispatchOrderDetails} />
         </Stack.Navigator>

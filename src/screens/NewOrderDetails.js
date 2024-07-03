@@ -10,14 +10,14 @@ import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import { useSelector } from 'react-redux';
 
-const OrderDetails = (route) => {
+const NewOrderDetails = (route) => {
 
   const navigation = useNavigation();
   const details = route?.route?.params?.data;
 
   const loginDetails = useSelector(state => state.login);
 
-  // console.log("details", details);
+  console.log("details", details);
 
   const now = new Date();
 
@@ -861,6 +861,6 @@ const OrderDetails = (route) => {
   )
 }
 
-export default OrderDetails;
+export default NewOrderDetails;
 
 const styles = StyleSheet.create({})

@@ -1,5 +1,4 @@
 import { useNavigation } from '@react-navigation/native';
-import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
 import { ScrollView, StatusBar, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { modalBackColor, zomatoRed } from '../utils/colors';
@@ -9,6 +8,8 @@ import { useState, useEffect } from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { useSelector } from 'react-redux';
 import Icon3 from 'react-native-vector-icons/dist/Ionicons';
+import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import Share from 'react-native-share';
 
 const DispatchOrderDetails = (route) => {
 
@@ -47,8 +48,8 @@ const DispatchOrderDetails = (route) => {
 
     const NoOfItems = () => {
         let items = 0;
-        billDetails.map(item => {
-            let num = item.lengthAndPieces.length;
+        details?.orderDetails?.map(item => {
+            let num = item.orderData.length;
             items += num;
         })
         return items;
@@ -57,45 +58,45 @@ const DispatchOrderDetails = (route) => {
     const getTotal = () => {
         let total = 0; // Use let instead of const
 
-        billDetails.forEach(item => {
-            const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
-            const totalAmount = totalQuantity * item.rate;
+        details?.orderDetails?.forEach(item => {
+            const totalQuantity = item?.orderData?.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
+            const totalAmount = totalQuantity * parseInt(item.rate);
             total += totalAmount;
         });
 
-        total = indianNumberFormat(total + parseInt(loadingCharge) + parseInt(bendCharge) + parseInt(transportCharge)); // Format the total amount
-        // return total + parseInt(loadingCharge) + parseInt(bendCharge) + parseInt(transportCharge);
+        total = indianNumberFormat(total + parseInt(details.bend_charge) + parseInt(details.loading_charge) + parseInt(details.transport_charge)); // Format the total amount
+
         return total;
     };
 
     const generateHtmlContent = () => {
-        const rows = billDetails.map(detail => {
-            const lengths = detail.lengthAndPieces.map((lp, index) => `
-      <tr style="width: 100%; margin: 0; ">
-        <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
-          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color.name : ''}</u></p>
-          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.type.name : ''}</u></p>
-        </td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness.name}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.type.name === 'Ridges' ? `${detail.width.name} inch` : detail.width}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length} ${detail.unit.name}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.pieces}</td>
-      </tr>
-    `).join('');
+        const rows = details?.orderDetails?.map(detail => {
+            const lengths = detail.orderData.map((lp, index) => `
+                <tr style="width: 100%; margin: 0; ">
+                    <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
+                    <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color : ''}</u></p>
+                    <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.product_type : ''}</u></p>
+                    </td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness} mm</td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.product_type === 'Ridges' ? `${detail.ridge_width} inch` : '3.5 mm'}</td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length} ${detail.unit}</td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.quantity}</td>
+                </tr>
+            `).join('');
 
             // Calculate the total number of pieces for each detail
-            const totalPieces = detail.lengthAndPieces.reduce((sum, lp) => sum + parseInt(lp.pieces), 0);
+            const totalPieces = detail.orderData.reduce((sum, lp) => sum + parseInt(lp.quantity), 0);
 
             return `
-      ${lengths}
-      <tr>
-        <td style="padding: 3px; "></td>
-        <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
-        <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
-        <td colspan="1" style="background-color: #a2eaf3; padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
-        <td style="background-color: #a2eaf3; border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
-      </tr>
-    `;
+                ${lengths}
+                <tr>
+                <td style="padding: 3px; "></td>
+                <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
+                <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
+                <td colspan="1" style="background-color: #a2eaf3; padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
+                <td style="background-color: #a2eaf3; border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
+                </tr>
+            `;
         }).join('');
 
         return `
@@ -161,7 +162,7 @@ const DispatchOrderDetails = (route) => {
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Material weight=</p>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Advance Payment=</p>
                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin: 0; margin-top: 3px; font-weight: 600;">
-                  <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= ${getTotal()}.00</p>
+                  <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= ₹${getTotal()}.00</p>
                   <p style="color: black; margin: 0; font-size: 12px; ">Receipt No: </p>
                 </div>
               </div>
@@ -245,127 +246,125 @@ const DispatchOrderDetails = (route) => {
                 </View>
             </View>
 
-            <View>
-                <ScrollView>
-                    <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20, paddingBottom: 40 }}>
+            {/* Content */}
+            <ScrollView>
+                <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20, paddingBottom: 40 }}>
 
-                        <View style={{ height: '100%', backgroundColor: '#fff', width: '100%', padding: 12 }}>
-                            <View style={{ padding: 2 }}>
+                    <View style={{ height: '100%', backgroundColor: '#fff', width: '100%', padding: 12 }}>
+                        <View style={{ padding: 2 }}>
 
-                                {/* First para */}
-                                <View>
-                                    <Text style={{ fontSize: responsiveFontSize(1.8), fontWeight: 'bold', textAlign: 'center', color: '#1bb3c7', textDecorationLine: 'underline' }}>POOJA ROOFING CO. (MFG)</Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.1), textAlign: 'center', color: '#000' }}>LOKHRA - LALGANESH ROAD , GUWAHATI - 781034 , ASSAM</Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.4), textAlign: 'center', color: '#000', marginTop: 7, textDecorationLine: 'underline' }}>GST NO: 18AAZFP3190K1ZD</Text>
+                            {/* First para */}
+                            <View>
+                                <Text style={{ fontSize: responsiveFontSize(1.8), fontWeight: 'bold', textAlign: 'center', color: '#1bb3c7', textDecorationLine: 'underline' }}>POOJA ROOFING CO. (MFG)</Text>
+                                <Text style={{ fontSize: responsiveFontSize(1.1), textAlign: 'center', color: '#000' }}>LOKHRA - LALGANESH ROAD , GUWAHATI - 781034 , ASSAM</Text>
+                                <Text style={{ fontSize: responsiveFontSize(1.4), textAlign: 'center', color: '#000', marginTop: 7, textDecorationLine: 'underline' }}>GST NO: 18AAZFP3190K1ZD</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', marginVertical: 4, color: '#000', fontWeight: '700' }}>REF: DO/24-25/077</Text>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'right', marginVertical: 4, color: '#000', textDecorationLine: 'underline', fontWeight: '500' }}>{formattedDate}</Text>
+                                </View>
+                                <Text style={{ fontSize: responsiveFontSize(1.9), fontWeight: 'bold', textAlign: 'center', marginTop: 3, marginBottom: 3, color: '#000', textDecorationLine: 'underline' }}>DISPATCH ORDER</Text>
+                                <Text style={{ fontSize: responsiveFontSize(1.7), textAlign: 'center', marginVertical: 6, color: '#000', fontWeight: '700', textDecorationLine: 'underline' }}>PARTY: {name}</Text>
+                            </View>
+
+                            {/* Second para */}
+                            <View style={{ marginVertical: 4, borderColor: '#000', borderWidth: 1 }}>
+                                {details?.orderDetails?.map((data, index) => (
+                                    <View style={{ width: '100%', flexDirection: 'column' }} key={details?.id}>
+
+                                        <View style={{ width: '100%', flexDirection: 'row' }}>
+
+                                            <View style={{ flexDirection: 'column', width: '20%', borderWidth: 0.5, borderColor: '#000', borderBottomWidth: 1, }}>
+                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline' }}>Colour: {data.color}</Text>
+                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline', marginBottom: 1 }}>{data.product_type}</Text>
+                                            </View>
+
+                                            <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderWidth: 0.5, borderColor: '#000', width: '80%' }}>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%', borderBottomWidth: 1, }}>
+                                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>THICKNESS</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
+                                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>WIDTH</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
+                                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>LENGTH</Text>
+                                                </View>
+                                                <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 0.5, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
+                                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>PC</Text>
+                                                </View>
+                                            </View>
+
+                                        </View>
+
+                                        <View>
+                                            {data.orderData.map((item, index) => (
+                                                <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
+                                                    <View style={{ width: '20%', }}>
+                                                    </View>
+                                                    <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%' }}>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness} mm</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.product_type === 'Ridges' ? `${data.ridge_width} inch` : data.width}</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length} {data.unit}</Text>
+                                                        <Text style={{ textAlign: 'center', color: '#000', width: '25%', borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', fontSize: responsiveFontSize(1.1), fontWeight: '500' }}>{item.quantity}</Text>
+                                                    </View>
+                                                </View>
+                                            ))}
+                                        </View>
+
+                                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#a2eaf3' }}>
+                                            <View style={{ width: '60%', borderColor: '#000', borderWidth: 1, borderBottomWidth: 0.5, borderRightWidth: 0.5, borderLeftWidth: 0, }}>
+                                                <Text></Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: '#000', borderWidth: 0.5, width: '20%', }}>
+                                                <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), fontWeight: '500' }}>Total</Text>
+                                            </View>
+                                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: '#000', borderWidth: 0.5, width: '20%', }}>
+                                                <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), textAlign: 'center', fontWeight: '600' }}>
+                                                    {data.orderData.reduce((sum, item) => sum + parseInt(item.quantity), 0)}
+                                                </Text>
+                                            </View>
+                                        </View>
+
+                                    </View>
+                                ))}
+                            </View>
+
+                            {/* Third para */}
+                            <View>
+                                <Text style={{ fontSize: responsiveFontSize(1.2), marginBottom: 1, fontWeight: '700', color: '#000', backgroundColor: 'yellow' }}>1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</Text>
+                                <Text style={{ fontSize: responsiveFontSize(1.1), fontWeight: '700', color: '#000', }}>2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</Text>
+
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15 }}>
+                                    <View>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Prepared By</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( A.B )</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Checked By</Text>
+                                    </View>
+                                    <View>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Approved By</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( {loginDetails[0].name} )</Text>
+                                    </View>
+                                </View>
+
+                                <View style={{ marginTop: 5 }}>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>Dispatch Date:-</Text>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Order By:- P. Chakraborty</Text>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', marginVertical: 4, color: '#000', fontWeight: '700' }}>REF: DO/24-25/077</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'right', marginVertical: 4, color: '#000', textDecorationLine: 'underline', fontWeight: '500' }}>{formattedDate}</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = ₹{details?.payble_amount}.00</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:- </Text>
                                     </View>
-                                    <Text style={{ fontSize: responsiveFontSize(1.9), fontWeight: 'bold', textAlign: 'center', marginTop: 3, marginBottom: 3, color: '#000', textDecorationLine: 'underline' }}>DISPATCH ORDER</Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.7), textAlign: 'center', marginVertical: 6, color: '#000', fontWeight: '700', textDecorationLine: 'underline' }}>PARTY: {name}</Text>
-                                </View>
-
-                                {/* Second para */}
-                                <View style={{ marginVertical: 4, borderColor: '#000', borderWidth: 1 }}>
-                                    {details?.orderDetails?.map((data, index) => (
-                                        <View style={{ width: '100%', flexDirection: 'column' }} key={details?.id}>
-
-                                            <View style={{ width: '100%', flexDirection: 'row' }}>
-
-                                                <View style={{ flexDirection: 'column', width: '20%', borderWidth: 0.5, borderColor: '#000', borderBottomWidth: 1, }}>
-                                                    <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline' }}>Colour: {data.color}</Text>
-                                                    <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline', marginBottom: 1 }}>{data.product_type}</Text>
-                                                </View>
-
-                                                <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderWidth: 0.5, borderColor: '#000', width: '80%' }}>
-                                                    <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%', borderBottomWidth: 1, }}>
-                                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>THICKNESS</Text>
-                                                    </View>
-                                                    <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
-                                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>WIDTH</Text>
-                                                    </View>
-                                                    <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 1, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
-                                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>LENGTH</Text>
-                                                    </View>
-                                                    <View style={{ flexDirection: 'row', alignItems: 'center', flex: 1, borderRightWidth: 0.5, borderColor: '#000', justifyContent: 'center', width: '20%' }}>
-                                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(1), fontWeight: '500' }}>PC</Text>
-                                                    </View>
-                                                </View>
-
-                                            </View>
-
-                                            <View>
-                                                {data.orderData.map((item, index) => (
-                                                    <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
-                                                        <View style={{ width: '20%', }}>
-                                                        </View>
-                                                        <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%' }}>
-                                                            <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness} mm</Text>
-                                                            <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.product_type === 'Ridges' ? `${data.ridge_width} inch` : data.width}</Text>
-                                                            <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length} {data.unit}</Text>
-                                                            <Text style={{ textAlign: 'center', color: '#000', width: '25%', borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', fontSize: responsiveFontSize(1.1), fontWeight: '500' }}>{item.quantity}</Text>
-                                                        </View>
-                                                    </View>
-                                                ))}
-                                            </View>
-
-                                            <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#a2eaf3' }}>
-                                                <View style={{ width: '60%', borderColor: '#000', borderWidth: 1, borderBottomWidth: 0.5, borderRightWidth: 0.5, borderLeftWidth: 0, }}>
-                                                    <Text></Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: '#000', borderWidth: 0.5, width: '20%', }}>
-                                                    <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), fontWeight: '500' }}>Total</Text>
-                                                </View>
-                                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: '#000', borderWidth: 0.5, width: '20%', }}>
-                                                    <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), textAlign: 'center', fontWeight: '600' }}>
-                                                        {data.orderData.reduce((sum, item) => sum + parseInt(item.quantity), 0)}
-                                                    </Text>
-                                                </View>
-                                            </View>
-
-                                        </View>
-                                    ))}
-                                </View>
-
-                                {/* Third para */}
-                                <View>
-                                    <Text style={{ fontSize: responsiveFontSize(1.2), marginBottom: 1, fontWeight: '700', color: '#000', backgroundColor: 'yellow' }}>1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.1), fontWeight: '700', color: '#000', }}>2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</Text>
-
-                                    <View style={{ flexDirection: 'row', justifyContent: 'space-around', marginTop: 15 }}>
-                                        <View>
-                                            <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Prepared By</Text>
-                                            <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( A.B )</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Checked By</Text>
-                                        </View>
-                                        <View>
-                                            <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Approved By</Text>
-                                            <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( {loginDetails[0].name} )</Text>
-                                        </View>
-                                    </View>
-
-                                    <View style={{ marginTop: 5 }}>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>Dispatch Date:-</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Order By:- P. Chakraborty</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
-                                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                            <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = ₹{details?.payble_amount}.00</Text>
-                                            <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:- </Text>
-                                        </View>
-                                    </View>
-
                                 </View>
 
                             </View>
+
                         </View>
+                    </View>
 
-                    </PinchZoomView>
-                </ScrollView>
-
-            </View>
+                </PinchZoomView>
+            </ScrollView>
 
         </SafeAreaView>
     )

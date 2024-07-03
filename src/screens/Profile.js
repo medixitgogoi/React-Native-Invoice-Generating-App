@@ -91,7 +91,7 @@ const Profile = () => {
                     </TouchableOpacity>
 
                     {/* My Sales */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#7e3aaf', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={() => navigation.navigate('Sales')} >
+                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#7e3aaf', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={() => navigation.navigate('NewOrders')} >
                         <View style={{ backgroundColor: '#eaddf4', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                             <Icon4 name="newspaper-sharp" size={18} style={{ width: 20, height: 20, color: '#7e3aaf' }} />
                         </View>
