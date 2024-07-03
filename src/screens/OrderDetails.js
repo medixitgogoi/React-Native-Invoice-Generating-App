@@ -9,114 +9,117 @@ import HTML from 'react-native-render-html';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
+import { useSelector } from 'react-redux';
 
 const OrderDetails = (route) => {
 
-    const navigation = useNavigation();
-    const details = route?.route?.params?.data;
+  const navigation = useNavigation();
+  const details = route?.route?.params?.data;
 
-    console.log("details", details);
+  const loginDetails = useSelector(state => state.login);
 
-    const now = new Date();
+  console.log("details", details);
 
-    const day = String(now.getDate()).padStart(2, '0');
-    const month = String(now.getMonth() + 1).padStart(2, '0');
-    const year = now.getFullYear();
+  const now = new Date();
 
-    const formattedDate = `${day}-${month}-${year}`;
+  const day = String(now.getDate()).padStart(2, '0');
+  const month = String(now.getMonth() + 1).padStart(2, '0');
+  const year = now.getFullYear();
 
-    const NoOfItems = () => {
-        let items = 0;
-        details.orderDetails.map(item => {
-            let num = item.orderData.length;
-            items += num;
-        })
-        return items;
-    };
+  const formattedDate = `${day}-${month}-${year}`;
 
-    function indianNumberFormat(number) {
-        // Split the number into an array of digits.
-        const digits = number.toString().split('');
+  const NoOfItems = () => {
+    let items = 0;
+    details.orderDetails.map(item => {
+      let num = item.orderData.length;
+      items += num;
+    })
+    return items;
+  };
 
-        // Reverse the array of digits.
-        digits.reverse();
+  function indianNumberFormat(number) {
+    // Split the number into an array of digits.
+    const digits = number.toString().split('');
 
-        // Add a comma after every three digits, starting from the right.
-        for (let i = 3; i < digits.length; i += 3) {
-            digits.splice(i, 0, ',');
+    // Reverse the array of digits.
+    digits.reverse();
+
+    // Add a comma after every three digits, starting from the right.
+    for (let i = 3; i < digits.length; i += 3) {
+      digits.splice(i, 0, ',');
+    }
+
+    // Join the array of digits back into a string.
+    const formattedNumber = digits.join('');
+
+    // Reverse the formatted number back to its original order.
+    return formattedNumber.split('').reverse().join('');
+  };
+
+  function numberToWords(num) {
+    if (num === 0) return 'Zero';
+
+    const belowTwenty = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
+    const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
+    const thousands = ['', 'Thousand', 'Lakh', 'Crore'];
+
+    function numberToWordsBelowThousand(num) {
+      if (num < 20) return belowTwenty[num];
+      if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + belowTwenty[num % 10] : '');
+      return belowTwenty[Math.floor(num / 100)] + ' Hundred' + (num % 100 !== 0 ? ' ' + numberToWordsBelowThousand(num % 100) : '');
+    }
+
+    let word = '';
+    let index = 0;
+
+    while (num > 0) {
+      let part = num % 1000;
+
+      if (index === 1) part = num % 100;
+
+      if (part > 0) {
+        let partInWords = numberToWordsBelowThousand(part);
+        if (index > 0) {
+          word = partInWords + ' ' + thousands[index] + ' ' + word;
+        } else {
+          word = partInWords;
         }
+      }
 
-        // Join the array of digits back into a string.
-        const formattedNumber = digits.join('');
+      num = Math.floor(num / (index === 1 ? 100 : 1000));
+      index++;
+    }
 
-        // Reverse the formatted number back to its original order.
-        return formattedNumber.split('').reverse().join('');
-    };
+    return word.trim();
+  };
 
-    function numberToWords(num) {
-        if (num === 0) return 'Zero';
+  const calculateTotalPrice = () => {
+    let amount = 0;
 
-        const belowTwenty = ['Zero', 'One', 'Two', 'Three', 'Four', 'Five', 'Six', 'Seven', 'Eight', 'Nine', 'Ten', 'Eleven', 'Twelve', 'Thirteen', 'Fourteen', 'Fifteen', 'Sixteen', 'Seventeen', 'Eighteen', 'Nineteen'];
-        const tens = ['', '', 'Twenty', 'Thirty', 'Forty', 'Fifty', 'Sixty', 'Seventy', 'Eighty', 'Ninety'];
-        const thousands = ['', 'Thousand', 'Lakh', 'Crore'];
+    details.orderDetails.map(item => {
+      let quantity = 0;
 
-        function numberToWordsBelowThousand(num) {
-            if (num < 20) return belowTwenty[num];
-            if (num < 100) return tens[Math.floor(num / 10)] + (num % 10 !== 0 ? ' ' + belowTwenty[num % 10] : '');
-            return belowTwenty[Math.floor(num / 100)] + ' Hundred' + (num % 100 !== 0 ? ' ' + numberToWordsBelowThousand(num % 100) : '');
-        }
+      item.orderData.map(item => {
+        quantity += item.length * item.quantity;
+      })
 
-        let word = '';
-        let index = 0;
+      amount += quantity * item.rate;
 
-        while (num > 0) {
-            let part = num % 1000;
+    })
 
-            if (index === 1) part = num % 100;
+    amount += parseInt(details.bend_charge) + parseInt(details.loading_charge) + parseInt(details.transport_charge);
 
-            if (part > 0) {
-                let partInWords = numberToWordsBelowThousand(part);
-                if (index > 0) {
-                    word = partInWords + ' ' + thousands[index] + ' ' + word;
-                } else {
-                    word = partInWords;
-                }
-            }
+    return amount;
+  };
 
-            num = Math.floor(num / (index === 1 ? 100 : 1000));
-            index++;
-        }
+  const generateTableRows2 = () => {
+    return details.orderDetails.map((item, index) => {
 
-        return word.trim();
-    };
+      const totalPieces = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * 1), 0);
+      const totalQuantity = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
+      const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
-    const calculateTotalPrice = () => {
-        let amount = 0;
-
-        details.orderDetails.map(item => {
-            let quantity = 0;
-
-            item.orderData.map(item => {
-                quantity += item.length * item.quantity;
-            })
-
-            amount += quantity * item.rate;
-
-        })
-
-        amount += parseInt(details.bend_charge) + parseInt(details.loading_charge) + parseInt(details.transport_charge);
-
-        return amount;
-    };
-
-    const generateTableRows2 = () => {
-        return details.orderDetails.map((item, index) => {
-
-            const totalPieces = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * 1), 0);
-            const totalQuantity = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
-            const totalAmount = indianNumberFormat(totalQuantity * item.rate);
-
-            const rows = item.orderData.map((lp, lpIndex) => `
+      const rows = item.orderData.map((lp, lpIndex) => `
         <div key=${lpIndex} style="display: flex; flexDirection: row; alignItems: center; ">
 
           ${lpIndex === 0 ? `
@@ -175,7 +178,7 @@ const OrderDetails = (route) => {
         </div>
             `).join('');
 
-            return rows + `
+      return rows + `
         <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; background-color: #a2eaf3; ">
 
           <div style="display: flex; flexDirection: column; font-size: 6px; width: 22%; alignItems: flex-end; height: 12px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
@@ -221,10 +224,10 @@ const OrderDetails = (route) => {
           </div>
         `;
 
-        }).join('');
-    };
+    }).join('');
+  };
 
-    const htmlContent2 = `
+  const htmlContent2 = `
   <!DOCTYPE html>
     <html>
       <head>
@@ -261,7 +264,7 @@ const OrderDetails = (route) => {
           
           <div style="flexDirection: row; alignItems: center; ">
             <p style="margin: 0; font-size: 7px; padding: 0; fontWeight: 500">Sales Person-:</p>
-            <p style="margin: 0; font-size: 7px; padding: 0; margin-left: 2px">Anil Beniwal</p>
+            <p style="margin: 0; font-size: 7px; padding: 0; margin-left: 2px">${loginDetails[0].name}</p>
           </div>
 
           <div style="flexDirection: column; alignItems: center">
@@ -388,16 +391,16 @@ const OrderDetails = (route) => {
     </html >
     `;
 
-    const generateTableRows = () => {
-        return `
+  const generateTableRows = () => {
+    return `
     <table style="width: 100%; border-collapse: collapse; margin-top: 2px; margin-bottom: 2px;">
       ${details.orderDetails.map((item, itemIndex) => {
 
-            const totalPieces = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * 1), 0);
-            const totalQuantity = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
-            const totalAmount = indianNumberFormat(totalQuantity * item.rate);
+      const totalPieces = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * 1), 0);
+      const totalQuantity = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
+      const totalAmount = indianNumberFormat(totalQuantity * item.rate);
 
-            return `
+      return `
           ${item.orderData.map((lp, lpIndex) => `
             <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
               ${lpIndex === 0 ? `
@@ -517,12 +520,12 @@ const OrderDetails = (route) => {
 
           </tr>
       `;
-        }).join('')}
+    }).join('')}
     </table>
   `;
-    };
+  };
 
-    const htmlContent = `
+  const htmlContent = `
         <!DOCTYPE html>
             <html>
             <head>
@@ -698,7 +701,7 @@ const OrderDetails = (route) => {
                 <p class="address">${formattedDate}</p>
                 </div>
 
-                <p style="font-size: 14px; margin-top: 3px;">Sales Person-: Anil Beniwal</p>
+                <p style="font-size: 14px; margin-top: 3px;">Sales Person-: ${loginDetails[0].name}</p>
 
                 <div class="party-info">
                 <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;">ESTIMATE</h5>
@@ -795,68 +798,68 @@ const OrderDetails = (route) => {
 
     `;
 
-    const generateInvoice = async () => {
+  const generateInvoice = async () => {
 
-        try {
-            // Generate PDF
-            const pdfOptions = {
-                html: htmlContent,
-                fileName: 'ColourTuff_Invoice',
-                directory: 'Documents',
-            };
+    try {
+      // Generate PDF
+      const pdfOptions = {
+        html: htmlContent,
+        fileName: 'ColourTuff_Invoice',
+        directory: 'Documents',
+      };
 
-            const pdf = await RNHTMLtoPDF.convert(pdfOptions);
-            const pdfPath = pdf.filePath;
+      const pdf = await RNHTMLtoPDF.convert(pdfOptions);
+      const pdfPath = pdf.filePath;
 
-            console.log(pdfPath);
+      console.log(pdfPath);
 
-            // Share the PDF
-            const shareOptions = {
-                title: 'Share Invoice',
-                url: `file://${pdfPath}`,
-                type: 'application/pdf',
-                saveToFiles: true,
-            };
+      // Share the PDF
+      const shareOptions = {
+        title: 'Share Invoice',
+        url: `file://${pdfPath}`,
+        type: 'application/pdf',
+        saveToFiles: true,
+      };
 
-            await Share.open(shareOptions);
-        } catch (error) {
-            console.error(error);
-        }
-    };
+      await Share.open(shareOptions);
+    } catch (error) {
+      console.error(error);
+    }
+  };
 
-    return (
-        <SafeAreaView style={{ flex: 1 }}>
-            <StatusBar
-                animated={true}
-                backgroundColor={'#fff'}
-                barStyle="dark-content"
-            />
+  return (
+    <SafeAreaView style={{ flex: 1 }}>
+      <StatusBar
+        animated={true}
+        backgroundColor={'#fff'}
+        barStyle="dark-content"
+      />
 
-            {/* header */}
-            <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", }}>
-                    <View style={{ paddingVertical: 8, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10, }}>
-                        <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-                            <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
-                        </TouchableOpacity>
-                        <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>View Order Details</Text>
-                    </View>
-                    <TouchableOpacity style={{ paddingHorizontal: 5, backgroundColor: modalBackColor, paddingVertical: 5, borderRadius: 50, elevation: 1, marginRight: 15 }} onPress={generateInvoice}>
-                        <Icon3 name="share-social" size={20} color={zomatoRed} />
-                    </TouchableOpacity>
-                </View>
-            </View>
+      {/* header */}
+      <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
+        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", }}>
+          <View style={{ paddingVertical: 8, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10, }}>
+            <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
+              <Icon name="keyboard-arrow-left" size={27} color={zomatoRed} />
+            </TouchableOpacity>
+            <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>View Order Details</Text>
+          </View>
+          <TouchableOpacity style={{ paddingHorizontal: 5, backgroundColor: modalBackColor, paddingVertical: 5, borderRadius: 50, elevation: 1, marginRight: 15 }} onPress={generateInvoice}>
+            <Icon3 name="share-social" size={20} color={zomatoRed} />
+          </TouchableOpacity>
+        </View>
+      </View>
 
-            <View>
-                <ScrollView>
-                    <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20 }}>
-                        <HTML source={{ html: htmlContent2 }} />
-                    </PinchZoomView>
-                </ScrollView>
-            </View>
+      <View>
+        <ScrollView>
+          <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20 }}>
+            <HTML source={{ html: htmlContent2 }} />
+          </PinchZoomView>
+        </ScrollView>
+      </View>
 
-        </SafeAreaView>
-    )
+    </SafeAreaView>
+  )
 }
 
 export default OrderDetails;

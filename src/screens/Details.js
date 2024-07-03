@@ -113,7 +113,7 @@ const Details = () => {
 
             const formData = new FormData();
 
-            formData.append('id', clientId);
+            formData.append('client_id', clientId);
             formData.append('name', partyName);
             formData.append('site_name', siteName);
             formData.append('pan', panNo);
@@ -130,6 +130,8 @@ const Details = () => {
             // Extract updated customer data from response
             const updatedCustomerData = response?.data?.data;
             console.log("updatedCustomerDetails", response);
+
+            // console.log("formData", formData);
 
             // Dispatch actions to update Redux store
             dispatch(addUser({

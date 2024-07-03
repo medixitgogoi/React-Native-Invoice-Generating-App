@@ -57,7 +57,7 @@ const Sales = () => {
             const data = response?.data?.data;
             setDetails(data);
 
-            // console.log("Detailssss", data);
+            console.log("Detailssss", data);
 
         } catch (error) {
             Toast.show({
