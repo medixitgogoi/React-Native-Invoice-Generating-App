@@ -15,6 +15,7 @@ import DispatchedOrders from '../screens/DispatchedOrders';
 import DispatchOrderDetails from '../screens/DispatchOrderDetails';
 import NewOrders from '../screens/NewOrders';
 import NewOrderDetails from '../screens/NewOrderDetails';
+import Sales from '../screens/Sales';
 
 const GuestStackNavigator = () => {
 
@@ -36,6 +37,7 @@ const GuestStackNavigator = () => {
             <Stack.Screen name="NewOrderDetails" component={NewOrderDetails} />
             <Stack.Screen name="DispatchedOrders" component={DispatchedOrders} />
             <Stack.Screen name="DispatchOrderDetails" component={DispatchOrderDetails} />
+            <Stack.Screen name="Sales" component={Sales} />
         </Stack.Navigator>
     )
 }

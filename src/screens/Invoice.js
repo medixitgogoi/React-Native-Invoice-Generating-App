@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity } fro
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { zomatoRed } from '../utils/colors';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import InvoiceView from '../components/InvoiceView';
 import DispatchOrderView from '../components/DispatchOrderView';
@@ -41,19 +41,19 @@ const Invoice = ({ route }) => {
                 </View>
             </View>
 
-            <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10 }}>
+            <View style={{ width: '71%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', marginTop: 10, padding: 5, alignSelf: 'center', borderRadius: 20, backgroundColor: '#fff', elevation: 2 }}>
 
-                <TouchableOpacity style={{ backgroundColor: tab === 1 ? zomatoRed : '#fff', padding: 8, borderTopLeftRadius: 7, borderBottomLeftRadius: 7, borderColor: zomatoRed, borderWidth: 1, borderRightWidth: 0.5 }} onPress={tabChangeHandler}>
-                    <Text style={{ color: tab === 1 ? '#fff' : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Invoice</Text>
+                <TouchableOpacity style={{ backgroundColor: tab === 1 ? zomatoRed : '#fff', padding: 8, borderRadius: 20, paddingHorizontal: 10 }} onPress={tabChangeHandler}>
+                    <Text style={{ color: tab === 1 ? '#fff' : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.8), textTransform: 'uppercase' }}>View Invoice</Text>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ backgroundColor: tab === 2 ? zomatoRed : '#fff', padding: 8, borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 7, borderBottomRightRadius: 7, borderLeftWidth: 0.5 }} onPress={tabChangeHandler}>
-                    <Text style={{ color: tab === 2 ? '#fff' : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.7), textTransform: 'uppercase' }}>View Dispatch Order</Text>
+                <TouchableOpacity style={{ backgroundColor: tab === 2 ? zomatoRed : '#fff', padding: 8, borderRadius: 20, paddingHorizontal: 10 }} onPress={tabChangeHandler}>
+                    <Text style={{ color: tab === 2 ? '#fff' : zomatoRed, textAlign: 'center', fontWeight: '600', fontSize: responsiveFontSize(1.8), textTransform: 'uppercase' }}>View Dispatch Order</Text>
                 </TouchableOpacity>
 
             </View>
 
-            <View style={{ margin: 10, }}>
+            <View style={{ margin: 10, marginTop: 0, }}>
                 {tab === 1 ? (
                     <InvoiceView bendCharge={bendCharge} loadingCharge={loadingCharge} transportCharge={transportCharge} />
                 ) : (
