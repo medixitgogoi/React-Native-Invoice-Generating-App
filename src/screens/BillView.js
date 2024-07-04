@@ -8,10 +8,13 @@ import HTML from 'react-native-render-html';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import PinchZoomView from 'react-native-pinch-zoom-view';
+import { zomatoRed } from '../utils/colors';
 
 const OrderDetails = ({ route }) => {
 
   const navigation = useNavigation();
+
+  const loginDetails = useSelector(state => state.login);
 
   const now = new Date();
 
@@ -33,6 +36,8 @@ const OrderDetails = ({ route }) => {
 
   const userDetails = useSelector(state => state.user);
   const billDetails = useSelector(state => state.bill);
+
+  console.log('billDetails', billDetails);
 
   const calculateTotalPrice = () => {
     let amount = 0;
@@ -135,15 +140,15 @@ const OrderDetails = ({ route }) => {
 
       const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
       const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
-      const totalAmount = indianNumberFormat(totalQuantity * item.rate);
+      const totalAmount = indianNumberFormat(totalQuantity * parseInt(item.rate));
 
       return `
           ${item.lengthAndPieces.map((lp, lpIndex) => `
             <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
               ${lpIndex === 0 ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color}</u></p>
-                  ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.type}</u>` : ``}
+                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color.name}</u></p>
+                  ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.type.name}</u>` : ``}
                 </td>
               ` : (item.lengthAndPieces.length - 1 === lpIndex && item.lengthAndPieces.length > 2) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
@@ -151,7 +156,7 @@ const OrderDetails = ({ route }) => {
                 </td>
               ` : (lpIndex === 1) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type}</u>
+                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.type.name}</u>
                 </td>
               `: `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
@@ -160,15 +165,15 @@ const OrderDetails = ({ route }) => {
               `}
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness.name}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.width}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.width.name ? `${item.width.name} inch` : item.width}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit}</p>
+                <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit.name}</p>
               </td>
 
               <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px; ">
@@ -438,7 +443,7 @@ const OrderDetails = ({ route }) => {
           <p class="address">${formattedDate}</p>
         </div>
 
-        <p style="font-size: 14px; margin-top: 3px;">Sales Person-: Anil Beniwal</p>
+        <p style="font-size: 14px; margin-top: 3px;">Sales Person-: ${loginDetails[0].name}</p>
 
         <div class="party-info">
           <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;">ESTIMATE</h5>
@@ -540,15 +545,15 @@ const OrderDetails = ({ route }) => {
 
       const totalPieces = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * 1), 0);
       const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
-      const totalAmount = indianNumberFormat(totalQuantity * item.rate);
+      const totalAmount = indianNumberFormat(totalQuantity * parseInt(item.rate));
 
       const rows = item.lengthAndPieces.map((lp, lpIndex) => `
         <div key=${lpIndex} style="display: flex; flexDirection: row; alignItems: center; ">
 
           ${lpIndex === 0 ? `
             <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
-              <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color}</u></p>
-              ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type}</u>` : ``}
+              <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color.name}</u></p>
+              ${item.lengthAndPieces.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type.name}</u>` : ``}
             </div>
             ` : (item.lengthAndPieces.length - 1 === lpIndex && item.lengthAndPieces.length > 2) ? `
             <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
@@ -556,7 +561,7 @@ const OrderDetails = ({ route }) => {
             </div>
             `: (lpIndex === 1) ? `
               <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 2px; justifyContent: center;">
-                <u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type}</u>
+                <u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.type.name}</u>
               </div>
             `: `
               <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
@@ -565,15 +570,15 @@ const OrderDetails = ({ route }) => {
           `}
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 9%; border: 0.5px solid black; alignItems: center; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness}</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.thickness.name}</p>
           </div>
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; alignItems: center; width: 8%; padding-top: 1px; padding-bottom: 1px; justifyContent: center;">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.width}</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${item.width.name ? `${item.width.name} inch` : item.width}</p>
           </div>
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.length} ${item.unit}</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500;">${lp.length} ${item.unit.name}</p>
           </div>
 
           <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; width: 8%; border: 0.5px solid black; alignItems: center; justifyContent: center;">
@@ -687,7 +692,7 @@ const OrderDetails = ({ route }) => {
           
           <div style="flexDirection: row; alignItems: center; ">
             <p style="margin: 0; font-size: 7px; padding: 0; fontWeight: 500">Sales Person-:</p>
-            <p style="margin: 0; font-size: 7px; padding: 0; margin-left: 2px">Anil Beniwal</p>
+            <p style="margin: 0; font-size: 7px; padding: 0; margin-left: 2px">${loginDetails[0].name}</p>
           </div>
 
           <div style="flexDirection: column; alignItems: center">
@@ -844,27 +849,27 @@ const OrderDetails = ({ route }) => {
   };
 
   return (
-    <SafeAreaView style={{ flex: 1, backgroundColor: '#444444', paddingBottom: 10, }}>
+    <SafeAreaView style={{ flex: 1, backgroundColor: '#f1f3f6', paddingBottom: 10, }}>
       <StatusBar
         animated={true}
-        backgroundColor='#000'
-        barStyle="light-content"
+        backgroundColor='#fff'
+        barStyle="dark-content"
       />
 
       {/* header */}
-      <View style={{ flexDirection: "row", backgroundColor: "#000", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
+      <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", }}>
 
           <View style={{ paddingVertical: 10, flexDirection: "row", alignItems: "center", gap: 3, paddingHorizontal: 10, justifyContent: 'space-between' }}>
             <TouchableOpacity style={{}} onPress={() => navigation.goBack()}>
-              <Icon name="keyboard-arrow-left" size={26} color={'#fff'} />
+              <Icon name="keyboard-arrow-left" size={26} color={zomatoRed} />
             </TouchableOpacity>
           </View>
 
-          <Text style={{ color: "#fff", fontWeight: "500", fontSize: responsiveFontSize(2.4), textTransform: 'uppercase' }}>View Invoice</Text>
+          <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.3), textTransform: 'uppercase' }}>View Invoice</Text>
 
           <TouchableOpacity style={{ paddingHorizontal: 20, paddingVertical: 8 }} onPress={() => generateInvoice()}>
-            <Icon name="share" size={18} color={'#fff'} />
+            <Icon name="share" size={18} color={zomatoRed} />
           </TouchableOpacity>
 
         </View>

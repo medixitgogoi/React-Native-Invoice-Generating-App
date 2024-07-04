@@ -1,8 +1,9 @@
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image, ActivityIndicator, ImageBackground, Animated } from 'react-native';
-import { zomatoRed } from '../utils/colors';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon2 from 'react-native-vector-icons/Feather';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
 import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
@@ -139,19 +140,20 @@ const Login = () => {
                     </View>
 
                     {/* Content */}
-                    <View style={{ height: "43%", paddingVertical: 5, flexDirection: 'column', gap: 25 }}>
+                    <View style={{ height: "43%", paddingVertical: 5, flexDirection: 'column', gap: 15 }}>
 
                         {/* Headline */}
-                        <Text style={{ color: "#000", textAlign: "center", color: zomatoRed, fontSize: responsiveFontSize(3.2), fontWeight: "700", textTransform: "uppercase", }}>Welcome Back!</Text>
+                        <Text style={{ color: "#000", textAlign: "center", color: zomatoRed, fontSize: responsiveFontSize(3.2), fontWeight: "700", textTransform: "uppercase", marginBottom: 10 }}>Welcome Back!</Text>
 
                         {/* Email */}
                         <View>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 8, width: '13%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -15, left: 50, backgroundColor: '#f1f3f6', display: loading ? 'none' : "flex", paddingHorizontal: 3 }}>
-                                <Text style={{ color: '#8a919f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Email</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', width: "80%", alignSelf: 'center', borderRadius: 8, display: loading ? 'none' : "flex", gap: 5 }}>
+                                <Icon name="email-outline" size={23} color={'#000'} />
+                                <Text style={{ color: '#5f5f5f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Email</Text>
                             </View>
                             <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 14, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isEmailFocused ? zomatoRed : "", borderWidth: isEmailFocused ? 1.5 : 0, marginVertical: 2 }}>
                                 <TextInput
-                                    style={{ paddingVertical: 8, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                    style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                     onChangeText={setEmail}
                                     value={email}
                                     placeholderTextColor="#abb0ba"
@@ -165,13 +167,13 @@ const Login = () => {
 
                         {/* Password */}
                         <View style={{ marginBottom: 20 }}>
-                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderRadius: 8, width: '21%', paddingVertical: 2, position: 'absolute', zIndex: 10, top: -15, left: 50, backgroundColor: '#f1f3f6', display: loading ? 'none' : "flex" }}>
-                                <Text style={{ color: '#8a919f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Password</Text>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', width: "80%", alignSelf: 'center', borderRadius: 8, display: loading ? 'none' : "flex", gap: 3 }}>
+                                <Icon name="lock-outline" size={23} color={'#000'} />
+                                <Text style={{ color: '#5f5f5f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Password</Text>
                             </View>
-
                             <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 15, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isPasswordFocused ? zomatoRed : "", borderWidth: isPasswordFocused ? 1.5 : 0, marginTop: 2 }}>
                                 <TextInput
-                                    style={{ paddingVertical: 8, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000" }}
+                                    style={{ fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", height: 40 }}
                                     onChangeText={setPassword}
                                     value={password}
                                     placeholderTextColor="#abb0ba"
@@ -179,7 +181,7 @@ const Login = () => {
                                     onBlur={() => setIsPasswordFocused(false)}
                                     secureTextEntry={show}
                                 />
-                                <View style={{ position: 'absolute', right: 7, bottom: 1 }}>
+                                <View style={{ position: 'absolute', right: 5, top: 12 }}>
                                     <Icon2
                                         name={show ? 'eye-off' : 'eye'}
                                         onPress={() => setShow(!show)}
@@ -199,7 +201,7 @@ const Login = () => {
                         </View>
 
                         {/* Log in button */}
-                        <TouchableOpacity onPress={loginHandler} style={{ alignSelf: "center", width: "80%", height: 55, marginBottom: 20, marginTop: errors.password ? 0 : 20 }}>
+                        <TouchableOpacity onPress={loginHandler} style={{ alignSelf: "center", width: "80%", height: 55, marginBottom: 20, marginTop: errors.password ? 0 : 10 }}>
                             <LinearGradient
                                 colors={['#d4212f', '#92141c']}
                                 start={{ x: 0, y: 0 }}

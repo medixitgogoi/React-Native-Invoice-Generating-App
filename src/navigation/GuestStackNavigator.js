@@ -3,6 +3,7 @@ import Home from '../screens/Home';
 import Details from '../screens/Details';
 import Profile from '../screens/Profile';
 import BillDetails from '../screens/BillDetails';
+import BillView from '../screens/BillView';
 import PIMyInvoice from '../screens/PIMyInvoice';
 import DispatchOrder from '../screens/DispatchOrder';
 import SalesmanReport from '../screens/SalesmanReport';
@@ -26,6 +27,7 @@ const GuestStackNavigator = () => {
             <Stack.Screen name="Details" component={Details} />
             <Stack.Screen name="Profile" component={Profile} />
             <Stack.Screen name="BillDetails" component={BillDetails} />
+            <Stack.Screen name="BillView" component={BillView} />
             <Stack.Screen name="PIMyInvoice" component={PIMyInvoice} />
             <Stack.Screen name="DispatchOrder" component={DispatchOrder} />
             <Stack.Screen name="SalesmanReport" component={SalesmanReport} />
