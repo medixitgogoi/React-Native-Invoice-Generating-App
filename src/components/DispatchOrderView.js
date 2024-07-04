@@ -1,14 +1,17 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native'
-import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { zomatoRed, lightZomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
+import PinchZoomView from 'react-native-pinch-zoom-view';
+import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
+import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
 import Share from 'react-native-share';
-import PinchZoomView from 'react-native-pinch-zoom-view';
-import { useEffect, useState } from 'react';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
 
-const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
+const DispatchOrderView = (route) => {
+
+    const details = route?.detail;
+    console.log('details', details);
 
     const now = new Date();
 
@@ -18,77 +21,45 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
     const formattedDate = `${day}-${month}-${year}`;
 
-    const [name, setName] = useState('');
-    const [site, setSite] = useState('');
-    const [pan, setPan] = useState('');
-    const [contact, setContact] = useState('');
-    const [gstin, setGstin] = useState('');
-
-    const userDetails = useSelector(state => state.user);
     const loginDetails = useSelector(state => state.login);
-    const billDetails = useSelector(state => state.bill);
-
-    useEffect(() => {
-        userDetails.map(user => {
-            setName(user.name)
-            setSite(user.site)
-            setPan(user.pan)
-            setContact(user.contact)
-            setGstin(user.gstin)
-        })
-    }, []);
 
     const NoOfItems = () => {
         let items = 0;
-        billDetails.map(item => {
-            let num = item.lengthAndPieces.length;
+        details?.orderDetails?.map(item => {
+            let num = item.orderData.length;
             items += num;
         })
         return items;
     };
 
-    const getTotal = () => {
-        let total = 0; // Use let instead of const
-
-        billDetails.forEach(item => {
-            const totalQuantity = item.lengthAndPieces.reduce((sum, lp) => sum + (lp.pieces * lp.length), 0);
-            const totalAmount = totalQuantity * item.rate;
-            total += totalAmount;
-        });
-
-        total = indianNumberFormat(total + parseInt(loadingCharge) + parseInt(bendCharge) + parseInt(transportCharge)); // Format the total amount
-        // return total + parseInt(loadingCharge) + parseInt(bendCharge) + parseInt(transportCharge);
-        return total;
-    };
-
     const generateHtmlContent = () => {
-        const rows = billDetails.map(detail => {
-            const lengths = detail.lengthAndPieces.map((lp, index) => `
-      <tr style="width: 100%; margin: 0; ">
-        <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
-          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color.name : ''}</u></p>
-          <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.type.name : ''}</u></p>
-        </td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness.name}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.type.name === 'Ridges' ? `${detail.width.name} inch` : detail.width}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length} ${detail.unit.name}</td>
-        <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.pieces}</td>
-      </tr>
-    `).join('');
+        const rows = details?.orderDetails?.map(detail => {
+            const lengths = detail.orderData.map((lp, index) => `
+                <tr style="width: 100%; margin: 0; ">
+                    <td style="padding: 3px; text-align: center; width: 20%; margin: 0;  ">
+                        <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? 'Colour: ' : ''} ${index === 0 ? detail.color : ''}</u></p>
+                        <p style="margin: 0; font-weight: 700; font-size: 12px; "><u>${index === 0 ? detail.product_type : ''}</u></p>
+                    </td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.thickness} mm</td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${detail.product_type === 'Ridges' ? `${detail.ridge_width} inch` : '3.5 mm'}</td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.length} ${detail.unit}</td>
+                    <td style="border: 1px solid black; padding: 3px; text-align: center; width: 20%; margin: 0; font-size: 12px; font-weight: 600; ">${lp.quantity}</td>
+                </tr>
+            `).join('');
 
             // Calculate the total number of pieces for each detail
-            const totalPieces = detail.lengthAndPieces.reduce((sum, lp) => sum + parseInt(lp.pieces), 0);
+            const totalPieces = detail?.orderData?.reduce((sum, lp) => sum + parseInt(lp.quantity), 0);
 
             return `
-      ${lengths}
-      <tr>
-        <td style="padding: 3px; "></td>
-        <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
-        <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
-        <td colspan="1" style="background-color: #a2eaf3; padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
-        <td style="background-color: #a2eaf3; border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
-      </tr>
-    `;
+                ${lengths}
+                <tr>
+                <td style="padding: 3px; "></td>
+                <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
+                <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
+                <td colspan="1" style="background-color: #a2eaf3; padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
+                <td style="background-color: #a2eaf3; border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
+                </tr>
+            `;
         }).join('');
 
         return `
@@ -118,7 +89,7 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
               </div>
               
               <div style="text-align: center; font-size: 18px; margin-bottom: 15px; font-weight: 700; "><u>DISPATCH ORDER</u></div>
-              <div style="text-align: center; font-size: 18px; margin-bottom: 5px; font-weight: 700;">PARTY: ${name}</div>
+              <div style="text-align: center; font-size: 18px; margin-bottom: 5px; font-weight: 700;">PARTY: ${details?.client_name}</div>
               
               <table style="width: 100%; border-collapse: collapse; ">
                 <thead>
@@ -150,11 +121,11 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
                   </div>               
                 </div>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Dispatch Date:- </p>
-                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Order By:- P. Chakraborty </p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Order By:- ${details?.client_name} </p>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Material weight=</p>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Advance Payment=</p>
                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin: 0; margin-top: 3px; font-weight: 600;">
-                  <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= ${getTotal()}.00</p>
+                  <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= ₹${indianNumberFormat(details?.payble_amount)}.00</p>
                   <p style="color: black; margin: 0; font-size: 12px; ">Receipt No: </p>
                 </div>
               </div>
@@ -233,19 +204,19 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
                                     <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'right', marginVertical: 4, color: '#000', textDecorationLine: 'underline', fontWeight: '500' }}>{formattedDate}</Text>
                                 </View>
                                 <Text style={{ fontSize: responsiveFontSize(1.9), fontWeight: 'bold', textAlign: 'center', marginTop: 3, marginBottom: 3, color: '#000', textDecorationLine: 'underline' }}>DISPATCH ORDER</Text>
-                                <Text style={{ fontSize: responsiveFontSize(1.7), textAlign: 'center', marginVertical: 6, color: '#000', fontWeight: '700', textDecorationLine: 'underline' }}>PARTY: {name}</Text>
+                                <Text style={{ fontSize: responsiveFontSize(1.7), textAlign: 'center', marginVertical: 6, color: '#000', fontWeight: '700', textDecorationLine: 'underline' }}>PARTY: {details?.client_name}</Text>
                             </View>
 
                             {/* Second para */}
                             <View style={{ marginVertical: 4, borderColor: '#000', borderWidth: 1 }}>
-                                {billDetails.map((data) => (
-                                    <View style={{ width: '100%', flexDirection: 'column' }} key={data.id}>
+                                {details?.orderDetails?.map((data, index) => (
+                                    <View style={{ width: '100%', flexDirection: 'column' }} key={details?.id}>
 
                                         <View style={{ width: '100%', flexDirection: 'row' }}>
 
                                             <View style={{ flexDirection: 'column', width: '20%', borderWidth: 0.5, borderColor: '#000', borderBottomWidth: 1, }}>
-                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline' }}>Colour: {data.color.name}</Text>
-                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline', marginBottom: 1 }}>{data.type.name}</Text>
+                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline' }}>Colour: {data.color}</Text>
+                                                <Text style={{ fontSize: responsiveFontSize(1), fontWeight: '500', color: '#000', textAlign: 'center', textDecorationLine: 'underline', marginBottom: 1 }}>{data.product_type}</Text>
                                             </View>
 
                                             <View style={{ flexDirection: 'row', justifyContent: 'space-around', borderWidth: 0.5, borderColor: '#000', width: '80%' }}>
@@ -266,15 +237,15 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
                                         </View>
 
                                         <View>
-                                            {data.lengthAndPieces.map((item, index) => (
+                                            {data.orderData.map((item, index) => (
                                                 <View key={index} style={{ flexDirection: 'row', justifyContent: 'space-around', width: '100%' }}>
                                                     <View style={{ width: '20%', }}>
                                                     </View>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%' }}>
-                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness.name}</Text>
-                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.type.name === 'Ridges' ? `${data.width.name} inch` : data.width}</Text>
-                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length} {data.unit.name}</Text>
-                                                        <Text style={{ textAlign: 'center', color: '#000', width: '25%', borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', fontSize: responsiveFontSize(1.1), fontWeight: '500' }}>{item.pieces}</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness} mm</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.product_type === 'Ridges' ? `${data.ridge_width} inch` : data.width}</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length} {data.unit}</Text>
+                                                        <Text style={{ textAlign: 'center', color: '#000', width: '25%', borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', fontSize: responsiveFontSize(1.1), fontWeight: '500' }}>{item.quantity}</Text>
                                                     </View>
                                                 </View>
                                             ))}
@@ -289,7 +260,7 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
                                             </View>
                                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', borderColor: '#000', borderWidth: 0.5, width: '20%', }}>
                                                 <Text style={{ textAlign: 'right', color: '#000', fontSize: responsiveFontSize(1.2), textAlign: 'center', fontWeight: '600' }}>
-                                                    {data.lengthAndPieces.reduce((sum, item) => sum + parseInt(item.pieces), 0)}
+                                                    {data.orderData.reduce((sum, item) => sum + parseInt(item.quantity), 0)}
                                                 </Text>
                                             </View>
                                         </View>
@@ -323,7 +294,7 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = {getTotal()}.00</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = ₹{indianNumberFormat(details?.payble_amount)}.00</Text>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:- </Text>
                                     </View>
                                 </View>
@@ -350,4 +321,4 @@ const DispatchOrderView = ({ bendCharge, loadingCharge, transportCharge }) => {
 
 export default DispatchOrderView;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({})

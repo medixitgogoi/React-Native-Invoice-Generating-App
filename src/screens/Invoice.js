@@ -18,7 +18,7 @@ const Invoice = ({ route }) => {
     const [tab, setTab] = useState(1);
 
     const tabChangeHandler = () => {
-        setTab(tab === 1 ? 2 : 1);
+        setTab(tab === 1 ? 2 : 1)
     }
 
     return (

@@ -13,7 +13,6 @@ import { useSelector } from 'react-redux';
 
 const InvoiceView = (route) => {
 
-  const navigation = useNavigation();
   const details = route?.detail;
 
   const loginDetails = useSelector(state => state.login);
