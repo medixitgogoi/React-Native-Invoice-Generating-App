@@ -2,7 +2,7 @@ import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity } fro
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
+import { zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import InvoiceView from '../components/InvoiceView';
 import DispatchOrderView from '../components/DispatchOrderView';
