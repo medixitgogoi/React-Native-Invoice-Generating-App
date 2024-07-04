@@ -17,8 +17,6 @@ const Sales = () => {
 
     const loginDetails = useSelector(state => state.login);
 
-    const [loading, setLoading] = useState(false);
-
     const [dispatchedOrders, setDispatchedOrders] = useState([]);
     const [toBeDispatchedOrders, setToBeDispatchedOrders] = useState([]);
 
@@ -42,7 +40,6 @@ const Sales = () => {
     };
 
     const getDispatchedOrderDetails = async () => {
-        setLoading(true);
         try {
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
@@ -68,13 +65,10 @@ const Sales = () => {
                 onPress: () => Toast.hide(),
             });
 
-        } finally {
-            setLoading(false);
         }
     };
 
     const getToBeDispatchedOrderDetails = async () => {
-        setLoading(true);
         try {
 
             axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
@@ -100,8 +94,6 @@ const Sales = () => {
                 onPress: () => Toast.hide(),
             });
 
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -138,14 +130,9 @@ const Sales = () => {
                 </View>
             </View>
 
-            {loading && (
-                <View style={{ height: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                    <ActivityIndicator size="large" color={zomatoRed} />
-                </View>
-            )}
-
             <ScrollView style={{ flex: 1 }}>
 
+                {/* Dispatched Orders */}
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, marginTop: 10, justifyContent: 'space-between' }}>
                     <Icon3 name="pin" size={23} color={zomatoRed} />
                     <Text style={{ color: '#5f5f5f', fontSize: responsiveFontSize(2.2), fontWeight: '500', textTransform: 'uppercase' }}>Orders that are dispatched</Text>
@@ -153,6 +140,12 @@ const Sales = () => {
                 </View>
 
                 <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8, }}>
+
+                    {dispatchedOrders.length === 0 && (
+                        <View style={{ height: '20%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <ActivityIndicator size="large" color={zomatoRed} />
+                        </View>
+                    )}
 
                     {dispatchedOrders?.map((item, index) => (
                         <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={index}>
@@ -197,7 +190,7 @@ const Sales = () => {
                                 </View>
 
                                 {/* View Order Button */}
-                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('DispatchOrderDetails', { data: item })}>
+                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('OrderDetails', { data: item })}>
                                     <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
                                     </View>
@@ -211,13 +204,20 @@ const Sales = () => {
 
                 </View>
 
+                {/* Yet To Be Dispatched Orders */}
                 <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, justifyContent: 'space-between', }}>
                     <Icon3 name="pin" size={23} color={zomatoRed} />
                     <Text style={{ color: '#5f5f5f', fontSize: responsiveFontSize(2.2), fontWeight: '500', textTransform: 'uppercase' }}>Orders that are yet to be dispatched</Text>
                     <Icon3 name="pin" size={23} color={zomatoRed} />
                 </View>
 
-                <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8, }}>
+                <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8 }}>
+
+                    {toBeDispatchedOrders.length === 0 && (
+                        <View style={{ height: '30%', flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <ActivityIndicator size="large" color={zomatoRed} />
+                        </View>
+                    )}
 
                     {toBeDispatchedOrders?.map((item, index) => (
                         <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={index}>
@@ -263,7 +263,7 @@ const Sales = () => {
                                 </View>
 
                                 {/* View Order Button */}
-                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('DispatchOrderDetails', { data: item })}>
+                                <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('OrderDetails', { data: item })}>
                                     <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                         <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
                                     </View>

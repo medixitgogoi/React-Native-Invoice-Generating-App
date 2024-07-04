@@ -9,12 +9,11 @@ import SalesmanReport from '../screens/SalesmanReport';
 import PartyReport from '../screens/PartyReport';
 import FillUpDetails from '../screens/FillUpDetails';
 import Invoice from '../screens/Invoice';
-import OrderDetails from '../screens/NewOrderDetails';
+import OrderDetails from '../screens/OrderDetails';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DispatchedOrders from '../screens/DispatchedOrders';
 import DispatchOrderDetails from '../screens/DispatchOrderDetails';
 import NewOrders from '../screens/NewOrders';
-import NewOrderDetails from '../screens/NewOrderDetails';
 import Sales from '../screens/Sales';
 
 const GuestStackNavigator = () => {
@@ -34,10 +33,10 @@ const GuestStackNavigator = () => {
             <Stack.Screen name="NewOrders" component={NewOrders} />
             <Stack.Screen name="FillUpDetails" component={FillUpDetails} />
             <Stack.Screen name="Invoice" component={Invoice} />
-            <Stack.Screen name="NewOrderDetails" component={NewOrderDetails} />
             <Stack.Screen name="DispatchedOrders" component={DispatchedOrders} />
             <Stack.Screen name="DispatchOrderDetails" component={DispatchOrderDetails} />
             <Stack.Screen name="Sales" component={Sales} />
+            <Stack.Screen name="OrderDetails" component={OrderDetails} />
         </Stack.Navigator>
     )
 }
