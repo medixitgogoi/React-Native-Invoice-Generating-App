@@ -64,59 +64,74 @@ const Profile = () => {
 
             <View style={{ flexDirection: 'column', alignItems: 'center', paddingVertical: 10, }}>
 
-                {/* Image */}
-                <View style={{ flexDirection: 'column', alignItems: 'center', marginTop: 30, marginVertical: 10 }}>
-                    {/* <Image source={require("../assets/login.png")} style={{ width: 200, height: 200 }} /> */}
-                    <View style={{ height: 130, width: 130, backgroundColor: '#000', borderRadius: 100, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
-                        <Text style={{ color: '#fff', fontSize: responsiveFontSize(8), textTransform: 'uppercase' }}>{loginDetails[0]?.name.slice(0, 1)}</Text>
+                {/* Details */}
+                <View style={{ backgroundColor: '#fff', width: '95%', borderRadius: 15, elevation: 1, padding: 20, flexDirection: 'row', alignItems: 'center', gap: 10 }}>
+
+                    {/* Image */}
+                    <View style={{ flexDirection: 'column', alignItems: 'center', }}>
+                        <View style={{ height: 100, width: 100, backgroundColor: '#b5d0ef', borderRadius: 100, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                            <Text style={{ color: '#235c9e', fontSize: responsiveFontSize(7), textTransform: 'uppercase' }}>{loginDetails[0]?.name.slice(0, 1)}</Text>
+                        </View>
                     </View>
+
+                    {/* Name and Email */}
+                    <View style={{ flexDirection: 'column', }}>
+                        <Text style={{ fontSize: responsiveFontSize(2.8), fontWeight: '600', color: '#000', textTransform: 'uppercase' }}>{loginDetails[0]?.name}</Text>
+                        <Text style={{ fontSize: responsiveFontSize(2), color: '#656565' }}>{loginDetails[0]?.email}</Text>
+                    </View>
+
                 </View>
 
-                {/* Name and Email */}
-                <View style={{ flexDirection: 'column', alignItems: 'center', gap: 3 }}>
-                    <Text style={{ fontSize: responsiveFontSize(2.6), fontWeight: '600', textAlign: 'center', color: '#000', textTransform: 'uppercase' }}>{loginDetails[0]?.name}</Text>
-                    <Text style={{ fontSize: responsiveFontSize(2), textAlign: 'center', color: '#656565' }}>{loginDetails[0]?.email}</Text>
-                </View>
-
-                <View style={{ width: '100%', flexDirection: 'row', alignItems: 'center', justifyContent: 'space-evenly', flexWrap: 'wrap', gap: 5, marginTop: 40 }}>
+                <View style={{ width: '95%', flexDirection: 'column', alignItems: 'center', gap: 5, marginTop: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 1, paddingVertical: 15, paddingHorizontal: 5 }}>
 
                     {/* Add customer */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: zomatoRed, borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={pressHandler}>
-                        <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
-                            <Icon3 name="person-add" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
+                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={pressHandler}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 2 }}>
+                                <Icon3 name="person-add" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10, fontSize: responsiveFontSize(2.2), }}>Add customer</Text>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>Add customer</Text>
+                        <View>
+                            <Icon name="keyboard-arrow-right" size={27} color={'#a4a4a4'} />
                         </View>
                     </TouchableOpacity>
+
+                    {/* Divider */}
+                    <View style={{ width: '82%', height: 1, backgroundColor: '#000', opacity: 0.1, marginBottom: 6, alignSelf: 'flex-end', marginTop: 6 }}></View>
 
                     {/* My Sales */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#7e3aaf', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={() => navigation.navigate('Sales')} >
-                        <View style={{ backgroundColor: '#eaddf4', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
-                            <Icon4 name="newspaper-sharp" size={18} style={{ width: 20, height: 20, color: '#7e3aaf' }} />
+                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={() => navigation.navigate('Sales')} >
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
+                                <Icon4 name="newspaper-sharp" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>My Sales</Text>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>My Sales</Text>
+                        <View>
+                            <Icon name="keyboard-arrow-right" size={27} color={'#a4a4a4'} />
                         </View>
                     </TouchableOpacity>
-
-                    {/* Share App */}
-                    {/* <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#e3e31d', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }}>
-                        <View style={{ backgroundColor: '#f9f9cd', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
-                            <Icon name="offline-share" size={18} style={{ width: 20, height: 20, color: '#c8c819' }} />
-                        </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>Share App</Text>
-                        </View>
-                    </TouchableOpacity> */}
+                    
+                    {/* divider */}
+                    <View style={{ width: '82%', height: 1, backgroundColor: '#000', opacity: 0.1, marginBottom: 6, alignSelf: 'flex-end', marginTop: 6 }}></View>
 
                     {/* Log out */}
-                    <TouchableOpacity style={{ backgroundColor: '#fff', width: '45%', height: 60, marginBottom: 10, borderRadius: 12, elevation: 2, borderColor: '#47c724', borderWidth: 0.8, flexDirection: 'row', alignItems: 'center', padding: 10 }} onPress={logoutHandler}>
-                        <View style={{ backgroundColor: '#d3f5ca', borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
-                            <Icon5 name="log-out" size={18} style={{ width: 20, height: 20, color: '#47c724' }} />
+                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={logoutHandler}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
+                                <Icon5 name="log-out" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
+                            </View>
+                            <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>Log out</Text>
+                            </View>
                         </View>
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>Log out</Text>
+                        <View>
+                            <Icon name="keyboard-arrow-right" size={27} color={'#a4a4a4'} />
                         </View>
                     </TouchableOpacity>
 

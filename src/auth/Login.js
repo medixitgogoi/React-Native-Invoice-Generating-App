@@ -127,7 +127,7 @@ const Login = () => {
             <SafeAreaView style={{ flex: 1, backgroundColor: "transparent", flexDirection: "column", }}>
                 <StatusBar
                     animated={true}
-                    backgroundColor={loading ? '#868686' : "transparent"}
+                    backgroundColor={loading ? '#8c8c8c' : "transparent"}
                     barStyle="dark-content"
                     translucent={true}
                 />
@@ -148,12 +148,12 @@ const Login = () => {
                         {/* Email */}
                         <View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', width: "80%", alignSelf: 'center', borderRadius: 8, display: loading ? 'none' : "flex", gap: 5 }}>
-                                <Icon name="email-outline" size={23} color={'#000'} />
-                                <Text style={{ color: '#5f5f5f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Email</Text>
+                                <Icon name="email-outline" size={23} color={'#363636'} />
+                                <Text style={{ color: '#5f5f5f', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Email</Text>
                             </View>
                             <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 14, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isEmailFocused ? zomatoRed : "", borderWidth: isEmailFocused ? 1.5 : 0, marginVertical: 2 }}>
                                 <TextInput
-                                    style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                    style={{ height: 40, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                     onChangeText={setEmail}
                                     value={email}
                                     placeholderTextColor="#abb0ba"
@@ -162,14 +162,14 @@ const Login = () => {
                                     onBlur={() => setIsEmailFocused(false)}
                                 />
                             </View>
-                            {errors.email && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), paddingLeft: 35, marginTop: 4 }}>{errors.email}</Text>}
+                            {errors.email && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), paddingLeft: 35 }}>{errors.email}</Text>}
                         </View>
 
                         {/* Password */}
                         <View style={{ marginBottom: 20 }}>
                             <View style={{ flexDirection: 'row', alignItems: 'center', width: "80%", alignSelf: 'center', borderRadius: 8, display: loading ? 'none' : "flex", gap: 3 }}>
-                                <Icon name="lock-outline" size={23} color={'#000'} />
-                                <Text style={{ color: '#5f5f5f', fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Password</Text>
+                                <Icon name="lock-outline" size={23} color={'#363636'} />
+                                <Text style={{ color: '#5f5f5f', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Password</Text>
                             </View>
                             <View style={{ alignSelf: "center", width: "80%", paddingHorizontal: 15, backgroundColor: "#f1f3f6", elevation: 8, borderRadius: 8, borderColor: isPasswordFocused ? zomatoRed : "", borderWidth: isPasswordFocused ? 1.5 : 0, marginTop: 2 }}>
                                 <TextInput
@@ -220,6 +220,7 @@ const Login = () => {
                                 </Text>
                             </LinearGradient>
                         </TouchableOpacity>
+
                     </View>
 
                     {/* Loading Spinner */}

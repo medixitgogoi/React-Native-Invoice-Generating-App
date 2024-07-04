@@ -1,4 +1,4 @@
-import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, ViewBase } from 'react-native';
+import { ActivityIndicator, FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -160,8 +160,8 @@ const Sales = () => {
                             />
                         )}
 
-                        {dispatchedOrders?.map((item, index) => (
-                            <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={index}>
+                        {dispatchedOrders?.map((item) => (
+                            <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={item.id}>
 
                                 {/* Top */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
@@ -242,8 +242,8 @@ const Sales = () => {
                             />
                         )}
 
-                        {toBeDispatchedOrders?.map((item, index) => (
-                            <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={index}>
+                        {toBeDispatchedOrders?.map((item) => (
+                            <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={item.id}>
 
                                 {/* Top */}
                                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
