@@ -82,10 +82,10 @@ const Profile = () => {
 
                 </View>
 
-                <View style={{ width: '95%', flexDirection: 'column', alignItems: 'center', gap: 5, marginTop: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 1, paddingVertical: 15, paddingHorizontal: 5 }}>
+                <View style={{ width: '95%', flexDirection: 'column', alignItems: 'center', gap: 5, marginTop: 20, backgroundColor: '#fff', borderRadius: 15, elevation: 1, paddingVertical: 15, }}>
 
                     {/* Add customer */}
-                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={pressHandler}>
+                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 5 }} onPress={pressHandler}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                             <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 2 }}>
                                 <Icon3 name="person-add" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
@@ -103,7 +103,7 @@ const Profile = () => {
                     <View style={{ width: '82%', height: 1, backgroundColor: '#000', opacity: 0.1, marginBottom: 6, alignSelf: 'flex-end', marginTop: 6 }}></View>
 
                     {/* My Sales */}
-                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={() => navigation.navigate('Sales')} >
+                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 5 }} onPress={() => navigation.navigate('Sales')} >
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                             <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                                 <Icon4 name="newspaper-sharp" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
@@ -116,12 +116,12 @@ const Profile = () => {
                             <Icon name="keyboard-arrow-right" size={27} color={'#a4a4a4'} />
                         </View>
                     </TouchableOpacity>
-                    
+
                     {/* divider */}
                     <View style={{ width: '82%', height: 1, backgroundColor: '#000', opacity: 0.1, marginBottom: 6, alignSelf: 'flex-end', marginTop: 6 }}></View>
 
                     {/* Log out */}
-                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={logoutHandler}>
+                    <TouchableOpacity style={{ width: '95%', borderRadius: 12, alignSelf: 'center', flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 5 }} onPress={logoutHandler}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                             <View style={{ backgroundColor: lightZomatoRed, borderRadius: 8, padding: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1 }}>
                                 <Icon5 name="log-out" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />

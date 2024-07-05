@@ -1,406 +1,178 @@
-const generateTableRows = () => {
-    return `
-    <table style="width: 100%; border-collapse: collapse; margin-top: 2px; margin-bottom: 2px;">
-      ${details.orderDetails.map((item, itemIndex) => {
+{
+  item?.order_status === '1' ? (
+    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+      <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
+    </View>
+  ) : (
+  <View style={{ backgroundColor: '#c5f8a4', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
+    <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
+    <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
+  </View>
+)
+}
 
-        const totalPieces = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * 1), 0);
-        const totalQuantity = item.orderData.reduce((sum, lp) => sum + (parseInt(lp.quantity) * parseInt(lp.length)), 0);
-        const totalAmount = indianNumberFormat(totalQuantity * item.rate);
+{/* Dispatched Orders */ }
+<View>
+  <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, marginTop: 10, justifyContent: 'space-between' }}>
+    <Icon3 name="pin" size={23} color={zomatoRed} />
+    <Text style={{ color: '#5f5f5f', fontSize: responsiveFontSize(2.1), fontWeight: '500', textTransform: 'uppercase' }}>Orders that are dispatched</Text>
+    <Icon3 name="pin" size={23} color={zomatoRed} />
+  </View>
 
-        return `
-          ${item.orderData.map((lp, lpIndex) => `
-            <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
-              ${lpIndex === 0 ? `
-                <td style="font-size: 10px; width: 23%; padding: 3px; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color}</u></p>
-                  ${item.orderData.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.product_type}</u>` : ``}
-                </td>
-              ` : (item.orderData.length - 1 === lpIndex && item.orderData.length > 2) ? `
-                <td style="font-size: 10px; width: 23%; padding: 3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                
-                </td>
-              ` : (lpIndex === 1) ? `
-                <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                  <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.product_type}</u>
-                </td>
-              `: `
-                <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
+  <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8, }}>
 
-                </td>
-              `}
+    {dispatchedOrders.length === 0 && (
+      <FlatList
+        data={[1]}
+        renderItem={() => (
+          <View style={{ flexDirection: 'column', width: '100%', height: 200, backgroundColor: '#d8dbdb', padding: 10, marginTop: 2, marginBottom: 8, borderRadius: 7, gap: 8 }}>
+            <ShimmerPlaceHolder style={{ width: '100%', height: 50, backgroundColor: '#f2f3f3', borderRadius: 7, }}>
+            </ShimmerPlaceHolder>
+            <ShimmerPlaceHolder style={{ width: '100%', height: 120, backgroundColor: '#f2f3f3', borderRadius: 7, }}>
+            </ShimmerPlaceHolder>
+          </View>
+        )}
+      />
+    )}
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.thickness}</p>
-              </td>
+    {dispatchedOrders?.map((item) => (
+      <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={item.id}>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 12px;">${item.product_type === 'Ridges' ? `${item.ridge_width} inch` : '3.5 mm'}</p>
-              </td>
+        {/* Top */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
+          <View style={{ flexDirection: 'column', }}>
+            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item?.client_name, search)}</Text>
+            <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
+          </View>
+          <View style={{ backgroundColor: '#c5f8a4', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
+            <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
+            <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
+          </View>
+        </View>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px;">
-                <p style="margin: 0; font-weight: 500; font-size: 11px;">${lp.length} ${item.unit}</p>
-              </td>
+        {/* Bottom */}
+        <View style={{ padding: 12 }}>
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 8%; padding: 3px; ">
-                <p style="margin: 0; font-weight: 500;">${lp.quantity}</p>
-              </td>
+          {/* Details */}
+          <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
+            {item.orderDetails.map(item => {
 
-              <td style="font-size: 10px; border: 0.5px solid black; width: 14%; padding: 0; ">
-                <div style="display: flex; height: 20px;">
-                  <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                    <p style="margin: 0; font-weight: 500; font-size: 12px;">${lp.quantity * lp.length}.00</p>
-                  </div>
-                  <div style="width: 1px; background-color: black; height: 100%;"></div>
-                  <div style="width: 35%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                    <p style="margin: 0; font-weight: 600; font-size: 12px;"></p>
-                  </div>
-                </div>
-              </td>
+              const totalPieces = item.orderData.reduce((pi, item) => {
+                return pi + parseInt(item.quantity);
+              }, 0);
 
-              ${lpIndex === 0 ? `
-                <td style="font-size: 10px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 3px;">
-                
-                </td>
-                ` : (item.orderData.length - 1 === lpIndex) ? `
-                <td style="font-size: 10px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 17%; padding: 3px;">
-                
-                </td>
-                ` : `
-                <td style="font-size: 10px; border-right: 0.5px solid black; width: 17%; padding: 3px;">
-                
-                </td>
-              `}
-              
-              ${lpIndex === 0 ? `
-                <td style="font-size: 10.3px; border-top: 0.5px solid black; border-right: 0.5px solid black; width: 14%; padding: 3px;">
+              return (
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                  <Text style={{ color: '#6f8990', fontWeight: '600' }}>{totalPieces} x</Text>
+                  <Text style={{ color: '#000', fontWeight: '500' }}>{item.product_type}</Text>
+                  <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                  <Text style={{ color: '#000', fontWeight: '500' }}>{item.color}</Text>
+                </View>
+              )
+            })}
+          </View>
 
-                </td>
-              ` : (item.orderData.length - 1 === lpIndex) ? `
-                <td style="font-size: 10.3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; width: 13%; padding: 3px;">
+          {/* Date and Amount */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
+            <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7) }}>{convertedDate(item?.order_date)}</Text>
+            <Text style={{ color: '#000', fontSize: responsiveFontSize(2), fontWeight: '500' }}>₹{indianNumberFormat(item?.payble_amount)}</Text>
+          </View>
 
-                </td>
-              ` : `
-                <td style="font-size: 10.3px; border-right: 0.5px solid black; width: 13%; padding: 3px;">
+          {/* View Order Button */}
+          <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('OrderDetails', { data: item })}>
+            <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
+            </View>
+            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '500', textTransform: 'uppercase' }}>View Order</Text>
+          </TouchableOpacity>
 
-                </td>
-              `}
+        </View>
 
-            </tr>
-          `).join('')}
+      </View>
+    ))}
 
-          <tr style="height: 20px; text-align: center; background-color: #a2eaf3; ">
-            <td style="width: 23%; padding: 0; border: 0.5px solid black; "></td>
-            
-            <td colspan="3" style="font-size: 13px; border: 0.5px solid black; text-align: right; padding-right: 13px; font-weight: 500; ">Total</td>
-            
-            <td style="font-size: 13px; border: 0.5px solid black; font-weight: 500; ">${totalPieces}</td>
-            
-            <td style="font-size: 10px; border: 0.5px solid black; width: 14%; padding: 0; ">
-              <div style="display: flex; height: 20px;">
-                <div style="width: 65%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                  <p style="margin: 0; font-weight: 500; font-size: 12px;">${totalQuantity}.00</p>
-                </div>
-                <div style="width: 1px; background-color: black; height: 100%;"></div>
-                <div style="width: 35%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                  <p style="margin: 0; font-weight: 600; font-size: 12px;">Rft</p>
-                </div>
-              </div>
-            </td>
+  </View>
+</View>
 
-            <td style="font-size: 10px; border: 0.5px solid black; width: 17%; padding: 0; vertical-align: top;">
-              <div style="display: flex; height: 20px; ">
-                <div style="width: 15%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                  <p style="margin: 0; font-weight: 500;">₹</p>
-                </div>
-                <div style="width: 1px; background-color: black;"></div>
-                <div style="width: 43%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                  <p style="margin: 0; font-weight: 600;">${item.rate}.00</p>
-                </div>
-                <div style="width: 1px; background-color: black;"></div>
-                <div style="width: 42%; display: flex; align-items: center; justify-content: center; padding: 0;">
-                  <p style="margin: 0; font-weight: 600;">Per Rft</p>
-                </div>
-              </div>
-            </td>
+{/* Yet To Be Dispatched Orders */ }
+<View>
+  <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 8, justifyContent: 'space-between', marginTop: 10 }}>
+    <Icon3 name="pin" size={23} color={zomatoRed} />
+    <Text style={{ color: '#5f5f5f', fontSize: responsiveFontSize(2.1), fontWeight: '500', textTransform: 'uppercase' }}>Orders that are yet to be dispatched</Text>
+    <Icon3 name="pin" size={23} color={zomatoRed} />
+  </View>
 
-            <td colspan="2" style="font-size: 13px; border: 0.5px solid black; font-weight: 600; ">₹${totalAmount}.00</td>
+  <View style={{ paddingHorizontal: 8, paddingVertical: 12, flexDirection: 'column', gap: 8 }}>
 
-          </tr>
-      `;
-    }).join('')}
-    </table>
-  `;
-};
+    {toBeDispatchedOrders.length === 0 && (
+      <FlatList
+        data={[1, 1]}
+        renderItem={() => (
+          <View style={{ flexDirection: 'column', width: '100%', height: 200, backgroundColor: '#d8dbdb', padding: 10, marginTop: 2, marginBottom: 8, borderRadius: 7, gap: 8 }}>
+            <ShimmerPlaceHolder style={{ width: '100%', height: 50, backgroundColor: '#f2f3f3', borderRadius: 7, }}>
+            </ShimmerPlaceHolder>
+            <ShimmerPlaceHolder style={{ width: '100%', height: 120, backgroundColor: '#f2f3f3', borderRadius: 7, }}>
+            </ShimmerPlaceHolder>
+          </View>
+        )}
+      />
+    )}
 
-const htmlContent = `
-        <!DOCTYPE html>
-            <html>
-            <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-                <style>
+    {toBeDispatchedOrders?.map((item) => (
+      <View style={{ width: '100%', borderRadius: 6, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }} key={item.id}>
 
-                @page {
-                    margin-top: 15px;
-                    margin-bottom: 10px;
-                }
-                
-                body {
-                    color: black;
-                    padding: 30px;
-                    background-color: white;
-                    font-family: Arial, sans-serif;
-                    font-size: 10px;
-                    margin: 0;
-                    padding-top: 20px;
-                }
+        {/* Top */}
+        <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
+          <View style={{ flexDirection: 'column', }}>
+            <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{item?.client_name}</Text>
+            <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
+          </View>
+          <View>
+            <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+              <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
+            </View>
+          </View>
+        </View>
 
-                h6 {
-                    font-size: 12px;
-                    margin: 0;
-                    font-weight: 500;
-                }
+        {/* Bottom */}
+        <View style={{ padding: 12 }}>
 
-                p {
-                    font-size: 12px;
-                    margin: 0;
-                }
+          <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
+            {item.orderDetails.map(item => {
 
-                em {
-                    font-style: italic;
-                }
+              const totalPieces = item.orderData.reduce((pi, item) => {
+                return pi + parseInt(item.quantity);
+              }, 0);
 
-                .container {
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
+              return (
+                <View style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                  <Text style={{ color: '#6f8990', fontWeight: '600' }}>{totalPieces} x</Text>
+                  <Text style={{ color: '#000', fontWeight: '500' }}>{item.product_type}</Text>
+                  <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                  <Text style={{ color: '#000', fontWeight: '500' }}>{item.color}</Text>
+                </View>
+              )
+            })}
+          </View>
 
-                .header {
-                    display: flex;
-                    flex-direction: row;
-                    align-items: center;
-                    justify-content: center;
-                    width: 100%;
-                    padding: 0;
-                    margin: 0;
-                    height: 45px;
-                    padding-right: 50px;
-                }
+          {/* Date and Amount */}
+          <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
+            <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7) }}>{convertedDate(item?.order_date)}</Text>
+            <Text style={{ color: '#000', fontSize: responsiveFontSize(2), fontWeight: '500' }}>₹{indianNumberFormat(item?.payble_amount)}</Text>
+          </View>
 
-                .header img {
-                    height: 100px;
-                    width: 100px;
-                    object-fit: contain;
-                    margin: 0;
-                    margin-right: 10px;
-                }
+          {/* View Order Button */}
+          <TouchableOpacity style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('OrderDetails', { data: item })}>
+            <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+              <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
+            </View>
+            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '500', textTransform: 'uppercase' }}>View Order</Text>
+          </TouchableOpacity>
 
-                .header div {
-                    text-align: center;
-                    margin: 0;
-                    padding: 0;
-                }
+        </View>
 
-                .address {
-                    text-align: center;
-                    margin: 0;
-                    font-weight: 400;
-                    font-size: 14px;
-                    margin-top: 2px;
-                }
+      </View>
+    ))}
 
-                .party-info {
-                    margin-top: 5px;
-                    width: 100%;
-                    display: flex;
-                    flex-direction: column;
-                    align-items: center;
-                }
-
-                .party-info h6 {
-                    font-weight: 400;
-                    margin-top: 1px;
-                    font-size: 11px;
-                }
-
-                .party-info em {
-                    font-style: italic;
-                }
-
-                .table {
-                    margin-top: 10px;
-                    width: 100%;
-                    border-collapse: collapse;
-                }
-
-                .table th,
-                .table td {
-                    border: 0.5px solid black;
-                    text-align: center;
-                }
-
-                .table th {
-                    background-color: #7ff460;
-                    font-size: 12px;
-                }
-
-                .note {
-                    margin-top: 20px;
-                    width: 100%;
-                }
-
-                .note h5 {
-                    font-weight: 600;
-                    margin-bottom: 1px;
-                    font-size: 11px;
-                    margin: 0;
-                    margin-bottom: 8px;
-                }
-
-                .note h6 {
-                    font-weight: 400;
-                    margin-bottom: 10px;
-                    font-size: 10px;
-                }
-
-                .note p {
-                    margin: 3px;
-                }
-
-                .signature {
-                    margin-top: 50px;
-                    display: flex;
-                    justify-content: space-between;
-                    width: 100%;
-                }
-
-                .ref {
-                    display: flex;
-                    justify-content: space-between;
-                    align-items: center;
-                    width: 100%;
-                    margin-top: 20px;
-                }
-
-                </style>
-            </head>
-
-            <body>
-
-                <div class="container">
-                <div class="header">
-                    <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzKTWxwQYlE-bvvFw7cb3WLvV-sx_A-XXzdK5HrixwRw&s">
-                    <div>
-                    <h6 style="font-size: 18px; padding-right: 10px;">COLOURTUFF+</h6>
-                    <h6 style="font-size: 14px; padding-right: 10px;">(A Product Of POOJA ROOFING CO.(MFG))</h6>
-                    </div>
-                </div>
-
-                <p class="address">ADDRESS:- MAYFAIR BUILDING, 1ST FLOOR, LALGANESH LOKHRA ROAD, OPP. HANUMAN MANDIR</p>
-                <p class="address">DISTRICT:- KAMRUP(M),GUWAHATI, ASSAM PIN CODE:- 781034</p>
-                <p class="address">E Mail: poojaroofingco.mfg@gmail.com</p>
-                <p class="address">Phone No. 0361-3102688</p>
-
-                </div>
-
-                <div class="ref">
-                <p class="address">REF.NO:- <u>PRCM/24-25/098</u></p>
-                <p class="address">${formattedDate}</p>
-                </div>
-
-                <p style="font-size: 14px; margin-top: 3px;">Sales Person-: Anil Beniwal</p>
-
-                <div class="party-info">
-                <h5 style="font-size: 13px; margin: 0; padding-bottom: 1px; font-weight: 500;">ESTIMATE</h5>
-                <p style="font-size: 12px; fontWeight: 600;"> <strong>PARTY:</strong> ${details.client_name}</p>
-                <h6><strong style="font-size: 12px;">Site:</strong> Ganeshguri</h6>
-                </div>
-
-                <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
-                <h6 style="font-weight: 400; "><strong>PAN:</strong> 111111111</h6>
-                <h6 style="font-weight: 400; "><strong>Contact No.:</strong> 333333333</h6>
-                <h6 style="font-weight: 400; "><strong>GSTIN:</strong> 33333333333</h6>
-                </div>
-                
-                <table class="table">
-                <thead>
-                    <tr>
-                    <th style="width: 23%; ">Material (Hi-rib)</th>
-                    <th style="width: 8%; ">Thick (mm)</th>
-                    <th style="width: 8%; ">Width</th>
-                    <th style="width: 8%; ">Length</th>
-                    <th style="width: 8%; ">No.of Pcs</th>
-                    <th style="width: 14%; ">Quantity</th>
-                    <th style="width: 17%; ">Rate (In ₹)</th>
-                    <th style="width: 14%; ">Amount (In Rs.)</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    ${generateTableRows()}
-                </tbody>
-                
-                </table>
-
-                <table style="width: 100%; border-collapse: collapse; margin-top: 2px; ${NoOfItems() > 24 ? `page-break-before: always;` : ``}; ">
-
-                <tr style="height: 62px;">
-                    <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
-                    ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Loading Charges</p>` : ``}
-                    ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Bend Charges</p>` : ``}
-                    ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Transport Charges</p>` : ``}
-                    </td>
-                    <td style="width: 14%; border: 0.5px solid black; text-align: center; ">
-                    ${loadingCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(loadingCharge)}.00</p>` : ``}
-                    ${bendCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(bendCharge)}.00</p>` : ``}
-                    ${transportCharge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(transportCharge)}.00</p>` : ``}
-                    </td>
-                </tr>
-                
-                <tr style="height: 30px;">
-                    <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 5px; padding-bottom: 5px; padding-right: 6px; ">
-                    <p style="margin: 1px; font-size: 11px;">Total amount to be paid</p>
-                    </td>
-                    <td style="width: 14%; border: 0.5px solid black; text-align: center; padding-top: 5px; padding-bottom: 5px;">
-                    <p style="font-size: 13px; font-weight: 600; margin: 0;">₹${indianNumberFormat(calculateTotalPrice())}.00</p>
-                    </td>
-                </tr>
-                </table>
-
-                <div style="width: 100%;">
-                <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
-                </div>
-
-                <div style="${NoOfItems() > 15 && NoOfItems() < 24 ? `page-break-before: always;` : ``};">
-                <div class="note">
-                    <h6>Note:</h6>
-                    <h5>Terms & conditions:-</h5>
-                    <p><em>1. Prices are inclusive of GST</em></p>
-                    <p><em>2. Prices are based on ex-factory at Changsari, Assam</em></p>
-                    <p><em>3. Payment Terms: 100% in Advance</em></p>
-                    <p><em>4. Rates are subject to change without any Prior Information.</em></p>
-                    <div style="flex-direction: column; background-color: yellow; padding-top: 1px; padding-bottom: 1px;">
-                    <p>5. FOR BANK DETAILS:- Name: Pooja Roofing Co. (MFG) A/C NO: 41122724588 (STATE BANK OF INDIA,)</p>
-                    <p style="padding-left: 12px;">IFSC CODE: SBIN0013246 (Traders Branch Fancy Bazar)</p>
-                    </div>
-                    <p><em>6. Transportation: Client's Own Arrangement / To Pay Basis</em></p>
-                    <p><em>7. The above Rates are valid for 7 Days</em></p>
-                </div>
-                </div>
-
-                <div style="flex-direction: column; margin-top: 25px; ">
-                <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Regards</em></p>
-                <p style="margin: 0; fontSize: 8px; fontWeight: 600; "><em>Pooja Roofing Co.(MFG)</em></p>
-                </div>
-
-                <div class="signature" >
-                <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Prepared by )</em></p>
-                <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Checked by )</em></p>
-                <p style="margin: 0; fontSize: 8px; fontWeight: 500;"><em>( Approved by )</em></p>
-                </div>
-
-            </body>
-
-        </html>
-
-`;
+  </View>
+</View>

@@ -2,7 +2,6 @@ import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-nati
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import PinchZoomView from 'react-native-pinch-zoom-view';
-import { useState, useEffect } from 'react';
 import { useSelector } from 'react-redux';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
@@ -243,7 +242,7 @@ const DispatchOrderView = (route) => {
                                                     </View>
                                                     <View style={{ flexDirection: 'row', alignItems: 'center', width: '80%' }}>
                                                         <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.thickness} mm</Text>
-                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.product_type === 'Ridges' ? `${data.ridge_width} inch` : data.width}</Text>
+                                                        <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{data.product_type === 'Ridges' ? `${data.ridge_width} inch` : '3.5 mm'}</Text>
                                                         <Text style={{ borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', textAlign: 'center', color: '#000', width: '25%', fontSize: responsiveFontSize(1.1), fontWeight: '500', height: '100%' }}>{item.length} {data.unit}</Text>
                                                         <Text style={{ textAlign: 'center', color: '#000', width: '25%', borderRightWidth: 1, borderTopWidth: 0.5, borderLeftWidth: 1, borderBottomWidth: 0.5, borderColor: '#000', fontSize: responsiveFontSize(1.1), fontWeight: '500' }}>{item.quantity}</Text>
                                                     </View>

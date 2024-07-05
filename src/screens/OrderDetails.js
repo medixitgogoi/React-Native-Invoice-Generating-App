@@ -11,6 +11,7 @@ import DispatchOrderView from '../components/DispatchOrderView';
 const OrderDetails = (route) => {
 
     const detail = route?.route?.params?.data;
+    console.log('detail', detail)
 
     const navigation = useNavigation();
 
