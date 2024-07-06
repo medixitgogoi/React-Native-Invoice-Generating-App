@@ -100,7 +100,7 @@ const PIMyInvoice = () => {
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f1f3f6' }}>
             <StatusBar animated={true} backgroundColor="#fff" barStyle="dark-content" />
 
-            {/* Header */}
+            {/* header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 2 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%" }}>
                     <View style={{ paddingVertical: 8, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10 }}>
@@ -169,11 +169,10 @@ const PIMyInvoice = () => {
                                     }}
                                 />
                                 <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                                    <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.5), }}>No results found for</Text>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.5), fontWeight: '500', textDecorationLine: 'underline' }}>'{search}'</Text>
+                                    <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.1), }}>No results found for</Text>
+                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.4), fontWeight: '500', textDecorationLine: 'underline' }}>'{search}'</Text>
                                 </View>
                             </View>
-
                         ) : (
                             filteredNames.map(item => (
                                 <TouchableOpacity style={{ flexDirection: 'row', justifyContent: 'space-between', backgroundColor: '#fceced', paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }} onPress={() => pressHandler(item)} key={item.id}>

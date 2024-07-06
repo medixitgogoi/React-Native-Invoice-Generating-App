@@ -1,17 +1,16 @@
-import { StyleSheet, Text, TouchableOpacity, View } from 'react-native'
-import { SafeAreaView } from 'react-native-safe-area-context'
-import { zomatoRed } from '../utils/colors'
-import { responsiveFontSize } from 'react-native-responsive-dimensions'
+import React, { useState } from 'react';
+import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import { SafeAreaView } from 'react-native-safe-area-context';
+import { zomatoRed } from '../utils/colors';
+import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
 import InvoiceView from '../components/InvoiceView';
 import DispatchOrderView from '../components/DispatchOrderView';
 
-const OrderDetails = (route) => {
+const OrderDetails = ({ route }) => {
 
-    const detail = route?.route?.params?.data;
-    console.log('detail', detail)
+    const { data: detail } = route.params;
 
     const navigation = useNavigation();
 
@@ -19,10 +18,10 @@ const OrderDetails = (route) => {
 
     const tabChangeHandler = () => {
         setTab(tab === 1 ? 2 : 1);
-    }
+    };
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={styles.container}>
 
             {/* header */}
             <View style={{ flexDirection: "column", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 2 }}>
@@ -44,18 +43,69 @@ const OrderDetails = (route) => {
                 </View>
             </View>
 
-            <View style={{ margin: 10, marginTop: 0, }}>
-                {tab === 1 ? (
-                    <InvoiceView detail={detail} />
-                ) : (
-                    <DispatchOrderView detail={detail} />
-                )}
+            {/* Content */}
+            <View style={styles.content}>
+                {tab === 1 ? <MemoizedInvoiceView detail={detail} /> : <MemoizedDispatchOrderView detail={detail} />}
             </View>
 
         </SafeAreaView>
-    )
-}
+    );
+};
+
+const MemoizedInvoiceView = React.memo(InvoiceView);
+const MemoizedDispatchOrderView = React.memo(DispatchOrderView);
+
+const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+    },
+    header: {
+        flexDirection: 'column',
+        backgroundColor: '#fff',
+        alignItems: 'center',
+        justifyContent: 'space-between',
+        elevation: 2,
+    },
+    headerContent: {
+        flexDirection: 'row',
+        alignItems: 'center',
+        gap: 6,
+        paddingHorizontal: 10,
+        paddingVertical: 8,
+    },
+    headerTitle: {
+        color: '#000',
+        fontWeight: '600',
+        fontSize: responsiveFontSize(2.5),
+    },
+    tabContainer: {
+        width: '100%',
+        flexDirection: 'row',
+        alignItems: 'center',
+    },
+    tabItem: {
+        width: '50%',
+        borderBottomColor: 'transparent',
+        borderBottomWidth: 0,
+        paddingVertical: 10,
+    },
+    activeTab: {
+        borderBottomColor: zomatoRed,
+        borderBottomWidth: 1.5,
+    },
+    tabText: {
+        color: '#585858',
+        textAlign: 'center',
+        fontWeight: '500',
+        fontSize: responsiveFontSize(2.2),
+    },
+    activeTabText: {
+        color: zomatoRed,
+    },
+    content: {
+        margin: 10,
+        marginTop: 0,
+    },
+});
 
 export default OrderDetails;
-
-const styles = StyleSheet.create({});

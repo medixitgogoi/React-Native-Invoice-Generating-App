@@ -79,8 +79,6 @@ const Sales = () => {
                 topOffset: 50,
                 onPress: () => Toast.hide(),
             });
-        } finally {
-            setLoading(false);
         }
     };
 
@@ -195,12 +193,12 @@ const Sales = () => {
                         </View>
                         <TextInput
                             placeholder="Search for a customer name"
-                            placeholderTextColor="#a1a1a1"
+                            placeholderTextColor="#838383"
                             onChangeText={handleSearch}
                             value={search}
                             onFocus={() => setIsSearchFocused(true)}
                             onBlur={() => setIsSearchFocused(false)}
-                            style={{ flex: 1, fontSize: responsiveFontSize(2.1), color: "#000", paddingVertical: 5, fontWeight: "500" }}
+                            style={{ flex: 1, fontSize: responsiveFontSize(2.1), color: "#000", paddingVertical: 5, fontWeight: "400" }}
                         />
                     </View>
                 </View>
@@ -243,11 +241,10 @@ const Sales = () => {
                         }}
                     />
                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
-                        <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.5), }}>No results found for</Text>
-                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.5), fontWeight: '500', textDecorationLine: 'underline' }}>'{search}'</Text>
+                        <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.1), }}>No results found for</Text>
+                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.4), fontWeight: '500', textDecorationLine: 'underline' }}>'{search}'</Text>
                     </View>
                 </View>
-
             ) : (
                 <FlatList
                     data={filteredNames}

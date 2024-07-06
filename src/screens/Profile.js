@@ -35,9 +35,9 @@ const Profile = () => {
             });
             console.error('Failed to logout: ', error);
         }
-    }
+    };
 
-    const pressHandler = () => {
+    const pressHandler = () => {;
         navigation.navigate('Details');
         dispatch(deleteUser())
     }
@@ -69,7 +69,7 @@ const Profile = () => {
 
                     {/* Image */}
                     <View style={{ flexDirection: 'column', alignItems: 'center', }}>
-                        <View style={{ height: 100, width: 100, backgroundColor: '#b5d0ef', borderRadius: 100, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
+                        <View style={{ height: 100, width: 100, backgroundColor: '#c2d9f2', borderRadius: 100, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}>
                             <Text style={{ color: '#235c9e', fontSize: responsiveFontSize(7), textTransform: 'uppercase' }}>{loginDetails[0]?.name.slice(0, 1)}</Text>
                         </View>
                     </View>
