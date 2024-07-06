@@ -143,6 +143,14 @@ const Details = () => {
                 gstin: updatedCustomerData.gst,
             }));
 
+            Toast.show({
+                type: 'success',
+                text1: 'User details updated successfully',
+                position: 'top',
+                topOffset: 50,
+                onPress: () => Toast.hide(),
+            });
+
         } catch (error) {
             // Log error
             console.error('Error updating data:', error);
@@ -185,6 +193,14 @@ const Details = () => {
                 setError(false);
 
                 console.log("Dixit", userDetails);
+
+                Toast.show({
+                    type: 'success',
+                    text1: 'User added successfully',
+                    position: 'top',
+                    topOffset: 50,
+                    onPress: () => Toast.hide(),
+                });
 
             }
         }
