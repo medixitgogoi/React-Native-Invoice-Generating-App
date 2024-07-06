@@ -17,7 +17,7 @@ import debounce from 'lodash.debounce';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const Sales = () => {
-    
+
     const navigation = useNavigation();
     const loginDetails = useSelector(state => state.login);
 
@@ -207,7 +207,7 @@ const Sales = () => {
             </View>
 
             {loading ? (
-                <ScrollView contentContainerStyle={{ paddingHorizontal: 10, paddingTop: 5 }}>
+                <ScrollView contentContainerStyle={{ paddingHorizontal: 10 }}>
                     {Array(6).fill(null).map((_, index) => (
                         <View key={index} style={{ width: '100%', borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', marginBottom: 10 }}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
@@ -242,8 +242,12 @@ const Sales = () => {
                             resizeMode: 'contain',
                         }}
                     />
-                    <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.5), fontWeight: '500' }}>No search results</Text>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                        <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.5), }}>No results found for</Text>
+                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.5), fontWeight: '500', textDecorationLine: 'underline' }}>'{search}'</Text>
+                    </View>
                 </View>
+
             ) : (
                 <FlatList
                     data={filteredNames}
