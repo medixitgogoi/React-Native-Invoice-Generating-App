@@ -1,9 +1,9 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useFocusEffect, useNavigation } from '@react-navigation/native';
+import { useNavigation } from '@react-navigation/native';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Toast from 'react-native-toast-message';
@@ -17,7 +17,7 @@ import debounce from 'lodash.debounce';
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
 
 const Sales = () => {
-
+    
     const navigation = useNavigation();
     const loginDetails = useSelector(state => state.login);
 
@@ -27,6 +27,7 @@ const Sales = () => {
     const [search, setSearch] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [filteredNames, setFilteredNames] = useState([]);
+    const [loading, setLoading] = useState(true);
 
     const debouncedSearch = useMemo(() => debounce((text) => {
         const filteredData = allOrders.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase()));
@@ -78,6 +79,8 @@ const Sales = () => {
                 topOffset: 50,
                 onPress: () => Toast.hide(),
             });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -97,6 +100,8 @@ const Sales = () => {
                 topOffset: 50,
                 onPress: () => Toast.hide(),
             });
+        } finally {
+            setLoading(false);
         }
     };
 
@@ -113,8 +118,13 @@ const Sales = () => {
         return `${day} ${month}, ${year}`;
     }
 
+    const handleViewOrder = useCallback((item) => {
+        navigation.navigate('OrderDetails', { data: item });
+        setSearch('');
+    }, [navigation]);
+
     const renderOrder = useCallback(({ item }) => (
-        <View style={{ width: '95%', alignSelf: 'center', marginBottom: 8, borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }}>
+        <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff' }}>
             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                 <View style={{ flexDirection: 'column', }}>
                     <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
@@ -151,14 +161,11 @@ const Sales = () => {
                 </View>
                 <TouchableOpacity
                     style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }}
-                    onPress={() => {
-                        navigation.navigate('OrderDetails', { data: item });
-                        setSearch('');
-                    }}>
+                    onPress={() => handleViewOrder(item)}>
                     <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                         <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
                     </View>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '500', textTransform: 'uppercase' }}>View Order</Text>
+                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '600', textTransform: 'uppercase' }}>View Order</Text>
                 </TouchableOpacity>
             </View>
         </View>
@@ -166,6 +173,8 @@ const Sales = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+
+            {/* Header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 2 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%" }}>
                     <View style={{ paddingVertical: 8, flexDirection: "row", alignItems: "center", gap: 6, paddingHorizontal: 10 }}>
@@ -176,7 +185,9 @@ const Sales = () => {
                     </View>
                 </View>
             </View>
-            <View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5, paddingBottom: 10 }}>
+
+            {/* Searchbar */}
+            <View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5, paddingBottom: 10, marginBottom: 8 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: "#fff", borderRadius: 12, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: "98%", alignSelf: "center", borderColor: isSearchFocused ? zomatoRed : "", borderWidth: isSearchFocused ? 0.7 : 0 }}>
                     <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
                         <View style={{ borderRadius: 10, alignItems: "center", justifyContent: "center", padding: 5, marginRight: 3 }}>
@@ -194,16 +205,45 @@ const Sales = () => {
                     </View>
                 </View>
             </View>
-            {(dispatchedOrders.length === 0 || toBeDispatchedOrders.length === 0) ? (
-                <FlatList
-                    data={[1, 1, 1]}
-                    renderItem={() => (
-                        <View style={{ flexDirection: 'column', width: '95%', height: 200, backgroundColor: '#d8dbdb', padding: 10, marginTop: 2, marginBottom: 8, borderRadius: 7, gap: 8, alignSelf: 'center' }}>
-                            <ShimmerPlaceHolder style={{ width: '100%', height: 50, backgroundColor: '#f2f3f3', borderRadius: 7 }} />
-                            <ShimmerPlaceHolder style={{ width: '100%', height: 120, backgroundColor: '#f2f3f3', borderRadius: 7 }} />
+
+            {loading ? (
+                <ScrollView contentContainerStyle={{ paddingHorizontal: 10, paddingTop: 5 }}>
+                    {Array(6).fill(null).map((_, index) => (
+                        <View key={index} style={{ width: '100%', borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', marginBottom: 10 }}>
+                            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
+                                <View style={{ flexDirection: 'column', }}>
+                                    <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(18), height: responsiveFontSize(1.8), marginBottom: 5 }} />
+                                    <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(15), height: responsiveFontSize(1.3) }} />
+                                </View>
+                                <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(10), height: responsiveFontSize(1.7) }} />
+                            </View>
+                            <View style={{ padding: 12 }}>
+                                <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
+                                    {Array(3).fill(null).map((_, index) => (
+                                        <ShimmerPlaceHolder key={index} autoRun style={{ width: responsiveFontSize(20), height: responsiveFontSize(1.3), marginBottom: 5 }} />
+                                    ))}
+                                </View>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
+                                    <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(10), height: responsiveFontSize(1.5) }} />
+                                    <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(10), height: responsiveFontSize(1.8) }} />
+                                </View>
+                                <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(25), height: responsiveFontSize(2), borderRadius: 6, marginTop: 8 }} />
+                            </View>
                         </View>
-                    )}
-                />
+                    ))}
+                </ScrollView>
+            ) : filteredNames.length === 0 ? (
+                <View style={{ flex: 0.8, justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 0 }}>
+                    <Image
+                        source={require("../assets/no-results.png")}
+                        style={{
+                            width: 230,
+                            height: 230,
+                            resizeMode: 'contain',
+                        }}
+                    />
+                    <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.5), fontWeight: '500' }}>No search results</Text>
+                </View>
             ) : (
                 <FlatList
                     data={filteredNames}
@@ -211,9 +251,10 @@ const Sales = () => {
                     keyExtractor={item => item.id.toString()}
                 />
             )}
+
         </SafeAreaView>
-    )
-}
+    );
+};
 
 export default Sales;
 
