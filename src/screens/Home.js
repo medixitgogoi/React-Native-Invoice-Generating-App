@@ -41,13 +41,6 @@ const Home = () => {
                     </View>
                 </TouchableOpacity>
 
-                {/* <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, height: 50, flexDirection: 'row', alignItems: 'center', padding: 8, justifyContent: 'space-between', elevation: 2, borderRadius: 5 }} onPress={() => navigation.navigate("DispatchOrder")}>
-                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Dispatch Order</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: lightZomatoRed, borderRadius: 100 }}>
-                        <Icon name="keyboard-arrow-right" size={20} color={zomatoRed} />
-                    </View>
-                </TouchableOpacity> */}
-
                 <TouchableOpacity style={{ width: '100%', backgroundColor: lightZomatoRed, height: 40, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, justifyContent: 'space-between', elevation: 2, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }} onPress={() => navigation.navigate("Sales")}>
                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>Salesman Report</Text>
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 100 }}>
