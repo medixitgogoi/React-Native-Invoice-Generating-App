@@ -91,7 +91,7 @@ const Profile = () => {
                                 <Icon3 name="person-add" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10, fontSize: responsiveFontSize(2.2), }}>Add customer</Text>
+                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10, fontSize: responsiveFontSize(2), }}>Add customer</Text>
                             </View>
                         </View>
                         <View>
@@ -109,7 +109,7 @@ const Profile = () => {
                                 <Icon4 name="newspaper-sharp" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>My Sales</Text>
+                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10, fontSize: responsiveFontSize(2) }}>My Sales</Text>
                             </View>
                         </View>
                         <View>
@@ -127,7 +127,7 @@ const Profile = () => {
                                 <Icon5 name="log-out" size={18} style={{ width: 20, height: 20, color: zomatoRed }} />
                             </View>
                             <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10 }}>Log out</Text>
+                                <Text style={{ color: '#000', fontWeight: '600', paddingLeft: 10, fontSize: responsiveFontSize(2) }}>Log out</Text>
                             </View>
                         </View>
                         <View>
@@ -136,7 +136,7 @@ const Profile = () => {
                     </TouchableOpacity>
 
                 </View>
-
+                
             </View>
 
         </SafeAreaView>
