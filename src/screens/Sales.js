@@ -99,31 +99,7 @@ const Sales = () => {
         const month = date.toLocaleString('default', { month: 'long' });
         const year = date.getFullYear();
         return `${day} ${month}, ${year}`;
-    };
-
-    const OrderItem = ({ item, search, handleViewOrder }) => {
-        const getHighlightedText = (text, highlight) => {
-            const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-            return (
-                <Text>
-                    {parts.map((part, index) =>
-                        part.toLowerCase() === highlight.toLowerCase() ? (
-                            <Text key={index} style={{ backgroundColor: 'yellow' }}>{part}</Text>
-                        ) : (
-                            <Text key={index}>{part}</Text>
-                        )
-                    )}
-                </Text>
-            );
-        };
-
-        return (
-            <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
-                {/* Header and Order Details */}
-                {/* View Order Button */}
-            </View>
-        );
-    };
+    }
 
     const handleViewOrder = useCallback((item) => {
         navigation.navigate('OrderDetails', { data: item });
@@ -131,8 +107,76 @@ const Sales = () => {
     }, [navigation]);
 
     const renderOrder = useCallback(({ item }) => (
-        <OrderItem item={item} search={search} handleViewOrder={handleViewOrder} />
-    ), [search, handleViewOrder]);
+        <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
+            <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
+                <View style={{ flexDirection: 'column', }}>
+                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
+                    <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
+                </View>
+                {item.order_status === '1' ? (
+                    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+                        <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
+                    </View>
+                ) : (
+                    <View style={{ backgroundColor: '#c5f8a4', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
+                        <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
+                        <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
+                    </View>
+                )}
+            </View>
+            <View style={{ padding: 12 }}>
+                <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
+                    {item.orderDetails.map(itemDetail => {
+                        const totalPieces = itemDetail.orderData.reduce((pi, item) => pi + parseInt(item.quantity), 0);
+                        return (
+                            <View key={itemDetail.id} style={{ flexDirection: 'row', alignItems: 'center', gap: 4 }}>
+                                <Text style={{ color: '#6f8990', fontWeight: '600' }}>{totalPieces} x</Text>
+                                <Text style={{ color: '#000', fontWeight: '500' }}>{itemDetail.product_type}</Text>
+                                <Text style={{ color: '#000', fontWeight: '500', marginHorizontal: 3 }}>•</Text>
+                                <Text style={{ color: '#000', fontWeight: '500' }}>{itemDetail.color}</Text>
+                            </View>
+                        );
+                    })}
+                </View>
+                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', paddingTop: 10 }}>
+                    <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7) }}>{convertedDate(item.order_date)}</Text>
+                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2), fontWeight: '500' }}>₹{indianNumberFormat(item.payble_amount)}</Text>
+                </View>
+                <TouchableOpacity
+                    style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }}
+                    onPress={() => handleViewOrder(item)}>
+                    <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                        <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
+                    </View>
+                    <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '600', textTransform: 'uppercase' }}>View Order</Text>
+                </TouchableOpacity>
+            </View>
+        </View>
+    ), [search, navigation]);
+
+    // const OrderItem = ({ item, search, handleViewOrder }) => {
+    //     const getHighlightedText = (text, highlight) => {
+    //         const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    //         return (
+    //             <Text>
+    //                 {parts.map((part, index) =>
+    //                     part.toLowerCase() === highlight.toLowerCase() ? (
+    //                         <Text key={index} style={{ backgroundColor: 'yellow' }}>{part}</Text>
+    //                     ) : (
+    //                         <Text key={index}>{part}</Text>
+    //                     )
+    //                 )}
+    //             </Text>
+    //         );
+    //     };
+
+    //     return (
+    //         <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
+    //             {/* Header and Order Details */}
+    //             {/* View Order Button */}
+    //         </View>
+    //     );
+    // };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
