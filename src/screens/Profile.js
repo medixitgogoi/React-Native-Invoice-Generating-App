@@ -37,7 +37,8 @@ const Profile = () => {
         }
     };
 
-    const pressHandler = () => {;
+    const pressHandler = () => {
+        ;
         navigation.navigate('Details');
         dispatch(deleteUser())
     }
@@ -136,7 +137,7 @@ const Profile = () => {
                     </TouchableOpacity>
 
                 </View>
-                
+
             </View>
 
         </SafeAreaView>
