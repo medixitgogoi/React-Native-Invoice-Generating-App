@@ -38,7 +38,6 @@ const Profile = () => {
     };
 
     const pressHandler = () => {
-        ;
         navigation.navigate('Details');
         dispatch(deleteUser())
     }
