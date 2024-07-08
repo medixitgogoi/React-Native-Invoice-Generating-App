@@ -98,7 +98,11 @@ const PIMyInvoice = () => {
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: '#f1f3f6' }}>
-            <StatusBar animated={true} backgroundColor="#fff" barStyle="dark-content" />
+            <StatusBar
+                animated={true}
+                backgroundColor="#fff"
+                barStyle="dark-content"
+            />
 
             {/* header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 2 }}>
@@ -188,7 +192,7 @@ const PIMyInvoice = () => {
                     </View>
                 </View>
             </ScrollView>
-            
+
         </SafeAreaView>
     );
 };
