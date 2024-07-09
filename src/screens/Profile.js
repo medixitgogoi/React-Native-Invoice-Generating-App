@@ -99,7 +99,7 @@ const Profile = () => {
                         </View>
                     </TouchableOpacity>
 
-                    {/* Divider */}
+                    {/* divider */}
                     <View style={{ width: '82%', height: 1, backgroundColor: '#000', opacity: 0.1, marginBottom: 6, alignSelf: 'flex-end', marginTop: 6 }}></View>
 
                     {/* My Sales */}

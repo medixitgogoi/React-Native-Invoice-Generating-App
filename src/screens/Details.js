@@ -14,7 +14,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { launchImageLibrary } from 'react-native-image-picker';
 import { addUser, deleteUser } from '../redux/UserSlice';
 import { emptyBill } from '../redux/BillDetailsSlice';
-import Toast from 'react-native-toast-message';
 import axios from 'axios';
 
 const Details = () => {
@@ -24,7 +23,6 @@ const Details = () => {
     const dispatch = useDispatch();
 
     const userDetails = useSelector(state => state.user);
-    // console.log('userDetailsFromRedux', userDetails);
 
     const loginDetails = useSelector(state => state.login);
 
@@ -143,14 +141,6 @@ const Details = () => {
                 gstin: updatedCustomerData.gst,
             }));
 
-            Toast.show({
-                type: 'success',
-                text1: 'User details updated successfully',
-                position: 'top',
-                topOffset: 50,
-                onPress: () => Toast.hide(),
-            });
-
         } catch (error) {
             // Log error
             console.error('Error updating data:', error);
@@ -193,15 +183,6 @@ const Details = () => {
                 setError(false);
 
                 console.log("Dixit", userDetails);
-
-                Toast.show({
-                    type: 'success',
-                    text1: 'User added successfully',
-                    position: 'top',
-                    topOffset: 50,
-                    onPress: () => Toast.hide(),
-                });
-
             }
         }
     }
@@ -218,12 +199,6 @@ const Details = () => {
     };
 
     const removeUserHandler = () => {
-        Toast.show({
-            type: 'error',
-            text1: 'User removed successfully',
-            topOffset: 50,
-            onPress: () => Toast.hide(),
-        });
         dispatch(deleteUser());
         // console.log("removeUser", userDetails);
         setPartyName('')

@@ -37,8 +37,6 @@ const Sales = () => {
         setSearch(text);
         debouncedSearch(text);
     };
-
-    // const getHighlightedText = (text, highlight) => {
     //     const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
     //     return (
     //         <Text>
