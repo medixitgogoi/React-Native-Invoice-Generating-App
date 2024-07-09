@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, TextInput, Image, FlatList } from 'react-native'
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, TextInput, Image, FlatList } from 'react-native';
 import { lightZomatoRed, zomatoRed } from '../utils/colors'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
 import { useState, useEffect, useMemo, useCallback } from 'react'
@@ -160,7 +160,7 @@ const DispatchedOrders = () => {
                         <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '600', textTransform: 'uppercase' }}>View Order</Text>
                     </TouchableOpacity>
                 </View>
-                
+
             </View>
         );
     };
@@ -262,4 +262,4 @@ const DispatchedOrders = () => {
 
 export default DispatchedOrders;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});

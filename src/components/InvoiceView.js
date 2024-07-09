@@ -1,9 +1,6 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, StatusBar, ScrollView } from 'react-native';
-import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useNavigation } from '@react-navigation/native';
-import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import Icon3 from 'react-native-vector-icons/dist/Ionicons';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import HTML from 'react-native-render-html';
 import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
@@ -849,4 +846,4 @@ const InvoiceView = (route) => {
 
 export default InvoiceView;
 
-const styles = StyleSheet.create({})
+const styles = StyleSheet.create({});
