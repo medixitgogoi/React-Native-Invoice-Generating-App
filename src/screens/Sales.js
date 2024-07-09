@@ -6,7 +6,6 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import Toast from 'react-native-toast-message';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
@@ -30,7 +29,7 @@ const Sales = () => {
     const [loading, setLoading] = useState(true);
 
     const debouncedSearch = useMemo(() => debounce((text) => {
-        setFilteredNames(allOrders.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
+        setFilteredNames(toBeDispatchedOrders.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
     }, 300), [allOrders]);
 
     const handleSearch = (text) => {
@@ -51,19 +50,20 @@ const Sales = () => {
         const fetchOrderDetails = async () => {
             try {
                 axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-                const dispatchedResponse = await axios.post('/employee/order/list', { order_status: '2' });
+                // const dispatchedResponse = await axios.post('/employee/order/list', { order_status: '2' });
                 const toBeDispatchedResponse = await axios.post('/employee/order/list', { order_status: '1' });
 
-                const dispatchedData = dispatchedResponse.data.data;
+                // const dispatchedData = dispatchedResponse.data.data;
                 const toBeDispatchedData = toBeDispatchedResponse.data.data;
-                const allData = [...dispatchedData, ...toBeDispatchedData];
+                // const allData = [...dispatchedData, ...toBeDispatchedData];
 
-                setDispatchedOrders(dispatchedData);
+                // setDispatchedOrders(dispatchedData);
                 setToBeDispatchedOrders(toBeDispatchedData);
-                setAllOrders(allData);
-                setFilteredNames(allData);
+                // setAllOrders(allData);
+                setFilteredNames(toBeDispatchedData);
+
             } catch (error) {
-                console.log(error)
+                console.log(error);
             } finally {
                 setLoading(false);
             }
@@ -91,6 +91,7 @@ const Sales = () => {
 
     const OrderItem = ({ item, search, handleViewOrder }) => {
 
+        // search text
         const getHighlightedText = (text, highlight) => {
             const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
             return (
@@ -113,7 +114,10 @@ const Sales = () => {
                         <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
                         <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                     </View>
-                    {item.order_status === '1' ? (
+                    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+                        <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
+                    </View>
+                    {/* {item.order_status === '1' ? (
                         <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
                             <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
                         </View>
@@ -122,7 +126,7 @@ const Sales = () => {
                             <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
                             <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
                         </View>
-                    )}
+                    )} */}
                 </View>
                 <View style={{ padding: 12 }}>
                     <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>

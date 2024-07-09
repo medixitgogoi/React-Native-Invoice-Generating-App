@@ -71,12 +71,7 @@ const DispatchedOrders = () => {
 
                 axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
 
-                const response = await axios.post(
-                    '/employee/order/list',
-                    {
-                        order_status: '2',
-                    }
-                );
+                const response = await axios.post('/employee/order/list', { order_status: '2', });
 
                 const data = response?.data?.data;
                 setDetails(data);
@@ -85,7 +80,7 @@ const DispatchedOrders = () => {
                 console.log("Detailssss", data);
 
             } catch (error) {
-                console.log(error)
+                console.log(error);
             } finally {
                 setLoading(false);
             }
@@ -121,7 +116,7 @@ const DispatchedOrders = () => {
 
         return (
             <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
-                
+
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                     <View style={{ flexDirection: 'column', }}>
                         <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
@@ -132,7 +127,7 @@ const DispatchedOrders = () => {
                         <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
                     </View>
                 </View>
-                
+
                 <View style={{ padding: 12 }}>
                     <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
                         {item.orderDetails.map(itemDetail => {
