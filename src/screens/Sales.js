@@ -37,19 +37,6 @@ const Sales = () => {
         setSearch(text);
         debouncedSearch(text);
     };
-    //     const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
-    //     return (
-    //         <Text>
-    //             {parts.map((part, index) =>
-    //                 part.toLowerCase() === highlight.toLowerCase() ? (
-    //                     <Text key={index} style={{ backgroundColor: 'yellow' }}>{part}</Text>
-    //                 ) : (
-    //                     <Text key={index}>{part}</Text>
-    //                 )
-    //             )}
-    //         </Text>
-    //     );
-    // };
 
     const indianNumberFormat = (number) => {
         const digits = number.toString().split('');
@@ -76,13 +63,7 @@ const Sales = () => {
                 setAllOrders(allData);
                 setFilteredNames(allData);
             } catch (error) {
-                Toast.show({
-                    type: 'error',
-                    text1: 'Error fetching data',
-                    text2: error.message,
-                    topOffset: 50,
-                    onPress: () => Toast.hide(),
-                });
+                console.log(error)
             } finally {
                 setLoading(false);
             }

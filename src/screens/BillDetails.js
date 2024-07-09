@@ -7,7 +7,6 @@ import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { removeItemFromBill } from '../redux/BillDetailsSlice';
-import Toast from 'react-native-toast-message';
 import axios from 'axios';
 
 const BillDetails = () => {
@@ -156,14 +155,6 @@ const BillDetails = () => {
     };
 
     const removeProductHandler = (item) => {
-
-        Toast.show({
-            type: 'error',
-            text1: 'Product removed successfully',
-            topOffset: 50,
-            onPress: () => Toast.hide(),
-        });
-
         dispatch(removeItemFromBill(item))
     }
 
