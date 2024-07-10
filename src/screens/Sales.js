@@ -30,7 +30,7 @@ const Sales = () => {
 
     const debouncedSearch = useMemo(() => debounce((text) => {
         setFilteredNames(toBeDispatchedOrders.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
-    }, 300), [allOrders]);
+    }, 300), [toBeDispatchedOrders]);
 
     const handleSearch = (text) => {
         setSearch(text);
