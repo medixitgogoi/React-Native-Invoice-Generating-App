@@ -18,7 +18,7 @@ const DispatchedOrders = () => {
 
     const navigation = useNavigation();
 
-    const [loading, setLoading] = useState(false);
+    const [loading, setLoading] = useState(true);
     const [details, setDetails] = useState([]);
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [search, setSearch] = useState('');
@@ -256,6 +256,7 @@ const DispatchedOrders = () => {
                     windowSize={5}
                 />
             )}
+
         </SafeAreaView>
     )
 }
