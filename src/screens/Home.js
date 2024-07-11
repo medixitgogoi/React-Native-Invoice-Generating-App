@@ -2,8 +2,9 @@ import { useNavigation } from '@react-navigation/native';
 import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, Image } from 'react-native';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
-import { zomatoRed } from '../utils/colors';
-import LinearGradient from 'react-native-linear-gradient';
+import Icon2 from 'react-native-vector-icons/dist/FontAwesome6';
+import Icon3 from 'react-native-vector-icons/dist/FontAwesome5';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 
 const Home = () => {
 
@@ -33,67 +34,71 @@ const Home = () => {
             </View>
 
             {/* Content */}
-            <View style={{ padding: 10, width: '100%', flexDirection: 'row', flexWrap: 'wrap', alignItems: 'center', justifyContent: 'space-between' }}>
+            <View style={{ padding: 12, width: '100%', flexDirection: 'column', alignItems: 'center' }}>
 
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 120, width: '100%', borderRadius: 8, marginBottom: 10 }} onPress={() => navigation.navigate("PIMyInvoice")}>
-                    <LinearGradient
-                        colors={['#cb202d', '#e55b66']}
-                        style={{ height: 120, width: '100%', borderRadius: 8, marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}
-                    >
-                        <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(3), textTransform: 'uppercase' }}>PI My Invoice</Text>
-                        <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                    </LinearGradient>
+                {/* PI My Invoice */}
+                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 10, height: 100, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'center' }} onPress={() => navigation.navigate("PIMyInvoice")}>
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15, width: '88%', paddingLeft: 20, gap: 3 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <View style={{ width: 20 }}>
+                                <Icon2 name="file-invoice" color={'#fff'} size={18} />
+                            </View>
+                            <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.5), textTransform: 'uppercase' }}>PI My Invoice</Text>
+                        </View>
+                        <Text style={{ color: '#fff', fontSize: responsiveFontSize(1.8), opacity: 0.9, paddingLeft: 20 }}>Effortlessly create and share your invoices</Text>
+                    </View>
+                    <View style={{ backgroundColor: '#fff', height: '100%', borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 10, borderBottomRightRadius: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '12%' }}>
+                        <Icon name="keyboard-arrow-right" size={27} color={zomatoRed} />
+                    </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 120, width: '100%', borderRadius: 8, marginBottom: 10 }} onPress={() => navigation.navigate("Sales")}>
-                    <LinearGradient
-                        colors={['#cb202d', '#e55b66']}
-                        style={{ height: 120, width: '100%', borderRadius: 8, marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}
-                    >
-                        <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(3), textTransform: 'uppercase' }}>Salesman Report</Text>
-                        <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                    </LinearGradient>
+                {/* Sales */}
+                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 10, height: 100, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'center' }} onPress={() => navigation.navigate("Sales")}>
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15, width: '88%', paddingLeft: 20, gap: 3 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <View style={{ width: 20 }}>
+                                <Icon2 name="chart-line" color={'#fff'} size={15} />
+                            </View>
+                            <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.5), textTransform: 'uppercase' }}>Salesman report</Text>
+                        </View>
+                        <Text style={{ color: lightZomatoRed, fontSize: responsiveFontSize(1.8), opacity: 0.9, paddingLeft: 20 }}>Track and analyze sales performance</Text>
+                    </View>
+                    <View style={{ backgroundColor: '#fff', height: '100%', borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 10, borderBottomRightRadius: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '12%' }}>
+                        <Icon name="keyboard-arrow-right" size={27} color={zomatoRed} />
+                    </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 120, width: '100%', borderRadius: 8, marginBottom: 10 }} onPress={() => navigation.navigate("DispatchedOrders")}>
-                    <LinearGradient
-                        colors={['#cb202d', '#e55b66']}
-                        style={{ height: 120, width: '100%', borderRadius: 8, marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}
-                    >
-                        <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(3), textTransform: 'uppercase' }}>Dispatched Orders</Text>
-                        <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                    </LinearGradient>
+                {/* Dispatch */}
+                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 10, height: 100, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'center' }} onPress={() => navigation.navigate("DispatchedOrders")}>
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15, width: '88%', paddingLeft: 20, gap: 3 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <View style={{ width: 20 }}>
+                                <Icon2 name="truck-fast" color={'#fff'} size={14} />
+                            </View>
+                            <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.5), textTransform: 'uppercase' }}>dispatched orders</Text>
+                        </View>
+                        <Text style={{ color: lightZomatoRed, fontSize: responsiveFontSize(1.8), opacity: 0.9, paddingLeft: 20 }}>Monitor and manage outgoing shipments</Text>
+                    </View>
+                    <View style={{ backgroundColor: '#fff', height: '100%', borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 10, borderBottomRightRadius: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '12%' }}>
+                        <Icon name="keyboard-arrow-right" size={27} color={zomatoRed} />
+                    </View>
                 </TouchableOpacity>
 
-                <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 120, width: '100%', borderRadius: 8, marginBottom: 10 }} onPress={() => navigation.navigate("PartyReport")}>
-                    <LinearGradient
-                        colors={['#cb202d', '#e55b66']}
-                        style={{ height: 120, width: '100%', borderRadius: 8, marginBottom: 10, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 10 }}
-                    >
-                        <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(3), textTransform: 'uppercase' }}>Party Report</Text>
-                        <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                    </LinearGradient>
+                {/* Party */}
+                <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 10, height: 100, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'center' }} onPress={() => navigation.navigate("PartyReport")}>
+                    <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15, width: '88%', paddingLeft: 20, gap: 3 }}>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', }}>
+                            <View style={{ width: 20 }}>
+                                <Icon3 name="chart-line" color={'#fff'} size={17} />
+                            </View>
+                            <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.5), textTransform: 'uppercase' }}>party report</Text>
+                        </View>
+                        <Text style={{ color: lightZomatoRed, fontSize: responsiveFontSize(1.8), opacity: 0.9, paddingLeft: 20 }}>Comprehensive reports on party transactions</Text>
+                    </View>
+                    <View style={{ backgroundColor: '#fff', height: '100%', borderColor: zomatoRed, borderWidth: 1, borderTopRightRadius: 10, borderBottomRightRadius: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', width: '12%' }}>
+                        <Icon name="keyboard-arrow-right" size={27} color={zomatoRed} />
+                    </View>
                 </TouchableOpacity>
-
-                {/* <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, borderRadius: 8, padding: 10, height: 50, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={() => navigation.navigate("PIMyInvoice")}>
-                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>PI My Invoice</Text>
-                    <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, borderRadius: 8, padding: 10, height: 50, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={() => navigation.navigate("Sales")}>
-                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>Salesman Report</Text>
-                    <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, borderRadius: 8, padding: 10, height: 50, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={() => navigation.navigate("DispatchedOrders")}>
-                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>Dispatch Order</Text>
-                    <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                </TouchableOpacity>
-
-                <TouchableOpacity style={{ width: '48%', backgroundColor: zomatoRed, borderRadius: 8, padding: 10, height: 50, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }} onPress={() => navigation.navigate('PartyReport')}>
-                    <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>Party Report</Text>
-                    <Icon name="keyboard-arrow-right" size={27} color={'#fff'} />
-                </TouchableOpacity> */}
 
             </View>
 

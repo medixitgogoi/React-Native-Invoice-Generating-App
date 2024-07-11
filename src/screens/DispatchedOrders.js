@@ -73,9 +73,10 @@ const DispatchedOrders = () => {
 
                 const response = await axios.post('/employee/order/list', { order_status: '2', });
 
-                const data = response?.data?.data;
+                const data = response.data.data;
+
                 setDetails(data);
-                setFilteredNames(data)
+                setFilteredNames(data);
 
                 console.log("Detailssss", data);
 
@@ -85,7 +86,9 @@ const DispatchedOrders = () => {
                 setLoading(false);
             }
         };
+
         getOrderDetails();
+
     }, []);
 
     const handleViewOrder = useCallback((item) => {
