@@ -41,7 +41,7 @@ const Home = () => {
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15, width: '88%', paddingLeft: 20, gap: 3 }}>
                         <View style={{ flexDirection: 'row', alignItems: 'center', }}>
                             <View style={{ width: 20 }}>
-                                <Icon2 name="file-invoice" color={'#fff'} size={18} />
+                                <Icon2 name="file-invoice" color={'#fff'} size={16} />
                             </View>
                             <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.5), textTransform: 'uppercase' }}>PI My Invoice</Text>
                         </View>
