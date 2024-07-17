@@ -11,10 +11,9 @@ import { useSelector } from 'react-redux';
 const InvoiceView = (route) => {
 
   const details = route?.detail;
+  console.log("details", details);
 
   const loginDetails = useSelector(state => state.login);
-
-  console.log("details", details);
 
   const now = new Date();
 
@@ -175,14 +174,14 @@ const InvoiceView = (route) => {
             `).join('');
 
       return rows + `
-        <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; background-color: #a2eaf3; ">
+        <div style="display: flex; flexDirection: row; alignItems: center; alignSelf: center; font-size: 6px; ">
 
           <div style="display: flex; flexDirection: column; font-size: 6px; width: 22%; alignItems: flex-end; height: 12px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
             <p style="fontSize: 6px; margin: 0; fontWeight: 500; "></p>
           </div>
 
           <div style="display: flex; flexDirection: column; font-size: 6px; width: 25%; alignItems: flex-end; height: 12px; justifyContent: center; border: 0.5px solid black; padding-right: 8px;">
-            <p style="fontSize: 6px; margin: 0; fontWeight: 500; ">Total</p>
+            <p style="fontSize: 6px; margin: 0; fontWeight: 500; color: #000 ">Total</p>
           </div>
          
           <div style="display: flex; flexDirection: column; font-size: 6px; width: 8%; alignItems: center; height: 12px; justifyContent: center; border: 0.5px solid black; ">
@@ -324,17 +323,17 @@ const InvoiceView = (route) => {
         <div style=" width: 100%; border: 0.5px solid black; flexDirection: row; alignItems: center; margin-top: 1px;">
 
           <div style="width: 86.9%; flexDirection: column; alignItems: flex-end; padding-right: 2px; padding-top: 5px; padding-bottom: 5px; ">
-            ${details.loading_charge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Loading Charges</p>` : ``}
-            ${details.bend_charge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Bend Charges</p>` : ``}
-            ${details.transport_charge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Transport Charges</p>` : ``}
+            ${parseInt(details.loading_charge) !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Loading Charges</p>` : ``}
+            ${parseInt(details.bend_charge) !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Bend Charges</p>` : ``}
+            ${parseInt(details.transport_charge) !== 0 ? `<p style="font-size: 6px; padding-right: 2px; margin: 0; ">Transport Charges</p>` : ``}
           </div>
 
           <div style="height: 100%; backgroundColor: black; width: 1.2px"></div>
 
           <div style="width: 13%; flexDirection: column; alignItems: center; padding-right: 2px;">
-            ${details.loading_charge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0; ">₹${indianNumberFormat(details.loading_charge)}.00</p>` : ``}
-            ${details.bend_charge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(details.bend_charge)}.00</p>` : ``}
-            ${details.transport_charge !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(details.transport_charge)}.00</p>` : ``}
+            ${parseInt(details.loading_charge) !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0; ">₹${indianNumberFormat(details.loading_charge)}.00</p>` : ``}
+            ${parseInt(details.bend_charge) !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(details.bend_charge)}.00</p>` : ``}
+            ${parseInt(details.transport_charge) !== 0 ? `<p style="font-size: 6px; padding-right: 2px; font-weight: 600; margin: 0;">₹${indianNumberFormat(details.transport_charge)}.00</p>` : ``}
           </div>
 
         </div>
@@ -477,7 +476,7 @@ const InvoiceView = (route) => {
             </tr>
           `).join('')}
 
-          <tr style="height: 20px; text-align: center; background-color: #a2eaf3; ">
+          <tr style="height: 20px; text-align: center; ">
             <td style="width: 23%; padding: 0; border: 0.5px solid black; "></td>
             
             <td colspan="3" style="font-size: 13px; border: 0.5px solid black; text-align: right; padding-right: 13px; font-weight: 500; ">Total</td>
@@ -541,6 +540,24 @@ const InvoiceView = (route) => {
                     font-size: 10px;
                     margin: 0;
                     padding-top: 20px;
+                }
+
+                .watermark {
+                  position: absolute;
+                  top: 50%;
+                  left: 60%;
+                  transform: translate(-50%, -50%);
+                  font-size: 50px;
+                  font-weight: bold;
+                  color: rgba(0, 0, 0, 0.1);
+                  z-index: -1;
+                  user-select: none;
+                  opacity: 0.1;
+                }
+
+                .watermark img{
+                  width: 200px;
+                  height: 100px
                 }
 
                 h6 {
@@ -636,6 +653,7 @@ const InvoiceView = (route) => {
                 .note {
                     margin-top: 20px;
                     width: 100%;
+                    position: relative;
                 }
 
                 .note h5 {
@@ -735,14 +753,14 @@ const InvoiceView = (route) => {
 
                 <tr style="height: 62px;">
                     <td style="width: 86%; border: 0.5px solid black; text-align: right; padding-top: 2px; padding-bottom: 2px; ">
-                    ${details.loading_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Loading Charges</p>` : ``}
-                    ${details.bend_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Bend Charges</p>` : ``}
-                    ${details.transport_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Transport Charges</p>` : ``}
+                    ${parseInt(details.loading_charge) !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Loading Charges</p>` : ``}
+                    ${parseInt(details.bend_charge) !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Bend Charges</p>` : ``}
+                    ${parseInt(details.transport_charge) !== 0 ? `<p style="margin: 1px; font-size: 12px; padding-right: 6px; margin-bottom: ">Transport Charges</p>` : ``}
                     </td>
                     <td style="width: 14%; border: 0.5px solid black; text-align: center; ">
-                    ${details.loading_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.loading_charge)}.00</p>` : ``}
-                    ${details.bend_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.bend_charge)}.00</p>` : ``}
-                    ${details.transport_charge !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.transport_charge)}.00</p>` : ``}
+                    ${parseInt(details.loading_charge) !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.loading_charge)}.00</p>` : ``}
+                    ${parseInt(details.bend_charge) !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.bend_charge)}.00</p>` : ``}
+                    ${parseInt(details.transport_charge) !== 0 ? `<p style="margin: 1px; font-size: 12px; font-weight: 600; margin-bottom: ">₹${indianNumberFormat(details.transport_charge)}.00</p>` : ``}
                     </td>
                 </tr>
                 
@@ -762,6 +780,9 @@ const InvoiceView = (route) => {
 
                 <div style="${NoOfItems() > 15 && NoOfItems() < 24 ? `page-break-before: always;` : ``};">
                 <div class="note">
+                    <div class="watermark">
+                      <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzKTWxwQYlE-bvvFw7cb3WLvV-sx_A-XXzdK5HrixwRw&s">
+                    </div>
                     <h6>Note:</h6>
                     <h5>Terms & conditions:-</h5>
                     <p><em>1. Prices are inclusive of GST</em></p>

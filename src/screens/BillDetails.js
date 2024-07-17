@@ -146,7 +146,7 @@ const BillDetails = () => {
             // setData(response.data.data);
             console.log('dataaaaaa', data);
             console.log("productDetailsFromBackend: ", response.data);
-            navigation.navigate('BillView', { bend: bend, loading: loading, transport: transport });
+            navigation.navigate('BillView', { bend: parseInt(bend), loading: parseInt(loading), transport: parseInt(transport) });
         } catch (error) {
             console.error('Error fetching data:', error);
         } finally {

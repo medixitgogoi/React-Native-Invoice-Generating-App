@@ -110,11 +110,12 @@ export default Home;
 
 const styles = StyleSheet.create({});
 
-{/* <TouchableOpacity style={{ width: '100%', backgroundColor: lightZomatoRed, height: 40, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, justifyContent: 'space-between', elevation: 2, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }} onPress={() => navigation.navigate("PIMyInvoice")}>
-                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>PI My Invoice</Text>
-                    <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 100 }}>
-                        <Icon name="keyboard-arrow-right" size={20} color={lightZomatoRed} />
-                    </View>
+{/*
+    <TouchableOpacity style={{ width: '100%', backgroundColor: lightZomatoRed, height: 40, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, justifyContent: 'space-between', elevation: 2, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }} onPress={() => navigation.navigate("PIMyInvoice")}>
+                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>PI My Invoice</Text>
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 100 }}>
+                    <Icon name="keyboard-arrow-right" size={20} color={lightZomatoRed} />
+                </View>
                 </TouchableOpacity>
 
                 <TouchableOpacity style={{ width: '100%', backgroundColor: lightZomatoRed, height: 40, flexDirection: 'row', alignItems: 'center', paddingHorizontal: 12, justifyContent: 'space-between', elevation: 2, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }} onPress={() => navigation.navigate("Sales")}>
@@ -136,4 +137,5 @@ const styles = StyleSheet.create({});
                     <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 100 }}>
                         <Icon name="keyboard-arrow-right" size={20} color={lightZomatoRed} />
                     </View>
-                </TouchableOpacity> */}
+                </TouchableOpacity> 
+*/}

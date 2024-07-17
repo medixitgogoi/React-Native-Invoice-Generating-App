@@ -10,7 +10,7 @@ import Share from 'react-native-share';
 const DispatchOrderView = (route) => {
 
     const details = route?.detail;
-    console.log('details', details);
+    // console.log('details', details);
 
     const now = new Date();
 
@@ -21,6 +21,7 @@ const DispatchOrderView = (route) => {
     const formattedDate = `${day}-${month}-${year}`;
 
     const loginDetails = useSelector(state => state.login);
+    console.log('loginDetails', loginDetails)
 
     const NoOfItems = () => {
         let items = 0;
@@ -283,13 +284,13 @@ const DispatchOrderView = (route) => {
                                     </View>
                                     <View>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Approved By</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( {loginDetails[0].name} )</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( S Beniwal )</Text>
                                     </View>
                                 </View>
 
                                 <View style={{ marginTop: 5 }}>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>Dispatch Date:-</Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Order By:- P. Chakraborty</Text>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Order By:- {loginDetails[0].name}</Text>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>

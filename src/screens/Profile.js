@@ -15,6 +15,7 @@ import { deleteUser } from '../redux/UserSlice';
 const Profile = () => {
 
     const navigation = useNavigation();
+
     const dispatch = useDispatch();
 
     const loginDetails = useSelector(state => state.login);
@@ -31,7 +32,7 @@ const Profile = () => {
     const pressHandler = () => {
         navigation.navigate('Details');
         dispatch(deleteUser())
-    }
+    };
 
     return (
         <SafeAreaView style={{ flex: 1 }}>

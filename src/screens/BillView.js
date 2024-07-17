@@ -12,6 +12,8 @@ import { zomatoRed } from '../utils/colors';
 
 const OrderDetails = ({ route }) => {
 
+  console.log('routeDetails', route);
+
   const navigation = useNavigation();
 
   const loginDetails = useSelector(state => state.login);
@@ -28,6 +30,10 @@ const OrderDetails = ({ route }) => {
   const loadingCharge = route.params.loading;
   const transportCharge = route.params.transport;
 
+  console.log('bendCharge', typeof (bendCharge))
+  console.log('loadingCharge', typeof (loadingCharge))
+  console.log('transportCharge', typeof (transportCharge))
+
   const [name, setName] = useState('');
   const [site, setSite] = useState('');
   const [pan, setPan] = useState('');
@@ -37,7 +43,7 @@ const OrderDetails = ({ route }) => {
   const userDetails = useSelector(state => state.user);
   const billDetails = useSelector(state => state.bill);
 
-  console.log('billDetails', billDetails);
+  // console.log('billDetails', billDetails);
 
   const calculateTotalPrice = () => {
     let amount = 0;
@@ -822,7 +828,6 @@ const OrderDetails = ({ route }) => {
   const generateInvoice = async () => {
 
     try {
-      // Generate PDF
       const pdfOptions = {
         html: htmlContent,
         fileName: 'ColourTuff_Invoice',
@@ -832,7 +837,7 @@ const OrderDetails = ({ route }) => {
       const pdf = await RNHTMLtoPDF.convert(pdfOptions);
       const pdfPath = pdf.filePath;
 
-      console.log(pdfPath);
+      // console.log(pdfPath);
 
       // Share the PDF
       const shareOptions = {
