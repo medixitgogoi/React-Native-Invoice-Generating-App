@@ -51,12 +51,14 @@ const PartyReport = () => {
     const fetchOrderDetails = async () => {
       try {
         axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+
         const dispatchedResponse = await axios.post('/employee/order/list', { order_status: '2' });
         const toBeDispatchedResponse = await axios.post('/employee/order/list', { order_status: '1' });
 
         const dispatchedData = dispatchedResponse.data.data;
         const toBeDispatchedData = toBeDispatchedResponse.data.data;
-        console.log('data', toBeDispatchedData)
+        // console.log('data', toBeDispatchedData);
+        
         const allData = [...dispatchedData, ...toBeDispatchedData];
 
         setDispatchedOrders(dispatchedData);
@@ -208,13 +210,13 @@ const PartyReport = () => {
         </View>
       </View>
 
-      <View style={styles.container}>
+      <View style={{ flex: 1, padding: 16 }}>
         <ScrollView>
           {loading ? (
-            <Text style={{ color: '#000' }}>Loading...</Text>
+            <Text>Loading...</Text>
           ) : (
-            uniqueClientNames?.map((name, index) => (
-              <Text key={index} style={styles.clientName}>{name}</Text>
+            uniqueClientNames.map((name, index) => (
+              <Text key={index} style={{ fontSize: 16, marginVertical: 8, color: '#000' }}>{name}</Text>
             ))
           )}
         </ScrollView>
