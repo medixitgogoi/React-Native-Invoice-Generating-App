@@ -25,12 +25,11 @@ const PartyReport = () => {
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const [filteredNames, setFilteredNames] = useState([]);
   const [loading, setLoading] = useState(true);
-
   const [uniqueClientNames, setUniqueClientNames] = useState([]);
 
   const debouncedSearch = useMemo(() => debounce((text) => {
-    setFilteredNames(toBeDispatchedOrders.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
-  }, 300), [toBeDispatchedOrders]);
+    setFilteredNames(uniqueClientNames.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
+  }, 300), [uniqueClientNames]);
 
   const handleSearch = (text) => {
     setSearch(text);
@@ -66,7 +65,6 @@ const PartyReport = () => {
 
         setAllOrders(allData);
         // setFilteredNames(toBeDispatchedData);
-        setFilteredNames(allData); // to be changed
 
         // Extract unique client names and their corresponding orders
         const uniqueNames = [];
@@ -80,6 +78,7 @@ const PartyReport = () => {
         });
 
         setUniqueClientNames(uniqueNames);
+        setFilteredNames(uniqueNames);
 
       } catch (error) {
         console.log(error);
@@ -139,15 +138,15 @@ const PartyReport = () => {
             <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
           </View>
           {/* {item.order_status === '1' ? (
-                        <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
-                            <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
-                        </View>
-                    ) : (
-                        <View style={{ backgroundColor: '#c5f8a4', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
-                            <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
-                            <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
-                        </View>
-                    )} */}
+              <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+                  <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
+              </View>
+            ) : (
+              <View style={{ backgroundColor: '#c5f8a4', borderRadius: 5, elevation: 1, borderColor: '#3f910b', borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', padding: 5, gap: 2 }}>
+                  <Text style={{ color: "#3f910b", fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>Dispatched</Text>
+                  <Icon3 name="check" style={{ width: 15, height: 15, color: '#3f910b', paddingTop: 2 }} />
+              </View>
+          )} */}
         </View>
         <View style={{ padding: 12 }}>
           <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
@@ -182,6 +181,21 @@ const PartyReport = () => {
 
   const pressHandler = (name) => {
     navigation.navigate('PartyReportDetails', { orders: allOrders, clientName: name });
+  };
+
+  const getHighlightedText = (text, highlight) => {
+    const parts = text.split(new RegExp(`(${highlight})`, 'gi'));
+    return (
+      <Text>
+        {parts.map((part, index) =>
+          part.toLowerCase() === highlight.toLowerCase() ? (
+            <Text key={index} style={{ backgroundColor: 'yellow' }}>{part}</Text>
+          ) : (
+            <Text key={index}>{part}</Text>
+          )
+        )}
+      </Text>
+    );
   };
 
   return (
@@ -250,10 +264,10 @@ const PartyReport = () => {
             </View>
           ) : (
             <View style={{ paddingHorizontal: 8, flexDirection: 'column', gap: 10, paddingBottom: 15, paddingTop: 5 }}>
-              {uniqueClientNames.map(item => (
+              {filteredNames.map(item => (
                 <View key={item?.id} style={{ flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#fceced', paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }}>
                   <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 5 }}>
-                    <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>{item?.client_name}</Text>
+                    <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>{getHighlightedText(item?.client_name, search)}</Text>
                     <Text style={{ color: '#000', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>{convertedDate(item?.order_date)}</Text>
                   </View>
                   <TouchableOpacity style={{ borderRadius: 8, marginTop: 10, marginBottom: 3 }} onPress={() => pressHandler(item?.client_name)}>
