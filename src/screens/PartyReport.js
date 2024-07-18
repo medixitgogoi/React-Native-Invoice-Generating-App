@@ -59,6 +59,7 @@ const PartyReport = () => {
         // console.log('data', toBeDispatchedData);
 
         const allData = [...dispatchedData, ...toBeDispatchedData];
+        console.log(allData)
 
         setDispatchedOrders(dispatchedData);
         setToBeDispatchedOrders(toBeDispatchedData);
@@ -85,6 +86,7 @@ const PartyReport = () => {
       } finally {
         setLoading(false);
         // console.log('uniqueClientNames', uniqueClientNames);
+        console.log(allOrders);
       }
     };
 
@@ -179,7 +181,7 @@ const PartyReport = () => {
   };
 
   const pressHandler = (name) => {
-    navigation.navigate('PartyReportDetails', { data: allOrders, name });
+    navigation.navigate('PartyReportDetails', { orders: allOrders, clientName: name });
   };
 
   return (
