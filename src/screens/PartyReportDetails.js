@@ -1,24 +1,35 @@
-import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity } from 'react-native';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, FlatList } from 'react-native';
+import { zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { useEffect, useState } from 'react';
 
-const PartyReportDetails = (route) => {
-
-    const [orders, setOrders] = useState([]);
-    const [name, setName] = useState('');
-
-    useEffect(() => {
-        setOrders(route.route.params.data);
-        setName(route.route.params.name);
-    }, [])
-
-    console.log('orders', orders);
-    console.log('name', name);
+const PartyReportDetails = ({ route }) => {
 
     const navigation = useNavigation();
+
+    const { orders, clientName } = route.params;
+
+    console.log('orders', orders);
+    console.log('name', clientName);
+
+    const [filteredOrders, setFilteredOrders] = useState([]);
+
+    useEffect(() => {
+        const filtered = orders.filter(order => order.client_name === clientName);
+        setFilteredOrders(filtered);
+    }, [orders, clientName]);
+
+    const renderOrder = ({ item }) => (
+        <View style={styles.orderCard}>
+            <Text style={styles.orderText}>ID: {item.id}</Text>
+            <Text style={styles.orderText}>Client Name: {item.client_name}</Text>
+            <Text style={styles.orderText}>Employee Name: {item.employee_name}</Text>
+        </View>
+    );
+
+    console.log('filteredOrders', filteredOrders);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -40,10 +51,29 @@ const PartyReportDetails = (route) => {
                 </View>
             </View>
 
+            <View style={{ flex: 1, padding: 10 }}>
+                <FlatList
+                    data={filteredOrders}
+                    renderItem={renderOrder}
+                    keyExtractor={item => item.id.toString()}
+                />
+            </View>
         </SafeAreaView>
     )
 }
 
 export default PartyReportDetails;
 
-const styles = StyleSheet.create({});
+const styles = StyleSheet.create({
+    orderCard: {
+        backgroundColor: '#fff',
+        padding: 10,
+        marginBottom: 10,
+        borderRadius: 5,
+        elevation: 2,
+    },
+    orderText: {
+        fontSize: responsiveFontSize(2),
+        color: '#000',
+    },
+});
