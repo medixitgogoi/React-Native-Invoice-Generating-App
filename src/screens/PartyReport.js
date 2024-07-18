@@ -1,6 +1,5 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar } from 'react-native';
-import { SafeAreaView } from 'react-native-safe-area-context';
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar, SafeAreaView } from 'react-native';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
@@ -9,7 +8,7 @@ import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import ShimmerPlaceholder, { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import debounce from 'lodash.debounce';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
@@ -58,22 +57,34 @@ const PartyReport = () => {
         const dispatchedData = dispatchedResponse.data.data;
         const toBeDispatchedData = toBeDispatchedResponse.data.data;
         // console.log('data', toBeDispatchedData);
-        
+
         const allData = [...dispatchedData, ...toBeDispatchedData];
 
         setDispatchedOrders(dispatchedData);
         setToBeDispatchedOrders(toBeDispatchedData);
-        setAllOrders(allData);
-        setFilteredNames(toBeDispatchedData);
 
-        // Extract unique client names
-        const uniqueNames = Array.from(new Set(allData.map(order => order.client_name)));
+        setAllOrders(allData);
+        // setFilteredNames(toBeDispatchedData);
+        setFilteredNames(allData); // to be changed
+
+        // Extract unique client names and their corresponding orders
+        const uniqueNames = [];
+        const uniqueNamesSet = new Set();
+
+        allData.forEach(order => {
+          if (!uniqueNamesSet.has(order.client_name)) {
+            uniqueNamesSet.add(order.client_name);
+            uniqueNames.push(order);
+          }
+        });
+
         setUniqueClientNames(uniqueNames);
 
       } catch (error) {
         console.log(error);
       } finally {
         setLoading(false);
+        // console.log('uniqueClientNames', uniqueClientNames);
       }
     };
 
@@ -167,6 +178,10 @@ const PartyReport = () => {
     );
   };
 
+  const pressHandler = (name) => {
+    navigation.navigate('PartyReportDetails');
+  }
+
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
       <StatusBar
@@ -191,7 +206,7 @@ const PartyReport = () => {
       </View>
 
       {/* Searchbar */}
-      <View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5, paddingBottom: 10, marginBottom: 8 }}>
+      <View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5, paddingBottom: 10, marginBottom: 5 }}>
         <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: "#fff", borderRadius: 12, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: "98%", alignSelf: "center", borderColor: isSearchFocused ? zomatoRed : "", borderWidth: isSearchFocused ? 0.7 : 0 }}>
           <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
             <View style={{ borderRadius: 10, alignItems: "center", justifyContent: "center", padding: 5, marginRight: 3 }}>
@@ -210,14 +225,48 @@ const PartyReport = () => {
         </View>
       </View>
 
-      <View style={{ flex: 1, padding: 16 }}>
+      {/* Headline */}
+      <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10 }}>
+        <Text style={{ color: '#c9c9c9' }}>________</Text>
+        <Text style={{ color: '#888888', fontSize: responsiveFontSize(1.5), fontWeight: '500', textTransform: 'uppercase' }}> Parties that have previously bought from you </Text>
+        <Text style={{ color: '#c9c9c9' }}>________</Text>
+      </View>
+
+      <View style={{ flex: 1 }}>
         <ScrollView>
           {loading ? (
-            <Text>Loading...</Text>
+            <View style={{ paddingHorizontal: 8, flexDirection: 'column', gap: 10, paddingBottom: 15, paddingTop: 5 }}>
+              {[...Array(8)].map((_, index) => (
+                <View key={index} style={{ flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#fceced', paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 5 }}>
+                    <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(20), height: responsiveFontSize(2.1), marginBottom: 5, borderRadius: 3, }} />
+                    <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(10), height: responsiveFontSize(1.7), marginBottom: 5, borderRadius: 3, }} />
+                  </View>
+                  <ShimmerPlaceHolder autoRun style={{ borderRadius: 5, height: responsiveFontSize(5), marginTop: 10, marginBottom: 3, width: '100%' }} />
+                </View>
+              ))}
+            </View>
           ) : (
-            uniqueClientNames.map((name, index) => (
-              <Text key={index} style={{ fontSize: 16, marginVertical: 8, color: '#000' }}>{name}</Text>
-            ))
+            <View style={{ paddingHorizontal: 8, flexDirection: 'column', gap: 10, paddingBottom: 15, paddingTop: 5 }}>
+              {uniqueClientNames.map(item => (
+                <View key={item?.id} style={{ flexDirection: 'column', justifyContent: 'space-between', backgroundColor: '#fceced', paddingVertical: 8, borderColor: zomatoRed, borderWidth: 0.7, paddingHorizontal: 10, borderRadius: 8, elevation: 2 }}>
+                  <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', gap: 5 }}>
+                    <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.1) }}>{item?.client_name}</Text>
+                    <Text style={{ color: '#000', fontSize: responsiveFontSize(1.7), fontWeight: '500' }}>{convertedDate(item?.order_date)}</Text>
+                  </View>
+                  <TouchableOpacity style={{ borderRadius: 8, marginTop: 10, marginBottom: 3 }} onPress={() => pressHandler(item?.client_name)}>
+                    <LinearGradient
+                      colors={['#941721', '#cb202d']}
+                      start={{ x: 0, y: 0 }}
+                      end={{ x: 1, y: 0 }}
+                      style={{ paddingVertical: 8, borderRadius: 8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center' }}
+                    >
+                      <Text style={{ color: '#fff', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>View All Orders</Text>
+                      <Icon name="keyboard-arrow-right" size={20} color={'#fff'} />
+                    </LinearGradient>
+                  </TouchableOpacity>
+                </View>))}
+            </View>
           )}
         </ScrollView>
       </View>
