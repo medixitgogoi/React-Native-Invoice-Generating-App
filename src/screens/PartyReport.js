@@ -8,7 +8,7 @@ import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import axios from 'axios';
 import { useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
-import ShimmerPlaceholder, { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import debounce from 'lodash.debounce';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
@@ -179,8 +179,8 @@ const PartyReport = () => {
   };
 
   const pressHandler = (name) => {
-    navigation.navigate('PartyReportDetails');
-  }
+    navigation.navigate('PartyReportDetails', { data: allOrders, name });
+  };
 
   return (
     <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
