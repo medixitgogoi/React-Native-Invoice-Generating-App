@@ -29,7 +29,7 @@ const PartyReport = () => {
 
   const debouncedSearch = useMemo(() => debounce((text) => {
     setFilteredNames(uniqueClientNames.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
-  }, 300), [uniqueClientNames]);
+  }, 100), [uniqueClientNames]);
 
   const handleSearch = (text) => {
     setSearch(text);
@@ -58,7 +58,7 @@ const PartyReport = () => {
         // console.log('data', toBeDispatchedData);
 
         const allData = [...dispatchedData, ...toBeDispatchedData];
-        console.log(allData)
+        console.log(allData);
 
         setDispatchedOrders(dispatchedData);
         setToBeDispatchedOrders(toBeDispatchedData);
@@ -215,9 +215,6 @@ const PartyReport = () => {
             </TouchableOpacity>
             <Text style={{ color: "#000", fontWeight: "600", fontSize: responsiveFontSize(2.5) }}>Party Report</Text>
           </View>
-          <TouchableOpacity style={{ marginRight: 8 }} onPress={() => navigation.navigate("Profile")}>
-            <Image source={require("../assets/login.png")} style={{ width: 30, height: 30 }} />
-          </TouchableOpacity>
         </View>
       </View>
 
@@ -249,6 +246,7 @@ const PartyReport = () => {
       </View>
 
       <View style={{ flex: 1 }}>
+
         <ScrollView>
           {loading ? (
             <View style={{ paddingHorizontal: 8, flexDirection: 'column', gap: 10, paddingBottom: 15, paddingTop: 5 }}>
@@ -261,6 +259,21 @@ const PartyReport = () => {
                   <ShimmerPlaceHolder autoRun style={{ borderRadius: 5, height: responsiveFontSize(5), marginTop: 10, marginBottom: 3, width: '100%' }} />
                 </View>
               ))}
+            </View>
+          ) : filteredNames.length === 0 ? (
+            <View style={{ flex: 0.8, justifyContent: 'center', alignItems: 'center', flexDirection: 'column', gap: 0 }}>
+              <Image
+                source={require("../assets/no-results.png")}
+                style={{
+                  width: 230,
+                  height: 230,
+                  resizeMode: 'contain',
+                }}
+              />
+              <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5 }}>
+                <Text style={{ color: '#4d4d4d', fontSize: responsiveFontSize(2.1), }}>No results found for</Text>
+                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.4), fontWeight: '500', textDecorationLine: 'underline' }}>'{search}'</Text>
+              </View>
             </View>
           ) : (
             <View style={{ paddingHorizontal: 8, flexDirection: 'column', gap: 10, paddingBottom: 15, paddingTop: 5 }}>
@@ -285,6 +298,7 @@ const PartyReport = () => {
             </View>
           )}
         </ScrollView>
+
       </View>
 
     </SafeAreaView>

@@ -150,9 +150,9 @@ const PIMyInvoice = () => {
             <ScrollView style={{ flex: 1, paddingHorizontal: 5 }}>
                 <View style={{ marginBottom: 20 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10, marginTop: 8 }}>
-                        <Text style={{ color: '#c9c9c9' }}>_____________</Text>
-                        <Text style={{ color: '#888888', fontSize: responsiveFontSize(1.5), fontWeight: '500', textTransform: 'uppercase' }}>All previously bought customers</Text>
-                        <Text style={{ color: '#c9c9c9' }}>_____________</Text>
+                        <Text style={{ color: '#c9c9c9' }}>____________</Text>
+                        <Text style={{ color: '#888888', fontSize: responsiveFontSize(1.5), fontWeight: '500', textTransform: 'uppercase' }}> All customers registered under you </Text>
+                        <Text style={{ color: '#c9c9c9' }}>____________</Text>
                     </View>
                     <View style={{ paddingHorizontal: 3, flexDirection: 'column', gap: 10 }}>
                         {loading ? (
