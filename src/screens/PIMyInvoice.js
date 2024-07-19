@@ -8,7 +8,6 @@ import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
 import axios from 'axios';
-import Toast from 'react-native-toast-message';
 import { useDispatch, useSelector } from 'react-redux';
 import { addUser, deleteUser } from '../redux/UserSlice';
 import { emptyBill } from '../redux/BillDetailsSlice';
@@ -78,14 +77,7 @@ const PIMyInvoice = () => {
                     setCustomerData(response?.data?.data);
                     setFilteredNames(response?.data?.data);
                 } catch (error) {
-                    Toast.show({
-                        type: 'error',
-                        text1: 'Error fetching data',
-                        text2: error.message,
-                        position: 'top',
-                        topOffset: 50,
-                        onPress: () => Toast.hide(),
-                    });
+                    console.log(error?.message)
                 } finally {
                     setLoading(false);
                 }
