@@ -147,6 +147,10 @@ const PartyReportDetails = ({ route }) => {
                 </View>
             </View>
 
+            <View style={{ marginVertical: 8 }}>
+                <Text style={{ color: '#000', textAlign: 'center', fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>All orders from {clientName}</Text>
+            </View>
+
             <View style={{ flex: 1, paddingVertical: 10 }}>
 
                 {loading ? (
