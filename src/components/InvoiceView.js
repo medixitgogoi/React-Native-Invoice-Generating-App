@@ -225,9 +225,11 @@ const InvoiceView = (route) => {
   const htmlContent2 = `
   <!DOCTYPE html>
     <html>
+
       <head>
         <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
       </head>
+    
       <body style="color: black; padding: 20px; backgroundColor: white;">
 
         <div>
@@ -357,12 +359,19 @@ const InvoiceView = (route) => {
         </div>
 
         <div style="margin-top: 4px;">
-          <h6 style="fontSize: 6px; margin: 0; fontWeight: 400;"><em>Note:</em></h6>
-          <h5 style="fontSize: 6px; fontWeight: 500; margin-top: 2px; margin-bottom: 1px;">Terms & conditions:-</h5>
-          <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>1. Prices are inclusive of GST</em></h6>
-          <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>2. Prices are based on ex-factory at Changsari, Assam</em></h6>
-          <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>3. Payment Terms : 100% in Advance</em></h6>
-          <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>4. Rates are subject to change without any Prior Information.</em></h6>
+          <div style="display: flex; flexDirection: row;">
+            <div>
+              <h6 style="fontSize: 6px; margin: 0; fontWeight: 400;"><em>Note:</em></h6>
+              <h5 style="fontSize: 6px; fontWeight: 500; margin-top: 2px; margin-bottom: 1px;">Terms & conditions:-</h5>
+              <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>1. Prices are inclusive of GST</em></h6>
+              <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>2. Prices are based on ex-factory at Changsari, Assam</em></h6>
+              <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>3. Payment Terms : 100% in Advance</em></h6>
+              <h6 style="fontSize: 6px; fontWeight: 400; margin: 0; padding-left: 1px"><em>4. Rates are subject to change without any Prior Information.</em></h6>
+            </div>
+            <div>
+              <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzKTWxwQYlE-bvvFw7cb3WLvV-sx_A-XXzdK5HrixwRw&s" style="width: 90px; opacity: 0.2; paddingTop: 5px;">
+            </div>
+          </div>
           <div style="flexDirection: column; backgroundColor: yellow; padding-top: 1px; padding-bottom: 1px; padding-left: 1px">
             <h6 style="fontSize: 6px; fontWeight: 500; margin: 0"><em>5. FOR BANK DETAILS:- Name: Pooja Roofing Co. (MFG) A/C NO: 41122724588 (STATE BANK OF INDIA,)</em></h6>
             <h6 style="fontSize: 6px; fontWeight: 500; margin: 0"><em>IFSC CODE: SBIN0013246 (Traders Branch Fancy Bazar)</em></h6>
@@ -524,8 +533,8 @@ const InvoiceView = (route) => {
         <!DOCTYPE html>
             <html>
             <head>
-                <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
-                <style>
+              <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=3.0, user-scalable=yes">
+              <style>
 
                 @page {
                     margin-top: 15px;
@@ -544,20 +553,19 @@ const InvoiceView = (route) => {
 
                 .watermark {
                   position: absolute;
-                  top: 50%;
-                  left: 60%;
+                  top: 32%;
+                  left: 50%;
                   transform: translate(-50%, -50%);
                   font-size: 50px;
                   font-weight: bold;
                   color: rgba(0, 0, 0, 0.1);
                   z-index: -1;
                   user-select: none;
-                  opacity: 0.1;
+                  opacity: 0.25;
                 }
 
                 .watermark img{
-                  width: 200px;
-                  height: 100px
+                  width: 230px;
                 }
 
                 h6 {
@@ -689,7 +697,7 @@ const InvoiceView = (route) => {
                     margin-top: 20px;
                 }
 
-                </style>
+              </style>
             </head>
 
             <body>
@@ -779,6 +787,7 @@ const InvoiceView = (route) => {
                 </div>
 
                 <div style="${NoOfItems() > 15 && NoOfItems() < 24 ? `page-break-before: always;` : ``};">
+
                 <div class="note">
                     <div class="watermark">
                       <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzKTWxwQYlE-bvvFw7cb3WLvV-sx_A-XXzdK5HrixwRw&s">
@@ -846,20 +855,20 @@ const InvoiceView = (route) => {
 
   return (
     <View>
-
-      <ScrollView>
-        <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20 }}>
-          <HTML source={{ html: htmlContent2 }} />
-        </PinchZoomView>
-      </ScrollView>
-
+      
       {/* Share button */}
-      <TouchableOpacity style={{ marginTop: 10, marginBottom: 30, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
+      <TouchableOpacity style={{ marginVertical: 20,  backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
         <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
           <Icon2 name="share" size={13} color={zomatoRed} />
         </View>
         <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
       </TouchableOpacity>
+
+      <ScrollView>
+        <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 20, marginBottom: 30, }}>
+          <HTML source={{ html: htmlContent2 }} />
+        </PinchZoomView>
+      </ScrollView>
 
     </View>
   )

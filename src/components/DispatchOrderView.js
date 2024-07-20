@@ -1,4 +1,4 @@
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import PinchZoomView from 'react-native-pinch-zoom-view';
@@ -8,6 +8,8 @@ import Icon2 from 'react-native-vector-icons/dist/FontAwesome5';
 import Share from 'react-native-share';
 
 const DispatchOrderView = (route) => {
+
+    const screenWidth = Dimensions.get('window').width;
 
     const details = route?.detail;
     // console.log('details', details);
@@ -21,7 +23,7 @@ const DispatchOrderView = (route) => {
     const formattedDate = `${day}-${month}-${year}`;
 
     const loginDetails = useSelector(state => state.login);
-    console.log('loginDetails', loginDetails)
+    console.log('loginDetails', loginDetails);
 
     const NoOfItems = () => {
         let items = 0;
@@ -54,10 +56,10 @@ const DispatchOrderView = (route) => {
                 ${lengths}
                 <tr>
                 <td style="padding: 3px; "></td>
-                <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
-                <td style="padding: 3px; background-color: #a2eaf3; border: 1px solid black; "></td>
-                <td colspan="1" style="background-color: #a2eaf3; padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
-                <td style="background-color: #a2eaf3; border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
+                <td style="padding: 3px;  border: 1px solid black; "></td>
+                <td style="padding: 3px;  border: 1px solid black; "></td>
+                <td colspan="1" style=" padding: 3px; border: 1px solid black; text-align: right; font-weight: 600; text-align: center; font-size: 13px;">Total</td>
+                <td style=" border: 1px solid black; padding: 3px; text-align: center; font-weight: 700; font-size: 13px;">${totalPieces}</td>
                 </tr>
             `;
         }).join('');
@@ -73,19 +75,43 @@ const DispatchOrderView = (route) => {
                 margin-top: 15px;
                 margin-bottom: 15px;
               }
+
+              .watermark {
+                position: absolute;
+                top: 91%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                font-size: 50px;
+                font-weight: bold;
+                color: rgba(0, 0, 0, 0.1);
+                z-index: -1;
+                user-select: none;
+                opacity: 0.2;
+              }
+
+              .watermark img{
+                width: 200px;
+              }
             
             </style>
           </head>
           <body style="font-family: Arial, sans-serif; padding: 20px;">
-            <div style="margin: 0; ">
+            <div style="margin: 0; position: relative;">
+
+            <div class="watermark">
+                <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRzKTWxwQYlE-bvvFw7cb3WLvV-sx_A-XXzdK5HrixwRw&s">
+            </div>
               
               <div style="text-align: center; font-size: 19px; font-weight: bold; color: #1bb3c7; margin-bottom: 2px; "><u>POOJA ROOFING CO. (MFG)</u></div>
               <div style="text-align: center; font-size: 13px; margin-bottom: 15px; ">LOKHRA - LALGANESH ROAD, GUWAHATI - 781034, ASSAM</div>
               <div style="text-align: center; font-size: 16px; margin-bottom: 5px; font-weight: 600;"><u>GST NO: 18AAZFP3190K1ZD</u></div>
               
-              <div style="flex-direction: row; justify-content: space-between; display: flex; margin-bottom: 10px;">
-                <div style="text-align: center; font-size: 12px; font-weight: 600; ">REF: DO/24-25/077</div>
-                <div style="text-align: center; font-size: 12px; font-weight: 600; "><u>${formattedDate}</u></div>
+              <div style="flex-direction: column; display: flex; margin-bottom: 10px; align-items: flex-end; ">
+                <div style="display: flex; flexDirection: row; justify-content: space-between; width: 100%; ">
+                    <div style="text-align: center; font-size: 12px; font-weight: 600; ">REF: DO/24-25/077</div>
+                    <div style="text-align: center; font-size: 12px; font-weight: 600; ">PI REF NO: PRCM/24-25/188</div>
+                </div>
+                <div style="text-align: center; font-size: 12px; font-weight: 600; margin-top: 5px; "><u>${formattedDate}</u></div>
               </div>
               
               <div style="text-align: center; font-size: 18px; margin-bottom: 15px; font-weight: 700; "><u>DISPATCH ORDER</u></div>
@@ -111,22 +137,25 @@ const DispatchOrderView = (route) => {
                 <p style="font-size: 12px; margin: 0; margin-top: 3px; font-weight: 600; ">2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</p>
                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-around; margin-top: 30px; margin-bottom: 10px;  ">
                   <div style="display: flex; flex-direction: column; align-items: center; ">
-                    <p style="margin: 0; font-size: 12px; font-weight: 500; ">Prepared By </p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; ">Prepared By</p>
                     <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(A.B.)</p>
                   </div>
                   <p style="margin: 0; font-size: 12px; font-weight: 500; ">Checked By </p>
                   <div style="display: flex; flex-direction: column; align-items: center; ">
-                    <p style="margin: 0; font-size: 12px; font-weight: 500; ">Approved By </p>
-                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(${loginDetails[0].name})</p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; ">Approved By</p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">( S Beniwal ))</p>
                   </div>               
                 </div>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Dispatch Date:- </p>
-                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Order By:- ${details?.client_name} </p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Order By:- ${loginDetails[0].name} </p>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Material weight=</p>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Advance Payment=</p>
                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin: 0; margin-top: 3px; font-weight: 600;">
                   <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= ₹${indianNumberFormat(details?.payble_amount)}.00</p>
-                  <p style="color: black; margin: 0; font-size: 12px; ">Receipt No: </p>
+                  <div style="display: flex; flex-direction: row;">
+                    <p style="color: black; margin: 0; font-size: 12px; ">Receipt No: </p>
+                    <p style="color: black; margin: 0; font-size: 12px; width: 100px;"></p>
+                  </div>
                 </div>
               </div>
             
@@ -188,8 +217,17 @@ const DispatchOrderView = (route) => {
 
     return (
         <View>
+            
+            {/* Share button */}
+            <TouchableOpacity style={{ marginVertical: 20, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 5 }} onPress={generateInvoice}>
+                <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
+                    <Icon2 name="share" size={13} color={zomatoRed} />
+                </View>
+                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
+            </TouchableOpacity>
+
             <ScrollView>
-                <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingTop: 20, paddingBottom: 40 }}>
+                <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 20, marginBottom: 30, }}>
 
                     <View style={{ height: '100%', backgroundColor: '#fff', width: '100%', padding: 12 }}>
                         <View style={{ padding: 2 }}>
@@ -199,9 +237,12 @@ const DispatchOrderView = (route) => {
                                 <Text style={{ fontSize: responsiveFontSize(1.8), fontWeight: 'bold', textAlign: 'center', color: '#1bb3c7', textDecorationLine: 'underline' }}>POOJA ROOFING CO. (MFG)</Text>
                                 <Text style={{ fontSize: responsiveFontSize(1.1), textAlign: 'center', color: '#000' }}>LOKHRA - LALGANESH ROAD , GUWAHATI - 781034 , ASSAM</Text>
                                 <Text style={{ fontSize: responsiveFontSize(1.4), textAlign: 'center', color: '#000', marginTop: 7, textDecorationLine: 'underline' }}>GST NO: 18AAZFP3190K1ZD</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                    <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', marginVertical: 4, color: '#000', fontWeight: '700' }}>REF: DO/24-25/077</Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'right', marginVertical: 4, color: '#000', textDecorationLine: 'underline', fontWeight: '500' }}>{formattedDate}</Text>
+                                <View style={{ flexDirection: 'column', marginTop: 4 }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '700' }}>REF: DO/24-25/077</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '700' }}>PI REF NO: PRCM/24-25/188</Text>
+                                    </View>
+                                    <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'right', marginVertical: 2, color: '#000', textDecorationLine: 'underline', fontWeight: '500' }}>{formattedDate}</Text>
                                 </View>
                                 <Text style={{ fontSize: responsiveFontSize(1.9), fontWeight: 'bold', textAlign: 'center', marginTop: 3, marginBottom: 3, color: '#000', textDecorationLine: 'underline' }}>DISPATCH ORDER</Text>
                                 <Text style={{ fontSize: responsiveFontSize(1.7), textAlign: 'center', marginVertical: 6, color: '#000', fontWeight: '700', textDecorationLine: 'underline' }}>PARTY: {details?.client_name}</Text>
@@ -251,7 +292,7 @@ const DispatchOrderView = (route) => {
                                             ))}
                                         </View>
 
-                                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', backgroundColor: '#a2eaf3' }}>
+                                        <View style={{ flexDirection: 'row', justifyContent: 'flex-end', }}>
                                             <View style={{ width: '60%', borderColor: '#000', borderWidth: 1, borderBottomWidth: 0.5, borderRightWidth: 0.5, borderLeftWidth: 0, }}>
                                                 <Text></Text>
                                             </View>
@@ -270,7 +311,10 @@ const DispatchOrderView = (route) => {
                             </View>
 
                             {/* Third para */}
-                            <View>
+                            <View style={{ position: 'relative' }}>
+                                <View style={{ position: 'absolute', left: '90%', transform: [{ translateX: -screenWidth / 2 }, { translateY: -25 }], fontSize: responsiveFontSize(3), fontWeight: 'bold', color: 'rgba(0, 0, 0, 0.1)', zIndex: -1, userSelect: 'none', opacity: 0.2, textAlign: 'center', width: screenWidth }}>
+                                    <Image source={require("../assets/logo.png")} style={{ width: 120 }} resizeMode='contain' />
+                                </View>
                                 <Text style={{ fontSize: responsiveFontSize(1.2), marginBottom: 1, fontWeight: '700', color: '#000', backgroundColor: 'yellow' }}>1. Pooja Roofing CO. MFG & 0.40mm/0.45mm Thickness to be Printed.</Text>
                                 <Text style={{ fontSize: responsiveFontSize(1.1), fontWeight: '700', color: '#000', }}>2. REGARDING ANY ISSUE IN MEASUREMENT PLEASE CONTACT 6901262103</Text>
 
@@ -295,7 +339,7 @@ const DispatchOrderView = (route) => {
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = ₹{indianNumberFormat(details?.payble_amount)}.00</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:- </Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:-               </Text>
                                     </View>
                                 </View>
 
@@ -306,14 +350,6 @@ const DispatchOrderView = (route) => {
 
                 </PinchZoomView>
             </ScrollView>
-
-            {/* Share button */}
-            <TouchableOpacity style={{ marginTop: 10, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 5 }} onPress={generateInvoice}>
-                <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
-                    <Icon2 name="share" size={13} color={zomatoRed} />
-                </View>
-                <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
-            </TouchableOpacity>
 
         </View>
     )
