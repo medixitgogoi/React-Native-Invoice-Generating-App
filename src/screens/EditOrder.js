@@ -7,6 +7,7 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 const EditOrder = (route) => {
 
     console.log('route', route.route.params.data);
+    const details = route.route.params.data;
 
     const navigation = useNavigation();
 
@@ -29,6 +30,13 @@ const EditOrder = (route) => {
                     </View>
                 </View>
             </View>
+
+            {details.orderDetails.map(item => (
+                <View style={{padding: 10, borderColor: zomatoRed, borderWidth: 1}}>
+                    <Text style={{ color: '#000' }}>{item.product_type}</Text>
+                    <Text style={{ color: '#000' }}>{item.color}</Text>
+                </View>
+            ))}
 
         </SafeAreaView>
     )
