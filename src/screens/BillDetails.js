@@ -19,8 +19,6 @@ const BillDetails = () => {
 
     const [clientId, setClientId] = useState(null);
 
-    // console.log("loginDetails", loginDetails);
-    // console.log("productDetails", productDetails);
     console.log("userDetailsssss", userDetails);
 
     const navigation = useNavigation();
@@ -29,11 +27,11 @@ const BillDetails = () => {
     const [loading, setLoading] = useState(0);
     const [transport, setTransport] = useState(0);
 
-    const [appLoad, setAppLoad] = useState(false)
+    const [appLoad, setAppLoad] = useState(false);
 
     useEffect(() => {
         setClientId(userDetails[0]?.id);
-    }, [])
+    }, []);
 
     console.log("clienId", clientId);
 
@@ -55,7 +53,7 @@ const BillDetails = () => {
 
         // Reverse the formatted number back to its original order.
         return formattedNumber.split('').reverse().join('');
-    }
+    };
 
     const calculateTotalPrice = () => {
         let amount = 0;
@@ -72,7 +70,7 @@ const BillDetails = () => {
         })
 
         return amount;
-    }
+    };
 
     const totalPrice = calculateTotalPrice();
 
@@ -83,7 +81,7 @@ const BillDetails = () => {
         amount = price + parseInt(bend) + parseInt(loading) + parseInt(transport);
 
         return amount;
-    }
+    };
 
     const totalAmount = calculateTotalAmount();
 
@@ -114,6 +112,7 @@ const BillDetails = () => {
 
         // Create a FormData object
         const data = new FormData();
+
         data.append("client_id", clientId);
         data.append("bend_charge", parseInt(bend));
         data.append("load_charge", parseInt(loading));

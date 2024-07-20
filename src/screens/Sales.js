@@ -1,16 +1,18 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
+import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
+import Icon4 from 'react-native-vector-icons/dist/Feather';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
-import axios from 'axios';
 import { useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
+import Modal from "react-native-modal";
+import axios from 'axios';
 import debounce from 'lodash.debounce';
 
 const ShimmerPlaceHolder = createShimmerPlaceholder(LinearGradient);
@@ -26,7 +28,10 @@ const Sales = () => {
     const [search, setSearch] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [filteredNames, setFilteredNames] = useState([]);
+    const [pieces, setPieces] = useState('');
     const [loading, setLoading] = useState(true);
+    const [editOrderModal, setEditOrderModal] = useState(false);
+    const [isPiecesFocused, setIsPiecesFocused] = useState(false);
 
     const debouncedSearch = useMemo(() => debounce((text) => {
         setFilteredNames(toBeDispatchedOrders.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
@@ -56,6 +61,7 @@ const Sales = () => {
                 // const dispatchedData = dispatchedResponse.data.data;
                 const toBeDispatchedData = toBeDispatchedResponse.data.data;
                 // const allData = [...dispatchedData, ...toBeDispatchedData];
+                // console.log('datataaaa', toBeDispatchedData);
 
                 // setDispatchedOrders(dispatchedData);
                 setToBeDispatchedOrders(toBeDispatchedData);
@@ -78,7 +84,7 @@ const Sales = () => {
         const month = date.toLocaleString('default', { month: 'long' });
         const year = date.getFullYear();
         return `${day} ${month}, ${year}`;
-    }
+    };
 
     const handleViewOrder = useCallback((item) => {
         navigation.navigate('OrderDetails', { data: item });
@@ -108,13 +114,13 @@ const Sales = () => {
         };
 
         return (
-            <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
+            <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 10, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                     <View style={{ flexDirection: 'column', }}>
                         <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
                         <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                     </View>
-                    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 5, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+                    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 6, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
                         <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
                     </View>
                     {/* {item.order_status === '1' ? (
@@ -146,14 +152,23 @@ const Sales = () => {
                         <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.7) }}>{convertedDate(item.order_date)}</Text>
                         <Text style={{ color: '#000', fontSize: responsiveFontSize(2), fontWeight: '500' }}>₹{indianNumberFormat(item.payble_amount)}</Text>
                     </View>
-                    <TouchableOpacity
-                        style={{ backgroundColor: zomatoRed, borderRadius: 6, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }}
-                        onPress={() => handleViewOrder(item)}>
-                        <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                            <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
-                        </View>
-                        <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '600', textTransform: 'uppercase' }}>View Order</Text>
-                    </TouchableOpacity>
+                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
+
+                        <TouchableOpacity style={{ width: '49%', backgroundColor: zomatoRed, borderRadius: 8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => handleViewOrder(item)}>
+                            <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
+                            </View>
+                            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '600', textTransform: 'uppercase' }}>View Order</Text>
+                        </TouchableOpacity>
+
+                        <TouchableOpacity style={{ width: '49%', backgroundColor: zomatoRed, borderRadius: 8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('EditOrder', { data: item })}>
+                            <View style={{ backgroundColor: lightZomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
+                                <Icon4 name="edit" size={14} color={zomatoRed} />
+                            </View>
+                            <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '600', textTransform: 'uppercase' }}>Edit Order</Text>
+                        </TouchableOpacity>
+
+                    </View>
                 </View>
             </View>
         );
@@ -161,6 +176,11 @@ const Sales = () => {
 
     return (
         <SafeAreaView style={{ flex: 1 }}>
+            <StatusBar
+                animated={true}
+                backgroundColor={'#fff'}
+                barStyle="dark-content"
+            />
 
             {/* header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>

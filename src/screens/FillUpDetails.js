@@ -152,14 +152,6 @@ const FillUpDetails = () => {
 
                 navigation.navigate('BillDetails');
 
-                Toast.show({
-                    type: 'success',
-                    text1: 'Product added successfully',
-                    text2: `${selectedType.name} added`,
-                    topOffset: 50,
-                    onPress: () => Toast.hide(),
-                });
-
                 dispatch(addItemToBill({
                     unit: selectedUnit,
                     type: selectedType,

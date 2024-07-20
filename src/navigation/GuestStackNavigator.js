@@ -12,6 +12,7 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import DispatchedOrders from '../screens/DispatchedOrders';
 import Sales from '../screens/Sales';
 import PartyReportDetails from '../screens/PartyReportDetails';
+import EditOrder from '../screens/EditOrder';
 
 const GuestStackNavigator = () => {
 
@@ -27,6 +28,7 @@ const GuestStackNavigator = () => {
             <Stack.Screen name="PIMyInvoice" component={PIMyInvoice} />
             <Stack.Screen name="PartyReport" component={PartyReport} />
             <Stack.Screen name="FillUpDetails" component={FillUpDetails} />
+            <Stack.Screen name="EditOrder" component={EditOrder} />
             <Stack.Screen name="DispatchedOrders" component={DispatchedOrders} />
             <Stack.Screen name="Sales" component={Sales} />
             <Stack.Screen name="OrderDetails" component={OrderDetails} />
