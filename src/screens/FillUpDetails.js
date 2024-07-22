@@ -10,7 +10,6 @@ import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill } from '../redux/BillDetailsSlice';
-import Toast from 'react-native-toast-message';
 import axios from 'axios';
 
 const FillUpDetails = () => {

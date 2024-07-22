@@ -140,10 +140,13 @@ const DispatchOrderView = (route) => {
                     <p style="margin: 0; font-size: 12px; font-weight: 500; ">Prepared By</p>
                     <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(A.B.)</p>
                   </div>
-                  <p style="margin: 0; font-size: 12px; font-weight: 500; ">Checked By </p>
+                  <div style="display: flex; flex-direction: column; align-items: center; ">
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; ">Checked By</p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">(    )</p>
+                  </div>               
                   <div style="display: flex; flex-direction: column; align-items: center; ">
                     <p style="margin: 0; font-size: 12px; font-weight: 500; ">Approved By</p>
-                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">( S Beniwal ))</p>
+                    <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">( S Beniwal )</p>
                   </div>               
                 </div>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Dispatch Date:- </p>
@@ -325,6 +328,7 @@ const DispatchOrderView = (route) => {
                                     </View>
                                     <View>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Checked By</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', textAlign: 'center', color: '#000' }}>( S Beniwal )</Text>
                                     </View>
                                     <View>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'center', color: '#000' }}>Approved By</Text>
