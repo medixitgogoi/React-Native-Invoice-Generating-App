@@ -11,7 +11,6 @@ import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import { useSelector } from 'react-redux';
 import LinearGradient from 'react-native-linear-gradient';
 import { createShimmerPlaceholder } from 'react-native-shimmer-placeholder';
-import Modal from "react-native-modal";
 import axios from 'axios';
 import debounce from 'lodash.debounce';
 
@@ -28,10 +27,7 @@ const Sales = () => {
     const [search, setSearch] = useState('');
     const [isSearchFocused, setIsSearchFocused] = useState(false);
     const [filteredNames, setFilteredNames] = useState([]);
-    const [pieces, setPieces] = useState('');
     const [loading, setLoading] = useState(true);
-    const [editOrderModal, setEditOrderModal] = useState(false);
-    const [isPiecesFocused, setIsPiecesFocused] = useState(false);
 
     const debouncedSearch = useMemo(() => debounce((text) => {
         setFilteredNames(toBeDispatchedOrders.filter(order => order.client_name.toLowerCase().includes(text.toLowerCase())));
@@ -114,13 +110,13 @@ const Sales = () => {
         };
 
         return (
-            <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 10, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
+            <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 13, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                     <View style={{ flexDirection: 'column', }}>
                         <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
                         <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
                     </View>
-                    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 6, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
+                    <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 7, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
                         <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>
                     </View>
                     {/* {item.order_status === '1' ? (
@@ -154,14 +150,14 @@ const Sales = () => {
                     </View>
                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
 
-                        <TouchableOpacity style={{ width: '49%', backgroundColor: zomatoRed, borderRadius: 8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => handleViewOrder(item)}>
+                        <TouchableOpacity style={{ width: '49%', backgroundColor: zomatoRed, borderRadius: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => handleViewOrder(item)}>
                             <View style={{ backgroundColor: lightZomatoRed, borderRadius: 5, width: 22, height: 22, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <Icon2 name="receipt-outline" size={14} color={zomatoRed} />
                             </View>
                             <Text style={{ color: '#fff', fontSize: responsiveFontSize(2), color: '#fff', fontWeight: '600', textTransform: 'uppercase' }}>View Order</Text>
                         </TouchableOpacity>
 
-                        <TouchableOpacity style={{ width: '49%', backgroundColor: zomatoRed, borderRadius: 8, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('EditOrder', { data: item })}>
+                        <TouchableOpacity style={{ width: '49%', backgroundColor: zomatoRed, borderRadius: 10, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', padding: 10, marginTop: 8, gap: 5 }} onPress={() => navigation.navigate('EditOrder', { data: item })}>
                             <View style={{ backgroundColor: lightZomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}>
                                 <Icon4 name="edit" size={14} color={zomatoRed} />
                             </View>
@@ -196,9 +192,9 @@ const Sales = () => {
 
             {/* Searchbar */}
             <View style={{ backgroundColor: "#f1f3f6", width: "100%", paddingHorizontal: 5, paddingBottom: 10, marginBottom: 8 }}>
-                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: "#fff", borderRadius: 12, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: "98%", alignSelf: "center", borderColor: isSearchFocused ? zomatoRed : "", borderWidth: isSearchFocused ? 0.7 : 0 }}>
+                <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: "#fff", borderRadius: 10, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: "98%", alignSelf: "center", borderColor: isSearchFocused ? zomatoRed : "", borderWidth: isSearchFocused ? 0.7 : 0 }}>
                     <View style={{ flexDirection: "row", justifyContent: 'space-between', alignItems: 'center' }}>
-                        <View style={{ borderRadius: 10, alignItems: "center", justifyContent: "center", padding: 5, marginRight: 3 }}>
+                        <View style={{ borderRadius: 10, alignItems: "center", justifyContent: "center", width: 25 }}>
                             <Icon2 name="search" size={18} color={zomatoRed} />
                         </View>
                         <TextInput
