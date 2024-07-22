@@ -78,7 +78,7 @@ const EditOrder = ({ route }) => {
             <ScrollView style={{ flex: 1 }}>
                 <View style={{ padding: 10 }}>
                     {details.orderDetails.map(item => (
-                        <View style={{ backgroundColor: '#fff', borderRadius: 8, width: '100%', paddingHorizontal: 11, flexDirection: 'column', gap: 8, paddingVertical: 12, elevation: 1, marginBottom: 8 }} key={item?.id}>
+                        <View style={{ backgroundColor: '#fff', borderRadius: 15, width: '100%', paddingHorizontal: 11, flexDirection: 'column', gap: 8, paddingVertical: 12, elevation: 1, marginBottom: 8 }} key={item?.id}>
 
                             {/* Header */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: lightZomatoRed, padding: 5, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6 }}>
@@ -136,7 +136,7 @@ const EditOrder = ({ route }) => {
                         <Icon2 name="close" size={20} style={{ color: '#fff' }} />
                     </TouchableOpacity>
 
-                    <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingHorizontal: 14, paddingVertical: 8 }}>
+                    <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingVertical: 8 }}>
 
                         {/* Headline */}
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 8, marginBottom: 10 }}>
@@ -144,7 +144,7 @@ const EditOrder = ({ route }) => {
                         </View>
 
                         {/* Update Pieces */}
-                        <View style={{ flexDirection: 'column' }}>
+                        <View style={{ flexDirection: 'column', paddingHorizontal: 14, }}>
                             <TextInput
                                 style={{ borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, height: 40, color: '#000', width: '100%', paddingHorizontal: 10, marginBottom: 15, backgroundColor: '#fff', borderRadius: 8, elevation: 1, fontWeight: '600' }}
                                 keyboardType="numeric"
@@ -156,10 +156,10 @@ const EditOrder = ({ route }) => {
                         </View>
 
                         {/* Buttons */}
-                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', borderRadius: 10, marginVertical: 5, paddingVertical: 8, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
+                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 5, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
 
                             {/* Cancel */}
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => setEditModal(false)} style={{ width: '46%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => setEditModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>
                                     Cancel
                                 </Text>
@@ -169,7 +169,7 @@ const EditOrder = ({ route }) => {
                             </TouchableOpacity>
 
                             {/* Save */}
-                            <TouchableOpacity onPress={handleSave} style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '46%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, gap: 4, alignItems: 'center' }}>
+                            <TouchableOpacity onPress={handleSave} style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, gap: 4, alignItems: 'center' }}>
                                 <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>
                                     Save
                                 </Text>
