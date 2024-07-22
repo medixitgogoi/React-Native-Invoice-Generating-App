@@ -61,7 +61,7 @@ const Sales = () => {
                 // const dispatchedData = dispatchedResponse.data.data;
                 const toBeDispatchedData = toBeDispatchedResponse.data.data;
                 // const allData = [...dispatchedData, ...toBeDispatchedData];
-                // console.log('datataaaa', toBeDispatchedData);
+                console.log('datataaaa', toBeDispatchedData);
 
                 // setDispatchedOrders(dispatchedData);
                 setToBeDispatchedOrders(toBeDispatchedData);

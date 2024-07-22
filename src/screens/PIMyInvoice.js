@@ -119,7 +119,7 @@ const PIMyInvoice = () => {
             </View>
 
             {/* Searchbar */}
-            <View style={{ backgroundColor: '#f1f3f6', width: '100%', paddingHorizontal: 5, paddingBottom: 20 }}>
+            <View style={{ backgroundColor: '#f1f3f6', width: '100%', paddingHorizontal: 5, paddingBottom: 10 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', backgroundColor: '#fff', borderRadius: 12, paddingHorizontal: 8, marginTop: 15, elevation: 3, width: '98%', alignSelf: 'center', borderColor: isSearchFocused ? zomatoRed : '', borderWidth: isSearchFocused ? 0.7 : 0 }}>
                     <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center' }}>
                         <View style={{ borderRadius: 10, alignItems: 'center', justifyContent: 'center', padding: 5 }}>
@@ -141,7 +141,7 @@ const PIMyInvoice = () => {
             {/* Customer Names */}
             <ScrollView style={{ flex: 1, paddingHorizontal: 5 }}>
                 <View style={{ marginBottom: 20 }}>
-                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10, marginTop: 8 }}>
+                    <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'flex-end', marginBottom: 10, marginTop: 10 }}>
                         <Text style={{ color: '#c9c9c9' }}>____________</Text>
                         <Text style={{ color: '#888888', fontSize: responsiveFontSize(1.5), fontWeight: '500', textTransform: 'uppercase' }}> All customers registered under you </Text>
                         <Text style={{ color: '#c9c9c9' }}>____________</Text>

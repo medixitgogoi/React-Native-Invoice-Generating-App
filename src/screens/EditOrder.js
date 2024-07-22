@@ -1,22 +1,24 @@
-import React, { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput, Button } from 'react-native';
+import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import Modal from "react-native-modal";
 import Icon4 from 'react-native-vector-icons/dist/Feather';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon3 from 'react-native-vector-icons/dist/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
+import Modal from "react-native-modal";
 
-const EditOrder = (route) => {
+const EditOrder = ({ route }) => {
 
-    const [details, setDetails] = useState(route?.route?.params?.data);
-    const [modalVisible, setModalVisible] = useState(false);
+    const initialData = route?.params?.data;
+
+    const [details, setDetails] = useState(initialData);
     const [editItem, setEditItem] = useState(null);
     const [editValue, setEditValue] = useState('');
     const [editModal, setEditModal] = useState(false);
     const [isPiecesFocused, setIsPiecesFocused] = useState(false);
+    const [loading, setLoading] = useState(false);
 
     const navigation = useNavigation();
 
@@ -27,7 +29,9 @@ const EditOrder = (route) => {
     };
 
     const handleSave = () => {
+
         const updatedDetails = { ...details };
+
         updatedDetails.orderDetails = updatedDetails.orderDetails.map(orderItem => {
             if (orderItem.id === editItem.item.id) {
                 orderItem.orderData = orderItem.orderData.map(orderDataItem => {
@@ -39,13 +43,24 @@ const EditOrder = (route) => {
             }
             return orderItem;
         });
+
         setDetails(updatedDetails);
         setEditModal(false);
+        setEditValue('');
+        console.log('updatedDetails', details);
     };
+
+    useEffect(() => {
+        console.log('route', initialData);
+    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", paddingBottom: 8 }}>
-            <StatusBar animated={true} backgroundColor={'#fff'} barStyle="dark-content" />
+            <StatusBar
+                animated={true}
+                backgroundColor={editModal ? "#818181" : '#fff'}
+                barStyle="dark-content"
+            />
 
             {/* Header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
@@ -64,7 +79,7 @@ const EditOrder = (route) => {
                 <View style={{ padding: 10 }}>
                     {details.orderDetails.map(item => (
                         <View style={{ backgroundColor: '#fff', borderRadius: 8, width: '100%', paddingHorizontal: 11, flexDirection: 'column', gap: 8, paddingVertical: 12, elevation: 1, marginBottom: 8 }} key={item?.id}>
-                            
+
                             {/* Header */}
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: lightZomatoRed, padding: 5, borderRadius: 8, borderColor: zomatoRed, borderWidth: 0.6 }}>
                                 <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.3), textTransform: 'uppercase', marginLeft: 5 }}>{item?.product_type}</Text>
@@ -75,6 +90,7 @@ const EditOrder = (route) => {
                             <View style={{ flexDirection: 'column', gap: 8, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 10, elevation: 1, justifyContent: 'space-between' }}>
                                 {item.orderData.map(it => (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: '100%' }} key={it?.id}>
+
                                         {/* Length */}
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, width: '40%' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Length:</Text>
@@ -88,16 +104,14 @@ const EditOrder = (route) => {
                                         </View>
 
                                         {/* Edit Option */}
-                                        <TouchableOpacity
-                                            style={{ backgroundColor: zomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }}
-                                            onPress={() => handleEdit(item, it)}
-                                        >
+                                        <TouchableOpacity style={{ backgroundColor: zomatoRed, height: 22, width: 22, flexDirection: 'row', justifyContent: 'center', alignItems: 'center', borderRadius: 5 }} onPress={() => handleEdit(item, it)}>
                                             <Icon4 name="edit" size={14} color={'#fff'} />
                                         </TouchableOpacity>
+
                                     </View>
                                 ))}
                             </View>
-                            
+
                         </View>
                     ))}
                 </View>
@@ -139,8 +153,6 @@ const EditOrder = (route) => {
                                 onFocus={() => setIsPiecesFocused(true)}
                                 onBlur={() => setIsPiecesFocused(false)}
                             />
-                            {/* <Button title="Save" onPress={handleSave} />
-                            <Button title="Cancel" color="red" onPress={() => setModalVisible(false)} /> */}
                         </View>
 
                         {/* Buttons */}
@@ -171,29 +183,7 @@ const EditOrder = (route) => {
                     </View>
                 </View>
             </Modal>
-
-            {/* Edit Modal */}
-            {/* <Modal
-                animationType="slide"
-                transparent={true}
-                visible={modalVisible}
-                onRequestClose={() => setModalVisible(false)}
-            >
-                <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', backgroundColor: 'rgba(0,0,0,0.5)' }}>
-                    <View style={{ width: '80%', backgroundColor: '#fff', borderRadius: 8, padding: 20, alignItems: 'center' }}>
-                        <Text style={{ fontSize: responsiveFontSize(2.5), marginBottom: 15, color: '#000', }}>Edit Pieces</Text>
-                        <TextInput
-                            style={{ height: 40, borderColor: 'gray', borderWidth: 1, color: '#000', width: '100%', paddingHorizontal: 10, marginBottom: 15 }}
-                            keyboardType="numeric"
-                            value={editValue}
-                            onChangeText={setEditValue}
-                        />
-                        <Button title="Save" onPress={handleSave} />
-                        <Button title="Cancel" color="red" onPress={() => setModalVisible(false)} />
-                    </View>
-                </View>
-            </Modal> */}
-
+            
         </SafeAreaView>
     );
 };
