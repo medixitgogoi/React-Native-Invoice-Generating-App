@@ -152,7 +152,7 @@ const EditOrder = ({ route }) => {
                     ))}
                 </View>
             </ScrollView>
-           
+
             {/* Edit Pieces Modal */}
             <Modal
                 isVisible={editModal}
@@ -165,19 +165,19 @@ const EditOrder = ({ route }) => {
                 style={{ justifyContent: 'flex-end', margin: 0 }}
             >
                 <View style={{ width: "100%", height: '100%', justifyContent: 'flex-end' }}>
-                    
+
                     {/* Close Button */}
                     <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setEditModal(false)}>
                         <Icon2 name="close" size={20} style={{ color: '#fff' }} />
                     </TouchableOpacity>
-                    
+
                     <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingVertical: 8 }}>
-                        
+
                         {/* Headline */}
                         <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 8, marginBottom: 10 }}>
                             <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Edit Pieces</Text>
                         </View>
-                        
+
                         {/* Update Pieces */}
                         <View style={{ flexDirection: 'column', paddingHorizontal: 14 }}>
                             <TextInput
@@ -215,18 +215,33 @@ const EditOrder = ({ route }) => {
             {/* Edit Rate Modal */}
             <Modal
                 isVisible={rateModal}
-                onBackdropPress={() => setRateModal(false)}
-                onSwipeComplete={() => setRateModal(false)}
-                onRequestClose={() => setRateModal(false)}
+                onBackdropPress={() => {
+                    setIsRateFocused(false);
+                    setRateModal(false);
+                }}
+                onSwipeComplete={() => {
+                    setIsRateFocused(false);
+                    setRateModal(false);
+                }}
+                onRequestClose={() => {
+                    setIsRateFocused(false);
+                    setRateModal(false);
+                }}
                 animationType="slide"
                 swipeDirection={['down']}
                 backdropOpacity={0.5}
                 style={{ justifyContent: 'flex-end', margin: 0 }}
             >
                 <View style={{ width: "100%", height: '100%', justifyContent: 'flex-end' }}>
-                    
+
                     {/* Close Button */}
-                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setRateModal(false)}>
+                    <TouchableOpacity
+                        style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }}
+                        onPress={() => {
+                            setIsRateFocused(false);
+                            setRateModal(false);
+                        }}
+                    >
                         <Icon2 name="close" size={20} style={{ color: '#fff' }} />
                     </TouchableOpacity>
 
