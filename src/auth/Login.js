@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image, ActivityIndicator, KeyboardAvoidingView, ImageBackground, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TextInput, TouchableOpacity, Image, ActivityIndicator, ImageBackground, Alert } from 'react-native';
 import { zomatoRed } from '../utils/colors';
 import { useState } from 'react';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -70,10 +70,13 @@ const Login = () => {
                     setPassword('');
 
                 } else {
-                    setErrors({ api: response.data.message });
+                    // setErrors({ api: response.data.message });
+                    console.log('error', response.data.message);
+                    Alert.alert(response.data.message)
                 }
             } catch (error) {
-                console.log(error);
+                console.log('errorrrrr', error);
+                // setErrors({ api: 'An error occurred. Please try again.' });
             }
         }
 
@@ -204,6 +207,9 @@ const Login = () => {
                                 </Text>
                             </LinearGradient>
                         </TouchableOpacity>
+
+                        {/* Error Message */}
+                        {errors.api && <Text style={{ color: zomatoRed, textAlign: 'center', fontSize: responsiveFontSize(2) }}>{errors.api}</Text>}
 
                     </View>
 
