@@ -213,7 +213,7 @@ const Sales = () => {
             {loading ? (
                 <ScrollView contentContainerStyle={{ paddingHorizontal: 10 }}>
                     {Array(6).fill(null).map((_, index) => (
-                        <View key={index} style={{ width: '100%', borderRadius: 8, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', marginBottom: 10 }}>
+                        <View key={index} style={{ width: '100%', borderRadius: 13, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', marginBottom: 10 }}>
                             <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                                 <View style={{ flexDirection: 'column', }}>
                                     <ShimmerPlaceHolder autoRun style={{ width: responsiveFontSize(18), height: responsiveFontSize(1.8), marginBottom: 5 }} />
