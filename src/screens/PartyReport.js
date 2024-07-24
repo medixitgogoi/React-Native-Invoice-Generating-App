@@ -58,7 +58,7 @@ const PartyReport = () => {
         // console.log('data', toBeDispatchedData);
 
         const allData = [...dispatchedData, ...toBeDispatchedData];
-        console.log(allData);
+        // console.log(allData);
 
         setDispatchedOrders(dispatchedData);
         setToBeDispatchedOrders(toBeDispatchedData);

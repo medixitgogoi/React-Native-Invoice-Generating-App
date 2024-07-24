@@ -1,7 +1,7 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
-import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
+import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
 import Icon4 from 'react-native-vector-icons/dist/Feather';
