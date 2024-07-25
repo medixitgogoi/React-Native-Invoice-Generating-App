@@ -110,7 +110,8 @@ const Sales = () => {
         };
 
         return (
-            <View style={{ width: '95%', alignSelf: 'center', marginBottom: 10, borderRadius: 13, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
+            <View style={{ width: '95%', alignSelf: 'center', marginBottom: 8, borderRadius: 13, flexDirection: 'column', borderColor: '#6f8990', borderWidth: 0.5, overflow: 'hidden', backgroundColor: '#fff', elevation: 1, }}>
+
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                     <View style={{ flexDirection: 'column', }}>
                         <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
@@ -130,6 +131,7 @@ const Sales = () => {
                         </View>
                     )} */}
                 </View>
+
                 <View style={{ padding: 12 }}>
                     <View style={{ flexDirection: 'column', gap: 5, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, borderStyle: 'dashed', paddingBottom: 10 }}>
                         {item.orderDetails.map(itemDetail => {
@@ -166,12 +168,13 @@ const Sales = () => {
 
                     </View>
                 </View>
+
             </View>
         );
     };
 
     return (
-        <SafeAreaView style={{ flex: 1 }}>
+        <SafeAreaView style={{ flex: 1, paddingBottom: 30 }}>
             <StatusBar
                 animated={true}
                 backgroundColor={'#fff'}
