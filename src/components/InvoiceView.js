@@ -267,7 +267,7 @@ const InvoiceView = (route) => {
           <div style="flexDirection: column; alignItems: center">
             <h6 style="margin: 0; font-size: 7px; font-weight: 600;">ESTIMATE</h6>
             <h5 style="font-size: 7px; margin: 0; font-weight: 500; margin-top: 0.5px;">PARTY: ${details.client_name}</h5>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 400; margin-top: 0.5px;">Site: Ganeshguri</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 400; margin-top: 0.5px;">Site: ${details.site_name}</h6>
           </div>
 
           <div style="flexDirection: row; alignItems: center; justifyContent: space-between; margin-top: 0.5px;">
@@ -738,7 +738,7 @@ const InvoiceView = (route) => {
                 </div>
                 
                 <table class="table">
-                <thead>
+                  <thead>
                     <tr>
                     <th style="width: 23%; ">Material (Hi-rib)</th>
                     <th style="width: 8%; ">Thick (mm)</th>
@@ -749,11 +749,11 @@ const InvoiceView = (route) => {
                     <th style="width: 17%; ">Rate (In ₹)</th>
                     <th style="width: 14%; ">Amount (In Rs.)</th>
                     </tr>
-                </thead>
+                  </thead>
 
-                <tbody>
+                  <tbody>
                     ${generateTableRows()}
-                </tbody>
+                  </tbody>
                 
                 </table>
 
@@ -783,7 +783,7 @@ const InvoiceView = (route) => {
                 </table>
 
                 <div style="width: 100%;">
-                <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
+                  <p style="font-size: 12px; font-weight: 400; margin: 2px;"><em>(Rupees ${numberToWords(calculateTotalPrice())} Only)</em></p>
                 </div>
 
                 <div style="${NoOfItems() > 15 && NoOfItems() < 24 ? `page-break-before: always;` : ``};">
