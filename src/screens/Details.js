@@ -68,9 +68,9 @@ const Details = () => {
 
             formData.append('name', partyName);
             formData.append('site_name', siteName);
-            formData.append('pan', panNo);
+            formData.append('pan', panNo ? panNo : 'Not specified');
             formData.append('mobile', contact);
-            formData.append('gst', gstin);
+            formData.append('gst', gstin ? gstin : 'Not specified');
 
             // Make API call to post customer details
             const response = await axios.post('/employee/client/submit', formData, {
@@ -218,17 +218,23 @@ const Details = () => {
             newErrors.contact = '*Mobile number must be exactly 10 digits';
         }
 
-        if (!panNo) {
-            newErrors.panNo = '*PAN number is required';
-        } else if (!/^[a-zA-Z0-9]{10}$/.test(panNo)) {
-            newErrors.panNo = '*PAN number must be exactly 10 alphanumeric characters';
-        }
+        // if (!/^[a-zA-Z0-9]{10}$/.test(panNo)) {
+        //     newErrors.panNo = '*PAN number must be exactly 10 alphanumeric characters';
+        // }
+        // if (!panNo) {
+        //     newErrors.panNo = '*PAN number is required';
+        // } else if (!/^[a-zA-Z0-9]{10}$/.test(panNo)) {
+        //     newErrors.panNo = '*PAN number must be exactly 10 alphanumeric characters';
+        // }
 
-        if (!gstin) {
-            newErrors.gstin = '*GSTIN number is required';
-        } else if (!/^[a-zA-Z0-9]{15}$/.test(gstin)) {
-            newErrors.gstin = '*GSTIN number must be exactly 15 digits';
-        }
+        // if (!/^[a-zA-Z0-9]{15}$/.test(gstin)) {
+        //     newErrors.gstin = '*GSTIN number must be exactly 15 digits';
+        // }
+        // if (!gstin) {
+        //     newErrors.gstin = '*GSTIN number is required';
+        // } else if (!/^[a-zA-Z0-9]{15}$/.test(gstin)) {
+        //     newErrors.gstin = '*GSTIN number must be exactly 15 digits';
+        // }
 
         setErrors(newErrors);
 
@@ -359,7 +365,11 @@ const Details = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', borderRadius: 50, backgroundColor: zomatoRed }}>
                                         <Icon2 name="card" size={14} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.pan}</Text>
+                                    {userDetails[0]?.pan === 'Not specified' ? (
+                                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2), fontWeight: '400', fontStyle: 'italic' }}>{userDetails[0]?.pan}</Text>
+                                    ) : (
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.pan}</Text>
+                                    )}
                                 </View>
 
                                 {/* Contact no */}
@@ -375,7 +385,11 @@ const Details = () => {
                                     <View style={{ width: 25, height: 25, justifyContent: 'center', alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 50 }}>
                                         <Icon3 name="barcode" size={13} style={{ color: lightZomatoRed }} />
                                     </View>
-                                    <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.gstin}</Text>
+                                    {userDetails[0]?.gstin === 'Not specified' ? (
+                                        <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2), fontWeight: '400', fontStyle: 'italic' }}>{userDetails[0]?.gstin}</Text>
+                                    ) : (
+                                        <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>{userDetails[0]?.gstin}</Text>
+                                    )}
                                 </View>
 
                             </View>
@@ -503,14 +517,14 @@ const Details = () => {
                                             style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                             onChangeText={setPanNo}
                                             value={panNo}
-                                            maxLength={10}
+                                            // maxLength={10}
                                             placeholderTextColor="#abb0ba"
                                             onFocus={() => setIsPanNoFocused(true)}
                                             onBlur={() => setIsPanNoFocused(false)}
                                         />
                                     </View>
                                 </View>
-                                {errors.panNo && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6) }}>{errors.panNo}</Text>}
+                                {/* {errors.panNo && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6) }}>{errors.panNo}</Text>} */}
 
                                 {/* Contact */}
                                 <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 15, paddingHorizontal: 15, paddingVertical: 10, gap: 4, elevation: 1 }}>
@@ -546,14 +560,14 @@ const Details = () => {
                                             style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                             onChangeText={setGstin}
                                             value={gstin}
-                                            maxLength={15}
+                                            // maxLength={15}
                                             placeholderTextColor="#abb0ba"
                                             onFocus={() => setIsGstinFocused(true)}
                                             onBlur={() => setIsGstinFocused(false)}
                                         />
                                     </View>
                                 </View>
-                                {errors.gstin && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), }}>{errors.gstin}</Text>}
+                                {/* {errors.gstin && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), }}>{errors.gstin}</Text>} */}
 
                                 {error && (
                                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right' }}>* Please fill all the details. All the fields are necessary.</Text>

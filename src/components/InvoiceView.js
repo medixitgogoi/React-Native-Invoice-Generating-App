@@ -855,9 +855,9 @@ const InvoiceView = (route) => {
 
   return (
     <View>
-      
+
       {/* Share button */}
-      <TouchableOpacity style={{ marginVertical: 20,  backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
+      <TouchableOpacity style={{ marginVertical: 20, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
         <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
           <Icon2 name="share" size={13} color={zomatoRed} />
         </View>

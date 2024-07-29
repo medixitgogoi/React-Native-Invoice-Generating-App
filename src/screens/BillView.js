@@ -30,9 +30,9 @@ const OrderDetails = ({ route }) => {
   const loadingCharge = route.params.loading;
   const transportCharge = route.params.transport;
 
-  console.log('bendCharge', typeof (bendCharge))
-  console.log('loadingCharge', typeof (loadingCharge))
-  console.log('transportCharge', typeof (transportCharge))
+  // console.log('bendCharge', typeof (bendCharge))
+  // console.log('loadingCharge', typeof (loadingCharge))
+  // console.log('transportCharge', typeof (transportCharge))
 
   const [name, setName] = useState('');
   const [site, setSite] = useState('');

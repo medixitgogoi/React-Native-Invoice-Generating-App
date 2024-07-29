@@ -67,9 +67,9 @@ const Profile = () => {
                     </View>
 
                     {/* Name and Email */}
-                    <View style={{ flexDirection: 'column', }}>
-                        <Text style={{ fontSize: responsiveFontSize(2.8), fontWeight: '600', color: '#000', textTransform: 'uppercase' }}>{loginDetails[0]?.name}</Text>
-                        <Text style={{ fontSize: responsiveFontSize(2), color: '#656565' }}>{loginDetails[0]?.email}</Text>
+                    <View style={{ flexDirection: 'column', gap: 3 }}>
+                        <Text style={{ fontSize: responsiveFontSize(2.5), fontWeight: '600', color: '#000', textTransform: 'uppercase', width: '80%' }}>{loginDetails[0]?.name}</Text>
+                        <Text style={{ fontSize: responsiveFontSize(1.8), color: '#656565', width: '80%' }}>{loginDetails[0]?.email}</Text>
                     </View>
 
                 </View>

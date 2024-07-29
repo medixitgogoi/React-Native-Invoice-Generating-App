@@ -132,7 +132,7 @@ const PIMyInvoice = () => {
                             value={search}
                             onFocus={() => setIsSearchFocused(true)}
                             onBlur={() => setIsSearchFocused(false)}
-                            style={{ flex: 1, fontSize: responsiveFontSize(2.1), color: '#000', paddingVertical: 5 }}
+                            style={{ flex: 1, fontSize: responsiveFontSize(2.1), color: '#000', paddingVertical: 5, fontWeight: '500' }}
                         />
                     </View>
                 </View>
