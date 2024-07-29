@@ -43,7 +43,8 @@ const OrderDetails = ({ route }) => {
   const userDetails = useSelector(state => state.user);
   const billDetails = useSelector(state => state.bill);
 
-  // console.log('billDetails', billDetails);
+  console.log('billDetails', billDetails);
+  console.log('userDetails', userDetails);
 
   const calculateTotalPrice = () => {
     let amount = 0;
@@ -476,9 +477,9 @@ const OrderDetails = ({ route }) => {
         </div>
 
         <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
-          <h6 style="font-weight: 400; "><strong>PAN:</strong> ${pan}</h6>
-          <h6 style="font-weight: 400; "><strong>Contact No.:</strong> ${contact}</h6>
-          <h6 style="font-weight: 400; "><strong>GSTIN:</strong> ${gstin}</h6>
+            ${pan == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN: ${pan}</h6>'}
+            <h6 style="font-weight: 400; "><strong>Contact No.:</strong> ${contact}</h6>
+            ${gstin == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN: ${gstin}</h6>'}
         </div>
         
         <table class="table">
@@ -729,9 +730,9 @@ const OrderDetails = ({ route }) => {
           </div>
 
           <div style="flexDirection: row; alignItems: center; justifyContent: space-between; margin-top: 0.5px;">
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN: ${pan}</h6>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">Contact No.: ${contact}</h6>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN: ${gstin}</h6>
+            ${pan == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN: ${pan}</h6>'}
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500;">Contact No.: ${contact}</h6>
+            ${gstin == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN: ${gstin}</h6>'}
           </div>
         
         </div>
