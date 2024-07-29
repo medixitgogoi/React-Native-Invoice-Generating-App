@@ -114,9 +114,9 @@ const Details = () => {
             formData.append('client_id', clientId);
             formData.append('name', partyName);
             formData.append('site_name', siteName);
-            formData.append('pan', panNo);
+            formData.append('pan', panNo ? panNo : 'Not specified');
             formData.append('mobile', contact);
-            formData.append('gst', gstin);
+            formData.append('gst', gstin ? gstin : 'Not specified');
 
             // Make API call to update customer details
             const response = await axios.post('/employee/client/submit', formData, {
