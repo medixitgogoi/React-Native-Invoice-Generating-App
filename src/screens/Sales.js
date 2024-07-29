@@ -174,7 +174,7 @@ const Sales = () => {
     };
 
     return (
-        <SafeAreaView style={{ flex: 1, paddingBottom: 30 }}>
+        <SafeAreaView style={{ flex: 1, paddingBottom: 10 }}>
             <StatusBar
                 animated={true}
                 backgroundColor={'#fff'}
