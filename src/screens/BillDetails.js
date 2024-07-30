@@ -19,8 +19,6 @@ const BillDetails = () => {
 
     const [clientId, setClientId] = useState(null);
 
-    console.log("userDetailsssss", userDetails);
-
     const navigation = useNavigation();
 
     const [bend, setBend] = useState(0);
@@ -342,17 +340,17 @@ const BillDetails = () => {
 
                             {/* Total price */}
                             <View style={{ backgroundColor: modalBackColor, width: '100%', borderRadius: 5, flexDirection: 'column', paddingVertical: 7, elevation: 2 }}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 12, }}>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Total price of the products</Text>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹{indianNumberFormat(calculateTotalPrice())}.00</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, }}>
+                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.1), fontWeight: '500' }}>Total price of the products</Text>
+                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹{indianNumberFormat(calculateTotalPrice())}</Text>
                                 </View>
                             </View>
 
                             {/* Total amount to be paid */}
                             <View style={{ backgroundColor: lightZomatoRed, width: '100%', borderRadius: 5, flexDirection: 'column', paddingVertical: 8 }}>
-                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 12, }}>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>total amount to be paid</Text>
-                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹{indianNumberFormat(calculateTotalAmount() ? calculateTotalAmount() : calculateTotalPrice())}.00</Text>
+                                <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', paddingHorizontal: 10, }}>
+                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2), fontWeight: '600', textTransform: 'uppercase' }}>total amount to be paid</Text>
+                                    <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: '600' }}>₹{indianNumberFormat(calculateTotalAmount() ? calculateTotalAmount() : calculateTotalPrice())}</Text>
                                 </View>
                             </View>
 
