@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, TouchableOpacity, ScrollView } from 'react-native';
+import { StyleSheet, Text, View, TouchableOpacity, ScrollView, Alert } from 'react-native';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import PinchZoomView from 'react-native-pinch-zoom-view';
@@ -11,7 +11,6 @@ import { useSelector } from 'react-redux';
 const InvoiceView = (route) => {
 
   const details = route?.detail;
-  console.log("details", details);
 
   const loginDetails = useSelector(state => state.login);
 
@@ -837,8 +836,6 @@ const InvoiceView = (route) => {
       const pdf = await RNHTMLtoPDF.convert(pdfOptions);
       const pdfPath = pdf.filePath;
 
-      console.log(pdfPath);
-
       // Share the PDF
       const shareOptions = {
         title: 'Share Invoice',
@@ -849,7 +846,7 @@ const InvoiceView = (route) => {
 
       await Share.open(shareOptions);
     } catch (error) {
-      console.error(error);
+      Alert.alert(error.message);
     }
   };
 

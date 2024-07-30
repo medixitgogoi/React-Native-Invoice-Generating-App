@@ -89,8 +89,6 @@ const EditOrder = ({ route }) => {
                 }
             });
 
-            console.log('piecesResponse', response.data.data);
-
             setLoading(false);
 
         } catch (error) {
@@ -100,7 +98,6 @@ const EditOrder = ({ route }) => {
         setDetails(updatedDetails);
         setEditModal(false);
         setEditValue('');
-        // console.log('updatedPiecesDetails', details);
     };
 
     // rate edit
@@ -158,8 +155,6 @@ const EditOrder = ({ route }) => {
                 }
             });
 
-            console.log('rateResponse', response.data.data);
-
             setLoading(false);
 
         } catch (error) {
@@ -169,7 +164,6 @@ const EditOrder = ({ route }) => {
         setDetails(updatedDetails);
         setRateModal(false);
         setRateValue('');
-        // console.log('updatedRateDetails', details);
     };
 
     return (

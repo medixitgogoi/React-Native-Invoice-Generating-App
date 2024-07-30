@@ -17,9 +17,6 @@ const PartyReportDetails = ({ route }) => {
 
     const { orders, clientName } = route.params;
 
-    // console.log('orders', orders);
-    // console.log('name', clientName);
-
     const [loading, setLoading] = useState(true);
     const [filteredOrders, setFilteredOrders] = useState([]);
 
@@ -124,8 +121,6 @@ const PartyReportDetails = ({ route }) => {
             </View>
         );
     };
-
-    // console.log('filteredOrders', filteredOrders);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>

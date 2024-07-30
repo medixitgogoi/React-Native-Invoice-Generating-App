@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Image, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, StatusBar, SafeAreaView, TouchableOpacity, TextInput, ScrollView, Image, ActivityIndicator, Alert } from 'react-native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
@@ -93,7 +93,7 @@ const Details = () => {
             }));
 
         } catch (error) {
-            console.error('Error fetching data:', error);
+            Alert.alert(error.message)
         } finally {
             setLoading(false);
         }
@@ -125,9 +125,6 @@ const Details = () => {
 
             // Extract updated customer data from response
             const updatedCustomerData = response?.data?.data;
-            console.log("updatedCustomerDetails", response);
-
-            // console.log("formData", formData);
 
             // Dispatch actions to update Redux store
             dispatch(addUser({
@@ -141,7 +138,7 @@ const Details = () => {
 
         } catch (error) {
             // Log error
-            console.error('Error updating data:', error);
+            Alert.alert(error.message);
             // Optional: Provide user feedback or additional error handling here
         } finally {
             // Reset loading state and close modals
@@ -179,7 +176,6 @@ const Details = () => {
                 setCustomerModal(false);
                 setError(false);
 
-                // console.log("Dixit", userDetails);
             }
         }
     }
@@ -198,8 +194,6 @@ const Details = () => {
 
                 setCustomerModal(false);
                 setError(false);
-
-                console.log("Dixit", userDetails);
             }
         }
     };
@@ -217,7 +211,6 @@ const Details = () => {
 
     const removeUserHandler = () => {
         dispatch(deleteUser());
-        // console.log("removeUser", userDetails);
         setPartyName('')
         setSiteName('');
         setPanNo('');
@@ -266,7 +259,6 @@ const Details = () => {
     const addCustomerHandler = () => {
         dispatch(deleteUser());
         setCustomerModal(true);
-        // console.log("addCustomer", userDetails)
     };
 
     return (

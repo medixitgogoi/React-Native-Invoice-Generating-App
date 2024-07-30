@@ -77,7 +77,7 @@ const PIMyInvoice = () => {
                     setCustomerData(response?.data?.data);
                     setFilteredNames(response?.data?.data);
                 } catch (error) {
-                    console.log(error?.message)
+                    Alert.alert(error.message)
                 } finally {
                     setLoading(false);
                 }

@@ -50,8 +50,6 @@ const Login = () => {
                     }
                 );
 
-                console.log("loginResponse: ", response?.data);
-
                 if (response.data.status) {
 
                     const userInfo = {
@@ -62,7 +60,6 @@ const Login = () => {
                     };
 
                     dispatch(addLoginUser(userInfo));
-                    console.log("userDetailsLogin: ", loginDetails);
 
                     await AsyncStorage.setItem('loginDetails', JSON.stringify(userInfo));
 
@@ -70,13 +67,10 @@ const Login = () => {
                     setPassword('');
 
                 } else {
-                    // setErrors({ api: response.data.message });
-                    console.log('error', response.data.message);
                     Alert.alert(response.data.message)
                 }
             } catch (error) {
-                console.log('errorrrrr', error);
-                // setErrors({ api: 'An error occurred. Please try again.' });
+                Alert.alert(error.message)
             }
         }
 

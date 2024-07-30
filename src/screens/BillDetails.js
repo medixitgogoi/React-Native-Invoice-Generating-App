@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView, ActivityIndicator } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView, ActivityIndicator, Alert } from 'react-native';
 import { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
@@ -32,8 +32,6 @@ const BillDetails = () => {
     useEffect(() => {
         setClientId(userDetails[0]?.id);
     }, []);
-
-    console.log("clienId", clientId);
 
     function indianNumberFormat(number) {
 
@@ -91,8 +89,6 @@ const BillDetails = () => {
 
         setAppLoad(true);
 
-        console.log("dednededd", userDetails);
-
         const mapProductDetails = (productDetails) => {
             return productDetails.map(product => ({
                 unit_id: product.unit.id,
@@ -142,12 +138,9 @@ const BillDetails = () => {
                     'content-type': 'multipart/form-data',
                 },
             });
-            // setData(response.data.data);
-            console.log('dataaaaaa', data);
-            console.log("productDetailsFromBackend: ", response.data);
             navigation.navigate('BillView', { bend: parseInt(bend), loading: parseInt(loading), transport: parseInt(transport) });
         } catch (error) {
-            console.error('Error fetching data:', error);
+            Alert.alert(error.message)
         } finally {
             setAppLoad(false);
         }
@@ -156,8 +149,6 @@ const BillDetails = () => {
     const removeProductHandler = (item) => {
         dispatch(removeItemFromBill(item))
     }
-
-    // console.log('cllientId', clientId);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", }}>

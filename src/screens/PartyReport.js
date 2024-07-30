@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar, SafeAreaView } from 'react-native';
+import { ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar, SafeAreaView, Alert } from 'react-native';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useNavigation } from '@react-navigation/native';
@@ -55,10 +55,8 @@ const PartyReport = () => {
 
         const dispatchedData = dispatchedResponse.data.data;
         const toBeDispatchedData = toBeDispatchedResponse.data.data;
-        // console.log('data', toBeDispatchedData);
 
         const allData = [...dispatchedData, ...toBeDispatchedData];
-        // console.log(allData);
 
         setDispatchedOrders(dispatchedData);
         setToBeDispatchedOrders(toBeDispatchedData);
@@ -81,11 +79,9 @@ const PartyReport = () => {
         setFilteredNames(uniqueNames);
 
       } catch (error) {
-        console.log(error);
+        Alert.alert(error.message);
       } finally {
         setLoading(false);
-        // console.log('uniqueClientNames', uniqueClientNames);
-        console.log(allOrders);
       }
     };
 

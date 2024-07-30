@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, TextInput, Image, FlatList } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, TouchableOpacity, ScrollView, StatusBar, TextInput, Image, FlatList, Alert } from 'react-native';
 import { lightZomatoRed, zomatoRed } from '../utils/colors'
 import { responsiveFontSize } from 'react-native-responsive-dimensions'
 import { useState, useEffect, useMemo, useCallback } from 'react'
@@ -78,10 +78,8 @@ const DispatchedOrders = () => {
                 setDetails(data);
                 setFilteredNames(data);
 
-                console.log("Detailssss", data);
-
             } catch (error) {
-                console.log(error);
+                Alert.alert(error.message);
             } finally {
                 setLoading(false);
             }

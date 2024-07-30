@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import { StyleSheet } from 'react-native';
+import { Alert, StyleSheet } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import AuthStackNavigator from './AuthStackNavigator';
 import GuestStackNavigator from './GuestStackNavigator';
@@ -28,7 +28,7 @@ const StackNavigation = () => {
                     dispatch(addLoginUser(JSON.parse(storedLoginDetails)));
                 }
             } catch (error) {
-                console.error('Failed to load login details:', error);
+                Alert.alert(error.message)
             } finally {
                 setIsAppLoading(false);
             }

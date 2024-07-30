@@ -1,5 +1,5 @@
 import { useCallback, useEffect, useState, useMemo } from 'react';
-import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar } from 'react-native';
+import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -59,7 +59,6 @@ const Sales = () => {
                     // const dispatchedData = dispatchedResponse.data.data;
                     const toBeDispatchedData = toBeDispatchedResponse.data.data;
                     // const allData = [...dispatchedData, ...toBeDispatchedData];
-                    console.log('datataaaa', toBeDispatchedData);
 
                     // setDispatchedOrders(dispatchedData);
                     setToBeDispatchedOrders(toBeDispatchedData);
@@ -67,7 +66,7 @@ const Sales = () => {
                     setFilteredNames(toBeDispatchedData);
 
                 } catch (error) {
-                    console.log(error);
+                    Alert.alert(error.message);
                 } finally {
                     setLoading(false);
                 }

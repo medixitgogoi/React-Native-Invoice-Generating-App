@@ -1,4 +1,4 @@
-import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image } from 'react-native'
+import { Dimensions, ScrollView, StyleSheet, Text, TouchableOpacity, View, Image, Alert } from 'react-native'
 import { zomatoRed, lightZomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import PinchZoomView from 'react-native-pinch-zoom-view';
@@ -12,7 +12,6 @@ const DispatchOrderView = (route) => {
     const screenWidth = Dimensions.get('window').width;
 
     const details = route?.detail;
-    // console.log('details', details);
 
     const now = new Date();
 
@@ -23,7 +22,6 @@ const DispatchOrderView = (route) => {
     const formattedDate = `${day}-${month}-${year}`;
 
     const loginDetails = useSelector(state => state.login);
-    console.log('loginDetails', loginDetails);
 
     const NoOfItems = () => {
         let items = 0;
@@ -173,7 +171,6 @@ const DispatchOrderView = (route) => {
     const generateInvoice = async () => {
 
         try {
-            // Generate PDF
             const pdfOptions = {
                 html: htmlContent,
                 fileName: 'ColourTuff_DO',
@@ -183,9 +180,6 @@ const DispatchOrderView = (route) => {
             const pdf = await RNHTMLtoPDF.convert(pdfOptions);
             const pdfPath = pdf.filePath;
 
-            console.log(pdfPath);
-
-            // Share the PDF
             const shareOptions = {
                 title: 'Share Invoice',
                 url: `file://${pdfPath}`,
@@ -195,7 +189,7 @@ const DispatchOrderView = (route) => {
 
             await Share.open(shareOptions);
         } catch (error) {
-            console.error(error);
+            Alert.alert(error.message);
         }
     };
 
@@ -220,7 +214,7 @@ const DispatchOrderView = (route) => {
 
     return (
         <View>
-            
+
             {/* Share button */}
             <TouchableOpacity style={{ marginVertical: 20, backgroundColor: zomatoRed, width: '100%', borderRadius: 8, padding: 6, alignSelf: 'center', flexDirection: 'row', justifyContent: 'center', alignItems: 'center', height: 40, gap: 7 }} onPress={generateInvoice}>
                 <View style={{ backgroundColor: lightZomatoRed, borderRadius: 4, flexDirection: 'row', alignItems: 'center', justifyContent: 'center', elevation: 1, height: 22, width: 22 }}>
@@ -229,6 +223,7 @@ const DispatchOrderView = (route) => {
                 <Text style={{ color: '#fff', fontWeight: '600', fontSize: responsiveFontSize(2.1), textTransform: 'uppercase' }}>Share PDF</Text>
             </TouchableOpacity>
 
+            {/* Dispatch pdf */}
             <ScrollView>
                 <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingBottom: 20, marginBottom: 30, }}>
 
