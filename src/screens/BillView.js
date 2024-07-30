@@ -43,8 +43,8 @@ const OrderDetails = ({ route }) => {
   const userDetails = useSelector(state => state.user);
   const billDetails = useSelector(state => state.bill);
 
-  console.log('billDetails', billDetails);
-  console.log('userDetails', userDetails);
+  // console.log('billDetails', billDetails);
+  // console.log('userDetails', userDetails);
 
   const calculateTotalPrice = () => {
     let amount = 0;

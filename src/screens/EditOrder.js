@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { useNavigation } from '@react-navigation/native';
-import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput } from 'react-native';
+import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon4 from 'react-native-vector-icons/dist/Feather';
@@ -8,10 +8,15 @@ import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon3 from 'react-native-vector-icons/dist/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Modal from "react-native-modal";
+import axios from 'axios';
+import { useSelector } from 'react-redux';
+import { beginAsyncEvent } from 'react-native/Libraries/Performance/Systrace';
 
 const EditOrder = ({ route }) => {
 
     const initialData = route?.params?.data;
+
+    const loginDetails = useSelector(state => state.login);
 
     const [details, setDetails] = useState(initialData);
     const [editItem, setEditItem] = useState(null);
@@ -56,18 +61,67 @@ const EditOrder = ({ route }) => {
         console.log('updatedPiecesDetails', details);
     };
 
-    const handleRateSave = () => {
+    const handleRateSave = async () => {
+
         const updatedDetails = { ...details };
+
         updatedDetails.orderDetails = updatedDetails.orderDetails.map(orderItem => {
             if (orderItem.id === editItem.id) {
                 orderItem.rate = rateValue;
             }
             return orderItem;
         });
+
+        const calculateTotalPrice = () => {
+            let amount = 0;
+
+            updatedDetails.orderDetails.map(item => {
+                let total = 0;
+
+                item.orderData.map(item => {
+                    total += parseInt(item.length) * parseInt(item.quantity);
+                })
+
+                amount += total * item.rate;
+
+            })
+
+            // return amount + parseInt(updatedDetails.bend_charge) + parseInt(updatedDetails.loading_charge) + parseInt(updatedDetails.transport_charge);
+            return amount;
+        };
+
+        try {
+            setLoading(true);
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+
+            const formData = new FormData();
+
+            formData.append('order_detail_id', editItem.id);
+            formData.append('rate', rateValue);
+            formData.append('order_data_id', editItem.orderData[0].id);
+            formData.append('quantity', editItem.orderData[0].quantity);
+            formData.append('total_amount', calculateTotalPrice());
+
+            // Make API call to post customer details
+            const response = await axios.post('/employee/order/update', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            console.log('response', response.data.data);
+
+            setLoading(false);
+
+        } catch (error) {
+            Alert.alert(error?.message)
+        }
+
         setDetails(updatedDetails);
         setRateModal(false);
         setRateValue('');
-        console.log('updatedRateDetails', details);
+        // console.log('updatedRateDetails', details);
     };
 
     useEffect(() => {
@@ -153,65 +207,6 @@ const EditOrder = ({ route }) => {
                 </View>
             </ScrollView>
 
-            {/* Edit Pieces Modal */}
-            <Modal
-                isVisible={editModal}
-                onBackdropPress={() => setEditModal(false)}
-                onSwipeComplete={() => setEditModal(false)}
-                onRequestClose={() => setEditModal(false)}
-                animationType="slide"
-                swipeDirection={['down']}
-                backdropOpacity={0.5}
-                style={{ justifyContent: 'flex-end', margin: 0 }}
-            >
-                <View style={{ width: "100%", height: '100%', justifyContent: 'flex-end' }}>
-
-                    {/* Close Button */}
-                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setEditModal(false)}>
-                        <Icon2 name="close" size={20} style={{ color: '#fff' }} />
-                    </TouchableOpacity>
-
-                    <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingVertical: 8 }}>
-
-                        {/* Headline */}
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 8, marginBottom: 10 }}>
-                            <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Edit Pieces</Text>
-                        </View>
-
-                        {/* Update Pieces */}
-                        <View style={{ flexDirection: 'column', paddingHorizontal: 14 }}>
-                            <TextInput
-                                style={{ borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, height: 40, color: '#000', width: '100%', paddingHorizontal: 10, marginBottom: 15, backgroundColor: '#fff', borderRadius: 8, elevation: 1, fontWeight: '600' }}
-                                keyboardType="numeric"
-                                value={editValue}
-                                onChangeText={setEditValue}
-                                onFocus={() => setIsPiecesFocused(true)}
-                                onBlur={() => setIsPiecesFocused(false)}
-                            />
-                        </View>
-
-                        {/* Buttons */}
-                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 5, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
-                            {/* Cancel */}
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => setEditModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
-                                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>Cancel</Text>
-                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 19, height: 19, alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
-                                    <Icon2 name="close" size={15} style={{ color: lightZomatoRed }} />
-                                </View>
-                            </TouchableOpacity>
-                            {/* Save */}
-                            <TouchableOpacity onPress={handlePiecesSave} style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, gap: 4, alignItems: 'center' }}>
-                                <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Save</Text>
-                                <View style={{ backgroundColor: lightZomatoRed, width: 19, height: 19, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderEndWidth: 0.6 }}>
-                                    <Icon3 name="save" size={15} color={zomatoRed} />
-                                </View>
-                            </TouchableOpacity>
-                        </View>
-
-                    </View>
-                </View>
-            </Modal>
-
             {/* Edit Rate Modal */}
             <Modal
                 isVisible={rateModal}
@@ -275,9 +270,80 @@ const EditOrder = ({ route }) => {
                                 </View>
                             </TouchableOpacity>
 
-                            {/* Save */}
-                            <TouchableOpacity onPress={handleRateSave} style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, gap: 4, alignItems: 'center' }}>
-                                <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Save</Text>
+                            {/* Update */}
+                            <TouchableOpacity onPress={handleRateSave} style={{ backgroundColor: loading ? '#e1e1e1' : zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: loading ? 2 : 4, borderColor: loading ? '#000' : '', borderWidth: loading ? 0.3 : 0, gap: 4, alignItems: 'center' }}>
+                                {loading ? (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
+                                        <ActivityIndicator size="small" color='#5a5a5a' />
+                                        <Text style={{ color: '#5a5a5a' }}>Updating data ...</Text>
+                                    </View>
+                                ) : (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Update</Text>
+                                        <View style={{ backgroundColor: lightZomatoRed, width: 19, height: 19, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderEndWidth: 0.6 }}>
+                                            <Icon3 name="save" size={15} color={zomatoRed} />
+                                        </View>
+                                    </View>
+                                )}
+                            </TouchableOpacity>
+
+                        </View>
+
+                    </View>
+                </View>
+            </Modal>
+
+            {/* Edit Pieces Modal */}
+            <Modal Modal
+                isVisible={editModal}
+                onBackdropPress={() => setEditModal(false)}
+                onSwipeComplete={() => setEditModal(false)}
+                onRequestClose={() => setEditModal(false)}
+                animationType="slide"
+                swipeDirection={['down']}
+                backdropOpacity={0.5}
+                style={{ justifyContent: 'flex-end', margin: 0 }}
+            >
+                <View style={{ width: "100%", height: '100%', justifyContent: 'flex-end' }}>
+
+                    {/* Close Button */}
+                    <TouchableOpacity style={{ alignSelf: 'center', backgroundColor: '#000', flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 35, height: 35, borderRadius: 50, marginBottom: 10 }} onPress={() => setEditModal(false)}>
+                        <Icon2 name="close" size={20} style={{ color: '#fff' }} />
+                    </TouchableOpacity>
+
+                    <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingVertical: 8 }}>
+
+                        {/* Headline */}
+                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 8, marginBottom: 10 }}>
+                            <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Edit Pieces</Text>
+                        </View>
+
+                        {/* Update Pieces */}
+                        <View style={{ flexDirection: 'column', paddingHorizontal: 14 }}>
+                            <TextInput
+                                style={{ borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, height: 40, color: '#000', width: '100%', paddingHorizontal: 10, marginBottom: 15, backgroundColor: '#fff', borderRadius: 8, elevation: 1, fontWeight: '600' }}
+                                keyboardType="numeric"
+                                value={editValue}
+                                onChangeText={setEditValue}
+                                onFocus={() => setIsPiecesFocused(true)}
+                                onBlur={() => setIsPiecesFocused(false)}
+                            />
+                        </View>
+
+                        {/* Buttons */}
+                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 5, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
+
+                            {/* Cancel */}
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => setEditModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                                <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>Cancel</Text>
+                                <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 19, height: 19, alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
+                                    <Icon2 name="close" size={15} style={{ color: lightZomatoRed }} />
+                                </View>
+                            </TouchableOpacity>
+
+                            {/* Update */}
+                            <TouchableOpacity onPress={handlePiecesSave} style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, gap: 4, alignItems: 'center' }}>
+                                <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Update</Text>
                                 <View style={{ backgroundColor: lightZomatoRed, width: 19, height: 19, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderEndWidth: 0.6 }}>
                                     <Icon3 name="save" size={15} color={zomatoRed} />
                                 </View>

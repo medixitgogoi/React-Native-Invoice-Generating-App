@@ -3,7 +3,7 @@ import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInp
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useNavigation } from '@react-navigation/native';
+import { useNavigation, useFocusEffect } from '@react-navigation/native';
 import Icon4 from 'react-native-vector-icons/dist/Feather';
 import Icon3 from 'react-native-vector-icons/dist/Entypo';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
@@ -47,32 +47,40 @@ const Sales = () => {
         return digits.reverse().join('');
     };
 
-    useEffect(() => {
-        const fetchOrderDetails = async () => {
-            try {
-                axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-                // const dispatchedResponse = await axios.post('/employee/order/list', { order_status: '2' });
-                const toBeDispatchedResponse = await axios.post('/employee/order/list', { order_status: '1' });
+    useFocusEffect(
+        useCallback(() => {
 
-                // const dispatchedData = dispatchedResponse.data.data;
-                const toBeDispatchedData = toBeDispatchedResponse.data.data;
-                // const allData = [...dispatchedData, ...toBeDispatchedData];
-                console.log('datataaaa', toBeDispatchedData);
+            const fetchOrderDetails = async () => {
+                try {
+                    axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+                    // const dispatchedResponse = await axios.post('/employee/order/list', { order_status: '2' });
+                    const toBeDispatchedResponse = await axios.post('/employee/order/list', { order_status: '1' });
 
-                // setDispatchedOrders(dispatchedData);
-                setToBeDispatchedOrders(toBeDispatchedData);
-                // setAllOrders(allData);
-                setFilteredNames(toBeDispatchedData);
+                    // const dispatchedData = dispatchedResponse.data.data;
+                    const toBeDispatchedData = toBeDispatchedResponse.data.data;
+                    // const allData = [...dispatchedData, ...toBeDispatchedData];
+                    console.log('datataaaa', toBeDispatchedData);
 
-            } catch (error) {
-                console.log(error);
-            } finally {
-                setLoading(false);
-            }
-        };
+                    // setDispatchedOrders(dispatchedData);
+                    setToBeDispatchedOrders(toBeDispatchedData);
+                    // setAllOrders(allData);
+                    setFilteredNames(toBeDispatchedData);
 
-        fetchOrderDetails();
-    }, []);
+                } catch (error) {
+                    console.log(error);
+                } finally {
+                    setLoading(false);
+                }
+            };
+
+            fetchOrderDetails();
+
+            return () => {
+                setLoading(true);
+            };
+
+        }, [loginDetails])
+    );
 
     const convertedDate = (timestamp) => {
         const date = new Date(timestamp);
@@ -115,7 +123,7 @@ const Sales = () => {
                 <View style={{ flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', backgroundColor: '#edf5fa', padding: 12, borderBottomColor: '#6f8990', borderBottomWidth: 0.5, }}>
                     <View style={{ flexDirection: 'column', }}>
                         <Text style={{ color: '#000', fontSize: responsiveFontSize(2.2), fontWeight: '600', textTransform: 'uppercase' }}>{getHighlightedText(item.client_name, search)}</Text>
-                        <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>Ganeshguri, Guwahati</Text>
+                        <Text style={{ color: '#6f8990', fontSize: responsiveFontSize(1.8), fontWeight: '500' }}>{item.site_name}</Text>
                     </View>
                     <View style={{ backgroundColor: lightZomatoRed, padding: 5, borderRadius: 7, elevation: 1, borderColor: zomatoRed, borderWidth: 0.6 }}>
                         <Text style={{ color: zomatoRed, fontWeight: '500', fontSize: responsiveFontSize(1.7) }}>To be dispatched</Text>

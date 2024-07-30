@@ -732,9 +732,9 @@ const InvoiceView = (route) => {
                 </div>
 
                 <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
-                <h6 style="font-weight: 400; "><strong>PAN:</strong> 111111111</h6>
-                <h6 style="font-weight: 400; "><strong>Contact No.:</strong> 333333333</h6>
-                <h6 style="font-weight: 400; "><strong>GSTIN:</strong> 33333333333</h6>
+                  <h6 style="font-weight: 400; "><strong>PAN:</strong> 111111111</h6>
+                  <h6 style="font-weight: 400; "><strong>Contact No.:</strong> 333333333</h6>
+                  <h6 style="font-weight: 400; "><strong>GSTIN:</strong> 33333333333</h6>
                 </div>
                 
                 <table class="table">
