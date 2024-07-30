@@ -1,5 +1,6 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import { useNavigation } from '@react-navigation/native';
+import { useSelector } from 'react-redux';
 import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -9,8 +10,6 @@ import Icon3 from 'react-native-vector-icons/dist/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
 import Modal from "react-native-modal";
 import axios from 'axios';
-import { useSelector } from 'react-redux';
-import { beginAsyncEvent } from 'react-native/Libraries/Performance/Systrace';
 
 const EditOrder = ({ route }) => {
 
@@ -30,19 +29,15 @@ const EditOrder = ({ route }) => {
 
     const navigation = useNavigation();
 
+    // pieces edit
     const handleEdit = (item, it) => {
         setEditItem({ item, it });
         setEditValue(it.quantity.toString());
         setEditModal(true);
     };
 
-    const handleRateEdit = (item) => {
-        setEditItem(item);
-        setRateValue(item.rate.toString());
-        setRateModal(true);
-    };
+    const handlePiecesSave = async () => {
 
-    const handlePiecesSave = () => {
         const updatedDetails = { ...details };
         updatedDetails.orderDetails = updatedDetails.orderDetails.map(orderItem => {
             if (orderItem.id === editItem.item.id) {
@@ -55,16 +50,69 @@ const EditOrder = ({ route }) => {
             }
             return orderItem;
         });
+
+        const calculateTotalPrice = () => {
+            let amount = 0;
+
+            updatedDetails.orderDetails.map(item => {
+                let total = 0;
+
+                item.orderData.map(item => {
+                    total += parseInt(item.length) * parseInt(item.quantity);
+                })
+
+                amount += total * item.rate;
+
+            })
+
+            // return amount + parseInt(updatedDetails.bend_charge) + parseInt(updatedDetails.loading_charge) + parseInt(updatedDetails.transport_charge);
+            return amount;
+        };
+
+        try {
+            setLoading(true);
+
+            axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+
+            const formData = new FormData();
+
+            formData.append('order_detail_id', editItem.item.id);
+            formData.append('rate', editItem.item.rate);
+            formData.append('order_data_id', editItem.it.id);
+            formData.append('quantity', editValue);
+            formData.append('total_amount', calculateTotalPrice());
+
+            // Make API call to post customer details
+            const response = await axios.post('/employee/order/update', formData, {
+                headers: {
+                    'Content-Type': 'multipart/form-data'
+                }
+            });
+
+            console.log('piecesResponse', response.data.data);
+
+            setLoading(false);
+
+        } catch (error) {
+            Alert.alert(error?.message)
+        }
+
         setDetails(updatedDetails);
         setEditModal(false);
         setEditValue('');
-        console.log('updatedPiecesDetails', details);
+        // console.log('updatedPiecesDetails', details);
+    };
+
+    // rate edit
+    const handleRateEdit = (item) => {
+        setEditItem(item);
+        setRateValue(item.rate.toString());
+        setRateModal(true);
     };
 
     const handleRateSave = async () => {
 
         const updatedDetails = { ...details };
-
         updatedDetails.orderDetails = updatedDetails.orderDetails.map(orderItem => {
             if (orderItem.id === editItem.id) {
                 orderItem.rate = rateValue;
@@ -110,7 +158,7 @@ const EditOrder = ({ route }) => {
                 }
             });
 
-            console.log('response', response.data.data);
+            console.log('rateResponse', response.data.data);
 
             setLoading(false);
 
@@ -123,10 +171,6 @@ const EditOrder = ({ route }) => {
         setRateValue('');
         // console.log('updatedRateDetails', details);
     };
-
-    useEffect(() => {
-        console.log('route', initialData);
-    }, []);
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", paddingBottom: 8 }}>
@@ -260,10 +304,10 @@ const EditOrder = ({ route }) => {
                         </View>
 
                         {/* Buttons */}
-                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 5, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
+                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 6, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
 
                             {/* Cancel */}
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => setRateModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => setRateModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 45, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>Cancel</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 19, height: 19, alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
                                     <Icon2 name="close" size={15} style={{ color: lightZomatoRed }} />
@@ -271,15 +315,15 @@ const EditOrder = ({ route }) => {
                             </TouchableOpacity>
 
                             {/* Update */}
-                            <TouchableOpacity onPress={handleRateSave} style={{ backgroundColor: loading ? '#e1e1e1' : zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: loading ? 2 : 4, borderColor: loading ? '#000' : '', borderWidth: loading ? 0.3 : 0, gap: 4, alignItems: 'center' }}>
+                            <TouchableOpacity onPress={handleRateSave} style={{ height: 45, backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: loading ? 2 : 4, borderColor: loading ? '#000' : '', borderWidth: loading ? 0.3 : 0, gap: 4, alignItems: 'center' }}>
                                 {loading ? (
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
                                         <ActivityIndicator size="small" color='#5a5a5a' />
-                                        <Text style={{ color: '#5a5a5a' }}>Updating data ...</Text>
+                                        <Text style={{ color: '#5a5a5a', fontSize: responsiveFontSize(2) }}>Updating data ...</Text>
                                     </View>
                                 ) : (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
-                                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Update</Text>
+                                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.4) }}>Update</Text>
                                         <View style={{ backgroundColor: lightZomatoRed, width: 19, height: 19, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderEndWidth: 0.6 }}>
                                             <Icon3 name="save" size={15} color={zomatoRed} />
                                         </View>
@@ -294,11 +338,20 @@ const EditOrder = ({ route }) => {
             </Modal>
 
             {/* Edit Pieces Modal */}
-            <Modal Modal
+            <Modal
                 isVisible={editModal}
-                onBackdropPress={() => setEditModal(false)}
-                onSwipeComplete={() => setEditModal(false)}
-                onRequestClose={() => setEditModal(false)}
+                onBackdropPress={() => {
+                    setIsPiecesFocused(false)
+                    setEditModal(false)
+                }}
+                onSwipeComplete={() => {
+                    setIsPiecesFocused(false)
+                    setEditModal(false)
+                }}
+                onRequestClose={() => {
+                    setIsPiecesFocused(false)
+                    setEditModal(false)
+                }}
                 animationType="slide"
                 swipeDirection={['down']}
                 backdropOpacity={0.5}
@@ -331,10 +384,10 @@ const EditOrder = ({ route }) => {
                         </View>
 
                         {/* Buttons */}
-                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 5, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
+                        <View style={{ backgroundColor: '#fff', width: '100%', flexDirection: 'row', paddingVertical: 6, justifyContent: 'space-evenly', alignItems: "center", elevation: 1 }}>
 
                             {/* Cancel */}
-                            <TouchableOpacity activeOpacity={0.7} onPress={() => setEditModal(false)} style={{ width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, height: 40, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
+                            <TouchableOpacity activeOpacity={0.7} onPress={() => setEditModal(false)} style={{ height: 45, width: '47%', backgroundColor: lightZomatoRed, borderRadius: 8, gap: 3, borderColor: zomatoRed, borderWidth: 0.6, flexDirection: 'row', alignItems: 'center', justifyContent: 'center' }}>
                                 <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(2.2), fontWeight: "600" }}>Cancel</Text>
                                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', width: 19, height: 19, alignItems: 'center', backgroundColor: zomatoRed, borderRadius: 5, borderColor: zomatoRed, borderWidth: 1 }}>
                                     <Icon2 name="close" size={15} style={{ color: lightZomatoRed }} />
@@ -342,11 +395,20 @@ const EditOrder = ({ route }) => {
                             </TouchableOpacity>
 
                             {/* Update */}
-                            <TouchableOpacity onPress={handlePiecesSave} style={{ backgroundColor: zomatoRed, padding: 10, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: 4, borderLeftColor: zomatoRed, borderLeftWidth: 0.6, gap: 4, alignItems: 'center' }}>
-                                <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Update</Text>
-                                <View style={{ backgroundColor: lightZomatoRed, width: 19, height: 19, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderEndWidth: 0.6 }}>
-                                    <Icon3 name="save" size={15} color={zomatoRed} />
-                                </View>
+                            <TouchableOpacity onPress={handlePiecesSave} style={{ backgroundColor: loading ? '#e1e1e1' : zomatoRed, height: 45, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: loading ? 2 : 4, borderColor: loading ? '#000' : '', borderWidth: loading ? 0.3 : 0, gap: 4, alignItems: 'center' }}>
+                                {loading ? (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                                        <ActivityIndicator size="small" color='#5a5a5a' />
+                                        <Text style={{ color: '#5a5a5a', fontSize: responsiveFontSize(2) }}>Updating data ...</Text>
+                                    </View>
+                                ) : (
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
+                                        <Text style={{ color: '#fff', fontWeight: '500', fontSize: responsiveFontSize(2.2) }}>Update</Text>
+                                        <View style={{ backgroundColor: lightZomatoRed, width: 19, height: 19, borderRadius: 4, alignItems: 'center', justifyContent: 'center', borderColor: zomatoRed, borderEndWidth: 0.6 }}>
+                                            <Icon3 name="save" size={15} color={zomatoRed} />
+                                        </View>
+                                    </View>
+                                )}
                             </TouchableOpacity>
 
                         </View>

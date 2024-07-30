@@ -56,7 +56,7 @@ const Details = () => {
 
     useEffect(() => {
         setClientId(userDetails[0]?.id);
-    }, [updateCustomerDetails])
+    }, [updateCustomerDetails]);
 
     const postCustomerDetails = async () => {
         setLoading(true);
@@ -100,8 +100,6 @@ const Details = () => {
     };
 
     const updateCustomerDetails = async () => {
-        // console.log('dixixixixixi', userDetails);
-        // console.log("clientId", clientId);
         setLoading(true);
         dispatch(deleteUser());
 
@@ -149,7 +147,7 @@ const Details = () => {
             // Reset loading state and close modals
             setLoading(false);
             setEditDetails(false);
-            setCustomerModal(false);
+            // setCustomerModal(false);
         }
     };
 
@@ -165,6 +163,25 @@ const Details = () => {
         setGstin(userDetails[0]?.gstin);
 
         dispatch(emptyBill());
+    };
+
+    const updateHandler = async () => {
+        if (partyName === '' || siteName === '') {
+            setCustomerModal(true);
+            setError(true);
+        } else {
+            setError(false);
+
+            if (validate()) {
+                dispatch(deleteUser());
+                await updateCustomerDetails();
+
+                setCustomerModal(false);
+                setError(false);
+
+                // console.log("Dixit", userDetails);
+            }
+        }
     }
 
     const saveHandler = async () => {
@@ -185,7 +202,7 @@ const Details = () => {
                 console.log("Dixit", userDetails);
             }
         }
-    }
+    };
 
     const imageHandler = () => {
         const options = {
@@ -206,7 +223,7 @@ const Details = () => {
         setPanNo('');
         setContact('');
         setGstin('');
-    }
+    };
 
     const validate = () => {
 
@@ -244,13 +261,13 @@ const Details = () => {
     const cancelHandler = () => {
         setCustomerModal(false);
         setEditDetails(false);
-    }
+    };
 
     const addCustomerHandler = () => {
         dispatch(deleteUser());
         setCustomerModal(true);
         // console.log("addCustomer", userDetails)
-    }
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", }}>
@@ -516,15 +533,13 @@ const Details = () => {
                                         <TextInput
                                             style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                             onChangeText={setPanNo}
-                                            value={panNo}
-                                            // maxLength={10}
+                                            value={panNo === 'Not specified' ? '' : panNo}
                                             placeholderTextColor="#abb0ba"
                                             onFocus={() => setIsPanNoFocused(true)}
                                             onBlur={() => setIsPanNoFocused(false)}
                                         />
                                     </View>
                                 </View>
-                                {/* {errors.panNo && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6) }}>{errors.panNo}</Text>} */}
 
                                 {/* Contact */}
                                 <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 15, paddingHorizontal: 15, paddingVertical: 10, gap: 4, elevation: 1 }}>
@@ -559,15 +574,13 @@ const Details = () => {
                                         <TextInput
                                             style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                             onChangeText={setGstin}
-                                            value={gstin}
-                                            // maxLength={15}
+                                            value={gstin === 'Not specified' ? '' : gstin}
                                             placeholderTextColor="#abb0ba"
                                             onFocus={() => setIsGstinFocused(true)}
                                             onBlur={() => setIsGstinFocused(false)}
                                         />
                                     </View>
                                 </View>
-                                {/* {errors.gstin && <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), }}>{errors.gstin}</Text>} */}
 
                                 {error && (
                                     <Text style={{ color: zomatoRed, fontSize: responsiveFontSize(1.6), textAlign: 'right' }}>* Please fill all the details. All the fields are necessary.</Text>
@@ -588,7 +601,7 @@ const Details = () => {
                             </TouchableOpacity>
 
                             {/* Save */}
-                            <TouchableOpacity onPress={() => editDetails ? updateCustomerDetails() : saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, }}>
+                            <TouchableOpacity onPress={() => editDetails ? updateHandler() : saveHandler()} activeOpacity={0.7} style={{ width: '47%', backgroundColor: loading ? '#e1e1e1' : zomatoRed, borderRadius: 8, marginLeft: 3, flexDirection: "row", alignItems: "center", justifyContent: "center", height: 40, borderColor: loading ? '#000' : '', borderWidth: loading ? 0.3 : 0, }}>
                                 {loading ? (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
                                         <ActivityIndicator size="small" color='#5a5a5a' />
