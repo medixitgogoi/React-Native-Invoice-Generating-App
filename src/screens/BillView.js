@@ -1,4 +1,4 @@
-import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, ScrollView, Alert } from 'react-native';
+import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, ScrollView, ActivityIndicator } from 'react-native';
 import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
@@ -36,6 +36,9 @@ const OrderDetails = ({ route }) => {
   const [pan, setPan] = useState('');
   const [contact, setContact] = useState('');
   const [gstin, setGstin] = useState('');
+  const [refNo, setRefNo] = useState('');
+
+  const [loading, setLoading] = useState(true);
 
   const userDetails = useSelector(state => state.user);
   const billDetails = useSelector(state => state.bill);
@@ -59,49 +62,44 @@ const OrderDetails = ({ route }) => {
     return amount;
   };
 
-  // useFocusEffect(
-  //   useCallback(() => {
+  useFocusEffect(
+    useCallback(() => {
 
-  //     const fetchOrderDetails = async () => {
-  //       try {
-  //         axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
-  //         // const dispatchedResponse = await axios.post('/employee/order/list', { order_status: '2' });
-  //         const toBeDispatchedResponse = await axios.post('/employee/order/list', { order_status: '1' });
+      const fetchOrderDetails = async () => {
+        try {
+          axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+          const toBeDispatchedResponse = await axios.post('/employee/order/list', { order_status: '1' });
 
-  //         // const dispatchedData = dispatchedResponse.data.data;
-  //         const toBeDispatchedData = toBeDispatchedResponse.data.data;
-  //         console.log('data', toBeDispatchedData);
-  //         // const allData = [...dispatchedData, ...toBeDispatchedData];
+          const toBeDispatchedData = toBeDispatchedResponse.data.data;
+          console.log('data', toBeDispatchedData[0]);
 
-  //         // setDispatchedOrders(dispatchedData);
-  //         setToBeDispatchedOrders(toBeDispatchedData);
-  //         // setAllOrders(allData);
-  //         setFilteredNames(toBeDispatchedData);
+          setRefNo(toBeDispatchedData[0]?.pl_no);
+          setPan(toBeDispatchedData[0]?.pan);
+          setGstin(toBeDispatchedData[0]?.gst)
 
-  //       } catch (error) {
-  //         Alert.alert(error.message);
-  //       } finally {
-  //         setLoading(false);
-  //       }
-  //     };
+          // setOrder(toBeDispatchedData[0]);
 
-  //     fetchOrderDetails();
+        } catch (error) {
 
-  //     return () => {
-  //       setLoading(true);
-  //     };
+        } finally {
+          setLoading(false);
+        }
+      };
 
-  //   }, [loginDetails])
-  // );
+      fetchOrderDetails();
 
+      return () => {
+        setLoading(true);
+      };
+
+    }, [])
+  );
 
   useEffect(() => {
     userDetails.map(user => {
       setName(user.name)
       setSite(user.site)
-      setPan(user.pan)
       setContact(user.contact)
-      setGstin(user.gstin)
     })
   }, []);
 
@@ -494,7 +492,7 @@ const OrderDetails = ({ route }) => {
         </div>
 
         <div class="ref">
-          <p class="address">REF.NO:- <u>PRCM/24-25/098</u></p>
+          <p class="address">REF.NO:- <u>${refNo}</u></p>
           <p class="address">${formattedDate}</p>
         </div>
 
@@ -507,9 +505,9 @@ const OrderDetails = ({ route }) => {
         </div>
 
         <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
-            ${pan == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN: ${pan}</h6>'}
-            <h6 style="font-weight: 400; "><strong>Contact No.:</strong> ${contact}</h6>
-            ${gstin == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN: ${gstin}</h6>'}
+          <h6 style="font-weight: 400; ">${pan === 'Not specified' ? '' : `<strong>PAN:</strong> ${pan}`}</h6>
+          <h6 style="font-weight: 400; "><strong>Contact No.:</strong> ${contact}</h6>
+          <h6 style="font-weight: 400; ">${gstin === 'Not specified' ? '' : `<strong>GSTIN:</strong> ${gstin}`}</h6>
         </div>
         
         <table class="table">
@@ -743,7 +741,7 @@ const OrderDetails = ({ route }) => {
           <div style="flexDirection: row; alignItems: center; gap: 5px; justifyContent: space-between">
             <div style="flexDirection: row; alignItems: center">
               <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">REF.NO:-</p>
-              <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;marginLeft: 0.5px; text-decoration: underline;"> PRCM/24-25/098</p>
+              <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;marginLeft: 0.5px; text-decoration: underline;"> ${refNo}</p>
             </div>
             <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">${formattedDate}</p>
           </div>
@@ -760,9 +758,9 @@ const OrderDetails = ({ route }) => {
           </div>
 
           <div style="flexDirection: row; alignItems: center; justifyContent: space-between; margin-top: 0.5px;">
-            ${pan == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN: ${pan}</h6>'}
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500;">Contact No.: ${contact}</h6>
-            ${gstin == 'Not specified' ? '' : '<h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN: ${gstin}</h6>'}
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">${pan === 'Not specified' ? '' : `PAN: ${pan}`}</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">Contact No.: ${contact}</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">${gstin === 'Not specified' ? '' : `GSTIN: ${gstin}`}</h6>
           </div>
         
         </div>
@@ -906,7 +904,7 @@ const OrderDetails = ({ route }) => {
 
       await Share.open(shareOptions);
     } catch (error) {
-      Alert.alert(error.message);
+
     }
   };
 
@@ -939,9 +937,16 @@ const OrderDetails = ({ route }) => {
 
       <ScrollView>
 
-        <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, }}>
-          <HTML source={{ html: htmlContent2 }} />
-        </PinchZoomView>
+        {loading ? (
+          <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, justifyContent: 'center', marginTop: 30 }}>
+            <ActivityIndicator size="large" color={zomatoRed} />
+            <Text style={{ color: zomatoRed, fontWeight: '600', fontSize: responsiveFontSize(2.2) }}>Building the invoice ...</Text>
+          </View>
+        ) : (
+          <PinchZoomView style={{ flexDirection: 'row', alignItems: 'center', paddingVertical: 20, }}>
+            <HTML source={{ html: htmlContent2 }} />
+          </PinchZoomView>
+        )}
 
       </ScrollView>
 
