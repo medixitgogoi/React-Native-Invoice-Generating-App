@@ -155,6 +155,8 @@ const EditOrder = ({ route }) => {
                 }
             });
 
+            console.log('data', response?.data?.data);
+
             setLoading(false);
 
         } catch (error) {
