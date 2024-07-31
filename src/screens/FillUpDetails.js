@@ -14,8 +14,6 @@ import axios from 'axios';
 
 const FillUpDetails = () => {
 
-    const userDetails = useSelector(state => state.user);
-
     const dispatch = useDispatch();
 
     const navigation = useNavigation();

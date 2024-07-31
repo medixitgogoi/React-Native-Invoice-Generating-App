@@ -74,6 +74,7 @@ const DispatchedOrders = () => {
                 const response = await axios.post('/employee/order/list', { order_status: '2', });
 
                 const data = response.data.data;
+                console.log('dispatchedOrders', data);
 
                 setDetails(data);
                 setFilteredNames(data);

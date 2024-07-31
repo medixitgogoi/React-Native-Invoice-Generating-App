@@ -597,7 +597,11 @@ const Details = () => {
                                 {loading ? (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, }}>
                                         <ActivityIndicator size="small" color='#5a5a5a' />
-                                        <Text style={{ color: '#5a5a5a' }}>Saving data ...</Text>
+                                        {editDetails ? (
+                                            <Text style={{ color: '#5a5a5a' }}>Updating data ...</Text>
+                                        ) : (
+                                            <Text style={{ color: '#5a5a5a' }}>Saving data ...</Text>
+                                        )}
                                     </View>
                                 ) : (
                                     <View>
@@ -619,9 +623,9 @@ const Details = () => {
                     </View>
 
                 </View>
-            </Modal>
+            </Modal >
 
-        </SafeAreaView>
+        </SafeAreaView >
     )
 }
 

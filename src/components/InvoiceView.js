@@ -12,6 +12,11 @@ const InvoiceView = (route) => {
 
   const details = route?.detail;
 
+  const refNo = details?.pl_no;
+  const panNo = details?.pan;
+  const gstNo = details?.gst;
+  const mobileNo = details?.mobile;
+
   const loginDetails = useSelector(state => state.login);
 
   const now = new Date();
@@ -253,7 +258,7 @@ const InvoiceView = (route) => {
           <div style="flexDirection: row; alignItems: center; gap: 5px; justifyContent: space-between">
             <div style="flexDirection: row; alignItems: center">
               <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">REF.NO:-</p>
-              <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;marginLeft: 0.5px; text-decoration: underline;"> PRCM/24-25/098</p>
+              <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;marginLeft: 0.5px; text-decoration: underline;"> ${refNo}</p>
             </div>
             <p style="margin: 0; fontSize: 7px; margin-top: 0.5px; font-weight: 400;">${formattedDate}</p>
           </div>
@@ -270,9 +275,9 @@ const InvoiceView = (route) => {
           </div>
 
           <div style="flexDirection: row; alignItems: center; justifyContent: space-between; margin-top: 0.5px;">
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">PAN: 111111</h6>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">Contact No.: 1111111</h6>
-            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">GSTIN: 11111</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">${panNo === 'Not specified' ? '' : `PAN: ${panNo}`}</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">Contact No.: ${mobileNo}</h6>
+            <h6 style="margin: 0; font-size: 6px; padding: 0; fontWeight: 500">${gstNo === 'Not specified' ? '' : `GSTIN: ${gstNo}`}</h6>
           </div>
         
         </div>
@@ -718,7 +723,7 @@ const InvoiceView = (route) => {
                 </div>
 
                 <div class="ref">
-                <p class="address">REF.NO:- <u>PRCM/24-25/098</u></p>
+                <p class="address">REF.NO:- <u>${refNo}</u></p>
                 <p class="address">${formattedDate}</p>
                 </div>
 
@@ -731,9 +736,9 @@ const InvoiceView = (route) => {
                 </div>
 
                 <div style="flex-direction: row; justify-content: space-between; align-items: center; display: flex; width: 100%; margin-top: 3px;">
-                  <h6 style="font-weight: 400; "><strong>PAN:</strong> 111111111</h6>
-                  <h6 style="font-weight: 400; "><strong>Contact No.:</strong> 333333333</h6>
-                  <h6 style="font-weight: 400; "><strong>GSTIN:</strong> 33333333333</h6>
+                  <h6 style="font-weight: 400; ">${panNo === 'Not specified' ? '' : `<strong>PAN:</strong> ${panNo}`}</h6>
+                  <h6 style="font-weight: 400; "><strong>Contact No.:</strong> ${mobileNo}</h6>
+                  <h6 style="font-weight: 400; ">${gstNo === 'Not specified' ? '' : `<strong>GSTIN:</strong> ${gstNo}`}</h6>
                 </div>
                 
                 <table class="table">
@@ -846,7 +851,7 @@ const InvoiceView = (route) => {
 
       await Share.open(shareOptions);
     } catch (error) {
-      Alert.alert(error.message);
+      console.log(error.message);
     }
   };
 

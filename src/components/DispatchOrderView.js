@@ -13,6 +13,9 @@ const DispatchOrderView = (route) => {
 
     const details = route?.detail;
 
+    const dispatchNo = details?.dispatch_no ? details?.dispatch_no : 'Not yet dispatched';
+    const pIrefNo = details?.pl_no;
+
     const now = new Date();
 
     const day = String(now.getDate()).padStart(2, '0');
@@ -106,8 +109,8 @@ const DispatchOrderView = (route) => {
               
               <div style="flex-direction: column; display: flex; margin-bottom: 10px; align-items: flex-end; ">
                 <div style="display: flex; flexDirection: row; justify-content: space-between; width: 100%; ">
-                    <div style="text-align: center; font-size: 12px; font-weight: 600; ">REF: DO/24-25/077</div>
-                    <div style="text-align: center; font-size: 12px; font-weight: 600; ">PI REF NO: PRCM/24-25/188</div>
+                    <div style="text-align: center; font-size: 12px; font-weight: 400; "><strong>REF:</strong> ${dispatchNo}</div>
+                    <div style="text-align: center; font-size: 12px; font-weight: 400; "><strong>PI REF NO:</strong> ${pIrefNo}</div>
                 </div>
                 <div style="text-align: center; font-size: 12px; font-weight: 600; margin-top: 5px; "><u>${formattedDate}</u></div>
               </div>
@@ -237,8 +240,14 @@ const DispatchOrderView = (route) => {
                                 <Text style={{ fontSize: responsiveFontSize(1.4), textAlign: 'center', color: '#000', marginTop: 7, textDecorationLine: 'underline' }}>GST NO: 18AAZFP3190K1ZD</Text>
                                 <View style={{ flexDirection: 'column', marginTop: 4 }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '700' }}>REF: DO/24-25/077</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '700' }}>PI REF NO: PRCM/24-25/188</Text>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                                            <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '700' }}>REF:</Text>
+                                            <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '400' }}>{dispatchNo}</Text>
+                                        </View>
+                                        <View style={{ flexDirection: 'row', alignItems: 'center', gap: 2 }}>
+                                            <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '700' }}>PI REF NO:</Text>
+                                            <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'left', color: '#000', fontWeight: '400' }}>{pIrefNo}</Text>
+                                        </View>
                                     </View>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), textAlign: 'right', marginVertical: 2, color: '#000', textDecorationLine: 'underline', fontWeight: '500' }}>{formattedDate}</Text>
                                 </View>

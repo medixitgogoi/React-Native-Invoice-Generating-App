@@ -85,6 +85,11 @@ const BillDetails = () => {
 
     const viewBillHandler = async () => {
 
+        // console.log('bend', typeof (parseInt(bend)));
+        // console.log('loadingValue', bend);
+        // console.log('loading', typeof (bend));
+        // console.log('transport', typeof (parseInt(transport)));
+
         setAppLoad(true);
 
         const mapProductDetails = (productDetails) => {
@@ -136,6 +141,7 @@ const BillDetails = () => {
                     'content-type': 'multipart/form-data',
                 },
             });
+            console.log('newOrder', response);
             navigation.navigate('BillView', { bend: parseInt(bend), loading: parseInt(loading), transport: parseInt(transport) });
         } catch (error) {
             Alert.alert(error.message)

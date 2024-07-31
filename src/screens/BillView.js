@@ -1,14 +1,15 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, ScrollView, Alert } from 'react-native';
-import { useNavigation } from '@react-navigation/native';
+import { useFocusEffect, useNavigation } from '@react-navigation/native';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import HTML from 'react-native-render-html';
 import RNHTMLtoPDF from 'react-native-html-to-pdf';
 import Share from 'react-native-share';
 import PinchZoomView from 'react-native-pinch-zoom-view';
 import { zomatoRed } from '../utils/colors';
+import axios from 'axios';
 
 const OrderDetails = ({ route }) => {
 
@@ -57,6 +58,42 @@ const OrderDetails = ({ route }) => {
 
     return amount;
   };
+
+  // useFocusEffect(
+  //   useCallback(() => {
+
+  //     const fetchOrderDetails = async () => {
+  //       try {
+  //         axios.defaults.headers.common['Authorization'] = `Bearer ${loginDetails[0]?.accessToken}`;
+  //         // const dispatchedResponse = await axios.post('/employee/order/list', { order_status: '2' });
+  //         const toBeDispatchedResponse = await axios.post('/employee/order/list', { order_status: '1' });
+
+  //         // const dispatchedData = dispatchedResponse.data.data;
+  //         const toBeDispatchedData = toBeDispatchedResponse.data.data;
+  //         console.log('data', toBeDispatchedData);
+  //         // const allData = [...dispatchedData, ...toBeDispatchedData];
+
+  //         // setDispatchedOrders(dispatchedData);
+  //         setToBeDispatchedOrders(toBeDispatchedData);
+  //         // setAllOrders(allData);
+  //         setFilteredNames(toBeDispatchedData);
+
+  //       } catch (error) {
+  //         Alert.alert(error.message);
+  //       } finally {
+  //         setLoading(false);
+  //       }
+  //     };
+
+  //     fetchOrderDetails();
+
+  //     return () => {
+  //       setLoading(true);
+  //     };
+
+  //   }, [loginDetails])
+  // );
+
 
   useEffect(() => {
     userDetails.map(user => {
