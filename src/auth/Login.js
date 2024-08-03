@@ -5,7 +5,7 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon2 from 'react-native-vector-icons/Feather';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import axios from 'axios';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch } from 'react-redux';
 import { addLoginUser } from '../redux/LoginSlice';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 import { BlurView } from '@react-native-community/blur';
@@ -14,7 +14,6 @@ import LinearGradient from 'react-native-linear-gradient';
 const Login = () => {
 
     const dispatch = useDispatch();
-    const loginDetails = useSelector(state => state.login);
 
     const [email, setEmail] = useState("");
     const [isEmailFocused, setIsEmailFocused] = useState(false);
