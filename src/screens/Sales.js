@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useState, useMemo } from 'react';
+import { useCallback, useState, useMemo } from 'react';
 import { FlatList, ScrollView, StyleSheet, Text, TouchableOpacity, View, TextInput, Image, StatusBar, Alert } from 'react-native';
 import { SafeAreaView } from 'react-native-safe-area-context';
 import { lightZomatoRed, zomatoRed } from '../utils/colors';
