@@ -34,6 +34,9 @@ const FillUpDetails = () => {
     const [rate, setRate] = useState('');
     const [isRateFocused, setIsRateFocused] = useState(false);
 
+    const [remark, setRemark] = useState('');
+    const [isRemarkFocused, setIsRemarkFocused] = useState(false);
+
     const [thickness, setThickness] = useState([]);
     const [unit, setUnit] = useState([]);
     const [type, setType] = useState([]);
@@ -157,12 +160,14 @@ const FillUpDetails = () => {
                     width: selectedType.name === 'Ridges' ? selectedWidth : '3.5 mm',
                     lengthAndPieces: products,
                     rate: rate,
+                    remark: remark
                 }));
 
                 // console.log("fillupdetails", productDetails);
 
                 setError(false);
                 setRate('');
+                setRemark('');
                 setProducts([]);
                 setSelectedColor(null);
                 setSelectedType(null);
@@ -415,7 +420,6 @@ const FillUpDetails = () => {
                                 style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
                                 onChangeText={setRate}
                                 value={rate}
-                                placeholderTextColor={zomatoRed}
                                 onFocus={() => setIsRateFocused(true)}
                                 onBlur={() => setIsRateFocused(false)}
                                 keyboardType="numeric"
@@ -426,19 +430,16 @@ const FillUpDetails = () => {
                     {/* Remark */}
                     <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
                         <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the remark:</Text>
-                        <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRateFocused ? zomatoRed : "", borderWidth: isRateFocused ? 1 : 0, marginVertical: 2 }}>
+                        <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRemarkFocused ? zomatoRed : "", borderWidth: isRemarkFocused ? 1 : 0, marginVertical: 2 }}>
                             <TextInput
-                                style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
-                                onChangeText={setRate}
-                                value={rate}
-                                placeholderTextColor={zomatoRed}
-                                onFocus={() => setIsRateFocused(true)}
-                                onBlur={() => setIsRateFocused(false)}
-                                keyboardType="numeric"
+                                style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000" }}
+                                onChangeText={setRemark}
+                                value={remark}
+                                onFocus={() => setIsRemarkFocused(true)}
+                                onBlur={() => setIsRemarkFocused(false)}
                             />
                         </View>
                     </View>
-
 
                     {/* Length and pieces */}
                     <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 5, marginTop: 6, elevation: 1, }}>

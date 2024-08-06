@@ -17,6 +17,8 @@ const BillDetails = () => {
     const userDetails = useSelector(state => state.user);
     const loginDetails = useSelector(state => state.login);
 
+    console.log('productDetails', productDetails);
+
     const [clientId, setClientId] = useState(null);
 
     const navigation = useNavigation();
@@ -259,6 +261,12 @@ const BillDetails = () => {
                                     </View>
 
                                     {/* Fourth section */}
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1, justifyContent: 'space-between' }}>
+                                        <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Remark:</Text>
+                                        <Text style={{ color: '#000', fontWeight: '500', fontSize: responsiveFontSize(2.2), }}>{item.remark}</Text>
+                                    </View>
+
+                                    {/* Fifth section */}
                                     <View style={{ flexDirection: 'column', gap: 5, backgroundColor: modalBackColor, paddingVertical: 8, paddingHorizontal: 12, borderRadius: 8, elevation: 1 }}>
                                         <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3, justifyContent: 'space-between' }}>
                                             <Text style={{ color: '#585858', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Rate (In ₹):</Text>
