@@ -1,6 +1,5 @@
 import { StyleSheet, Text, View, SafeAreaView, StatusBar, TouchableOpacity, TextInput, ScrollView } from 'react-native';
-import { useCallback, useEffect, useState } from 'react';
-import Modal from "react-native-modal";
+import { useEffect, useState } from 'react';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import SelectDropdown from 'react-native-select-dropdown';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
@@ -10,6 +9,7 @@ import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import { useDispatch, useSelector } from 'react-redux';
 import { addItemToBill } from '../redux/BillDetailsSlice';
+import Modal from "react-native-modal";
 import axios from 'axios';
 
 const FillUpDetails = () => {
@@ -172,7 +172,7 @@ const FillUpDetails = () => {
 
             }
         }
-    }
+    };
 
     const addLengthPieces = () => {
         setMoreProductModal(false);
@@ -185,12 +185,12 @@ const FillUpDetails = () => {
         setPieces('');
         setIsLengthFocused(false);
         setIsPiecesFocused(false);
-    }
+    };
 
     const removeLengthPieces = (id) => {
         const filteredData = products.filter(item => item.id !== id);
         setProducts(filteredData);
-    }
+    };
 
     return (
         <SafeAreaView style={{ flex: 1, backgroundColor: "#f1f3f6", flexDirection: "column", paddingBottom: 8, }}>
@@ -422,6 +422,23 @@ const FillUpDetails = () => {
                             />
                         </View>
                     </View>
+
+                    {/* Remark */}
+                    <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingVertical: 10, gap: 4, marginTop: 6, elevation: 1 }}>
+                        <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Enter the remark:</Text>
+                        <View style={{ alignSelf: "center", width: "100%", paddingHorizontal: 14, backgroundColor: modalBackColor, elevation: 1, borderRadius: 8, borderColor: isRateFocused ? zomatoRed : "", borderWidth: isRateFocused ? 1 : 0, marginVertical: 2 }}>
+                            <TextInput
+                                style={{ paddingVertical: 5, fontSize: responsiveFontSize(2.1), fontWeight: "500", color: "#000", }}
+                                onChangeText={setRate}
+                                value={rate}
+                                placeholderTextColor={zomatoRed}
+                                onFocus={() => setIsRateFocused(true)}
+                                onBlur={() => setIsRateFocused(false)}
+                                keyboardType="numeric"
+                            />
+                        </View>
+                    </View>
+
 
                     {/* Length and pieces */}
                     <View style={{ flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 12, paddingVertical: 5, marginTop: 6, elevation: 1, }}>
