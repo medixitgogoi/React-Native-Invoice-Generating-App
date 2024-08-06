@@ -87,11 +87,6 @@ const BillDetails = () => {
 
     const viewBillHandler = async () => {
 
-        // console.log('bend', typeof (parseInt(bend)));
-        // console.log('loadingValue', bend);
-        // console.log('loading', typeof (bend));
-        // console.log('transport', typeof (parseInt(transport)));
-
         setAppLoad(true);
 
         const mapProductDetails = (productDetails) => {
@@ -207,7 +202,7 @@ const BillDetails = () => {
                                 })
 
                                 return quantity;
-                            }
+                            };
 
                             const unit = item?.unit?.name;
 
