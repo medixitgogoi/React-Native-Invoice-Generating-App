@@ -125,18 +125,23 @@ const InvoiceView = (route) => {
             <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
               <p style="fontSize: 6px; margin: 0; fontWeight: 500;"><u>Colour: ${item.color}</u></p>
               ${item.orderData.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.product_type}</u>` : ``}
+              ${item.remarks !== 'null' && item.orderData.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.remarks}</u>` : ``}
             </div>
-            ` : (item.orderData.length - 1 === lpIndex && item.orderData.length > 2) ? `
+            ` : (item.orderData.length - 1 === lpIndex && item.orderData.length > 2 && item.orderData.length < 4) ? `
             <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
-            
+              ${item.remarks !== 'null' ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.remarks}</u>` : ``}
             </div>
             `: (lpIndex === 1) ? `
               <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 2px; justifyContent: center;">
                 <u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.product_type}</u>
+                ${item.remarks !== 'null' && item.orderData.length === 2 ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.remarks}</u>` : ``}
+              </div>
+            `: (lpIndex === 2) ? `
+              <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 2px; justifyContent: center;">
+                ${item.remarks !== 'null' ? `<u style="margin: 0; font-weight: 500; font-size: 6px; ">${item.remarks}</u>` : ``} 
               </div>
             `: `
               <div style="display: flex; height: 13px; flexDirection: column; font-size: 6px; border: 0.5px solid black; width: 22%; alignItems: center; padding: 0; justifyContent: center;">
-              
               </div>
           `}
 
@@ -411,22 +416,28 @@ const InvoiceView = (route) => {
       return `
           ${item.orderData.map((lp, lpIndex) => `
             <tr key="${itemIndex}-${lpIndex}" style="text-align: center;">
+
               ${lpIndex === 0 ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-top: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
                   <p style="margin: 0; font-weight: 500; font-size: 12px;"><u>Colour: ${item.color}</u></p>
-                  ${item.orderData.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.product_type}</u>` : ``}
+                  <p>${item.orderData.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.product_type}</u>` : ``}</p>
+                  ${item.orderData.length === 1 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.remarks !== 'null' ? item.remarks : ''}</u>` : ``}
                 </td>
-              ` : (item.orderData.length - 1 === lpIndex && item.orderData.length > 2) ? `
+              ` : (item.orderData.length - 1 === lpIndex && item.orderData.length > 2 && item.orderData.length < 4) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-bottom: 0.5px solid black; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-                
+                  <u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.remarks !== 'null' ? item.remarks : ''}</u>
                 </td>
               ` : (lpIndex === 1) ? `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
                   <u style="margin: 0; font-weight: 500; font-size: 12px;">${item.product_type}</u>
+                  <p>${item.orderData.length === 2 ? `<u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.remarks !== 'null' ? item.remarks : ''}</u>` : ``}</p>
+                </td>
+              `: (lpIndex === 2) ? `
+                <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
+                  <u style="margin: 0; font-weight: 500; font-size: 12px; ">${item.remarks !== 'null' ? item.remarks : ''}</u>
                 </td>
               `: `
                 <td style="font-size: 10px; width: 23%; padding: 3px; border-right: 0.5px solid black; border-left: 0.5px solid black;">
-
                 </td>
               `}
 

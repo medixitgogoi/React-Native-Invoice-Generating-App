@@ -92,6 +92,7 @@ const BillDetails = () => {
         const mapProductDetails = (productDetails) => {
             return productDetails.map(product => ({
                 unit_id: product.unit.id,
+                remarks: product.remark ? product.remark : null,
                 thickness_id: product.thickness.id,
                 type_id: product.type.id,
                 color_id: product.color.id,
@@ -119,6 +120,7 @@ const BillDetails = () => {
         // Append products array items
         mappedProducts.forEach((product, index) => {
             data.append(`products[${index}][unit_id]`, product.unit_id);
+            data.append(`products[${index}][remarks]`, product.remarks);
             data.append(`products[${index}][thickness_id]`, product.thickness_id);
             data.append(`products[${index}][type_id]`, product.type_id);
             data.append(`products[${index}][color_id]`, product.color_id);
@@ -138,7 +140,7 @@ const BillDetails = () => {
                     'content-type': 'multipart/form-data',
                 },
             });
-            console.log('newOrder', response);
+            console.log('newResponse', response);
             navigation.navigate('BillView', { bend: parseInt(bend), loading: parseInt(loading), transport: parseInt(transport) });
         } catch (error) {
 
