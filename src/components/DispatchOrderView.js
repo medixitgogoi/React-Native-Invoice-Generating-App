@@ -12,7 +12,7 @@ const DispatchOrderView = (route) => {
     const screenWidth = Dimensions.get('window').width;
 
     const details = route?.detail;
-    console.log('details', details);
+    // console.log('details', details);
 
     const dispatchNo = details?.dispatch_no ? details?.dispatch_no : 'Not yet dispatched';
     const pIrefNo = details?.pl_no;
