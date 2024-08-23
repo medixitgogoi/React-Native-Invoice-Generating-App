@@ -12,11 +12,20 @@ const DispatchOrderView = (route) => {
     const screenWidth = Dimensions.get('window').width;
 
     const details = route?.detail;
+    console.log('details', details);
 
     const dispatchNo = details?.dispatch_no ? details?.dispatch_no : 'Not yet dispatched';
     const pIrefNo = details?.pl_no;
+    const weight = details?.weight;
+    const payment = details?.adv_payment;
+
+    const dispatchedDate = details?.dispatch_date;
+    const date = new Date(dispatchedDate);
+
+    const formattedDispatchedDate = date.toISOString().split('T')[0];
 
     const now = new Date();
+    console.log('now', now);
 
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -341,10 +350,19 @@ const DispatchOrderView = (route) => {
                                 </View>
 
                                 <View style={{ marginTop: 5 }}>
-                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>Dispatch Date:-</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>Dispatch Date:-</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>{formattedDispatchedDate}</Text>
+                                    </View>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Order By:- {loginDetails[0].name}</Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
-                                    <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>{weight}</Text>
+                                    </View>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>{payment}</Text>
+                                    </View>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = ₹{indianNumberFormat(details?.payble_amount)}.00</Text>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', fontWeight: '700' }}>Receipt No:-               </Text>
@@ -359,7 +377,7 @@ const DispatchOrderView = (route) => {
                 </PinchZoomView>
             </ScrollView>
 
-        </View>
+        </View >
     )
 }
 
