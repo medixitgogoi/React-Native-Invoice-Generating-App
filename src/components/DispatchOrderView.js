@@ -20,12 +20,15 @@ const DispatchOrderView = (route) => {
     const payment = details?.adv_payment;
 
     const dispatchedDate = details?.dispatch_date;
+    // console.log('dispatchedDate', dispatchedDate);
     const date = new Date(dispatchedDate);
+    // console.log('date', date);
 
-    const formattedDispatchedDate = date.toISOString().split('T')[0];
+    const formattedDispatchedDate = date?.toISOString().split('T')[0];
+    // console.log('formattedDispatchedDate', formattedDispatchedDate);
 
     const now = new Date();
-    console.log('now', now);
+    // console.log('now', now);
 
     const day = String(now.getDate()).padStart(2, '0');
     const month = String(now.getMonth() + 1).padStart(2, '0');
@@ -159,10 +162,10 @@ const DispatchOrderView = (route) => {
                     <p style="margin: 0; font-size: 12px; font-weight: 500; margin-top: 3px; ">( S Beniwal )</p>
                   </div>               
                 </div>
-                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Dispatch Date:- </p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Dispatch Date:- ${dispatchedDate === null ? '' : formattedDispatchedDate}</p>
                 <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Order By:- ${loginDetails[0].name} </p>
-                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Material weight=</p>
-                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Advance Payment=</p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Material weight= ${weight === null ? '' : weight}</p>
+                <p style="margin: 0; font-size: 12px; margin-top: 3px; font-weight: 600; ">Advance Payment= ${payment === null ? '' : `₹${indianNumberFormat(payment)}`}</p>
                 <div style="display: flex; flex-direction: row; align-items: center; justify-content: space-between; margin: 0; margin-top: 3px; font-weight: 600;">
                   <p style="color: black; margin: 0; font-size: 12px; ">Total Payment= ₹${indianNumberFormat(details?.payble_amount)}.00</p>
                   <div style="display: flex; flex-direction: row;">
@@ -352,16 +355,16 @@ const DispatchOrderView = (route) => {
                                 <View style={{ marginTop: 5 }}>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>Dispatch Date:-</Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>{formattedDispatchedDate}</Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700', marginTop: 5 }}>{dispatchedDate === null ? '' : formattedDispatchedDate}</Text>
                                     </View>
                                     <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Order By:- {loginDetails[0].name}</Text>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material weight= </Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>{weight}</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Material Weight = </Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>{weight === null ? '' : weight}</Text>
                                     </View>
-                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 3 }}>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment= </Text>
-                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>{payment}</Text>
+                                    <View style={{ flexDirection: 'row', alignItems: 'center', gap: 1 }}>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>Advance Payment = </Text>
+                                        <Text style={{ fontSize: responsiveFontSize(1.2), color: '#000', marginBottom: 1, fontWeight: '700' }}>{payment === null ? '' : `₹${indianNumberFormat(payment)}`}</Text>
                                     </View>
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between' }}>
                                         <Text style={{ fontSize: responsiveFontSize(1.2), fontWeight: 'bold', color: '#000', marginBottom: 1, fontWeight: '700' }}>Total Payment = ₹{indianNumberFormat(details?.payble_amount)}.00</Text>
@@ -377,7 +380,7 @@ const DispatchOrderView = (route) => {
                 </PinchZoomView>
             </ScrollView>
 
-        </View >
+        </View>
     )
 }
 
