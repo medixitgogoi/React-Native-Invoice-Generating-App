@@ -14,6 +14,7 @@ import axios from 'axios';
 const EditOrder = ({ route }) => {
 
     const initialData = route?.params?.data;
+    console.log('initialData', initialData);
 
     const loginDetails = useSelector(state => state.login);
 
