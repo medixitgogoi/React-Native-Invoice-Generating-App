@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import { SafeAreaView, StatusBar, View, Text, TouchableOpacity, ScrollView, TextInput, ActivityIndicator, Alert } from 'react-native';
 import { lightZomatoRed, modalBackColor, zomatoRed } from '../utils/colors';
 import { responsiveFontSize } from 'react-native-responsive-dimensions';
-import Icon4 from 'react-native-vector-icons/dist/Feather';
+import Icon4, { __esModule } from 'react-native-vector-icons/dist/Feather';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon3 from 'react-native-vector-icons/dist/FontAwesome5';
 import Icon2 from 'react-native-vector-icons/dist/Ionicons';
@@ -14,7 +14,7 @@ import axios from 'axios';
 const EditOrder = ({ route }) => {
 
     const initialData = route?.params?.data;
-    console.log('initialData', initialData);
+    // console.log('initialData', initialData);
 
     const loginDetails = useSelector(state => state.login);
 
@@ -23,10 +23,12 @@ const EditOrder = ({ route }) => {
     const [editValue, setEditValue] = useState('');
     const [editModal, setEditModal] = useState(false);
     const [isPiecesFocused, setIsPiecesFocused] = useState(false);
+    const [isLengthFocused, setIsLengthFocused] = useState(false);
     const [rateModal, setRateModal] = useState(false);
     const [rateValue, setRateValue] = useState('');
     const [isRateFocused, setIsRateFocused] = useState(false);
     const [loading, setLoading] = useState(false);
+    const [editLength, setEditLength] = useState('');
 
     const navigation = useNavigation();
 
@@ -34,17 +36,20 @@ const EditOrder = ({ route }) => {
     const handleEdit = (item, it) => {
         setEditItem({ item, it });
         setEditValue(it.quantity.toString());
+        setEditLength(it?.length?.toString());
         setEditModal(true);
     };
 
     const handlePiecesSave = async () => {
 
         const updatedDetails = { ...details };
+
         updatedDetails.orderDetails = updatedDetails.orderDetails.map(orderItem => {
             if (orderItem.id === editItem.item.id) {
                 orderItem.orderData = orderItem.orderData.map(orderDataItem => {
                     if (orderDataItem.id === editItem.it.id) {
                         orderDataItem.quantity = editValue;
+                        orderDataItem.length = editLength;
                     }
                     return orderDataItem;
                 });
@@ -81,6 +86,7 @@ const EditOrder = ({ route }) => {
             formData.append('rate', editItem.item.rate);
             formData.append('order_data_id', editItem.it.id);
             formData.append('quantity', editValue);
+            formData.append('length', editLength);
             formData.append('total_amount', calculateTotalPrice());
 
             // Make API call to post customer details
@@ -89,6 +95,7 @@ const EditOrder = ({ route }) => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
+            console.log('response', response);
 
             setLoading(false);
 
@@ -99,6 +106,7 @@ const EditOrder = ({ route }) => {
         setDetails(updatedDetails);
         setEditModal(false);
         setEditValue('');
+        setEditLength('');
     };
 
     // rate edit
@@ -364,20 +372,38 @@ const EditOrder = ({ route }) => {
                     <View style={{ backgroundColor: modalBackColor, borderTopLeftRadius: 15, borderTopRightRadius: 15, elevation: 1, paddingVertical: 8 }}>
 
                         {/* Headline */}
-                        <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 5, marginVertical: 8, marginBottom: 10 }}>
-                            <Text style={{ textAlign: 'center', color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.6), }}>Edit Pieces</Text>
+                        <View style={{ flexDirection: 'row', alignItems: 'center', paddingHorizontal: 14, gap: 5, justifyContent: 'center', marginVertical: 8, marginBottom: 8 }}>
+                            <Text style={{ color: '#000', fontWeight: '600', fontSize: responsiveFontSize(2.5) }}>Update Details</Text>
+                        </View>
+
+                        {/* Update Length */}
+                        <View style={{ marginBottom: 5, flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingTop: 8, gap: 4, marginTop: 6, elevation: 1, marginHorizontal: 14 }}>
+                            <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Edit the length:</Text>
+                            <View style={{ flexDirection: 'column', marginTop: 3 }}>
+                                <TextInput
+                                    style={{ borderColor: isLengthFocused ? zomatoRed : "", borderWidth: isLengthFocused ? 1 : 0, height: 40, color: '#000', width: '100%', paddingHorizontal: 10, marginBottom: 15, backgroundColor: modalBackColor, borderRadius: 8, elevation: 1, fontWeight: '600' }}
+                                    keyboardType="numeric"
+                                    value={editLength}
+                                    onChangeText={setEditLength}
+                                    onFocus={() => setIsLengthFocused(true)}
+                                    onBlur={() => setIsLengthFocused(false)}
+                                />
+                            </View>
                         </View>
 
                         {/* Update Pieces */}
-                        <View style={{ flexDirection: 'column', paddingHorizontal: 14 }}>
-                            <TextInput
-                                style={{ borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, height: 40, color: '#000', width: '100%', paddingHorizontal: 10, marginBottom: 15, backgroundColor: '#fff', borderRadius: 8, elevation: 1, fontWeight: '600' }}
-                                keyboardType="numeric"
-                                value={editValue}
-                                onChangeText={setEditValue}
-                                onFocus={() => setIsPiecesFocused(true)}
-                                onBlur={() => setIsPiecesFocused(false)}
-                            />
+                        <View style={{ marginVertical: 10, flexDirection: 'column', backgroundColor: '#fff', borderRadius: 10, paddingHorizontal: 15, paddingTop: 8, gap: 4, marginTop: 6, elevation: 1, marginHorizontal: 14 }}>
+                            <Text style={{ color: '#517c84', fontSize: responsiveFontSize(2.2), fontWeight: '500' }}>Edit the pieces:</Text>
+                            <View style={{ flexDirection: 'column', marginTop: 3 }}>
+                                <TextInput
+                                    style={{ borderColor: isPiecesFocused ? zomatoRed : "", borderWidth: isPiecesFocused ? 1 : 0, height: 40, color: '#000', width: '100%', paddingHorizontal: 10, marginBottom: 15, backgroundColor: modalBackColor, borderRadius: 8, elevation: 1, fontWeight: '600' }}
+                                    keyboardType="numeric"
+                                    value={editValue}
+                                    onChangeText={setEditValue}
+                                    onFocus={() => setIsPiecesFocused(true)}
+                                    onBlur={() => setIsPiecesFocused(false)}
+                                />
+                            </View>
                         </View>
 
                         {/* Buttons */}
@@ -392,7 +418,7 @@ const EditOrder = ({ route }) => {
                             </TouchableOpacity>
 
                             {/* Update */}
-                            <TouchableOpacity onPress={handlePiecesSave} style={{ backgroundColor: loading ? '#e1e1e1' : zomatoRed, height: 45, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: loading ? 2 : 4, borderColor: loading ? '#000' : '', borderWidth: loading ? 0.3 : 0, gap: 4, alignItems: 'center' }}>
+                            <TouchableOpacity disabled={loading} onPress={handlePiecesSave} style={{ backgroundColor: loading ? '#e1e1e1' : zomatoRed, height: 45, borderRadius: 8, justifyContent: 'center', flexDirection: 'row', width: '47%', alignSelf: 'center', elevation: loading ? 2 : 4, borderColor: loading ? '#000' : '', borderWidth: loading ? 0.3 : 0, gap: 4, alignItems: 'center' }}>
                                 {loading ? (
                                     <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'center', gap: 4 }}>
                                         <ActivityIndicator size="small" color='#5a5a5a' />
@@ -409,7 +435,6 @@ const EditOrder = ({ route }) => {
                             </TouchableOpacity>
 
                         </View>
-
                     </View>
                 </View>
             </Modal>
