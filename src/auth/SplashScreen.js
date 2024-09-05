@@ -14,7 +14,7 @@ const SplashScreen = () => {
             fadeAnim,
             {
                 toValue: 1,
-                duration: 1500, // 2 seconds
+                duration: 1500,
                 useNativeDriver: true,
             }
         ).start(() => {
