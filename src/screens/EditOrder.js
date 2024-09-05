@@ -32,7 +32,7 @@ const EditOrder = ({ route }) => {
 
     const navigation = useNavigation();
 
-    // pieces edit
+    // length and pieces edit
     const handleEdit = (item, it) => {
         setEditItem({ item, it });
         setEditValue(it.quantity.toString());
@@ -68,7 +68,6 @@ const EditOrder = ({ route }) => {
                 })
 
                 amount += total * item.rate;
-
             })
 
             // return amount + parseInt(updatedDetails.bend_charge) + parseInt(updatedDetails.loading_charge) + parseInt(updatedDetails.transport_charge);
@@ -95,7 +94,7 @@ const EditOrder = ({ route }) => {
                     'Content-Type': 'multipart/form-data'
                 }
             });
-            console.log('response', response);
+            // console.log('response', response);
 
             setLoading(false);
 
@@ -335,9 +334,7 @@ const EditOrder = ({ route }) => {
                                     </View>
                                 )}
                             </TouchableOpacity>
-
                         </View>
-
                     </View>
                 </View>
             </Modal>
@@ -438,7 +435,6 @@ const EditOrder = ({ route }) => {
                     </View>
                 </View>
             </Modal>
-
         </SafeAreaView>
     );
 };

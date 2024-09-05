@@ -28,7 +28,7 @@ const StackNavigation = () => {
                     dispatch(addLoginUser(JSON.parse(storedLoginDetails)));
                 }
             } catch (error) {
-                Alert.alert(error.message)
+                Alert.alert(error.message);
             } finally {
                 setIsAppLoading(false);
             }
