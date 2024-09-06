@@ -1,5 +1,5 @@
 import React, { useEffect, useRef } from 'react';
-import { StyleSheet, View, SafeAreaView, StatusBar, Image, Animated } from 'react-native';
+import { StyleSheet, View, SafeAreaView, StatusBar, Animated } from 'react-native';
 import { zomatoRed } from '../utils/colors';
 import { useNavigation } from '@react-navigation/native';
 import LinearGradient from 'react-native-linear-gradient';
@@ -20,7 +20,7 @@ const SplashScreen = () => {
         ).start(() => {
             setTimeout(() => {
                 navigation.navigate("Login")
-            }, 0); // additional delay of 1 second before navigating
+            }, 0);
         });
     }, [fadeAnim]);
 
