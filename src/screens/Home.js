@@ -17,7 +17,6 @@ const Home = () => {
                 backgroundColor="#fff"
                 barStyle="dark-content"
             />
-
             {/* header */}
             <View style={{ flexDirection: "row", backgroundColor: "#fff", alignItems: "center", justifyContent: "space-between", elevation: 1 }}>
                 <View style={{ flexDirection: 'row', alignItems: 'center', justifyContent: 'space-between', width: "100%", }}>
@@ -35,7 +34,6 @@ const Home = () => {
 
             {/* Content */}
             <View style={{ padding: 12, width: '100%', flexDirection: 'column', alignItems: 'center' }}>
-
                 {/* PI My Invoice */}
                 <TouchableOpacity style={{ width: '100%', backgroundColor: zomatoRed, borderRadius: 10, height: 100, marginBottom: 10, flexDirection: 'row', justifyContent: 'space-between', alignItems: 'center', alignSelf: 'center' }} onPress={() => navigation.navigate("PIMyInvoice")}>
                     <View style={{ flexDirection: 'column', justifyContent: 'space-between', paddingLeft: 15, width: '88%', paddingLeft: 20, gap: 3 }}>
@@ -99,9 +97,7 @@ const Home = () => {
                         <Icon name="keyboard-arrow-right" size={27} color={zomatoRed} />
                     </View>
                 </TouchableOpacity>
-
             </View>
-
         </SafeAreaView>
     )
 }

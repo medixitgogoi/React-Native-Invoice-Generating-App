@@ -132,7 +132,6 @@ const FillUpDetails = () => {
     };
 
     useEffect(() => {
-
         getThicknessDetails();
         getUnitDetails();
         getColorDetails();
