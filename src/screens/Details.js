@@ -623,9 +623,9 @@ const Details = () => {
                     </View>
 
                 </View>
-            </Modal >
+            </Modal>
 
-        </SafeAreaView >
+        </SafeAreaView>
     )
 }
 

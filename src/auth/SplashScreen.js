@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import { StyleSheet, View, SafeAreaView, StatusBar, Animated } from 'react-native';
 import { zomatoRed } from '../utils/colors';
 import { useNavigation } from '@react-navigation/native';
