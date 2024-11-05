@@ -4,7 +4,7 @@ import { responsiveFontSize } from 'react-native-responsive-dimensions';
 import Icon from 'react-native-vector-icons/dist/MaterialIcons';
 import Icon2 from 'react-native-vector-icons/dist/FontAwesome6';
 import Icon3 from 'react-native-vector-icons/dist/FontAwesome5';
-import { lightZomatoRed, zomatoRed } from '../utils/colors';
+import { zomatoRed, lightZomatoRed } from '../utils/colors';
 
 const Home = () => {
 
